@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ Téma – itt tudsz mindent átírni VS Code-ban
 const THEME = {
@@ -238,21 +239,21 @@ export default function PromptBuilderDark() {
         }}
       />
 
-      <header
-        className="w-full border-b"
-        style={{ borderColor: THEME.border }}
-      >
-        <div className="mx-auto max-w-5xl px-6 py-6 text-center">
-          <div
-            className="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3"
-            style={{ border: `2px solid ${THEME.border}` }}
-          >
-            LOGO
-          </div>
-          <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder – Dark</h1>
-          <p className="text-xs md:text-sm mt-1 opacity-90">fekete háttér • halványlila szöveg • finom glow</p>
-        </div>
-      </header>
+<header
+  className="w-full border-b"
+  style={{ borderColor: THEME.border }}
+>
+  <div className="mx-auto max-w-5xl px-6 py-6 text-center">
+    <div
+      className="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3"
+      style={{ border: `2px solid ${THEME.border}` }}
+    >
+      <img src={myLogo} alt="Alice in BP logó" className="w-full h-full object-cover" />
+    </div>
+    <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder – Dark</h1>
+    <p className="text-xs md:text-sm mt-1 opacity-90">fekete háttér • halványlila szöveg • finom glow</p>
+  </div>
+</header>
 
       <main className="mx-auto max-w-5xl px-6 py-8 md:py-12">
         {/* Fő keret */}
