@@ -250,7 +250,7 @@ export default function PromptBuilderDark() {
     >
       <img src={myLogo} alt="Alice in BP logó" className="w-full h-full object-cover" />
     </div>
-    <h1 className="text-xl md:text-2xl font-semibold tracking-widest"> ★ Prompt Builder ★ </h1>
+    <h1 className="text-xl md:text-2xl font-semibold tracking-widest"> ★  Prompt Builder  ★ </h1>
     <p className="text-xs md:text-sm mt-1 opacity-90">Prompt generator for AI images</p>
   </div>
 </header>
