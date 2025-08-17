@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
             "Claude Monet + Vincent van Gogh, impresszionista, napfelkelte a mező felett."
         ],
         subject: [
-            "Mai: Beautiful half-elf woman, long wavy black hair, ice-blue eyes, noble black dress, sapphire pendant",
-            "Nelira: Beautiful human woman, ash-blonde hair, emerald green eyes, elegant medieval dress, RPG",
-            "Caelril: Tall, lean elf woman, long black braided hair, yellow-golden eyes, assassin",
-            "Grael: Brown-haired, brown-eyed human man, medieval city guard, sword, bloodied, ominous gaze",
+            "Half-elf woman, black wavy hair, ice-blue eyes, black noble dress, sapphire pendant, medieval",
+            "Human woman, ash-blonde hair, emerald eyes, elegant medieval dress",
+            "Tall elf woman, black braided hair, yellow-gold eyes, assassin warrior, expressionless, early medieval",
+            "Brown-haired human man, brown eyes, city guard, sword, bloodied, ominous, medieval",
         ],
         setting: [
             "a magical library with floating books and glowing runes",
