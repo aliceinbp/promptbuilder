@@ -207,10 +207,15 @@ export default function PromptBuilderDark() {
   </div>
   <textarea
     className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
-    rows={2}
+    style={{
+      background: THEME.bg,
+      color: THEME.text,
+      border:`1px solid ${THEME.border}`,
+      width: "300px",
+      height: "100px"
+    }}
     value={style}
     onChange={(e) => setStyle(e.target.value)}
-    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
   />
 </Card>
           <Card label="👤 Subject">
@@ -220,23 +225,33 @@ export default function PromptBuilderDark() {
   </div>
   <textarea
     className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
-    rows={2}
+    style={{
+      background: THEME.bg,
+      color: THEME.text,
+      border:`1px solid ${THEME.border}`,
+      width: "300px",
+      height: "100px"
+    }}
     value={subject}
     onChange={(e) => setSubject(e.target.value)}
-    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
   />
 </Card>
-          <Card label="🏞 Setting">
+         <Card label="🏞 Setting">
   <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
   <div className="flex gap-2 mt-2">
     <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
   </div>
   <textarea
     className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
-    rows={2}
+    style={{
+      background: THEME.bg,
+      color: THEME.text,
+      border:`1px solid ${THEME.border}`,
+      width: "300px",
+      height: "100px"
+    }}
     value={setting}
     onChange={(e) => setSetting(e.target.value)}
-    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
   />
 </Card>
           <Card label="✨ Extra">
@@ -246,10 +261,15 @@ export default function PromptBuilderDark() {
   </div>
   <textarea
     className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
-    rows={2}
+    style={{
+      background: THEME.bg,
+      color: THEME.text,
+      border:`1px solid ${THEME.border}`,
+      width: "300px",
+      height: "100px"
+    }}
     value={extra}
     onChange={(e) => setExtra(e.target.value)}
-    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
   />
 </Card>
         </div>
