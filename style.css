@@ -92,12 +92,21 @@ header p {
     margin-bottom: 25px;
 }
 
+/* MÓDOSÍTOTT: A feliratok igazítása az ikonokhoz */
 label {
-    display: block;
+    display: flex; 
+    align-items: center;
     margin-bottom: 8px;
     color: #c89eff;
     font-weight: bold;
     font-size: 1.1em;
+}
+
+/* ÚJ: Az ikonok stílusa a feliratokban */
+label i {
+    margin-right: 10px;
+    color: #be80ff;
+    font-size: 0.9em;
 }
 
 .input-group {
@@ -190,7 +199,6 @@ footer a:hover {
     color: #ffffff;
 }
 
-/* ÚJ: Segédosztály egy elem elrejtéséhez */
 .hidden {
     display: none;
 }
