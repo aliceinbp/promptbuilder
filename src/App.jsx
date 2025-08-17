@@ -156,13 +156,9 @@ export default function PromptBuilderDark() {
   );
 
   const Select = ({ value, onChange, options, placeholder }) => (
-    <div className="relative">
-      <select className="appearance-none w-full h-8 text-xs md:text-sm rounded-xl pr-8 pl-3" style={{background: THEME.bg, color: THEME.text, border:`1px solid ${THEME.border}`}} value={value} onChange={(e)=>onChange(e.target.value)}>
-        <option value="">{placeholder}</option>
-        {options.map((opt,i)=>(<option key={i} value={opt}>{opt}</option>))}
-      </select>
-      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-xs" style={{color:THEME.accentSoft}}>▾</div>
-    </div>
+    <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+    <img src={myLogo} alt="Logo" className="w-full h-full" />
+</div>
   );
 
   const Button = ({ children, onClick, variant = "ghost" }) => (
