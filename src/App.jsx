@@ -1,19 +1,22 @@
 import React, { useMemo, useState } from "react";
 import myLogo from './assets/myLogo.jpg';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-// ⚙️ Téma – itt tudsz mindent átírni VS Code-ban
+// ⚙️ TÉMA: Minden szín, keret és méret itt állítható
 const THEME = {
-  bg: "#0a0a0a",
-  text: "#d8b4fe",
-  card: "#141018",
-  border: "#5b21b6",
-  accent: "#a855f7",
-  accentSoft: "#c084fc",
-  logoSize: 200, // A logó mérete
+  bg: "#0a0a0a", // Teljes háttér (fekete)
+  text: "#d8b4fe", // Halványlila szöveg
+  card: "#141018", // Kártyák háttere (nagyon sötét lila-fekete)
+  border: "#5b21b6", // Lila keret
+  accent: "#a855f7", // Gombok, kiemelések
+  accentSoft: "#c084fc", // Hover/fénylés
+  logoSize: "200px", // A logó mérete
+  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace", // Betűtípus, ami a 'csajos' hangulathoz passzol
 };
 
-export default function PromptBuilderDark() {
-  // 🔽 Legördülő listák (TELJES, a kéréseid szerint)
+export default function PromptBuilder() {
+  // 🔽 Adatforrások a legördülő menükhöz
   const styleOptions = [
     "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
     "Albert Bierstadt + Bob Ross, fenséges tájképek, buja részletekkel",
@@ -127,11 +130,13 @@ export default function PromptBuilderDark() {
     "glitch art, corrupted image effect, digital noise"
   ];
 
-  // Állapotok
+  // React hook-ok a szövegdobozok tartalmának kezelésére
   const [style, setStyle] = useState("");
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
   const [extra, setExtra] = useState("");
+
+  // useMemo hook a végső prompt automatikus frissítésére
   const finalPrompt = useMemo(
     () => [style, subject, setting, extra].filter(Boolean).join("\n"),
     [style, subject, setting, extra]
@@ -164,6 +169,7 @@ export default function PromptBuilderDark() {
     }
   };
 
+  // Komponensek
   const Card = ({ label, children }) => (
     <section
       className="rounded-2xl shadow-md p-4 md:p-5 backdrop-blur-sm border"
@@ -234,6 +240,7 @@ export default function PromptBuilderDark() {
         }}
       />
 
+      {/* Fejléc a logóval és a címmel */}
       <header className="w-full border-b" style={{ borderColor: THEME.border }}>
         <div className="mx-auto max-w-5xl px-6 py-4">
           <div className="grid grid-cols-2 items-center gap-4">
@@ -243,15 +250,15 @@ export default function PromptBuilderDark() {
               </div>
             </div>
             <div className="flex flex-col justify-center">
-              <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
-              <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+              <h1 className="text-xl md:text-2xl font-semibold tracking-widest" style={{fontFamily: THEME.font}}>★ Prompt Builder ★</h1>
+              <p className="text-xs md:text-sm opacity-90" style={{fontFamily: THEME.font}}>Prompt generator for AI images</p>
             </div>
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
-        {/* Fő keret */}
+        {/* Fő konténer szaggatott kerettel */}
         <div
           className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8 border-4"
           style={{
@@ -260,17 +267,17 @@ export default function PromptBuilderDark() {
             background: THEME.card,
           }}
         >
-          {/* Vezérlők */}
+          {/* Vezérlő gombok */}
           <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
             <div className="flex gap-2 md:gap-3">
               <Button onClick={shuffleAll} variant="solid">Shuffle All</Button>
               <Button onClick={clearAll}>Clear</Button>
               <Button onClick={copy}>Copy</Button>
             </div>
-            <div className="text-xs opacity-80">Chrome-kompatibilis • reszponzív</div>
+            <div className="text-xs opacity-80" style={{fontFamily: THEME.font}}>Chrome-kompatibilis • reszponzív</div>
           </div>
 
-          {/* Kártyák */}
+          {/* Prompt elemek kártyái */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Card label="🎨 Style">
               <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
@@ -349,6 +356,7 @@ export default function PromptBuilderDark() {
             </Card>
           </div>
 
+          {/* Végső prompt szövegdoboz */}
           <Card label="📝 Final Prompt">
             <textarea
               className="w-full rounded-xl p-3 text-xs md:text-sm"
@@ -364,6 +372,21 @@ export default function PromptBuilderDark() {
           </Card>
         </div>
       </main>
+
+      {/* Lábjegyzet az alkotások linkjével */}
+      <footer className="w-full text-center py-4 mt-8" style={{ color: THEME.text, fontFamily: THEME.font }}>
+        <p>
+          Fedezd fel a gyűjteményem:{" "}
+          <a
+            href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: THEME.accentSoft, textDecoration: "underline" }}
+          >
+            Alicebp's creations
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }
