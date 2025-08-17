@@ -7,33 +7,54 @@ document.addEventListener('DOMContentLoaded', function() {
         hu: {
             navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek",
             artistsTitle: "Művész Adatbázis",
-            artistDescBasquiat: "Ez a párosítás a nyers, graffiti-szerű neo-expresszionizmust ötvözi az elvont, kalligrafikus firkákkal. Az eredmény energikus, texturált és mélyen szimbolikus.",
-            artistDescMiyazaki: "Két anime mester találkozása. A Studio Ghibli varázslatos, emberközpontú világa keveredik Shinkai fotórealisztikus, érzelmes és fényben úszó tájképeivel.",
-            artistDescRutkowski: "A modern digitális fantasy festészet (epikus fények, drámai pózok) és a szecesszió eleganciájának (díszes vonalak, organikus minták) fúziója.",
-            artistDescGiger: "A biomechanikus horror és a pszichológiai mélységű, torz figurák párosa. Sötét, nyugtalanító és szürreális látványvilágot eredményez.",
-            artistDescDali: "A szürrealizmus és a kora reneszánsz vizionárius festészetének találkozása. Álomszerű, bizarr lényekkel és szimbolizmussal teli, fantasztikus világokat hoz létre.",
-            artistDescBurton: "Jellegzetes gótikus, mesei stílus, ami egyszerre sötét és játékos. Hosszú, vékony karakterek, spirális formák és egy melankolikus, mégis bájos hangulat jellemzi.",
-            artistDescBierstadt: "Fenséges, idealizált amerikai tájképek romantikus stílusban, drámai fény-árnyék hatásokkal és aprólékos részletességgel.",
-            artistDescGrey: "Vizionárius művészet, amely az emberi testet, a tudatot és a spiritualitást metafizikai és anatómiai pontossággal ábrázolja.",
+            artistDescBasquiatSingle: "Amerikai neo-expresszionista művész, akinek nyers, graffiti-szerű stílusa a szavak, szimbólumok és a figuratív ábrázolás energikus keveréke.",
+            artistDescTwombly: "Amerikai festő, akinek nagyméretű, szabadon firkált, kalligrafikus munkái a klasszikus történelem és mitológia témáit dolgozzák fel elvont formában.",
+            artistDescBierstadt: "Német-amerikai festő, a romantikus tájképfestészet mestere. Fenséges, idealizált amerikai tájképei drámai fény-árnyék hatásokkal és aprólékos részletességgel bírnak.",
+            artistDescRoss: "Amerikai festő és televíziós személyiség, aki a 'wet-on-wet' olajfestési technikájáról és megnyugtató, természetközeli tájképeiről ismert.",
+            artistDescMiyazakiSingle: "A Studio Ghibli társalapítója, az anime legendája. Munkáit a varázslatos, emberközpontú történetek, a természet tisztelete és a repülés motívuma jellemzi.",
+            artistDescShinkai: "Modern anime rendező, akit a fotórealisztikus, érzelmes és fényben úszó tájképei tettek híressé. Művei gyakran a távolság és a melankólia témáit járják körül.",
+            artistDescGrey: "Vizionárius művész, aki az emberi testet, a tudatot és a spiritualitást metafizikai és anatómiai pontossággal ábrázolja.",
+            artistDescRutkowskiSingle: "Népszerű digitális fantasy festő, akinek stílusát az epikus, filmszerű fények, a drámai pózok és a klasszikus olajfestészetet idéző textúrák határozzák meg.",
+            artistDescMucha: "Cseh festő, a szecesszió (Art Nouveau) ikonikus alakja. Munkáit a díszes, hullámzó vonalak, organikus minták és az idealizált női alakok jellemzik.",
             artistDescKlimt: "Az osztrák szecesszió mestere. Stílusát a díszes, arany hátterek, a gazdag mintázatok és az erotikus, szimbolikus női alakok jellemzik.",
+            artistDescSchiele: "Osztrák expresszionista festő, akit a nyers, torzított önarcképei és aktjai tettek híressé. Munkái az emberi test és a psziché mélységeit kutatják.",
             artistDescBanksy: "Ismeretlen street art művész, akinek szatirikus és felforgató üzenetei gyakran politikai vagy társadalmi kommentárként jelennek meg a köztereken.",
             artistDescKahlo: "Mexikói festőnő, aki leginkább szürreális önarcképeiről ismert. Művei a személyes szenvedést, az identitást és a mexikói kultúrát dolgozzák fel.",
             artistDescRembrandt: "A holland aranykor egyik legnagyobb festője, a fény-árnyék (chiaroscuro) mestere. Portréi mély pszichológiai betekintést nyújtanak.",
+            artistDescCaravaggio: "Olasz barokk festő, aki a drámai, kontrasztos fény-árnyék technikájával (tenebrizmus) forradalmasította a festészetet.",
             artistDescMagritte: "Belga szürrealista művész, aki hétköznapi tárgyakat ábrázolt meghökkentő, gondolatébresztő kontextusban, megkérdőjelezve a valóság és a látszat viszonyát.",
+            artistDescEscher: "Holland grafikusművész, aki lehetetlen építményeiről, végtelen mintázatairól és paradox optikai illúzióiról ismert.",
             artistDescCrewdson: "Amerikai fotográfus, aki filmszerű, aprólékosan megrendezett jeleneteket készít amerikai kertvárosokról, feszültséggel és rejtélyekkel teli hangulatot teremtve.",
+            artistDescVallejo: "Perui-amerikai festő, a hiperrealista fantasy művészet egyik legismertebb alakja. Képei gyakran ábrázolnak mitológiai hősöket és egzotikus tájakat.",
+            artistDescBeksinski: "Lengyel festő, aki a disztópikus szürrealizmus sötét, nyomasztó és gyakran apokaliptikus vízióiról ismert.",
             artistDescLiepke: "Modern amerikai festő, akinek expresszív, sötét tónusú portréi a magányt, a vágyat és az emberi kapcsolatok törékenységét vizsgálják.",
+            artistDescHale: "Amerikai festő, aki sötét, drámai és gyakran erőszakos jeleneteket ábrázol expresszív, dinamikus ecsetkezeléssel.",
+            artistDescLeibovitz: "Híres amerikai portréfotós, akinek képei ikonikusak és gyakran intim, mégis gondosan megkomponált beállításokban mutatják be a hírességeket.",
             artistDescFrazetta: "A fantasy és sci-fi művészet ikonikus alakja. Dinamikus, erőteljes kompozíciói barbárokról, harcosokról és szörnyekről a műfaj alapköveivé váltak.",
+            artistDescDore: "Francia grafikusművész, aki a 19. században készült, drámai és részletgazdag fametszeteiről ismert, melyekkel klasszikus irodalmi műveket illusztrált.",
+            artistDescDaliSingle: "A szürrealizmus legismertebb alakja. Munkáit a bizarr, álomszerű jelenetek, az olvadó órák és a tudatalatti mélységeinek feltárása jellemzi.",
+            artistDescBosch: "Kora reneszánsz festő, akinek fantasztikus, szimbolikus és gyakran groteszk festményei a bűn, az erény és a túlvilág témáit dolgozzák fel.",
+            artistDescGigerSingle: "Svájci művész, a biomechanikus stílus megteremtője. Munkái az emberi test és a gépek fúzióját ábrázolják egy sötét, szürreális és nyugtalanító esztétikával.",
+            artistDescBacon: "Ír születésű brit festő, aki nyers, torzított és pszichológiailag megterhelő portréiról és figuráiról ismert.",
+            artistDescHopper: "Amerikai realista festő, aki a modern városi élet magányát és elidegenedését örökítette meg jellegzetes, fény-árnyékkal teli kompozícióiban.",
+            artistDescBrom: "Amerikai gótikus és dark fantasy művész. Stílusa sötét, részletgazdag és gyakran groteszk, a szépséget és a horrort ötvözi.",
             artistDescMoebius: "Jean Giraud francia művész álneve, a képregény és a sci-fi látványtervezés megújítója. Stílusát a letisztult vonalak és a lenyűgöző, képzeletgazdag világok jellemzik.",
-            artistDescToriyama: "A Dragon Ball sorozat megalkotója, akinek jellegzetes, szögletes és energikus anime stílusa generációkra volt hatással.",
+            artistDescMead: "Legendás 'vizuális futurista', aki olyan filmek világát tervezte, mint a Szárnyas fejvadász és a Tron. Munkáit a letisztult, high-tech és optimista jövőkép jellemzi.",
+            artistDescAmano: "Japán művész, aki leginkább a Final Fantasy videójáték-sorozat karakterterveiről ismert. Stílusa légies, elegáns, és a hagyományos japán fametszetekből merít.",
             artistDescShinkawa: "Japán videójáték-tervező, aki a Metal Gear Solid sorozat művészeti stílusáért felelt. Munkáit a kalligrafikus, tusfestészetre emlékeztető vonalvezetés és a komor, high-tech dizájn jellemzi.",
-            artistDescLeyendecker: "A 20. század elejének egyik legmeghatározóbb amerikai illusztrátora. Elegáns, idealizált alakjai és jellegzetes ecsetkezelése a 'flapper' korszak szinonimájává vált.",
+            artistDescRockwell: "Amerikai festő és illusztrátor, aki az amerikai hétköznapok idealizált, szentimentális és részletgazdag jeleneteiről vált híressé.",
             artistDescNihei: "Japán manga művész, aki sötét, disztópikus cyberpunk világairól ismert. Stílusát a hatalmas, monumentális építészeti terek és a részletgazdag, komor látványvilág határozza meg.",
             artistDescMiura: "A 'Berserk' című dark fantasy manga megalkotója. Művészetét a rendkívüli részletesség, a brutális, epikus csatajelenetek és a mély, sötét történetmesélés jellemzi.",
             artistDescLoish: "Modern digitális művész, akinek élénk színvilágú, stilizált és bájos karakterábrázolásai rendkívül népszerűek. Munkái gyakran a nőiességet és a természetet ünneplik.",
-            artistDescFriedrich: "A német romantika központi alakja. Tájképei gyakran ábrázolnak magányos alakokat fenséges, spirituális töltetű természetben, melankolikus és tiszteletet parancsoló hangulatot teremtve.",
+            artistDescTurner: "Angol romantikus tájképfestő, a 'fény festője'. Munkáit a vibráló színek, a dinamikus kompozíciók és az atmoszferikus, gyakran viharos jelenetek jellemzik.",
             artistDescWyeth: "Amerikai realista festő, aki a vidéki táj és emberek csendes, gyakran melankolikus világát örökítette meg rendkívüli részletességgel és visszafogott színhasználattal.",
+            artistDescMiller: "Amerikai képregényíró és -rajzoló, a modern, sötét és nyers képregény stílus egyik úttörője (Sin City, The Dark Knight Returns).",
             artistDescKirby: "A képregény 'Királya', a Marvel univerzum számos ikonikus karakterének (Fantasztikus Négyes, Thor, Hulk) társalkotója. Stílusát a kozmikus energia, a dinamizmus és a monumentális lépték jellemzi.",
+            artistDescKenna: "Brit fotográfus, aki minimalista, fekete-fehér tájképeiről ismert. Hosszú expozíciós technikájával éteri, időtlen hangulatot teremt.",
             artistDescWeston: "A 20. századi fotóművészet egyik úttörője. Fekete-fehér, borotvaéles képei hétköznapi tárgyakat (paprika, kagyló) és tájképeket emelnek absztrakt, szoborszerű formákká.",
+            artistDescGogh: "Holland posztimpresszionista festő, akinek érzelmekkel teli, vastag ecsetvonásai és élénk színei a modern művészet egyik legfontosabb alakjává tették.",
+            artistDescWarhol: "Az amerikai pop art mozgalom központi figurája. Művei a fogyasztói társadalom és a sztárkultusz témáit dolgozzák fel, gyakran a sokszorosítás technikájával.",
+            artistDescPicasso: "A 20. század egyik legmeghatározóbb művésze, a kubizmus társalapítója. Munkássága rendkívül sokszínű, a realista ábrázolástól a teljes absztrakcióig terjed.",
             galleryTitle: "Galéria", comingSoon: "Hamarosan...",
             galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
             linksTitle: "Ajánlott AI Képalkotó Oldalak",
@@ -58,33 +79,54 @@ document.addEventListener('DOMContentLoaded', function() {
         en: {
             navHome: "Home", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists",
             artistsTitle: "Artist Database",
-            artistDescBasquiat: "This pairing combines the raw, graffiti-like neo-expressionism with abstract, calligraphic scribbles. The result is energetic, textured, and deeply symbolic.",
-            artistDescMiyazaki: "A meeting of two anime masters. The magical, human-centric world of Studio Ghibli blends with Shinkai's photorealistic, emotional, and light-filled landscapes.",
-            artistDescRutkowski: "A fusion of modern digital fantasy painting (epic lights, dramatic poses) and the elegance of Art Nouveau (ornate lines, organic patterns).",
-            artistDescGiger: "The pairing of biomechanical horror and psychologically deep, distorted figures. It results in a dark, unsettling, and surreal visual world.",
-            artistDescDali: "The meeting of surrealism and early Renaissance visionary painting. It creates dreamlike, fantastic worlds filled with bizarre creatures and symbolism.",
-            artistDescBurton: "A distinctive gothic, fairytale style that is both dark and playful. Characterized by long, thin characters, spiral shapes, and a melancholic yet charming atmosphere.",
-            artistDescBierstadt: "Majestic, idealized American landscapes in a romantic style, featuring dramatic lighting and meticulous detail.",
-            artistDescGrey: "Visionary art that depicts the human body, consciousness, and spirituality with metaphysical and anatomical precision.",
+            artistDescBasquiatSingle: "An American neo-expressionist artist whose raw, graffiti-like style is an energetic mix of words, symbols, and figurative imagery.",
+            artistDescTwombly: "An American painter whose large-scale, freely scribbled, calligraphic works explore themes of classical history and mythology in an abstract form.",
+            artistDescBierstadt: "A German-American painter, master of romantic landscape painting. His majestic, idealized American landscapes feature dramatic lighting and meticulous detail.",
+            artistDescRoss: "An American painter and television personality known for his 'wet-on-wet' oil painting technique and his calming, nature-centric landscapes.",
+            artistDescMiyazakiSingle: "Co-founder of Studio Ghibli, a legend of anime. His works are characterized by magical, human-centric stories, a respect for nature, and the motif of flight.",
+            artistDescShinkai: "A modern anime director famous for his photorealistic, emotional, and light-filled landscapes. His works often explore themes of distance and melancholy.",
+            artistDescGrey: "A visionary artist who depicts the human body, consciousness, and spirituality with metaphysical and anatomical precision.",
+            artistDescRutkowskiSingle: "A popular digital fantasy painter whose style is defined by epic, cinematic lighting, dramatic poses, and textures reminiscent of classical oil painting.",
+            artistDescMucha: "A Czech painter, an iconic figure of Art Nouveau. His work is characterized by ornate, flowing lines, organic patterns, and idealized female figures.",
             artistDescKlimt: "Master of the Austrian Art Nouveau. His style is characterized by ornamental, golden backgrounds, rich patterns, and erotic, symbolic female figures.",
+            artistDescSchiele: "An Austrian expressionist painter, famous for his raw, distorted self-portraits and nudes. His work explores the depths of the human body and psyche.",
             artistDescBanksy: "An anonymous street artist whose satirical and subversive messages often appear in public spaces as political or social commentary.",
             artistDescKahlo: "A Mexican painter best known for her surreal self-portraits. Her works explore personal suffering, identity, and Mexican culture.",
             artistDescRembrandt: "One of the greatest painters of the Dutch Golden Age, a master of chiaroscuro (light and shadow). His portraits offer deep psychological insight.",
+            artistDescCaravaggio: "An Italian Baroque painter who revolutionized painting with his dramatic, high-contrast light and shadow technique (tenebrism).",
             artistDescMagritte: "A Belgian surrealist artist who depicted ordinary objects in unusual, thought-provoking contexts, questioning the relationship between reality and representation.",
+            artistDescEscher: "A Dutch graphic artist known for his impossible constructions, infinite patterns, and paradoxical optical illusions.",
             artistDescCrewdson: "An American photographer who creates cinematic, meticulously staged scenes of American suburban life, filled with an atmosphere of tension and mystery.",
+            artistDescVallejo: "A Peruvian-American painter, one of the most famous figures in hyperrealistic fantasy art. His paintings often depict mythological heroes and exotic landscapes.",
+            artistDescBeksinski: "A Polish painter known for his dark, oppressive, and often apocalyptic visions of dystopian surrealism.",
             artistDescLiepke: "A modern American painter whose expressive, dark-toned portraits explore loneliness, desire, and the fragility of human connections.",
+            artistDescHale: "An American painter who depicts dark, dramatic, and often violent scenes with expressive, dynamic brushwork.",
+            artistDescLeibovitz: "A famous American portrait photographer whose images are iconic and often feature celebrities in intimate yet carefully composed settings.",
             artistDescFrazetta: "An iconic figure in fantasy and sci-fi art. His dynamic, powerful compositions of barbarians, warriors, and monsters became cornerstones of the genre.",
+            artistDescDore: "A French graphic artist known for his dramatic and detailed wood engravings from the 19th century, with which he illustrated classic literary works.",
+            artistDescDaliSingle: "The most famous figure of surrealism. His work is characterized by bizarre, dreamlike scenes, melting clocks, and an exploration of the subconscious depths.",
+            artistDescBosch: "An early Renaissance painter whose fantastic, symbolic, and often grotesque paintings deal with themes of sin, virtue, and the afterlife.",
+            artistDescGigerSingle: "A Swiss artist, creator of the biomechanical style. His works depict the fusion of the human body and machines with a dark, surreal, and unsettling aesthetic.",
+            artistDescBacon: "An Irish-born British painter known for his raw, distorted, and psychologically charged portraits and figures.",
+            artistDescHopper: "An American realist painter who captured the loneliness and alienation of modern urban life in his distinctive compositions filled with light and shadow.",
+            artistDescBrom: "An American gothic and dark fantasy artist. His style is dark, detailed, and often grotesque, combining beauty and horror.",
             artistDescMoebius: "The pseudonym of French artist Jean Giraud, an innovator in comics and sci-fi concept design. His style is defined by clean lines and stunning, imaginative worlds.",
-            artistDescToriyama: "The creator of the Dragon Ball series, whose distinctive, angular, and energetic anime style has influenced generations.",
+            artistDescMead: "A legendary 'visual futurist' who designed the worlds of films like Blade Runner and Tron. His work is characterized by a clean, high-tech, and optimistic vision of the future.",
+            artistDescAmano: "A Japanese artist best known for his character designs for the Final Fantasy video game series. His style is ethereal, elegant, and draws from traditional Japanese woodblock prints.",
             artistDescShinkawa: "A Japanese video game artist, responsible for the art style of the Metal Gear Solid series. His work is known for its calligraphic, ink-wash-like linework and somber, high-tech designs.",
-            artistDescLeyendecker: "One of the most influential American illustrators of the early 20th century. His elegant, idealized figures and distinctive brushwork became synonymous with the 'flapper' era.",
+            artistDescRockwell: "An American painter and illustrator who became famous for his idealized, sentimental, and detailed scenes of American everyday life.",
             artistDescNihei: "A Japanese manga artist known for his dark, dystopian cyberpunk worlds. His style is defined by vast, monumental architectural spaces and a detailed, grim visual style.",
             artistDescMiura: "The creator of the dark fantasy manga 'Berserk'. His art is characterized by extraordinary detail, brutal, epic battle scenes, and deep, dark storytelling.",
             artistDescLoish: "A modern digital artist whose vibrant, stylized, and charming character illustrations are immensely popular. Her work often celebrates femininity and nature.",
-            artistDescFriedrich: "A central figure of German Romanticism. His landscapes often depict lonely figures in sublime, spiritual natural settings, creating a melancholic and awe-inspiring mood.",
+            artistDescTurner: "An English Romantic landscape painter, the 'painter of light'. His work is characterized by vibrant colors, dynamic compositions, and atmospheric, often stormy scenes.",
             artistDescWyeth: "An American realist painter who captured the quiet, often melancholic world of the rural landscape and its people with extraordinary detail and a muted color palette.",
+            artistDescMiller: "An American comic book writer and artist, a pioneer of the modern, dark, and gritty comic book style (Sin City, The Dark Knight Returns).",
             artistDescKirby: "The 'King' of comics, co-creator of many iconic Marvel Universe characters (Fantastic Four, Thor, Hulk). His style is defined by cosmic energy, dynamism, and a monumental scale.",
+            artistDescKenna: "A British photographer known for his minimalist, black-and-white landscapes. His long-exposure technique creates an ethereal, timeless mood.",
             artistDescWeston: "A pioneer of 20th-century photography. His black-and-white, razor-sharp images elevate everyday objects (peppers, shells) and landscapes into abstract, sculptural forms.",
+            artistDescGogh: "A Dutch post-impressionist painter whose emotionally charged, thick brushstrokes and vibrant colors made him one of the most important figures in modern art.",
+            artistDescWarhol: "A central figure in the American pop art movement. His works explore themes of consumer society and celebrity culture, often using the technique of reproduction.",
+            artistDescPicasso: "One of the most influential artists of the 20th century, co-founder of Cubism. His work is incredibly diverse, ranging from realistic depiction to complete abstraction.",
             galleryTitle: "Gallery", comingSoon: "Coming Soon...",
             galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",
             linksTitle: "Recommended AI Image Generators",
@@ -113,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function setLanguage(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
-        
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (translations[lang] && translations[lang][key]) {
@@ -122,30 +163,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 else { elem.textContent = text; }
             }
         });
-
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
-        if(langHu && langEn){
+        if (langHu && langEn) {
             langHu.classList.toggle('active', lang === 'hu');
             langEn.classList.toggle('active', lang === 'en');
         }
-
         const translateButton = document.getElementById('translate-button');
-        if(translateButton) {
+        if (translateButton) {
             translateButton.classList.toggle('hidden', lang !== 'hu');
         }
-        
         if (typeof populateSelects === 'function') {
             populateSelects();
         }
-         if (typeof renderSavedPrompts === 'function') {
+        if (typeof renderSavedPrompts === 'function') {
             renderSavedPrompts();
         }
     }
 
     const langHu = document.getElementById('lang-hu');
     const langEn = document.getElementById('lang-en');
-    if(langHu && langEn){
+    if (langHu && langEn) {
         langHu.addEventListener('click', (e) => { e.preventDefault(); setLanguage('hu'); });
         langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
     }
@@ -153,24 +191,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const infoButton = document.getElementById('info-button');
-    
-    if(infoButton && infoModal && overlay){
+    if (infoButton && infoModal && overlay) {
         const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
         const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
         const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
-     }
+    }
      
-     if(overlay){
-         overlay.addEventListener('click', () => {
+    if (overlay) {
+        overlay.addEventListener('click', () => {
             document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
             overlay.classList.add('hidden');
-         });
-     }
+        });
+    }
 
     if (document.getElementById('random-button')) {
-    
         const defaultPrompts = {
             en: {
                 style: [ ...new Set([ "Photorealistic", "Oil painting", "Pencil sketch", "Watercolor", "Impressionism by Claude Monet", "Surrealism by Salvador Dalí", "Cubism by Pablo Picasso", "Art Nouveau by Alphonse Mucha", "Pop Art by Andy Warhol", "Concept art", "Digital painting by Greg Rutkowski", "Steampunk aesthetic", "Cyberpunk neon noir", "Biomechanical art by H.R. Giger", "Fantasy art by Frank Frazetta", "Studio Ghibli anime style", "Disney animation style", "Tim Burton style", "Art Deco", "Baroque painting", "Minimalist line art", "Ukiyo-e Japanese art", "Vintage photography", "Double exposure", "Synthwave", "Solarpunk", "Gothic art", "Cosmic horror", "Abstract expressionism", "Cinematic still from a movie", "Jean-Michel Basquiat + Cy Twombly, texture and expressive abstraction", "Albert Bierstadt + Bob Ross, majestic landscapes with lush details", "Hayao Miyazaki + Makoto Shinkai, vibrant, emotional anime visuals", "Alex Grey + visionary art, spiritual and transcendent visual metaphors", "Greg Rutkowski + Alphonse Mucha, fantasy illustration in art nouveau style", "Gustav Klimt + Egon Schiele, gold, patterns and raw human emotions", "Banksy + Jean-Michel Basquiat, street art with social commentary", "Frida Kahlo + fantasy art, surreal self-portraits with fantastical elements", "Rembrandt + Caravaggio, dark, dramatic portraits with masterful chiaroscuro", "René Magritte + M.C. Escher, thought-provoking, paradoxical reality", "Gregory Crewdson + Boris Vallejo, cinematic lighting, fantasy realism", "Boris Vallejo + Zdzisław Beksiński, hyperrealistic dark fantasy", "Malcolm Liepke + Phil Hale, expressive brushwork, dripping melancholy", "Caravaggio + Annie Leibovitz, dramatic portrait", "Frank Frazetta + Gustave Doré, epic fantasy illustration", "Salvador Dalí + Hieronymus Bosch, dreamlike surrealism", "H.R. Giger + Francis Bacon, biomechanical psychological horror", "Edward Hopper + Film Noir aesthetic, rain-soaked urban melancholy", "Brom + Zdzisław Beksiński, dark fantasy, ominous character design", "Frank Frazetta + Greg Rutkowski, classic fantasy heroes and illustrations", "Moebius (Jean Giraud) + Syd Mead, futuristic sci-fi characters and worlds", "Akira Toriyama + Yoshitaka Amano, anime-style heroes with fantasy elements", "Yoji Shinkawa + H.R. Giger, biomechanical, post-apocalyptic characters", "J.C. Leyendecker + Norman Rockwell, classic, iconic adventurers", "Tsutomu Nihei + sci-fi noir, dark, detailed cyberpunk and dystopian characters", "Kentaro Miura + fantasy art, detailed, epic and brutal characters", "Alphonse Mucha + Art Nouveau aesthetic, elegant, magical, art nouveau style characters", "Loish + whimsical art, colorful, stylized and charming fantasy characters", "Caspar David Friedrich + Disney concept art, oil painting, magical, moonlit forest.", "Syd Mead + Jean-Michel Basquiat, digital art, neon-futuristic, graffiti city.", "Edward Hopper + Ansel Adams, realistic depiction, rain-soaked train station.", "Makoto Shinkai + Hayao Miyazaki, anime style, train running through a quiet field.", "Albert Bierstadt + Frank Frazetta, oil painting, misty mountain lake with hidden crystals.", "Andrew Wyeth + J.M.W. Turner, watercolor, quiet, foggy seashore.", "Jack Kirby + Frank Miller, comic book style, monumental futuristic city.", "Moebius (Jean Giraud) + Studio Ghibli art, digital art, floating island with huge trees.", "Edward Weston + Michael Kenna, photorealistic, black and white, abandoned pier.", "Claude Monet + Vincent van Gogh, impressionist, sunrise over a field." ])],
@@ -397,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
         translateButton.addEventListener('click', function() { const promptText = finalPromptTextarea.value; if (promptText.trim() === '') return; const encodedText = encodeURIComponent(promptText); const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`; window.open(translateUrl, '_blank'); });
         historyButton.addEventListener('click', () => { renderHistory(); openModal(historyModal); });
         closeHistoryModalBtn.addEventListener('click', () => { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); });
-        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; updateFinalPrompt(); overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
+        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; /*updateFinalPrompt();*/ overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
         
         renderSavedPrompts();
         updateFinalPrompt();
