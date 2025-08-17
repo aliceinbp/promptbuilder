@@ -201,21 +201,57 @@ export default function PromptBuilderDark() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           <Card label="🎨 Style">
-            <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
-            <div className="flex gap-2"><Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button></div>
-          </Card>
+  <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
+  <div className="flex gap-2 mt-2">
+    <Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button>
+  </div>
+  <textarea
+    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    rows={2}
+    value={style}
+    onChange={(e) => setStyle(e.target.value)}
+    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
+  />
+</Card>
           <Card label="👤 Subject">
-            <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
-            <div className="flex gap-2"><Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button></div>
-          </Card>
+  <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
+  <div className="flex gap-2 mt-2">
+    <Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button>
+  </div>
+  <textarea
+    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    rows={2}
+    value={subject}
+    onChange={(e) => setSubject(e.target.value)}
+    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
+  />
+</Card>
           <Card label="🏞 Setting">
-            <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
-            <div className="flex gap-2"><Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button></div>
-          </Card>
+  <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
+  <div className="flex gap-2 mt-2">
+    <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
+  </div>
+  <textarea
+    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    rows={2}
+    value={setting}
+    onChange={(e) => setSetting(e.target.value)}
+    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
+  />
+</Card>
           <Card label="✨ Extra">
-            <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
-            <div className="flex gap-2"><Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button></div>
-          </Card>
+  <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
+  <div className="flex gap-2 mt-2">
+    <Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button>
+  </div>
+  <textarea
+    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    rows={2}
+    value={extra}
+    onChange={(e) => setExtra(e.target.value)}
+    style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}}
+  />
+</Card>
         </div>
         <Card label="📝 Final Prompt">
           <textarea className="w-full rounded-xl p-3 text-xs md:text-sm" rows={8} readOnly style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}} value={finalPrompt}/>
