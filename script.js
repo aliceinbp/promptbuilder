@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             settingPlaceholder: "Itt szerkesztheted a kiválasztott helyszíneket...",
             extraPlaceholder: "Itt szerkesztheted a kiválasztott extrákat...",
             finalPromptLabel: "Végleges prompt (angolul)",
-            finalPromptPlaceholder: "Az összeállített prompt itt fog megjelenni...",
+            finalPromptPlaceholder: "Az összeállított prompt itt fog megjelenni...",
             copyButton: "Prompt másolása",
             copyButtonSuccess: "Másolva!",
             translateButton: "Fordítás Angolra",
@@ -63,23 +63,22 @@ document.addEventListener('DOMContentLoaded', function() {
         finalPromptTextarea.value = promptParts.join(', ');
     }
     
-    // MÓDOSÍTOTT FUNKCIÓ
     function setLanguage(lang) {
         currentLanguage = lang;
         document.documentElement.lang = lang;
         document.getElementById('lang-hu').classList.toggle('active', lang === 'hu');
         document.getElementById('lang-en').classList.toggle('active', lang === 'en');
         
-        // MÓDOSÍTÁS: A fordító gomb elrejtése vagy megjelenítése
         translateButton.classList.toggle('hidden', lang !== 'hu');
 
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
+            const target = elem.tagName === 'SPAN' ? elem : elem; // Find the span if it exists
             if (translations[lang] && translations[lang][key]) {
-                if (elem.placeholder !== undefined) {
-                    elem.placeholder = translations[lang][key];
+                if (target.placeholder !== undefined) {
+                    target.placeholder = translations[lang][key];
                 } else {
-                    elem.textContent = translations[lang][key];
+                    target.textContent = translations[lang][key];
                 }
             }
         });
