@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ TÉMA: Minden szín, keret és méret itt állítható a könnyű szerkeszthetőségért
@@ -133,6 +133,13 @@ export default function PromptBuilder() {
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
   const [extra, setExtra] = useState("");
+  const [finalPrompt, setFinalPrompt] = useState("");
+
+  // A végső prompt frissítése a 4 mező alapján
+  useEffect(() => {
+    const combinedPrompt = [style, subject, setting, extra].filter(Boolean).join("\n");
+    setFinalPrompt(combinedPrompt);
+  }, [style, subject, setting, extra]);
 
   // Segédfüggvények
   const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
@@ -147,6 +154,7 @@ export default function PromptBuilder() {
     setSubject("");
     setSetting("");
     setExtra("");
+    setFinalPrompt("");
   };
   const copy = async () => {
     try {
@@ -160,9 +168,6 @@ export default function PromptBuilder() {
       document.body.removeChild(ta);
     }
   };
-
-  // A végső prompt frissítése a 4 mező alapján
-  const finalPrompt = [style, subject, setting, extra].filter(Boolean).join("\n");
 
   // Komponens a kártyákhoz
   const Card = ({ label, children }) => (
@@ -275,7 +280,7 @@ export default function PromptBuilder() {
           {/* Prompt elemek kártyái */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Card label="🎨 Style">
-              <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
+              <Select value={style} onChange={e => setStyle(e.target.value)} options={styleOptions} placeholder="Válassz stílust…" />
               <div className="flex gap-2 mt-2">
                 <Button onClick={() => setStyle(pickRandom(styleOptions))}>Random</Button>
               </div>
@@ -294,7 +299,7 @@ export default function PromptBuilder() {
             </Card>
 
             <Card label="👤 Subject">
-              <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
+              <Select value={subject} onChange={e => setSubject(e.target.value)} options={subjectOptions} placeholder="Válassz témát…" />
               <div className="flex gap-2 mt-2">
                 <Button onClick={() => setSubject(pickRandom(subjectOptions))}>Random</Button>
               </div>
@@ -313,7 +318,7 @@ export default function PromptBuilder() {
             </Card>
 
             <Card label="🏞 Setting">
-              <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
+              <Select value={setting} onChange={e => setSetting(e.target.value)} options={settingOptions} placeholder="Válassz helyszínt…" />
               <div className="flex gap-2 mt-2">
                 <Button onClick={() => setSetting(pickRandom(settingOptions))}>Random</Button>
               </div>
@@ -332,7 +337,7 @@ export default function PromptBuilder() {
             </Card>
 
             <Card label="✨ Extra">
-              <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
+              <Select value={extra} onChange={e => setExtra(e.target.value)} options={extraOptions} placeholder="Válassz extrát…" />
               <div className="flex gap-2 mt-2">
                 <Button onClick={() => setExtra(pickRandom(extraOptions))}>Random</Button>
               </div>
@@ -356,7 +361,7 @@ export default function PromptBuilder() {
             <textarea
               className="w-full rounded-xl p-3 text-xs md:text-sm"
               rows={8}
-              readOnly={true} // A végleges prompt mező nem szerkeszthető, a 4 fenti mező adatai alapján frissül
+              onChange={(e) => setFinalPrompt(e.target.value)}
               style={{
                 background: THEME.bg,
                 color: THEME.text,
