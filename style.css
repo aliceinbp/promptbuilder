@@ -58,16 +58,23 @@ header {
 
 /* JAVÍTOTT RÉSZ: Logó konténer és a logó maga */
 #logo-container {
-    /* A konténernek már nem adunk külön stílust, 
-       így a kép mérete fogja meghatározni. */
-    margin-bottom: 15px; /* Csak egy kis alsó térközt hagyunk */
+    width: 170px;  /* A kör alakú terület mérete */
+    height: 170px;
+    margin: 0 auto 15px auto; /* Középre igazítás és alsó térköz */
+    border-radius: 50%; /* Ez teszi a konténert kör alakúvá */
+    
+    /* Ez adja a csajos, árnyékos lila keretet/ragyogást */
+    box-shadow: 0 0 15px rgba(190, 128, 255, 0.8);
+
+    /* Flexbox a kép tökéletes középre igazításához */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #logo {
-    width: 160px;  /* Itt beállítjuk a logó kívánt méretét */
+    width: 160px; /* A kép mérete, hogy kényelmesen elférjen */
     height: 160px;
-    /* A border-radius és object-fit tulajdonságokat eltávolítottuk,
-       hogy ne vágja le a képet. */
 }
 /* EDDIG TART A JAVÍTÁS */
 
