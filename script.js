@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         hu: {
             navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria",
             galleryTitle: "Galéria", comingSoon: "Hamarosan...",
+            galleryCatFantasy: "Fantasy Portrék",
+            galleryCatDark: "Dark & Gothic",
+            galleryCatLandscape: "Elvarázsolt Tájképek",
+            galleryCatCreatures: "Lények és Szörnyetegek",
             linksTitle: "Ajánlott AI Képalkotó Oldalak",
             nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
             leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
@@ -27,6 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         en: {
             navHome: "Home", navLinks: "Links", navGallery: "Gallery",
             galleryTitle: "Gallery", comingSoon: "Coming Soon...",
+            galleryCatFantasy: "Fantasy Portraits",
+            galleryCatDark: "Dark & Gothic",
+            galleryCatLandscape: "Enchanted Landscapes",
+            galleryCatCreatures: "Creatures & Beasts",
             linksTitle: "Recommended AI Image Generators",
             nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
             leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
