@@ -12,6 +12,7 @@ body { background-color: #121212; color: #e0e0e0; font-family: 'Poppins', sans-s
 #lang-switcher, header, main, footer, .chat-section, #links-section, #gallery-section { opacity: 0; animation: fadeIn 0.6s ease-out 0.2s forwards; }
 
 header { text-align: center; }
+
 #header-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; }
 #info-button { background: none; border: none; color: #888; font-size: 1.5em; cursor: pointer; transition: color 0.3s ease; }
 #info-button:hover { color: #c89eff; }
@@ -25,11 +26,23 @@ header { text-align: center; }
 header h1 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 2.5em; margin: 10px 0 5px 0; }
 header p { color: #b3b3b3; font-size: 1.1em; margin: 0; }
 
-#header-nav-container { width: 100%; margin-top: 25px; padding-top: 25px; border-top: 1px solid #a46de5; }
+/* JAVÍTOTT RÉSZ: A navigációs menü elválasztója és térköze */
+#header-nav-container {
+    width: 100%;
+    margin-top: 25px; /* Tér a logó/cím és a menü között */
+    padding-bottom: 25px; /* Tér ("lyuk") a menü és a vonal között */
+    border-bottom: 1px solid #a46de5; /* Az elválasztóvonal a menü ALATT */
+}
+/* EDDIG TART A JAVÍTÁS */
+
 #main-nav { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
 #main-nav a { color: #b3b3b3; text-decoration: none; font-weight: bold; padding: 8px 15px; border-radius: 20px; transition: all 0.3s ease; }
 #main-nav a:hover { color: #fff; background-color: #3f3f3f; }
 #main-nav a.active { color: #121212; background-color: #a46de5; }
+
+main {
+    padding-top: 30px; /* Tér a menü alatti vonal és a tartalom között */
+}
 
 .main-actions { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #444; }
 #random-button, #clear-all-button { background-color: transparent; border: 2px solid #a46de5; color: #a46de5; padding: 12px 25px; font-size: 1.1em; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
