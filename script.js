@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ÚJ: Az oldal tetejére ugrik betöltéskor
+    // JAVÍTVA: Ez a két sor biztosítja, hogy az oldal tetejére ugorjon frissítéskor
+    history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
     // === KÖZÖS RÉSZ MINDEN OLDALHOZ ===
@@ -117,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
          });
      }
 
-    // === CSAK A FŐOLDALON (index.html) SZÜKSÉGES LOGIKA ===
     if (document.getElementById('random-button')) {
     
         const defaultPrompts = {
@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const managePromptsList = document.getElementById('manage-prompts-list');
         const newPromptInput = document.getElementById('new-prompt-input');
         const addNewPromptBtn = document.getElementById('add-new-prompt-btn');
-
         const historyModal = document.getElementById('history-modal');
         const historyButton = document.getElementById('history-button');
         const historyList = document.getElementById('history-list');
@@ -162,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
-
+        
         function openManageModal(category) {
             currentManagedCategory = category;
             const categoryLabelKey = category + 'Label';
