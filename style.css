@@ -1,0 +1,141 @@
+/* Magyar komment: Alapvető beállítások és betűtípus importálása */
+body {
+    background-color: #121212; /* Sötét fekete háttér */
+    color: #e0e0e0; /* Világos szürke alapszöveg szín a jobb olvashatóságért */
+    font-family: 'Poppins', sans-serif; /* Modern, letisztult betűtípus */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Magyar komment: A teljes oldalt magába foglaló keret stílusa */
+#main-container {
+    width: 100%;
+    max-width: 900px;
+    background-color: #1e1e1e; /* Kicsit világosabb fekete a kontraszthoz */
+    border: 2px solid #a46de5; /* Halványlila keret */
+    border-radius: 15px; /* Lekerekített sarkok */
+    padding: 25px 40px;
+    box-shadow: 0 0 20px rgba(164, 109, 229, 0.3); /* Finom lila ragyogás */
+}
+
+/* Magyar komment: A fejléc (logó és címek) stílusai */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #a46de5;
+    padding-bottom: 20px;
+}
+
+#logo {
+    width: 150px; /* Logó mérete */
+    height: 150px;
+    border-radius: 50%; /* Kör alakú logó */
+    border: 3px solid #a46de5;
+}
+
+header h1 {
+    font-family: 'Pacifico', cursive; /* Díszes, "csajos" betűtípus */
+    color: #c89eff; /* Élénkebb lila a címnek */
+    font-size: 2.5em;
+    margin: 10px 0 5px 0;
+}
+
+header p {
+    color: #b3b3b3;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Magyar komment: A prompt generátor szekcióinak általános stílusa */
+.prompt-section, .final-prompt-section {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #c89eff;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px; /* Térköz a legördülő menü és a gomb között */
+}
+
+/* Magyar komment: Legördülő menük (select) stílusa */
+.prompt-select {
+    flex-grow: 1; /* A menü kitölti a rendelkezésre álló helyet */
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.prompt-select:focus {
+    outline: none;
+    border-color: #a46de5;
+}
+
+/* Magyar komment: Szövegdobozok (textarea) stílusa */
+.prompt-textarea {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    resize: vertical; /* Csak függőlegesen átméretezhető */
+}
+
+.prompt-textarea:focus {
+    outline: none;
+    border-color: #a46de5;
+}
+
+/* Magyar komment: Gombok stílusa */
+.add-button, #copy-button {
+    background-color: #a46de5;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    padding: 0 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover, #copy-button:hover {
+    background-color: #c89eff; /* Világosabb lila hover effektus */
+}
+
+/* Magyar komment: A lábléc (footer) és a benne lévő link stílusa */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #a46de5;
+}
+
+footer a {
+    color: #c89eff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff; /* Fehér szín hover esetén */
+}

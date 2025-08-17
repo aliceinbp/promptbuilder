@@ -1,13 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hu">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> Prompt Builder - Aliceinbp  </title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="main-container">
+
+        <header>
+            <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            <h1>★ Prompt Builder ★</h1>
+            <p>Prompt generator for AI images</p>
+        </header>
+
+        <main>
+            <div class="prompt-section">
+                <label for="style-select">Style:</label>
+                <div class="input-group">
+                    <select id="style-select" class="prompt-select">
+                        </select>
+                    <button class="add-button" data-target="style-text">Hozzáad</button>
+                </div>
+                <textarea id="style-text" class="prompt-textarea" rows="3" placeholder="Itt szerkesztheted a kiválasztott stílusokat..."></textarea>
+            </div>
+
+            <div class="prompt-section">
+                <label for="subject-select">Subject:</label>
+                <div class="input-group">
+                    <select id="subject-select" class="prompt-select">
+                        </select>
+                    <button class="add-button" data-target="subject-text">Hozzáad</button>
+                </div>
+                <textarea id="subject-text" class="prompt-textarea" rows="3" placeholder="Itt szerkesztheted a kiválasztott témákat..."></textarea>
+            </div>
+
+            <div class="prompt-section">
+                <label for="setting-select">Setting:</label>
+                <div class="input-group">
+                    <select id="setting-select" class="prompt-select">
+                        </select>
+                    <button class="add-button" data-target="setting-text">Hozzáad</button>
+                </div>
+                <textarea id="setting-text" class="prompt-textarea" rows="3" placeholder="Itt szerkesztheted a kiválasztott helyszíneket..."></textarea>
+            </div>
+
+            <div class="prompt-section">
+                <label for="extra-select">Extra:</label>
+                <div class="input-group">
+                    <select id="extra-select" class="prompt-select">
+                        </select>
+                    <button class="add-button" data-target="extra-text">Hozzáad</button>
+                </div>
+                <textarea id="extra-text" class="prompt-textarea" rows="3" placeholder="Itt szerkesztheted a kiválasztott extrákat..."></textarea>
+            </div>
+
+            <div class="final-prompt-section">
+                <label for="final-prompt">Végleges prompt (angolul)</label>
+                <textarea id="final-prompt" rows="6" placeholder="Az összeállított prompt itt fog megjelenni..."></textarea>
+                <button id="copy-button">Prompt másolása</button>
+            </div>
+        </main>
+
+        <footer>
+            <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's creations</a>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
