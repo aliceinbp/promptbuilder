@@ -1,8 +1,44 @@
 // Magyar komment: Várjuk meg, amíg a teljes HTML dokumentum betöltődik.
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Magyar komment: Fordítások tárolása. Könnyen bővíthető.
+    const translations = {
+        hu: {
+            styleLabel: "Stílus:",
+            subjectLabel: "Téma:",
+            settingLabel: "Helyszín:",
+            extraLabel: "Extrák:",
+            addButton: "Hozzáad",
+            stylePlaceholder: "Itt szerkesztheted a kiválasztott stílusokat...",
+            subjectPlaceholder: "Itt szerkesztheted a kiválasztott témákat...",
+            settingPlaceholder: "Itt szerkesztheted a kiválasztott helyszíneket...",
+            extraPlaceholder: "Itt szerkesztheted a kiválasztott extrákat...",
+            finalPromptLabel: "Végleges prompt (angolul)",
+            finalPromptPlaceholder: "Az összeállított prompt itt fog megjelenni...",
+            copyButton: "Prompt másolása",
+            copyButtonSuccess: "Másolva!",
+            selectDefault: "Válassz egyet a(z) {category} kategóriából..."
+        },
+        en: {
+            styleLabel: "Style:",
+            subjectLabel: "Subject:",
+            settingLabel: "Setting:",
+            extraLabel: "Extra:",
+            addButton: "Add",
+            stylePlaceholder: "You can edit the selected styles here...",
+            subjectPlaceholder: "You can edit the selected subjects here...",
+            settingPlaceholder: "You can edit the selected settings here...",
+            extraPlaceholder: "You can edit the selected extras here...",
+            finalPromptLabel: "Final prompt (English)",
+            finalPromptPlaceholder: "The combined prompt will appear here...",
+            copyButton: "Copy Prompt",
+            copyButtonSuccess: "Copied!",
+            selectDefault: "Choose an option from {category}..."
+        }
+    };
+
     // Magyar komment: Itt tároljuk az összes prompt opciót kategóriánként.
-    // Ez a struktúra könnyen bővíthető a jövőben.
+    // EZ A RÉSZ FRISSÜLT A TE LISTÁDDAL
     const prompts = {
         style: [
             "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
@@ -86,7 +122,9 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    // Magyar komment: DOM elemek kigyűjtése változókba a könnyebb elérésért.
+    let currentLanguage = 'en'; // Alapértelmezett nyelv
+
+    // Magyar komment: DOM elemek kigyűjtése változókba.
     const textareas = {
         style: document.getElementById('style-text'),
         subject: document.getElementById('subject-text'),
@@ -94,30 +132,51 @@ document.addEventListener('DOMContentLoaded', function() {
         extra: document.getElementById('extra-text')
     };
     const finalPromptTextarea = document.getElementById('final-prompt');
+    const copyButton = document.getElementById('copy-button');
 
-    // Magyar komment: Ez a funkció frissíti a végső promptot a négy szövegdoboz tartalma alapján.
+    // Magyar komment: Frissíti a végső promptot.
     function updateFinalPrompt() {
-        const style = textareas.style.value.trim();
-        const subject = textareas.subject.value.trim();
-        const setting = textareas.setting.value.trim();
-        const extra = textareas.extra.value.trim();
-
-        // Összefűzzük a részeket, de csak azokat, amik nem üresek.
-        const promptParts = [style, subject, setting, extra].filter(part => part !== "");
+        const promptParts = [textareas.style.value, textareas.subject.value, textareas.setting.value, textareas.extra.value]
+            .map(part => part.trim())
+            .filter(part => part !== "");
         finalPromptTextarea.value = promptParts.join(', ');
     }
+    
+    // Magyar komment: Lefordítja az oldalt a kiválasztott nyelvre.
+    function setLanguage(lang) {
+        currentLanguage = lang;
+        document.documentElement.lang = lang; // HTML lang attribútum frissítése
 
-    // Magyar komment: Ez a funkció feltölti a legördülő menüket (select) a prompts objektumból.
+        // Aktív gomb stílusának beállítása
+        document.getElementById('lang-hu').classList.toggle('active', lang === 'hu');
+        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+        
+        document.querySelectorAll('[data-key]').forEach(elem => {
+            const key = elem.dataset.key;
+            if (translations[lang] && translations[lang][key]) {
+                if (elem.placeholder !== undefined) {
+                    elem.placeholder = translations[lang][key];
+                } else {
+                    elem.textContent = translations[lang][key];
+                }
+            }
+        });
+        // A legördülő menüket újra kell tölteni a fordítás miatt
+        populateSelects();
+    }
+
+    // Magyar komment: Feltölti a legördülő menüket a megfelelő nyelvű szöveggel.
     function populateSelects() {
         for (const category in prompts) {
             const selectElement = document.getElementById(`${category}-select`);
-            // Hozzáadunk egy alapértelmezett, kiválaszthatatlan opciót.
+            selectElement.innerHTML = ''; // Kiürítjük a menüt
+            
             const defaultOption = document.createElement('option');
-            defaultOption.textContent = `Válassz egyet a(z) ${category} kategóriából...`;
+            const defaultText = translations[currentLanguage].selectDefault.replace('{category}', category);
+            defaultOption.textContent = defaultText;
             defaultOption.value = "";
             selectElement.appendChild(defaultOption);
 
-            // Betöltjük az összes többi opciót a listából.
             prompts[category].forEach(optionText => {
                 const option = document.createElement('option');
                 option.value = optionText;
@@ -127,49 +186,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Magyar komment: Eseménykezelőket adunk a "Hozzáad" gombokhoz.
+    // Magyar komment: Eseménykezelők a "Hozzáad" gombokhoz.
     document.querySelectorAll('.add-button').forEach(button => {
         button.addEventListener('click', function() {
-            const targetTextareaId = this.dataset.target; // A gomb 'data-target' attribútuma
+            const selectElement = this.previousElementSibling;
+            const targetTextareaId = selectElement.id.replace('-select', '-text');
             const targetTextarea = document.getElementById(targetTextareaId);
-            const selectElement = this.previousElementSibling; // A gomb melletti select elem
             const selectedValue = selectElement.value;
 
             if (selectedValue) {
-                // Ha a szövegdoboz már tartalmaz szöveget, vesszővel és szóközzel választjuk el.
-                if (targetTextarea.value.trim() !== "") {
-                    targetTextarea.value += ", " + selectedValue;
-                } else {
-                    targetTextarea.value = selectedValue;
-                }
-                // Frissítjük a végső promptot minden hozzáadás után.
+                targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
                 updateFinalPrompt();
             }
-            
-            // Visszaállítjuk a legördülő menüt az alapértelmezett opcióra.
             selectElement.selectedIndex = 0;
         });
     });
 
-    // Magyar komment: Eseménykezelőket adunk a szövegdobozokhoz.
-    // Így ha manuálisan szerkeszted a tartalmat, a végső prompt akkor is frissül.
-    for (const category in textareas) {
-        textareas[category].addEventListener('input', updateFinalPrompt);
-    }
+    // Magyar komment: Eseménykezelők a szövegdobozokhoz.
+    Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
 
     // Magyar komment: Eseménykezelő a másolás gombhoz.
-    document.getElementById('copy-button').addEventListener('click', function() {
-        finalPromptTextarea.select(); // Kijelöli a szöveget
-        document.execCommand('copy'); // Vágólapra másolja
-        // Visszajelzés a felhasználónak
-        this.textContent = 'Másolva!';
+    copyButton.addEventListener('click', function() {
+        finalPromptTextarea.select();
+        document.execCommand('copy');
+        
+        const originalText = this.textContent;
+        this.textContent = translations[currentLanguage].copyButtonSuccess;
         setTimeout(() => {
-            this.textContent = 'Prompt másolása';
+            this.textContent = originalText;
         }, 1500);
     });
 
+    // Magyar komment: Eseménykezelők a nyelvválasztó gombokhoz.
+    document.getElementById('lang-hu').addEventListener('click', (e) => {
+        e.preventDefault();
+        setLanguage('hu');
+    });
+    document.getElementById('lang-en').addEventListener('click', (e) => {
+        e.preventDefault();
+        setLanguage('en');
+    });
 
-    // Magyar komment: Az oldal betöltődésekor lefutó funkciók.
-    populateSelects();
-    updateFinalPrompt(); // Lefuttatjuk egyszer az elején is.
+    // Magyar komment: Oldal betöltésekor lefutó funkciók.
+    setLanguage(currentLanguage); // Beállítjuk az alapértelmezett nyelvet
+    updateFinalPrompt();
 });
