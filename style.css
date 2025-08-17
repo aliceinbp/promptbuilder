@@ -12,7 +12,6 @@ body { background-color: #121212; color: #e0e0e0; font-family: 'Poppins', sans-s
 #lang-switcher, header, main, footer, .chat-section, #links-section, #gallery-section { opacity: 0; animation: fadeIn 0.6s ease-out 0.2s forwards; }
 
 header { text-align: center; }
-
 #header-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; }
 #info-button { background: none; border: none; color: #888; font-size: 1.5em; cursor: pointer; transition: color 0.3s ease; }
 #info-button:hover { color: #c89eff; }
@@ -26,60 +25,16 @@ header { text-align: center; }
 header h1 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 2.5em; margin: 10px 0 5px 0; }
 header p { color: #b3b3b3; font-size: 1.1em; margin: 0; }
 
-/* JAVÍTOTT RÉSZ: A navigációs menü elválasztója és térköze */
-#header-nav-container {
-    width: 100%;
-    margin-top: 25px; /* Tér a logó/cím és a menü között */
-    padding-bottom: 25px; /* Tér ("lyuk") a menü és a vonal között */
-    border-bottom: 1px solid #a46de5; /* Az elválasztóvonal a menü ALATT */
-}
-/* EDDIG TART A JAVÍTÁS */
-
+#header-nav-container { width: 100%; margin-top: 25px; padding-bottom: 25px; border-bottom: 1px solid #a46de5; }
 #main-nav { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
 #main-nav a { color: #b3b3b3; text-decoration: none; font-weight: bold; padding: 8px 15px; border-radius: 20px; transition: all 0.3s ease; }
 #main-nav a:hover { color: #fff; background-color: #3f3f3f; }
 #main-nav a.active { color: #121212; background-color: #a46de5; }
 
-main {
-    padding-top: 30px; /* Tér a menü alatti vonal és a tartalom között */
-}
+main { padding-top: 30px; }
 
-.main-actions { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #444; }
-#random-button, #clear-all-button { background-color: transparent; border: 2px solid #a46de5; color: #a46de5; padding: 12px 25px; font-size: 1.1em; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
-#random-button:hover, #clear-all-button:hover { background-color: #a46de5; color: #121212; box-shadow: 0 0 15px rgba(164, 109, 229, 0.5); transform: translateY(-3px); }
-#clear-all-button { border-color: #555; color: #888; }
-#clear-all-button:hover { background-color: #555; color: #fff; box-shadow: 0 0 15px rgba(100,100,100,0.5); }
-
-.prompt-section, .final-prompt-section, .negative-prompt-section { margin-bottom: 25px; }
-
-label { display: flex; align-items: center; margin-bottom: 8px; color: #c89eff; font-weight: bold; font-size: 1.1em; }
-label > i:first-child { margin-right: 10px; color: #be80ff; font-size: 0.9em; transition: transform 0.2s ease; }
-label:hover > i:first-child { transform: scale(1.2); }
-.manage-prompts-btn { margin-left: auto; font-size: 1em; color: #555; cursor: pointer; transition: all 0.2s ease; }
-.manage-prompts-btn:hover { color: #c89eff; transform: rotate(90deg) scale(1.2); }
-
-.input-group { display: flex; gap: 10px; }
-.prompt-select { flex-grow: 1; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; cursor: pointer; min-width: 0; }
-.prompt-textarea, #negative-prompt { width: 100%; margin-top: 10px; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; resize: vertical; }
-#final-prompt { background-color: #252525; }
-
-.button-group { margin-top: 10px; display: flex; gap: 10px; }
-#save-prompt-button, .add-button, #copy-button, #translate-button { background-color: #a46de5; color: #121212; border: none; border-radius: 5px; padding: 10px 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease-out; }
-#save-prompt-button { background-color: transparent; border: 1px solid #a46de5; color: #a46de5; }
-.button-group > button { flex-grow: 1; }
-#save-prompt-button:hover, .add-button:hover, #copy-button:hover, #translate-button:hover { background-color: #c89eff; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); color: #121212; }
-
-#saved-prompts-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; }
-#saved-prompts-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-#saved-prompts-list { display: flex; flex-direction: column; gap: 10px; }
-.saved-prompt-item { background-color: #2d2d2d; padding: 10px 15px; border-radius: 5px; display: flex; align-items: center; gap: 15px; border-left: 3px solid #a46de5; transition: background-color 0.2s ease; }
-.saved-prompt-item:hover { background-color: #3f3f3f; }
-.saved-prompt-text { flex-grow: 1; text-align: left; font-size: 0.9em; color: #e0e0e0; }
-.saved-prompt-actions button { background: none; border: none; color: #888; font-size: 1.1em; cursor: pointer; transition: color 0.2s ease; }
-.saved-prompt-actions button:hover { color: #c89eff; }
-
-#links-section, .chat-section, #gallery-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; text-align: center; }
-#links-section h2, .chat-section h2, #gallery-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; }
+#links-section, #gallery-section { text-align: center; }
+#links-section h2, #gallery-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; }
 .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left; }
 .link-card { background-color: #2d2d2d; border-radius: 8px; padding: 20px; border: 1px solid #444; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .link-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(164, 109, 229, 0.2); border-color: #a46de5; }
@@ -88,7 +43,39 @@ label:hover > i:first-child { transform: scale(1.2); }
 .link-card a { display: block; background-color: #a46de5; color: #121212; text-decoration: none; padding: 10px; border-radius: 5px; font-weight: bold; text-align: center; transition: background-color 0.3s ease; }
 .link-card a:hover { background-color: #c89eff; }
 
-.coming-soon { font-size: 1.5em; color: #888; font-style: italic; }
+/* ÚJ: Galéria stílusok */
+.gallery-category-title {
+    font-family: 'Pacifico', cursive;
+    color: #c89eff;
+    font-size: 1.8em;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #444;
+}
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.gallery-item {
+    padding: 8px;
+    border: 2px solid #a46de5;
+    background-color: #121212;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(164, 109, 229, 0.2);
+    transition: transform 0.3s ease;
+}
+.gallery-item:hover {
+    transform: scale(1.03);
+}
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+/* EDDIG tartanak az ÚJ stílusok */
 
 footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #a46de5; display: flex; justify-content: space-between; align-items: center; }
 .footer-item { display: flex; align-items: center; justify-content: center; flex: 1; }
@@ -101,24 +88,15 @@ footer a i { margin-right: 8px; color: #be80ff; }
 
 .hidden { display: none !important; }
 
-#modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; animation: fadeIn 0.3s ease-out; }
-.modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1e1e1e; border: 1px solid #a46de5; border-radius: 10px; padding: 30px; z-index: 1001; width: 90%; max-width: 500px; box-shadow: 0 0 25px rgba(164, 109, 229, 0.4); animation: fadeIn 0.3s ease-out; }
+#modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; }
+.modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1e1e1e; border: 1px solid #a46de5; border-radius: 10px; padding: 30px; z-index: 1001; width: 90%; max-width: 500px; box-shadow: 0 0 25px rgba(164, 109, 229, 0.4); }
 .modal h2 { font-family: 'Pacifico', cursive; color: #c89eff; margin-top: 0; }
 .modal p { color: #e0e0e0; line-height: 1.6; }
 .close-modal-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #888; font-size: 1.5em; cursor: pointer; transition: color 0.2s ease; }
 .close-modal-btn:hover { color: #fff; }
 
-#manage-prompts-list { max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 10px; }
-.manage-list-item { display: flex; justify-content: space-between; align-items: center; background-color: #2d2d2d; padding: 8px 12px; border-radius: 5px; margin-bottom: 8px; }
-.manage-list-item button { background: none; border: none; color: #888; cursor: pointer; transition: color 0.2s ease, transform 0.2s ease; }
-.manage-list-item button:hover { color: #ff6b6b; transform: scale(1.2); }
-.add-new-prompt-form { display: flex; gap: 10px; }
-#new-prompt-input { flex-grow: 1; background-color: #2d2d2d; border: 1px solid #555; color: #fff; padding: 10px; border-radius: 5px; }
-#add-new-prompt-btn { background-color: #a46de5; border: none; color: #121212; font-weight: bold; padding: 0 20px; border-radius: 5px; cursor: pointer; }
-
 @media (max-width: 768px) {
     #main-container { padding: 20px; }
-    .main-actions { flex-direction: column; }
     footer { flex-direction: column; gap: 20px; }
     .footer-item, .footer-item:first-child, .footer-item:last-child { justify-content: center; width: 100%; }
 }
