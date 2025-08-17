@@ -1,29 +1,18 @@
 import React, { useMemo, useState } from "react";
 import myLogo from './assets/myLogo.jpg';
 
-// ⚙️ TÉMA – minden szín/keret itt állítható VS Code-ban
+// ⚙️ Téma – itt tudsz mindent átírni VS Code-ban
 const THEME = {
   bg: "#0a0a0a",
   text: "#d8b4fe",
   card: "#141018",
-  border: "#a855f7",
+  border: "#5b21b6",
   accent: "#a855f7",
   accentSoft: "#c084fc",
-  frame: "barbed",
-  logoSize: 200,
 };
 
-// Szögesdrót SVG
-function encodeSVG(svg) {
-  return svg.replace(/\n/g, '').replace(/\t/g, '').replace(/\"/g, "'").replace(/#/g, '%23');
-}
-function makeBarbedDataUrl(color = THEME.border) {
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><defs><pattern id='p' width='64' height='64' patternUnits='userSpaceOnUse'><path d='M0 32H64' stroke='${color}' stroke-width='2' /><path d='M16 32l6-6M16 32l6 6M48 32l6-6M48 32l6 6' stroke='${color}' stroke-width='2' /><path d='M32 0V64' stroke='${color}' stroke-width='2' /><path d='M32 16l6-6M32 16l-6-6M32 48l6 6M32 48l-6 6' stroke='${color}' stroke-width='2' /></pattern></defs><rect x='0' y='0' width='64' height='64' fill='url(#p)'/></svg>`;
-  return `url("data:image/svg+xml;utf8,${encodeSVG(svg)}")`;
-}
-
 export default function PromptBuilderDark() {
-  // Opciók
+  // 🔽 Legördülő listák (TELJES, a kéréseid szerint)
   const styleOptions = [
     "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
     "Albert Bierstadt + Bob Ross, fenséges tájképek, buja részletekkel",
@@ -79,7 +68,6 @@ export default function PromptBuilderDark() {
     "a futuristic, elegant astronaut in a gilded helmet",
     "steampunk robot walking through a field of flowers",
     "a mystical forest with glowing mushrooms and fairy dust",
-    "a talking cat sipping steaming tea in front of a rain-soaked window",
     "an underwater kingdom filled with bioluminescence",
     "an ice dragon enthroned on a crystal mountain with the northern lights in the background",
     "a medieval market full of adventurers and strange creatures",
@@ -136,61 +124,142 @@ export default function PromptBuilderDark() {
     "woodcut art, high contrast, rustic feel",
     "glitch art, corrupted image effect, digital noise"
   ];
+
+  // Állapotok
   const [style, setStyle] = useState("");
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
   const [extra, setExtra] = useState("");
+  const finalPrompt = useMemo(
+    () => [style, subject, setting, extra].filter(Boolean).join("\n"),
+    [style, subject, setting, extra]
+  );
 
-  const finalPrompt = useMemo(() => [style, subject, setting, extra].filter(Boolean).join("\n"), [style, subject, setting, extra]);
-
+  // Segédfüggvények
   const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
-  const shuffleAll = () => { setStyle(pickRandom(styleOptions)); setSubject(pickRandom(subjectOptions)); setSetting(pickRandom(settingOptions)); setExtra(pickRandom(extraOptions)); };
-  const clearAll = () => { setStyle(""); setSubject(""); setSetting(""); setExtra(""); };
-  const copy = async () => { try { await navigator.clipboard.writeText(finalPrompt); } catch { const ta=document.createElement("textarea"); ta.value=finalPrompt; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);} };
+  const shuffleAll = () => {
+    setStyle(pickRandom(styleOptions));
+    setSubject(pickRandom(subjectOptions));
+    setSetting(pickRandom(settingOptions));
+    setExtra(pickRandom(extraOptions));
+  };
+  const clearAll = () => {
+    setStyle("");
+    setSubject("");
+    setSetting("");
+    setExtra("");
+  };
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(finalPrompt);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = finalPrompt;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+  };
 
   const Card = ({ label, children }) => (
-    <section className="rounded-2xl shadow-md p-4 md:p-5 backdrop-blur-sm border" style={{ background: THEME.card, borderColor: THEME.border }}>
-      <h2 className="text-sm font-semibold mb-2 tracking-wide" style={{ color: THEME.text }}>{label}</h2>
+    <section
+      className="rounded-2xl shadow-md p-4 md:p-5 backdrop-blur-sm border"
+      style={{ background: THEME.card, borderColor: THEME.border }}
+    >
+      <h2 className="text-sm font-semibold mb-2 tracking-wide" style={{ color: THEME.text }}>
+        {label}
+      </h2>
       {children}
     </section>
   );
 
   const Select = ({ value, onChange, options, placeholder }) => (
     <div className="relative">
-      <select className="appearance-none w-full h-8 text-xs md:text-sm rounded-xl pr-8 pl-3" style={{background: THEME.bg, color: THEME.text, border:`1px solid ${THEME.border}`}} value={value} onChange={(e)=>onChange(e.target.value)}>
+      <select
+        aria-label={placeholder}
+        className="appearance-none w-full h-8 text-xs md:text-sm rounded-xl pr-8 pl-3"
+        style={{
+          background: THEME.bg,
+          color: THEME.text,
+          border: `1px solid ${THEME.border}`,
+        }}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      >
         <option value="">{placeholder}</option>
-        {options.map((opt,i)=>(<option key={i} value={opt}>{opt}</option>))}
+        {options.map((opt, i) => (
+          <option key={i} value={opt}>
+            {opt}
+          </option>
+        ))}
       </select>
-      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-xs" style={{color:THEME.accentSoft}}>▾</div>
+      <div
+        className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-xs"
+        style={{ color: THEME.accentSoft }}
+      >
+        ▾
+      </div>
     </div>
   );
 
   const Button = ({ children, onClick, variant = "ghost" }) => (
-    <button onClick={onClick} className="px-3 py-1.5 rounded-xl text-xs md:text-sm transition" style={{ color: THEME.text, background: variant==="solid"?THEME.accent:THEME.bg, border:`1px solid ${THEME.border}` }}>{children}</button>
+    <button
+      onClick={onClick}
+      className="px-3 py-1.5 rounded-xl text-xs md:text-sm transition"
+      style={{
+        color: THEME.text,
+        background: variant === "solid" ? THEME.accent : THEME.bg,
+        border: `1px solid ${THEME.border}`,
+      }}
+    >
+      {children}
+    </button>
   );
 
-  const frameStyle = THEME.frame==='barbed'?{borderWidth:'16px',borderStyle:'solid',borderImage:`${makeBarbedDataUrl(THEME.border)} 32 round`,background:THEME.card,margin:'20px',borderRadius:'20px'}:{borderWidth:'4px',borderStyle:'dashed',borderColor:THEME.border,background:THEME.card,margin:'20px',borderRadius:'20px'};
+  const frameStyle = {
+    borderColor: THEME.border,
+    borderStyle: "dashed",
+    background: THEME.card,
+  };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center" style={{ color: THEME.text, background: THEME.bg }}>
-      <div aria-hidden className="fixed inset-0 -z-10 opacity-50" style={{background:"radial-gradient(800px 400px at 50% -10%, rgba(168,85,247,0.12), transparent), radial-gradient(600px 300px at 100% 10%, rgba(192,132,252,0.10), transparent)"}}/>
+    <div
+      className="min-h-screen w-full flex flex-col items-center"
+      style={{ color: THEME.text, background: THEME.bg }}
+    >
+      {/* Felső lila derengés */}
+      <div
+        aria-hidden
+        className="fixed inset-0 -z-10 opacity-50"
+        style={{
+          background:
+            "radial-gradient(800px 400px at 50% -10%, rgba(168,85,247,0.12), transparent), radial-gradient(600px 300px at 100% 10%, rgba(192,132,252,0.10), transparent)",
+        }}
+      />
+
       <header className="w-full border-b" style={{ borderColor: THEME.border }}>
-        <div className="mx-auto max-w-5xl px-6 py-4">
-          <div className="grid grid-cols-2 items-center gap-4">
-            <div className="flex items-center justify-center">
-              <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
-                <img src={myLogo} alt="Logo" className="w-full h-full" />
-              </div>
-            </div>
-            <div className="flex flex-col justify-center">
-              <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
-              <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
-            </div>
+        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-4">
+          <div
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center"
+            style={{ border: `2px solid ${THEME.border}` }}
+          >
+            <img src={myLogo} alt="Logo" className="rounded-full" />
+          </div>
+          <div>
+            <h1 className="text-lg md:text-xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+            <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
           </div>
         </div>
       </header>
+
       <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
-        <div className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8" style={frameStyle}>
+        {/* Fő keret */}
+        <div
+          className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8 border-4"
+          style={frameStyle}
+        >
+          {/* Vezérlők */}
           <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
             <div className="flex gap-2 md:gap-3">
               <Button onClick={shuffleAll} variant="solid">Shuffle All</Button>
@@ -199,86 +268,98 @@ export default function PromptBuilderDark() {
             </div>
             <div className="text-xs opacity-80">Chrome-kompatibilis • reszponzív</div>
           </div>
+
+          {/* Kártyák */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Card label="🎨 Style">
               <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
               <div className="flex gap-2 mt-2">
-                <Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button>
+                <Button onClick={() => setStyle(pickRandom(styleOptions))}>Random</Button>
               </div>
               <textarea
                 className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
                 rows={2}
                 value={style}
                 onChange={(e) => setStyle(e.target.value)}
+                placeholder="Vagy írd ide a saját stílusodat..."
                 style={{
                   background: THEME.bg,
                   color: THEME.text,
                   border:`1px solid ${THEME.border}`,
-                  width: "300px",
-                  height: "100px"
                 }}
               />
             </Card>
+
             <Card label="👤 Subject">
               <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
               <div className="flex gap-2 mt-2">
-                <Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button>
+                <Button onClick={() => setSubject(pickRandom(subjectOptions))}>Random</Button>
               </div>
               <textarea
                 className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
                 rows={2}
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
+                placeholder="Vagy írd ide a saját témádat..."
                 style={{
                   background: THEME.bg,
                   color: THEME.text,
                   border:`1px solid ${THEME.border}`,
-                  width: "300px",
-                  height: "100px"
                 }}
               />
             </Card>
+
             <Card label="🏞 Setting">
               <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
               <div className="flex gap-2 mt-2">
-                <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
+                <Button onClick={() => setSetting(pickRandom(settingOptions))}>Random</Button>
               </div>
               <textarea
                 className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
                 rows={2}
                 value={setting}
                 onChange={(e) => setSetting(e.target.value)}
+                placeholder="Vagy írd ide a saját helyszínedet..."
                 style={{
                   background: THEME.bg,
                   color: THEME.text,
                   border:`1px solid ${THEME.border}`,
-                  width: "300px",
-                  height: "100px"
                 }}
               />
             </Card>
+
             <Card label="✨ Extra">
               <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
               <div className="flex gap-2 mt-2">
-                <Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button>
+                <Button onClick={() => setExtra(pickRandom(extraOptions))}>Random</Button>
               </div>
               <textarea
                 className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
                 rows={2}
                 value={extra}
                 onChange={(e) => setExtra(e.target.value)}
+                placeholder="Vagy írd ide a saját extrádat..."
                 style={{
                   background: THEME.bg,
                   color: THEME.text,
                   border:`1px solid ${THEME.border}`,
-                  width: "300px",
-                  height: "100px"
                 }}
               />
             </Card>
           </div>
+
           <Card label="📝 Final Prompt">
-            <textarea className="w-full rounded-xl p-3 text-xs md:text-sm" rows={8} readOnly style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}} value={finalPrompt}/>
+            <textarea
+              className="w-full rounded-xl p-3 text-xs md:text-sm"
+              rows={8}
+              readOnly
+              style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border:`1px solid ${THEME.border}`,
+              }}
+              value={finalPrompt}
+            />
           </Card>
         </div>
       </main>
