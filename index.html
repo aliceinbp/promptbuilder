@@ -26,6 +26,11 @@
         </header>
 
         <main>
+
+            <div class="random-prompt-section">
+                <button id="random-button"><i class="fa-solid fa-dice"></i> <span data-key="randomButton">Véletlen Prompt</span></button>
+            </div>
+
             <div class="prompt-section">
                 <label for="style-select"><i class="fa-solid fa-palette"></i> <span data-key="styleLabel">Style:</span></label>
                 <div class="input-group">
@@ -71,23 +76,20 @@
                 </div>
             </div>
         </main>
+        
+        <section class="chat-section">
+            <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
+            <script id="cid0020000416433965702" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 250px;height: 200px;">{"handle":"aliceinbpchat","arch":"js","styles":{"a":"1e1e1e","b":100,"c":"e0e0e0","d":"e0e0e0","k":"a46de5","l":"a46de5","m":"a46de5","n":"FFFFFF","p":"10","q":"252525","r":100}}</script>
+        </section>
 
         <footer>
-            <div class="footer-item" id="chat-wrapper">
-                <script id="cid0020000416433965702" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 250px;height: 200px;">{"handle":"aliceinbpchat","arch":"js","styles":{"a":"1e1e1e","b":100,"c":"e0e0e0","d":"e0e0e0","k":"a46de5","l":"a46de5","m":"a46de5","n":"FFFFFF","p":"10","q":"252525","r":100}}</script>
-            </div>
-            
             <div class="footer-item">
                 <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
             </div>
-
-            <div class="footer-item" id="visitor-counter-wrapper">
-                <div id="visitor-counter">
-                    <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
-                </div>
+            <div class="footer-item" id="visitor-counter">
+                <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
             </div>
         </footer>
-
     </div>
 
     <script src="script.js"></script>

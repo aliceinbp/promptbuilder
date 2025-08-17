@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const translations = {
         hu: {
+            randomButton: "Véletlen Prompt", // ÚJ
             styleLabel: "Stílus:",
             subjectLabel: "Téma:",
             settingLabel: "Helyszín:",
@@ -16,9 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
             copyButton: "Prompt másolása",
             copyButtonSuccess: "Másolva!",
             translateButton: "Fordítás Angolra",
+            chatTitle: "Vendégkönyv / Chat",
             selectDefault: "Válassz egyet a(z) {category} kategóriából..."
         },
         en: {
+            randomButton: "Random Prompt", // ÚJ
             styleLabel: "Style:",
             subjectLabel: "Subject:",
             settingLabel: "Setting:",
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             copyButton: "Copy Prompt",
             copyButtonSuccess: "Copied!",
             translateButton: "Translate to English",
+            chatTitle: "Guestbook / Chat",
             selectDefault: "Choose an option from {category}..."
         }
     };
@@ -57,6 +61,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const finalPromptTextarea = document.getElementById('final-prompt');
     const copyButton = document.getElementById('copy-button');
     const translateButton = document.getElementById('translate-button');
+    const randomButton = document.getElementById('random-button'); // ÚJ
+
+    // ÚJ: Funkció a véletlen prompt generálásához
+    function generateRandomPrompt() {
+        const langPrompts = prompts[currentLanguage];
+        
+        // Segédfüggvény egy véletlen elem kiválasztásához egy listából
+        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+        // Véletlen elemek kiválasztása és a szövegdobozok frissítése
+        textareas.style.value = getRandomItem(langPrompts.style);
+        textareas.subject.value = getRandomItem(langPrompts.subject);
+        textareas.setting.value = getRandomItem(langPrompts.setting);
+        textareas.extra.value = getRandomItem(langPrompts.extra);
+
+        // A végső prompt frissítése
+        updateFinalPrompt();
+    }
 
     function updateFinalPrompt() {
         const promptParts = [textareas.style.value, textareas.subject.value, textareas.setting.value, textareas.extra.value].map(part => part.trim()).filter(part => part !== "");
@@ -68,12 +90,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.lang = lang;
         document.getElementById('lang-hu').classList.toggle('active', lang === 'hu');
         document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-        
         translateButton.classList.toggle('hidden', lang !== 'hu');
-
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
-            const target = elem.tagName === 'SPAN' ? elem : elem; // Find the span if it exists
+            const target = elem.tagName === 'SPAN' ? elem : elem;
             if (translations[lang] && translations[lang][key]) {
                 if (target.placeholder !== undefined) {
                     target.placeholder = translations[lang][key];
@@ -90,13 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectElement = document.getElementById(`${category}-select`);
             if (selectElement) {
                 selectElement.innerHTML = '';
-                
                 const defaultOption = document.createElement('option');
                 let defaultText = translations[currentLanguage].selectDefault.replace('{category}', category);
                 defaultOption.textContent = defaultText;
                 defaultOption.value = "";
                 selectElement.appendChild(defaultOption);
-
                 prompts[currentLanguage][category].forEach(optionText => {
                     const option = document.createElement('option');
                     option.value = optionText;
@@ -113,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetTextareaId = selectElement.id.replace('-select', '-text');
             const targetTextarea = document.getElementById(targetTextareaId);
             const selectedValue = selectElement.value;
-
             if (selectedValue) {
                 targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
                 updateFinalPrompt();
@@ -127,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
     copyButton.addEventListener('click', function() {
         finalPromptTextarea.select();
         document.execCommand('copy');
-        
         const originalText = this.textContent;
         this.textContent = translations[currentLanguage].copyButtonSuccess;
         setTimeout(() => {
@@ -142,6 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`;
         window.open(translateUrl, '_blank');
     });
+
+    // ÚJ: Eseményfigyelő a véletlen gombhoz
+    randomButton.addEventListener('click', generateRandomPrompt);
 
     document.getElementById('lang-hu').addEventListener('click', (e) => {
         e.preventDefault();
