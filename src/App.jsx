@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ TÉMA – minden szín/keret itt állítható VS Code-ban
@@ -21,27 +21,6 @@ function makeBarbedDataUrl(color = THEME.border) {
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><defs><pattern id='p' width='64' height='64' patternUnits='userSpaceOnUse'><path d='M0 32H64' stroke='${color}' stroke-width='2' /><path d='M16 32l6-6M16 32l6 6M48 32l6-6M48 32l6 6' stroke='${color}' stroke-width='2' /><path d='M32 0V64' stroke='${color}' stroke-width='2' /><path d='M32 16l6-6M32 16l-6-6M32 48l6 6M32 48l-6 6' stroke='${color}' stroke-width='2' /></pattern></defs><rect x='0' y='0' width='64' height='64' fill='url(#p)'/></svg>`;
   return `url("data:image/svg+xml;utf8,${encodeSVG(svg)}")`;
 }
-
-// A ControlledTextarea komponenst kihelyeztük a fő funkción kívülre.
-const ControlledTextarea = ({ value, onChange, placeholder, style }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.value = value;
-    }
-  }, [value]);
-
-  return (
-    <textarea
-      ref={ref}
-      className="rounded-xl p-3 text-xs md:text-sm mt-3"
-      style={style}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-    />
-  );
-};
 
 export default function PromptBuilderDark() {
   // Opciók
@@ -157,7 +136,6 @@ export default function PromptBuilderDark() {
     "woodcut art, high contrast, rustic feel",
     "glitch art, corrupted image effect, digital noise"
   ];
-
   const [style, setStyle] = useState("");
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
@@ -224,47 +202,79 @@ export default function PromptBuilderDark() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Card label="🎨 Style">
               <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
-              <div className="flex gap-2"><Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button></div>
-              <ControlledTextarea value={style} onChange={setStyle} placeholder="Vagy írd ide a saját stílusodat..." style={{
-                background: THEME.bg,
-                color: THEME.text,
-                border:`1px solid ${THEME.border}`,
-                width: "300px",
-                height: "100px"
-              }}/>
+              <div className="flex gap-2 mt-2">
+                <Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button>
+              </div>
+              <textarea
+                className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+                rows={2}
+                value={style}
+                onChange={(e) => setStyle(e.target.value)}
+                style={{
+                  background: THEME.bg,
+                  color: THEME.text,
+                  border:`1px solid ${THEME.border}`,
+                  width: "300px",
+                  height: "100px"
+                }}
+              />
             </Card>
             <Card label="👤 Subject">
               <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
-              <div className="flex gap-2"><Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button></div>
-              <ControlledTextarea value={subject} onChange={setSubject} placeholder="Vagy írd ide a saját témádat..." style={{
-                background: THEME.bg,
-                color: THEME.text,
-                border:`1px solid ${THEME.border}`,
-                width: "300px",
-                height: "100px"
-              }}/>
+              <div className="flex gap-2 mt-2">
+                <Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button>
+              </div>
+              <textarea
+                className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+                rows={2}
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                style={{
+                  background: THEME.bg,
+                  color: THEME.text,
+                  border:`1px solid ${THEME.border}`,
+                  width: "300px",
+                  height: "100px"
+                }}
+              />
             </Card>
             <Card label="🏞 Setting">
               <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
-              <div className="flex gap-2"><Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button></div>
-              <ControlledTextarea value={setting} onChange={setSetting} placeholder="Vagy írd ide a saját helyszínedet..." style={{
-                background: THEME.bg,
-                color: THEME.text,
-                border:`1px solid ${THEME.border}`,
-                width: "300px",
-                height: "100px"
-              }}/>
+              <div className="flex gap-2 mt-2">
+                <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
+              </div>
+              <textarea
+                className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+                rows={2}
+                value={setting}
+                onChange={(e) => setSetting(e.target.value)}
+                style={{
+                  background: THEME.bg,
+                  color: THEME.text,
+                  border:`1px solid ${THEME.border}`,
+                  width: "300px",
+                  height: "100px"
+                }}
+              />
             </Card>
             <Card label="✨ Extra">
               <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
-              <div className="flex gap-2"><Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button></div>
-              <ControlledTextarea value={extra} onChange={setExtra} placeholder="Vagy írd ide a saját extrádat..." style={{
-                background: THEME.bg,
-                color: THEME.text,
-                border:`1px solid ${THEME.border}`,
-                width: "300px",
-                height: "100px"
-              }}/>
+              <div className="flex gap-2 mt-2">
+                <Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button>
+              </div>
+              <textarea
+                className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+                rows={2}
+                value={extra}
+                onChange={(e) => setExtra(e.target.value)}
+                style={{
+                  background: THEME.bg,
+                  color: THEME.text,
+                  border:`1px solid ${THEME.border}`,
+                  width: "300px",
+                  height: "100px"
+                }}
+              />
             </Card>
           </div>
           <Card label="📝 Final Prompt">
