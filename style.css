@@ -33,6 +33,7 @@ header p { color: #b3b3b3; font-size: 1.1em; margin: 0; }
 
 main { padding-top: 30px; }
 
+.artist-subtitle { font-style: italic; color: #b3b3b3; margin-top: -10px; margin-bottom: 30px; font-size: 1.1em; }
 .main-actions { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #444; }
 #random-button, #clear-all-button { background-color: transparent; border: 2px solid #a46de5; color: #a46de5; padding: 12px 25px; font-size: 1.1em; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
 #random-button:hover, #clear-all-button:hover { background-color: #a46de5; color: #121212; box-shadow: 0 0 15px rgba(164, 109, 229, 0.5); transform: translateY(-3px); }
