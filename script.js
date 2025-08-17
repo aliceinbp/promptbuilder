@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // ÚJ: Az oldal tetejére ugrik betöltéskor
+    window.scrollTo(0, 0);
+
+    // === KÖZÖS RÉSZ MINDEN OLDALHOZ ===
+
     const translations = {
         hu: {
             navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria",
@@ -81,6 +86,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof populateSelects === 'function') {
             populateSelects();
         }
+         if (typeof renderSavedPrompts === 'function') {
+            renderSavedPrompts();
+        }
     }
 
     const langHu = document.getElementById('lang-hu');
@@ -110,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
      }
 
     // === CSAK A FŐOLDALON (index.html) SZÜKSÉGES LOGIKA ===
-    // Ezzel a feltétellel a kód nem fut hibára a többi oldalon.
     if (document.getElementById('random-button')) {
     
         const defaultPrompts = {
@@ -145,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const newPromptInput = document.getElementById('new-prompt-input');
         const addNewPromptBtn = document.getElementById('add-new-prompt-btn');
 
-        // Előzmények Funkció
         const historyModal = document.getElementById('history-modal');
         const historyButton = document.getElementById('history-button');
         const historyList = document.getElementById('history-list');
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
-        
+
         function openManageModal(category) {
             currentManagedCategory = category;
             const categoryLabelKey = category + 'Label';
@@ -251,9 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function saveToHistory(prompt) {
             if (!prompt || prompt === promptHistory[0]) return;
-            promptHistory.unshift(prompt); // Az elejére teszi az újat
+            promptHistory.unshift(prompt);
             if (promptHistory.length > 15) {
-                promptHistory.pop(); // A legrégebbit eltávolítja
+                promptHistory.pop();
             }
         }
 
@@ -279,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clearTimeout(historyTimeout);
             historyTimeout = setTimeout(() => {
                 saveToHistory(finalPrompt);
-            }, 1500); // 1.5 másodperc várakozás után ment az előzményekbe
+            }, 1500);
         }
 
         function getCombinedPrompts(lang) {
@@ -339,18 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         translateButton.addEventListener('click', function() { const promptText = finalPromptTextarea.value; if (promptText.trim() === '') return; const encodedText = encodeURIComponent(promptText); const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`; window.open(translateUrl, '_blank'); });
-        
         historyButton.addEventListener('click', () => { renderHistory(); openModal(historyModal); });
         closeHistoryModalBtn.addEventListener('click', () => { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); });
-        historyList.addEventListener('click', (e) => {
-            if (e.target.classList.contains('history-item')) {
-                finalPromptTextarea.value = e.target.textContent;
-                updateFinalPrompt(); // Hogy a history-ba ne kerüljön be újra
-                overlay.classList.add('hidden');
-                historyModal.classList.add('hidden');
-            }
-        });
-
+        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; updateFinalPrompt(); overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
+        
         renderSavedPrompts();
         updateFinalPrompt();
     }
