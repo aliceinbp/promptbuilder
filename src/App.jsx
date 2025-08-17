@@ -1,9 +1,7 @@
 import React, { useMemo, useState } from "react";
 import myLogo from './assets/myLogo.jpg';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-// ⚙️ TÉMA: Minden szín, keret és méret itt állítható
+// ⚙️ TÉMA: Minden szín, keret és méret itt állítható a könnyű szerkeszthetőségért
 const THEME = {
   bg: "#0a0a0a", // Teljes háttér (fekete)
   text: "#d8b4fe", // Halványlila szöveg
@@ -12,11 +10,11 @@ const THEME = {
   accent: "#a855f7", // Gombok, kiemelések
   accentSoft: "#c084fc", // Hover/fénylés
   logoSize: "200px", // A logó mérete
-  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace", // Betűtípus, ami a 'csajos' hangulathoz passzol
+  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace", // Betűtípus
 };
 
 export default function PromptBuilder() {
-  // 🔽 Adatforrások a legördülő menükhöz
+  // 🔽 Adatforrások a legördülő menükhöz (a te általad megadott adatok)
   const styleOptions = [
     "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
     "Albert Bierstadt + Bob Ross, fenséges tájképek, buja részletekkel",
@@ -137,6 +135,7 @@ export default function PromptBuilder() {
   const [extra, setExtra] = useState("");
 
   // useMemo hook a végső prompt automatikus frissítésére
+  // Ez a kód felelős az összes doboz tartalmának egybegyúrásáért
   const finalPrompt = useMemo(
     () => [style, subject, setting, extra].filter(Boolean).join("\n"),
     [style, subject, setting, extra]
@@ -169,7 +168,7 @@ export default function PromptBuilder() {
     }
   };
 
-  // Komponensek
+  // Komponens a kártyákhoz
   const Card = ({ label, children }) => (
     <section
       className="rounded-2xl shadow-md p-4 md:p-5 backdrop-blur-sm border"
@@ -182,6 +181,7 @@ export default function PromptBuilder() {
     </section>
   );
 
+  // Komponens a legördülő menühöz
   const Select = ({ value, onChange, options, placeholder }) => (
     <div className="relative">
       <select
@@ -211,6 +211,7 @@ export default function PromptBuilder() {
     </div>
   );
 
+  // Komponens a gombokhoz
   const Button = ({ children, onClick, variant = "ghost" }) => (
     <button
       onClick={onClick}
@@ -243,13 +244,11 @@ export default function PromptBuilder() {
       {/* Fejléc a logóval és a címmel */}
       <header className="w-full border-b" style={{ borderColor: THEME.border }}>
         <div className="mx-auto max-w-5xl px-6 py-4">
-          <div className="grid grid-cols-2 items-center gap-4">
-            <div className="flex items-center justify-center">
-              <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
-                <img src={myLogo} alt="Logo" className="w-full h-full" />
-              </div>
+          <div className="flex flex-col items-center gap-4">
+            <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+              <img src={myLogo} alt="Logo" className="w-full h-full" />
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="text-center">
               <h1 className="text-xl md:text-2xl font-semibold tracking-widest" style={{fontFamily: THEME.font}}>★ Prompt Builder ★</h1>
               <p className="text-xs md:text-sm opacity-90" style={{fontFamily: THEME.font}}>Prompt generator for AI images</p>
             </div>
@@ -361,7 +360,8 @@ export default function PromptBuilder() {
             <textarea
               className="w-full rounded-xl p-3 text-xs md:text-sm"
               rows={8}
-              readOnly
+              readOnly={false}
+              onChange={(e) => setFinalPrompt(e.target.value)}
               style={{
                 background: THEME.bg,
                 color: THEME.text,
