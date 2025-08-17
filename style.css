@@ -176,14 +176,39 @@ label i {
     background-color: #c89eff;
 }
 
+/* MÓDOSÍTOTT LÁBLÉC STÍLUS */
 footer {
-    margin-top: 30px;
+    margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #a46de5;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px; /* Térköz az elemek között */
 }
+
+.footer-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Bal oldali elem (chat) */
+.footer-item:first-child {
+    justify-content: flex-start;
+    flex: 1;
+}
+/* Középső elem (link) */
+.footer-item:nth-child(2) {
+    justify-content: center;
+    flex: 1;
+    white-space: nowrap; /* Megakadályozza, hogy a link szövege sortörjön */
+}
+/* Jobb oldali elem (számláló) */
+.footer-item:last-child {
+    justify-content: flex-end;
+    flex: 1;
+}
+
 
 footer a {
     color: #c89eff;
