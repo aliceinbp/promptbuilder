@@ -9,6 +9,7 @@ const THEME = {
   border: "#5b21b6",
   accent: "#a855f7",
   accentSoft: "#c084fc",
+  logoSize: 200, // A logó mérete
 };
 
 export default function PromptBuilderDark() {
@@ -68,6 +69,7 @@ export default function PromptBuilderDark() {
     "a futuristic, elegant astronaut in a gilded helmet",
     "steampunk robot walking through a field of flowers",
     "a mystical forest with glowing mushrooms and fairy dust",
+    "a talking cat sipping steaming tea in front of a rain-soaked window",
     "an underwater kingdom filled with bioluminescence",
     "an ice dragon enthroned on a crystal mountain with the northern lights in the background",
     "a medieval market full of adventurers and strange creatures",
@@ -217,12 +219,6 @@ export default function PromptBuilderDark() {
     </button>
   );
 
-  const frameStyle = {
-    borderColor: THEME.border,
-    borderStyle: "dashed",
-    background: THEME.card,
-  };
-
   return (
     <div
       className="min-h-screen w-full flex flex-col items-center"
@@ -239,16 +235,17 @@ export default function PromptBuilderDark() {
       />
 
       <header className="w-full border-b" style={{ borderColor: THEME.border }}>
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-4">
-          <div
-            className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center"
-            style={{ border: `2px solid ${THEME.border}` }}
-          >
-            <img src={myLogo} alt="Logo" className="rounded-full" />
-          </div>
-          <div>
-            <h1 className="text-lg md:text-xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
-            <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+        <div className="mx-auto max-w-5xl px-6 py-4">
+          <div className="grid grid-cols-2 items-center gap-4">
+            <div className="flex items-center justify-center">
+              <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+                <img src={myLogo} alt="Logo" className="w-full h-full" />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center">
+              <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+              <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+            </div>
           </div>
         </div>
       </header>
@@ -257,7 +254,11 @@ export default function PromptBuilderDark() {
         {/* Fő keret */}
         <div
           className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8 border-4"
-          style={frameStyle}
+          style={{
+            borderColor: THEME.border,
+            borderStyle: "dashed",
+            background: THEME.card,
+          }}
         >
           {/* Vezérlők */}
           <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
