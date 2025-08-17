@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // === KÖZÖS RÉSZ MINDEN OLDALHOZ ===
-
     const translations = {
         hu: {
             navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria",
             galleryTitle: "Galéria", comingSoon: "Hamarosan...",
             galleryCatFantasy: "Fantasy Portrék",
             galleryCatDark: "Dark & Gothic",
-            galleryCatLandscape: "Elvarázsolt Tájképek",
-            galleryCatCreatures: "Lények és Szörnyetegek",
+            galleryCatWorlds: "Mágikus Világok",
+            galleryCatShards: "Fantázia Szilánkok",
             linksTitle: "Ajánlott AI Képalkotó Oldalak",
             nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
             leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
@@ -33,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
             galleryTitle: "Gallery", comingSoon: "Coming Soon...",
             galleryCatFantasy: "Fantasy Portraits",
             galleryCatDark: "Dark & Gothic",
-            galleryCatLandscape: "Enchanted Landscapes",
-            galleryCatCreatures: "Creatures & Beasts",
+            galleryCatWorlds: "Magical Worlds",
+            galleryCatShards: "Shards of Fantasy",
             linksTitle: "Recommended AI Image Generators",
             nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
             leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
@@ -82,7 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
             translateButton.classList.toggle('hidden', lang !== 'hu');
         }
         
-        if (typeof populateSelects === 'function') populateSelects();
+        if (typeof populateSelects === 'function') {
+            populateSelects();
+        }
     }
 
     const langHu = document.getElementById('lang-hu');
@@ -111,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
          });
      }
 
-    // === CSAK A FŐOLDALON (index.html) SZÜKSÉGES LOGIKA ===
     if (document.getElementById('random-button')) {
     
         const defaultPrompts = {
@@ -124,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hu: {
                 style: [ "Fotórealisztikus", "Olajfestmény", "Ceruzavázlat", "Akvarell", "Impresszionizmus, Claude Monet stílusában", "Szürrealizmus, Salvador Dalí stílusában", "Kubizmus, Pablo Picasso stílusában", "Szecesszió, Alphonse Mucha stílusában", "Pop Art, Andy Warhol stílusában", "Koncepciórajz", "Digitális festmény, Greg Rutkowski stílusában", "Steampunk esztétika", "Cyberpunk neon noir", "Biomechanikus művészet, H.R. Giger stílusában", "Fantasy művészet, Frank Frazetta stílusában", "Studio Ghibli anime stílus", "Disney animációs stílus", "Tim Burton stílus", "Art Deco", "Barokk festmény", "Minimalista vonalrajz", "Ukiyo-e japán művészet", "Vintage fotográfia", "Dupla expozíció", "Synthwave", "Solarpunk", "Gótikus művészet", "Kozmikus horror", "Absztrakt expresszionizmus", "Filmszerű állókép egy moziból" ],
                 subject: [ "Egy magányos űrhajós egy idegen ereklyét fedez fel", "Egy bölcs, öreg sárkány aranyhegyen tekeregve", "Egy cyberpunk detektív egy esőáztatta neon városban", "Egy gyönyörű varázslónő egy bonyolult varázslatot szór", "Egy csapat kalandor egy tábortűz körül", "Egy fenséges fehér farkas egy vérholdra üvölt", "Egy titkosügynök egy nagy sebességű autósüldözésben", "Egy mitikus főnix, ami feltámad a hamvaiból", "Egy steampunk feltaláló a műhelyében", "Egy nyugodt erdei szellem meditál", "Egy lovag fényes páncélban egy kolosszális szörnnyel szemben", "Egy android, aki megkérdőjelezi saját létezését", "Egy macska, aki apró varázslósüveget visel", "Egy kalózkapitány a hajója fedélzetén", "Egy hableány egy elsüllyedt várost fedez fel", "Egy időutazó, aki Róma bukásának tanúja", "Egy öntudattal rendelkező robot, aki egy kertet gondoz", "Egy gótikus vámpír egy pazar kastélyban", "Egy poszt-apokaliptikus túlélő egy kibernetikus kutyával", "Egy harcos királynő, aki csatába vezeti seregét", "Egy ősi fa, melynek törzsébe fénylő rúnákat véstek", "Egy rejtélyes alak velencei maszkban", "Egy óriási űrbálna, ami egy várost cipel a hátán", "Egy félelf nő jégkék szemekkel", "Egy kőből és indákból készült védelmező gólem", "Egy gyermek, aki egy fénylő lampiont enged az égbe", "Egy tudós egy lebegő tekercsekkel teli könyvtárban", "Egy futurisztikus katona motorizált páncélban", "A kozmosz istensége, aki galaxisokat formál", "Egy beszélő állat segítőtárs egy kalandban" ],
-                setting: [ "Egy elvarázsolt erdő izzó gombákkal", "Egy futurisztikus város repülő autókkal és hologramokkal", "Az alexandriai nagykönyvtár, újragondolva", "Egy elfeledett templom mélyen a dzsungelben", "Egy űrállomás, ami egy fekete lyuk körül kering", "Egy vízalatti királyság korallból és fényből", "Egy lebegő sziget a felhők tengerében", "Egy poszt-apokaliptikus pusztaság omladozó felhőkarcolókkal", "Egy viktoriánus kori londoni utca ködbe burkolózva", "Egy rég elveszett tünde király trónterme", "Egy Roxfortra emlékeztető mágikus egyetem", "Egy nyüzsgő piac egy középkori fantasy városban", "Egy békés japán kert koi-tóval", "Egy kietlen idegen bolygó két nappal", "Egy kolosszális barlangrendszer óriási kristályokkal", "Egy hatalmas, ősi óramű gépezet belseje", "Egy vibráló korallzátony, ami hemzseg az idegen tengeri élettől", "Egy rejtett kolostor magasan a havas hegyekben", "Egy szürreális álomvilág, ahol a gravitáció opcionális", "Egy vulkanikus táj lávafolyamokkal", "Egy napsütötte tengerpart egy trópusi szigeten", "Egy sötét, kísértetjárta kúria egy dombon", "Egy római stílusú város a Marson", "Egy mókás falu, ahol a házak cukorkából vannak", "Egy idegen bazár egy sivatagos bolygón", "Egy elhagyatott űrhajó, ami egy ködben sodródik", "Egy csatatér egy epikus mágikus háború után", "Egy békés rét egy csillagos égbolt alatt", "Egy törp város, amit egy hegy szívébe vájtak", "Az Olümposz hegy csúcsa" ],
+                setting: [ "Egy elvarázsolt erdő izzó gombákkal", "Egy futurisztikus város repülő autókkal és hologramokkal", "Az alexandriai nagykönyvtár, újragondolva", "Egy elfevedett templom mélyen a dzsungelben", "Egy űrállomás, ami egy fekete lyuk körül kering", "Egy vízalatti királyság korallból és fényből", "Egy lebegő sziget a felhők tengerében", "Egy poszt-apokaliptikus pusztaság omladozó felhőkarcolókkal", "Egy viktoriánus kori londoni utca ködbe burkolózva", "Egy rég elveszett tünde király trónterme", "Egy Roxfortra emlékeztető mágikus egyetem", "Egy nyüzsgő piac egy középkori fantasy városban", "Egy békés japán kert koi-tóval", "Egy kietlen idegen bolygó két nappal", "Egy kolosszális barlangrendszer óriási kristályokkal", "Egy hatalmas, ősi óramű gépezet belseje", "Egy vibráló korallzátony, ami hemzseg az idegen tengeri élettől", "Egy rejtett kolostor magasan a havas hegyekben", "Egy szürreális álomvilág, ahol a gravitáció opcionális", "Egy vulkanikus táj lávafolyamokkal", "Egy napsütötte tengerpart egy trópusi szigeten", "Egy sötét, kísértetjárta kúria egy dombon", "Egy római stílusú város a Marson", "Egy mókás falu, ahol a házak cukorkából vannak", "Egy idegen bazár egy sivatagos bolygón", "Egy elhagyatott űrhajó, ami egy ködben sodródik", "Egy csatatér egy epikus mágikus háború után", "Egy békés rét egy csillagos égbolt alatt", "Egy törp város, amit egy hegy szívébe vájtak", "Az Olümposz hegy csúcsa" ],
                 extra: [ "Filmszerű megvilágítás", "Volumetrikus fény, fénysugarak", "Dinamikus póz", "Hiperrealisztikus, 8K felbontás", "Sekély mélységélesség", "Részletes vonalvezetés, manga stílus", "Lágy pasztell paletta, éteri hangulat", "Élénk színek, magas kontraszt", "Monokróm, fekete-fehér", "Népszerű az ArtStation-ön", "Octane render, fotorealisztikus", "Unreal Engine 5 képernyőkép", "Matte painting", "Arany óra megvilágítás", "Hangulatos és atmoszférikus", "Minimalista", "Bonyolult részletek", "Epikus méret, nagylátószögű felvétel", "Közeli portré", "Dinamikus akciójelenet", "Glitch effekt, digitális torzítás", "Subsurface scattering", "Dús és benőtt növényzet", "Elegáns és díszes", "Sötét és nyers", "Mókás és bájos", "Misztikus és mágikus atmoszféra", "Baljós és vészjósló", "Békés és nyugodt", "Retro 80-as évek esztétika" ]
             }
         };
