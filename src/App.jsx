@@ -206,7 +206,7 @@ export default function PromptBuilderDark() {
     <Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button>
   </div>
   <textarea
-    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    className="rounded-xl p-3 text-xs md:text-sm mt-3"
     style={{
       background: THEME.bg,
       color: THEME.text,
@@ -216,6 +216,7 @@ export default function PromptBuilderDark() {
     }}
     value={style}
     onChange={(e) => setStyle(e.target.value)}
+    key="style-textarea"
   />
 </Card>
           <Card label="👤 Subject">
@@ -224,7 +225,7 @@ export default function PromptBuilderDark() {
     <Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button>
   </div>
   <textarea
-    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    className="rounded-xl p-3 text-xs md:text-sm mt-3"
     style={{
       background: THEME.bg,
       color: THEME.text,
@@ -234,6 +235,7 @@ export default function PromptBuilderDark() {
     }}
     value={subject}
     onChange={(e) => setSubject(e.target.value)}
+    key="subject-textarea"
   />
 </Card>
          <Card label="🏞 Setting">
@@ -242,7 +244,7 @@ export default function PromptBuilderDark() {
     <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
   </div>
   <textarea
-    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    className="rounded-xl p-3 text-xs md:text-sm mt-3"
     style={{
       background: THEME.bg,
       color: THEME.text,
@@ -252,15 +254,16 @@ export default function PromptBuilderDark() {
     }}
     value={setting}
     onChange={(e) => setSetting(e.target.value)}
+    key="setting-textarea"
   />
 </Card>
-          <Card label="✨ Extra">
+         <Card label="✨ Extra">
   <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
   <div className="flex gap-2 mt-2">
     <Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button>
   </div>
   <textarea
-    className="w-full rounded-xl p-3 text-xs md:text-sm mt-3"
+    className="rounded-xl p-3 text-xs md:text-sm mt-3"
     style={{
       background: THEME.bg,
       color: THEME.text,
@@ -270,6 +273,7 @@ export default function PromptBuilderDark() {
     }}
     value={extra}
     onChange={(e) => setExtra(e.target.value)}
+    key="extra-textarea"
   />
 </Card>
         </div>
