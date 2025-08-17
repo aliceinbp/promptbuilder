@@ -56,14 +56,12 @@ header {
     padding-bottom: 20px;
 }
 
-/* ÚJ: Logó konténer, ez kapja a keretet */
-#logo-container {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    border: 3px solid #a46de5;
-    margin: 0 auto 15px auto; /* Középre igazítás és térköz */
-    padding: 5px; /* Térköz a keret és a kép között */
+/* MÓDOSÍTOTT: A logó kitölti a konténert */
+#logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* <--- EZ A SOR A PROBLÉMA */
+    object-fit: cover; 
 }
 
 /* MÓDOSÍTOTT: A logó kitölti a konténert */
