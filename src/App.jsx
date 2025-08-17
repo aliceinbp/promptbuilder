@@ -22,6 +22,27 @@ function makeBarbedDataUrl(color = THEME.border) {
   return `url("data:image/svg+xml;utf8,${encodeSVG(svg)}")`;
 }
 
+// A ControlledTextarea komponenst kihelyeztük a fő funkción kívülre.
+const ControlledTextarea = ({ value, onChange, placeholder, style }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = value;
+    }
+  }, [value]);
+
+  return (
+    <textarea
+      ref={ref}
+      className="rounded-xl p-3 text-xs md:text-sm mt-3"
+      style={style}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+    />
+  );
+};
+
 export default function PromptBuilderDark() {
   // Opciók
   const styleOptions = [
@@ -136,6 +157,7 @@ export default function PromptBuilderDark() {
     "woodcut art, high contrast, rustic feel",
     "glitch art, corrupted image effect, digital noise"
   ];
+
   const [style, setStyle] = useState("");
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
@@ -168,32 +190,6 @@ export default function PromptBuilderDark() {
   const Button = ({ children, onClick, variant = "ghost" }) => (
     <button onClick={onClick} className="px-3 py-1.5 rounded-xl text-xs md:text-sm transition" style={{ color: THEME.text, background: variant==="solid"?THEME.accent:THEME.bg, border:`1px solid ${THEME.border}` }}>{children}</button>
   );
-
-  const ControlledTextarea = ({ value, onChange, placeholder }) => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-      if (ref.current) {
-        ref.current.value = value;
-      }
-    }, [value]);
-
-    return (
-      <textarea
-        ref={ref}
-        className="rounded-xl p-3 text-xs md:text-sm mt-3"
-        style={{
-          background: THEME.bg,
-          color: THEME.text,
-          border:`1px solid ${THEME.border}`,
-          width: "300px",
-          height: "100px"
-        }}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-      />
-    );
-  };
 
   const frameStyle = THEME.frame==='barbed'?{borderWidth:'16px',borderStyle:'solid',borderImage:`${makeBarbedDataUrl(THEME.border)} 32 round`,background:THEME.card,margin:'20px',borderRadius:'20px'}:{borderWidth:'4px',borderStyle:'dashed',borderColor:THEME.border,background:THEME.card,margin:'20px',borderRadius:'20px'};
 
@@ -229,22 +225,46 @@ export default function PromptBuilderDark() {
             <Card label="🎨 Style">
               <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
               <div className="flex gap-2"><Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button></div>
-              <ControlledTextarea value={style} onChange={setStyle} placeholder="Vagy írd ide a saját stílusodat..." />
+              <ControlledTextarea value={style} onChange={setStyle} placeholder="Vagy írd ide a saját stílusodat..." style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border:`1px solid ${THEME.border}`,
+                width: "300px",
+                height: "100px"
+              }}/>
             </Card>
             <Card label="👤 Subject">
               <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
               <div className="flex gap-2"><Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button></div>
-              <ControlledTextarea value={subject} onChange={setSubject} placeholder="Vagy írd ide a saját témádat..." />
+              <ControlledTextarea value={subject} onChange={setSubject} placeholder="Vagy írd ide a saját témádat..." style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border:`1px solid ${THEME.border}`,
+                width: "300px",
+                height: "100px"
+              }}/>
             </Card>
             <Card label="🏞 Setting">
               <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
               <div className="flex gap-2"><Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button></div>
-              <ControlledTextarea value={setting} onChange={setSetting} placeholder="Vagy írd ide a saját helyszínedet..." />
+              <ControlledTextarea value={setting} onChange={setSetting} placeholder="Vagy írd ide a saját helyszínedet..." style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border:`1px solid ${THEME.border}`,
+                width: "300px",
+                height: "100px"
+              }}/>
             </Card>
             <Card label="✨ Extra">
               <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
               <div className="flex gap-2"><Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button></div>
-              <ControlledTextarea value={extra} onChange={setExtra} placeholder="Vagy írd ide a saját extrádat..." />
+              <ControlledTextarea value={extra} onChange={setExtra} placeholder="Vagy írd ide a saját extrádat..." style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border:`1px solid ${THEME.border}`,
+                width: "300px",
+                height: "100px"
+              }}/>
             </Card>
           </div>
           <Card label="📝 Final Prompt">
