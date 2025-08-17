@@ -10,9 +10,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
     <div id="main-container">
-        <div id="header-placeholder"></div>
+        <header>
+            <div id="header-top-row">
+                <div id="info-button-wrapper">
+                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
+                </div>
+                <div id="lang-switcher">
+                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
+                </div>
+            </div>
+            <div id="logo-container">
+                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            </div>
+            <h1>★ Prompt Builder ★</h1>
+            <p>Prompt generator for AI images</p>
+            <div id="header-nav-container">
+                <nav id="main-nav">
+                    <a href="index.html" class="active" data-key="navHome">Főoldal</a>
+                    <a href="links.html" data-key="navLinks">Ajánlások</a>
+                    <a href="gallery.html" data-key="navGallery">Galéria</a>
+                </nav>
+            </div>
+        </header>
 
         <main>
             <div class="main-actions">
@@ -86,7 +106,21 @@
             </section>
         </main>
         
-        <div id="footer-placeholder"></div>
+        <section class="chat-section">
+            <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
+            <div id="chat-wrapper">
+                <script id="cid0020000416433965702" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 250px;height: 200px;">{"handle":"aliceinbpchat","arch":"js","styles":{"a":"1e1e1e","b":100,"c":"e0e0e0","d":"e0e0e0","k":"a46de5","l":"a46de5","m":"a46de5","n":"FFFFFF","p":"10","q":"252525","r":100}}</script>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-item">
+                <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
+            </div>
+            <div class="footer-item" id="visitor-counter">
+                <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+            </div>
+        </footer>
     </div>
 
     <div id="modal-overlay" class="hidden"></div>
@@ -107,7 +141,6 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

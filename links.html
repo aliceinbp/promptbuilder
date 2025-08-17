@@ -11,7 +11,28 @@
 </head>
 <body>
     <div id="main-container">
-        <div id="header-placeholder"></div>
+        <header>
+            <div id="header-top-row">
+                <div id="info-button-wrapper">
+                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
+                </div>
+                <div id="lang-switcher">
+                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
+                </div>
+            </div>
+            <div id="logo-container">
+                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            </div>
+            <h1>★ Prompt Builder ★</h1>
+            <p>Prompt generator for AI images</p>
+            <div id="header-nav-container">
+                <nav id="main-nav">
+                    <a href="index.html" data-key="navHome">Főoldal</a>
+                    <a href="links.html" class="active" data-key="navLinks">Ajánlások</a>
+                    <a href="gallery.html" data-key="navGallery">Galéria</a>
+                </nav>
+            </div>
+        </header>
 
         <main>
              <section id="links-section">
@@ -25,8 +46,25 @@
             </section>
         </main>
 
-        <div id="footer-placeholder"></div>
+        <footer>
+            <div class="footer-item">
+                <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
+            </div>
+            <div class="footer-item" id="visitor-counter">
+                <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+            </div>
+        </footer>
     </div>
-    <script src="main.js"></script>
-    <script src="script.js"></script> </body>
+
+    <div id="modal-overlay" class="hidden"></div>
+    <div id="info-modal" class="modal hidden">
+        <button id="close-info-modal" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-key="infoModalTitle">A Prompt Builderről</h2>
+        <p data-key="infoModalText1">Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.</p>
+        <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
+        <p>❤️</p>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>
