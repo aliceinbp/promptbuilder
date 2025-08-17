@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             linksTitle: "Ajánlott AI Képalkotó Oldalak",
             nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
             leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
+            imgtoimgDesc: "Napi bejelentkezéssel ad ingyenes krediteket. Képes a meglévő képeket átalakítani promptok alapján.",
             copilotDesc: "A legújabb DALL-E 3 modellt használja, és teljesen ingyenes egy Microsoft fiókkal. Kiváló minőséget produkál.",
             playgroundDesc: "Naponta rengeteg ingyenes kép készíthető vele. Nagyon letisztult, könnyen kezelhető felület, ideális kezdőknek is.",
             visitButton: "Oldal Megnyitása",
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             linksTitle: "Recommended AI Image Generators",
             nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
             leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
+            imgtoimgDesc: "Provides free credits with daily login. Capable of transforming existing images based on prompts.",
             copilotDesc: "Uses the latest DALL-E 3 model and is completely free with a Microsoft account. Produces excellent quality.",
             playgroundDesc: "You can create a large number of free images daily. Very clean, easy-to-use interface, also ideal for beginners.",
             visitButton: "Visit Site",
@@ -102,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
      }
 
     // === CSAK A FŐOLDALON (index.html) SZÜKSÉGES LOGIKA ===
-    // Ezzel a feltétellel a kód nem fut hibára a többi oldalon.
     if (document.getElementById('random-button')) {
     
         const defaultPrompts = {
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function getSavedPrompts() { return JSON.parse(localStorage.getItem('savedPrompts')) || []; }
         
-        window.renderSavedPrompts = function() {
+        function renderSavedPrompts() {
             savedPromptsList.innerHTML = '';
             const saved = getSavedPrompts();
             if(saved.length === 0){ savedPromptsList.innerHTML = `<p style="text-align: center; color: #888;">Nincsenek mentett promptjaid.</p>`; return; }
@@ -250,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return combined;
         }
 
-        window.populateSelects = function() {
+        function populateSelects() {
             const combinedPrompts = getCombinedPrompts(currentLanguage);
             for (const category in combinedPrompts) {
                 const selectElement = document.getElementById(`${category}-select`);
@@ -282,13 +283,23 @@ document.addEventListener('DOMContentLoaded', function() {
         managePromptsList.addEventListener('click', function(event) { const target = event.target.closest('.delete-custom-prompt-btn'); if (target) { deleteCustomPrompt(parseInt(target.dataset.index, 10)); } });
         document.querySelectorAll('.add-button').forEach(button => { button.addEventListener('click', function() { const selectElement = this.previousElementSibling; const targetTextareaId = selectElement.id.replace('-select', '-text'); const targetTextarea = document.getElementById(targetTextareaId); const selectedValue = selectElement.value; if (selectedValue) { targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue; updateFinalPrompt(); } selectElement.selectedIndex = 0; }); });
         Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
-        copyButton.addEventListener('click', function() { let textToCopy = finalPromptTextarea.value.trim(); const negativeText = negativePromptTextarea.value.trim(); if(negativeText !== ''){ textToCopy += ` --no ${negativeText}`; } navigator.clipboard.writeText(textToCopy).then(() => { const buttonTextSpan = this.querySelector('span'); const originalText = buttonTextSpan.textContent; buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess; setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500); }); });
+        copyButton.addEventListener('click', function() {
+            let textToCopy = finalPromptTextarea.value.trim();
+            const negativeText = negativePromptTextarea.value.trim();
+            if(negativeText !== ''){ textToCopy += ` --no ${negativeText}`; }
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const buttonTextSpan = this.querySelector('span');
+                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
+                const target = buttonTextSpan || this;
+                target.textContent = translations[currentLanguage].copyButtonSuccess;
+                setTimeout(() => { target.textContent = originalText; }, 1500);
+            });
+        });
         translateButton.addEventListener('click', function() { const promptText = finalPromptTextarea.value; if (promptText.trim() === '') return; const encodedText = encodeURIComponent(promptText); const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`; window.open(translateUrl, '_blank'); });
         
         renderSavedPrompts();
         updateFinalPrompt();
-    } // Itt ér véget a főoldali logika IF blokkja
-
-    // Végül, a nyelv beállítása minden oldalon lefut
+    }
+    
     setLanguage(currentLanguage);
 });
