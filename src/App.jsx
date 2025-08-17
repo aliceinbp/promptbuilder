@@ -1,18 +1,45 @@
 import React, { useMemo, useState } from "react";
 import myLogo from './assets/myLogo.jpg';
 
-// ⚙️ Téma – itt tudsz mindent átírni VS Code-ban
+// ⚙️ TÉMA – minden szín/keret itt állítható VS Code-ban
 const THEME = {
   bg: "#0a0a0a",           // teljes háttér (fekete)
   text: "#d8b4fe",         // halványlila szöveg
-  card: "#141018",         // kártyák háttere (nagyon sötét lila-fekete)
-  border: "#5b21b6",       // halványlila keret
+  card: "#141018",         // kártyák háttere (sötét lila-fekete)
+  border: "#a855f7",       // lila keret (szögesdróthoz is ez megy)
   accent: "#a855f7",       // gombok, kiemelések
   accentSoft: "#c084fc",   // hover/fénylés
+  frame: "barbed",          // "barbed" | "dashed" – szögesdrót vagy sima szaggatott
+  logoSize: 80,             // logó méret px (desktopon)
 };
 
+// Segédfüggvény: SVG → data URI (szögesdrót kerethez)
+function encodeSVG(svg) {
+  return svg
+    .replace(/\n/g, '')
+    .replace(/\t/g, '')
+    .replace(/\"/g, "'")
+    .replace(/#/g, '%23');
+}
+function makeBarbedDataUrl(color = THEME.border) {
+  const c = color;
+  const svg = `
+  <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>
+    <defs>
+      <pattern id='p' width='64' height='64' patternUnits='userSpaceOnUse'>
+        <path d='M0 32H64' stroke='${c}' stroke-width='2' />
+        <path d='M16 32l6-6M16 32l6 6M48 32l6-6M48 32l6 6' stroke='${c}' stroke-width='2' />
+        <path d='M32 0V64' stroke='${c}' stroke-width='2' />
+        <path d='M32 16l6-6M32 16l-6-6M32 48l6 6M32 48l-6 6' stroke='${c}' stroke-width='2' />
+      </pattern>
+    </defs>
+    <rect x='0' y='0' width='64' height='64' fill='url(#p)'/>
+  </svg>`;
+  return `url("data:image/svg+xml;utf8,${encodeSVG(svg)}")`;
+}
+
 export default function PromptBuilderDark() {
-  // 🔽 Legördülő listák (TELJES, a kéréseid szerint)
+  // 🔽 TELJES LISTÁK (a korábban megadott opciók)
   const styleOptions = [
     "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
     "Albert Bierstadt + Bob Ross, fenséges tájképek, buja részletekkel",
@@ -154,7 +181,6 @@ export default function PromptBuilderDark() {
     try {
       await navigator.clipboard.writeText(finalPrompt);
     } catch {
-      // Fallback Chrome-ban is működik
       const ta = document.createElement("textarea");
       ta.value = finalPrompt;
       document.body.appendChild(ta);
@@ -164,7 +190,7 @@ export default function PromptBuilderDark() {
     }
   };
 
-  // UI helper – kártyakomponens
+  // Reusable UI elemek
   const Card = ({ label, children }) => (
     <section
       className="rounded-2xl shadow-md p-4 md:p-5 backdrop-blur-sm border"
@@ -177,7 +203,6 @@ export default function PromptBuilderDark() {
     </section>
   );
 
-  // Select (félmagas + dark-lila)
   const Select = ({ value, onChange, options, placeholder }) => (
     <div className="relative">
       <select
@@ -224,12 +249,27 @@ export default function PromptBuilderDark() {
     </button>
   );
 
+  // Keret stílus: szögesdrót vagy sima dashed
+  const frameStyle = THEME.frame === 'barbed'
+    ? {
+        borderWidth: '12px',
+        borderStyle: 'solid',
+        borderImage: `${makeBarbedDataUrl(THEME.border)} 32 round`,
+        background: THEME.card,
+      }
+    : {
+        borderWidth: '4px',
+        borderStyle: 'dashed',
+        borderColor: THEME.border,
+        background: THEME.card,
+      };
+
   return (
     <div
-      className="min-h-screen w-full"
+      className="min-h-screen w-full flex flex-col items-center"
       style={{ color: THEME.text, background: THEME.bg }}
     >
-      {/* Felső lila derengés a csajos-dark hangulathoz */}
+      {/* Lágy lila derengés */}
       <div
         aria-hidden
         className="fixed inset-0 -z-10 opacity-50"
@@ -239,29 +279,26 @@ export default function PromptBuilderDark() {
         }}
       />
 
-<header
-  className="w-full border-b"
-  style={{ borderColor: THEME.border }}
->
-  <div className="mx-auto max-w-5xl px-6 py-6 text-center">
-    <div
-      className="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3"
-      style={{ border: `2px solid ${THEME.border}` }}
-    >
-      <img src={myLogo} alt="Alice in BP logó" className="w-full h-full object-cover" />
-    </div>
-    <h1 className="text-xl md:text-2xl font-semibold tracking-widest"> ★  Prompt Builder  ★ </h1>
-    <p className="text-xs md:text-sm mt-1 opacity-90">Prompt generator for AI images</p>
-  </div>
-</header>
+      {/* FEJLÉC */}
+      <header className="w-full border-b" style={{ borderColor: THEME.border }}>
+        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-4">
+          <div
+            className="rounded-full flex items-center justify-center overflow-hidden"
+            style={{ border: `2px solid ${THEME.border}`, width: THEME.logoSize, height: THEME.logoSize }}
+          >
+            <img src={myLogo} alt="Logo" className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <h1 className="text-lg md:text-xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+            <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+          </div>
+        </div>
+      </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-8 md:py-12">
-        {/* Fő keret */}
-        <div
-          className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8"
-          style={{ border: `1px solid ${THEME.border}`, background: THEME.card }}
-        >
-          {/* Vezérlők felül */}
+      {/* FŐ TARTALOM + KERET */}
+      <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
+        <div className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8" style={frameStyle}>
+          {/* Vezérlők */}
           <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
             <div className="flex gap-2 md:gap-3">
               <Button onClick={shuffleAll} variant="solid">Shuffle All</Button>
@@ -271,73 +308,52 @@ export default function PromptBuilderDark() {
             <div className="text-xs opacity-80">Chrome-kompatibilis • reszponzív</div>
           </div>
 
-          {/* Kártyák – nagyobb távok, kisebb selectek */}
+          {/* Kártyák */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Card label="🎨 Style">
-              <Select
-                value={style}
-                onChange={setStyle}
-                options={styleOptions}
-                placeholder="Válassz stílust…"
-              />
-              <div className="flex gap-2">
+              <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
+              <div className="flex gap-2 mt-2">
                 <Button onClick={() => setStyle(pickRandom(styleOptions))}>Random</Button>
               </div>
             </Card>
 
             <Card label="👤 Subject">
-              <Select
-                value={subject}
-                onChange={setSubject}
-                options={subjectOptions}
-                placeholder="Válassz témát…"
-              />
-              <div className="flex gap-2">
+              <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
+              <div className="flex gap-2 mt-2">
                 <Button onClick={() => setSubject(pickRandom(subjectOptions))}>Random</Button>
               </div>
             </Card>
 
             <Card label="🏞 Setting">
-              <Select
-                value={setting}
-                onChange={setSetting}
-                options={settingOptions}
-                placeholder="Válassz helyszínt…"
-              />
-              <div className="flex gap-2">
+              <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
+              <div className="flex gap-2 mt-2">
                 <Button onClick={() => setSetting(pickRandom(settingOptions))}>Random</Button>
               </div>
             </Card>
 
             <Card label="✨ Extra">
-              <Select
-                value={extra}
-                onChange={setExtra}
-                options={extraOptions}
-                placeholder="Válassz extrát…"
-              />
-              <div className="flex gap-2">
+              <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
+              <div className="flex gap-2 mt-2">
                 <Button onClick={() => setExtra(pickRandom(extraOptions))}>Random</Button>
               </div>
             </Card>
           </div>
 
-          {/* Eredmény doboz – egy darab, nagy, fekete */}
-          <Card label="🖋 Végső Prompt">
+          <Card label="📝 Final Prompt">
             <textarea
+              className="w-full rounded-xl p-3 text-xs md:text-sm"
+              rows={8}
               readOnly
-              className="w-full rounded-2xl p-3 md:p-4 font-mono text-xs md:text-sm min-h-[140px]"
-              style={{ background: THEME.bg, color: THEME.text, border: `1px solid ${THEME.border}` }}
+              style={{
+                background: THEME.bg,
+                color: THEME.text,
+                border: `1px solid ${THEME.border}`,
+              }}
               value={finalPrompt}
             />
-            <div className="flex gap-2">
-              <Button onClick={() => copy()} variant="solid">Másolás</Button>
-            </div>
           </Card>
         </div>
       </main>
-
-      <footer className="py-8 text-center text-xs opacity-70">♥ csajos-dark vibe – minden szín a THEME-ben állítható</footer>
     </div>
   );
 }
