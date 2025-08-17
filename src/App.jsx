@@ -1,16 +1,16 @@
-import React, { useMemo, useState } from "react";
+import React, { useState, useEffect } from "react";
 import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ TÉMA: Minden szín, keret és méret itt állítható a könnyű szerkeszthetőségért
 const THEME = {
-  bg: "#0a0a0a", // Teljes háttér (fekete)
-  text: "#d8b4fe", // Halványlila szöveg
-  card: "#141018", // Kártyák háttere (nagyon sötét lila-fekete)
-  border: "#5b21b6", // Lila keret
-  accent: "#a855f7", // Gombok, kiemelések
-  accentSoft: "#c084fc", // Hover/fénylés
-  logoSize: "200px", // A logó mérete
-  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace", // Betűtípus
+  bg: "#0a0a0a",
+  text: "#d8b4fe",
+  card: "#141018",
+  border: "#5b21b6",
+  accent: "#a855f7",
+  accentSoft: "#c084fc",
+  logoSize: "200px",
+  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace",
 };
 
 export default function PromptBuilder() {
@@ -133,13 +133,13 @@ export default function PromptBuilder() {
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
   const [extra, setExtra] = useState("");
+  const [finalPrompt, setFinalPrompt] = useState("");
 
-  // useMemo hook a végső prompt automatikus frissítésére
-  // Ez a kód felelős az összes doboz tartalmának egybegyúrásáért
-  const finalPrompt = useMemo(
-    () => [style, subject, setting, extra].filter(Boolean).join("\n"),
-    [style, subject, setting, extra]
-  );
+  // useEffect hook: frissíti a végső promptot, amikor a 4 mező bármelyike megváltozik
+  useEffect(() => {
+    const combinedPrompt = [style, subject, setting, extra].filter(Boolean).join("\n");
+    setFinalPrompt(combinedPrompt);
+  }, [style, subject, setting, extra]);
 
   // Segédfüggvények
   const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
@@ -360,7 +360,6 @@ export default function PromptBuilder() {
             <textarea
               className="w-full rounded-xl p-3 text-xs md:text-sm"
               rows={8}
-              readOnly={false}
               onChange={(e) => setFinalPrompt(e.target.value)}
               style={{
                 background: THEME.bg,
