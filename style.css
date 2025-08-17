@@ -58,22 +58,16 @@ header {
 
 /* JAVÍTOTT RÉSZ: Logó konténer és a logó maga */
 #logo-container {
-    width: 170px; /* Konténer mérete */
-    height: 170px;
-    border-radius: 50%;
-    border: 3px solid #a46de5;
-    margin: 0 auto 15px auto;
-    /* A paddinget kivettük innen, hogy ne okozzon problémát */
-    display: flex; /* Flexbox a könnyű középre igazításhoz */
-    justify-content: center;
-    align-items: center;
+    /* A konténernek már nem adunk külön stílust, 
+       így a kép mérete fogja meghatározni. */
+    margin-bottom: 15px; /* Csak egy kis alsó térközt hagyunk */
 }
 
 #logo {
-    width: 155px;  /* A kép mérete kisebb, mint a konténeré */
-    height: 155px;
-    object-fit: cover;
-    border-radius: 50%; /* A kép maga is legyen kör alakú, így tökéletes lesz */
+    width: 160px;  /* Itt beállítjuk a logó kívánt méretét */
+    height: 160px;
+    /* A border-radius és object-fit tulajdonságokat eltávolítottuk,
+       hogy ne vágja le a képet. */
 }
 /* EDDIG TART A JAVÍTÁS */
 
