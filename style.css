@@ -15,7 +15,6 @@ body {
     margin: 0;
 }
 
-/* Magyar komment: A teljes oldalt magába foglaló keret stílusa */
 #main-container {
     width: 100%;
     max-width: 900px;
@@ -27,7 +26,6 @@ body {
     position: relative; 
 }
 
-/* Magyar komment: Nyelvválasztó a jobb felső sarokban */
 #lang-switcher {
     position: absolute;
     top: 20px;
@@ -48,7 +46,6 @@ body {
     color: #e0e0e0;
 }
 
-/* Magyar komment: A fejléc (logó és címek) stílusai */
 header {
     text-align: center;
     margin-bottom: 30px;
@@ -74,7 +71,6 @@ header {
     object-fit: cover;
 }
 
-
 header h1 {
     font-family: 'Pacifico', cursive;
     color: #c89eff;
@@ -92,7 +88,6 @@ header p {
     margin-bottom: 25px;
 }
 
-/* MÓDOSÍTOTT: A feliratok igazítása az ikonokhoz */
 label {
     display: flex; 
     align-items: center;
@@ -102,7 +97,6 @@ label {
     font-size: 1.1em;
 }
 
-/* ÚJ: Az ikonok stílusa a feliratokban */
 label i {
     margin-right: 10px;
     color: #be80ff;
@@ -181,11 +175,14 @@ label i {
     background-color: #c89eff;
 }
 
+/* MÓDOSÍTOTT LÁBLÉC STÍLUS */
 footer {
-    text-align: center;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #a46de5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 footer a {
