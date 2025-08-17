@@ -1,6 +1,6 @@
 /* Magyar komment: Alapvető beállítások és betűtípus importálása */
 * {
-    box-sizing: border-box; /* Megakadályozza, hogy a padding és border növelje az elem méretét */
+    box-sizing: border-box; 
 }
 
 body {
@@ -24,7 +24,7 @@ body {
     border-radius: 15px;
     padding: 25px 40px;
     box-shadow: 0 0 20px rgba(164, 109, 229, 0.3);
-    position: relative; /* A nyelvválasztó pozicionálásához kell */
+    position: relative; 
 }
 
 /* Magyar komment: Nyelvválasztó a jobb felső sarokban */
@@ -56,17 +56,13 @@ header {
     padding-bottom: 20px;
 }
 
-/* JAVÍTOTT RÉSZ: Logó konténer és a logó maga */
+/* VÉGLEGES RÉSZ: Logó konténer és a logó maga */
 #logo-container {
-    width: 170px;  /* A kör alakú terület mérete */
+    width: 170px;
     height: 170px;
-    margin: 0 auto 15px auto; /* Középre igazítás és alsó térköz */
-    border-radius: 50%; /* Ez teszi a konténert kör alakúvá */
-    
-    /* Ez adja a csajos, árnyékos lila keretet/ragyogást */
+    margin: 0 auto 15px auto;
+    border-radius: 50%;
     box-shadow: 0 0 15px rgba(190, 128, 255, 0.8);
-
-    /* Flexbox a kép tökéletes középre igazításához */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,8 +71,10 @@ header {
 #logo {
     width: 160px;
     height: 160px;
+    border-radius: 50%; /* Ez a sor vágja körbe a képet, hogy belepasszoljon a keretbe */
+    object-fit: cover; /* Biztosítja, hogy a kép szépen kitöltse a kört */
 }
-/* EDDIG TART A JAVÍTÁS */
+/* EDDIG TART A VÉGLEGES RÉSZ */
 
 
 header h1 {
