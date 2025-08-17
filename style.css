@@ -56,7 +56,6 @@ header {
     padding-bottom: 20px;
 }
 
-/* VÉGLEGES RÉSZ: Logó konténer és a logó maga */
 #logo-container {
     width: 170px;
     height: 170px;
@@ -71,10 +70,9 @@ header {
 #logo {
     width: 160px;
     height: 160px;
-    border-radius: 50%; /* Ez a sor vágja körbe a képet, hogy belepasszoljon a keretbe */
-    object-fit: cover; /* Biztosítja, hogy a kép szépen kitöltse a kört */
+    border-radius: 50%;
+    object-fit: cover;
 }
-/* EDDIG TART A VÉGLEGES RÉSZ */
 
 
 header h1 {
@@ -90,7 +88,6 @@ header p {
     margin: 0;
 }
 
-/* Magyar komment: A prompt generátor szekcióinak általános stílusa */
 .prompt-section, .final-prompt-section {
     margin-bottom: 25px;
 }
@@ -148,19 +145,30 @@ label {
     background-color: #252525;
 }
 
-.add-button, #copy-button {
+.button-group {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px; 
+}
+
+.add-button, #copy-button, #translate-button {
     background-color: #a46de5;
     color: #121212;
     border: none;
     border-radius: 5px;
-    padding: 0 20px;
+    padding: 10px 20px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
     flex-shrink: 0;
 }
 
-.add-button:hover, #copy-button:hover {
+.button-group > button {
+    flex-grow: 1;
+}
+
+
+.add-button:hover, #copy-button:hover, #translate-button:hover {
     background-color: #c89eff;
 }
 
@@ -180,4 +188,9 @@ footer a {
 
 footer a:hover {
     color: #ffffff;
+}
+
+/* ÚJ: Segédosztály egy elem elrejtéséhez */
+.hidden {
+    display: none;
 }

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Magyar komment: A felület szövegeinek fordításai
     const translations = {
         hu: {
             styleLabel: "Stílus:",
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             settingPlaceholder: "Itt szerkesztheted a kiválasztott helyszíneket...",
             extraPlaceholder: "Itt szerkesztheted a kiválasztott extrákat...",
             finalPromptLabel: "Végleges prompt (angolul)",
-            finalPromptPlaceholder: "Az összeállított prompt itt fog megjelenni...",
+            finalPromptPlaceholder: "Az összeállített prompt itt fog megjelenni...",
             copyButton: "Prompt másolása",
             copyButtonSuccess: "Másolva!",
             translateButton: "Fordítás Angolra",
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // A prompt opciók fordításai
     const prompts = {
         en: {
             style: ["Jean-Michel Basquiat + Cy Twombly, texture and expressive abstraction", "Albert Bierstadt + Bob Ross, majestic landscapes with lush details", "Hayao Miyazaki + Makoto Shinkai, vibrant, emotional anime visuals", "Alex Grey + visionary art, spiritual and transcendent visual metaphors", "Greg Rutkowski + Alphonse Mucha, fantasy illustration in art nouveau style", "Gustav Klimt + Egon Schiele, gold, patterns and raw human emotions", "Banksy + Jean-Michel Basquiat, street art with social commentary", "Frida Kahlo + fantasy art, surreal self-portraits with fantastical elements", "Rembrandt + Caravaggio, dark, dramatic portraits with masterful chiaroscuro", "René Magritte + M.C. Escher, thought-provoking, paradoxical reality", "Gregory Crewdson + Boris Vallejo, cinematic lighting, fantasy realism", "Boris Vallejo + Zdzisław Beksiński, hyperrealistic dark fantasy", "Malcolm Liepke + Phil Hale, expressive brushwork, dripping melancholy", "Caravaggio + Annie Leibovitz, dramatic portrait", "Frank Frazetta + Gustave Doré, epic fantasy illustration", "Salvador Dalí + Hieronymus Bosch, dreamlike surrealism", "H.R. Giger + Francis Bacon, biomechanical psychological horror", "Edward Hopper + Film Noir aesthetic, rain-soaked urban melancholy", "Brom + Zdzisław Beksiński, dark fantasy, ominous character design", "Frank Frazetta + Greg Rutkowski, classic fantasy heroes and illustrations", "Moebius (Jean Giraud) + Syd Mead, futuristic sci-fi characters and worlds", "Akira Toriyama + Yoshitaka Amano, anime-style heroes with fantasy elements", "Yoji Shinkawa + H.R. Giger, biomechanical, post-apocalyptic characters", "J.C. Leyendecker + Norman Rockwell, classic, iconic adventurers", "Tsutomu Nihei + sci-fi noir, dark, detailed cyberpunk and dystopian characters", "Kentaro Miura + fantasy art, detailed, epic and brutal characters", "Alphonse Mucha + Art Nouveau aesthetic, elegant, magical, art nouveau style characters", "Loish + whimsical art, colorful, stylized and charming fantasy characters", "Caspar David Friedrich + Disney concept art, oil painting, magical, moonlit forest.", "Syd Mead + Jean-Michel Basquiat, digital art, neon-futuristic, graffiti city.", "Edward Hopper + Ansel Adams, realistic depiction, rain-soaked train station.", "Makoto Shinkai + Hayao Miyazaki, anime style, train running through a quiet field.", "Albert Bierstadt + Frank Frazetta, oil painting, misty mountain lake with hidden crystals.", "Andrew Wyeth + J.M.W. Turner, watercolor, quiet, foggy seashore.", "Jack Kirby + Frank Miller, comic book style, monumental futuristic city.", "Moebius (Jean Giraud) + Studio Ghibli art, digital art, floating island with huge trees.", "Edward Weston + Michael Kenna, photorealistic, black and white, abandoned pier.", "Claude Monet + Vincent van Gogh, impressionist, sunrise over a field."],
@@ -65,12 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
         finalPromptTextarea.value = promptParts.join(', ');
     }
     
+    // MÓDOSÍTOTT FUNKCIÓ
     function setLanguage(lang) {
         currentLanguage = lang;
         document.documentElement.lang = lang;
         document.getElementById('lang-hu').classList.toggle('active', lang === 'hu');
         document.getElementById('lang-en').classList.toggle('active', lang === 'en');
         
+        // MÓDOSÍTÁS: A fordító gomb elrejtése vagy megjelenítése
+        translateButton.classList.toggle('hidden', lang !== 'hu');
+
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (translations[lang] && translations[lang][key]) {
