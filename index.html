@@ -26,49 +26,80 @@
         </header>
 
         <main>
-            <div class="random-prompt-section">
+
+            <div class="main-actions">
                 <button id="random-button"><i class="fa-solid fa-dice"></i> <span data-key="randomButton">Véletlen Prompt</span></button>
+                <button id="clear-all-button"><i class="fa-solid fa-trash-can"></i> <span data-key="clearAllButton">Mindent Töröl</span></button>
             </div>
+
             <div class="prompt-section">
-                <label for="style-select"><i class="fa-solid fa-palette"></i> <span data-key="styleLabel">Style:</span></label>
+                <label for="style-select">
+                    <i class="fa-solid fa-palette"></i> 
+                    <span data-key="styleLabel">Style:</span>
+                    <i class="fa-solid fa-xmark clear-btn" data-target="style-text" title="Törlés"></i>
+                </label>
                 <div class="input-group">
                     <select id="style-select" class="prompt-select"></select>
                     <button class="add-button" data-key="addButton">Hozzáad</button>
                 </div>
-                <textarea id="style-text" class="prompt-textarea" data-key="stylePlaceholder" placeholder="Itt szerkesztheted a kiválasztott stílusokat..."></textarea>
+                <textarea id="style-text" class="prompt-textarea" data-key="stylePlaceholder" placeholder="..."></textarea>
             </div>
+
             <div class="prompt-section">
-                <label for="subject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="subjectLabel">Subject:</span></label>
+                <label for="subject-select">
+                    <i class="fa-solid fa-image-portrait"></i> 
+                    <span data-key="subjectLabel">Subject:</span>
+                    <i class="fa-solid fa-xmark clear-btn" data-target="subject-text" title="Törlés"></i>
+                </label>
                 <div class="input-group">
                     <select id="subject-select" class="prompt-select"></select>
                     <button class="add-button" data-key="addButton">Hozzáad</button>
                 </div>
-                <textarea id="subject-text" class="prompt-textarea" data-key="subjectPlaceholder" placeholder="Itt szerkesztheted a kiválasztott témákat..."></textarea>
+                <textarea id="subject-text" class="prompt-textarea" data-key="subjectPlaceholder" placeholder="..."></textarea>
             </div>
+
             <div class="prompt-section">
-                <label for="setting-select"><i class="fa-solid fa-mountain-sun"></i> <span data-key="settingLabel">Setting:</span></label>
+                <label for="setting-select">
+                    <i class="fa-solid fa-mountain-sun"></i> 
+                    <span data-key="settingLabel">Setting:</span>
+                    <i class="fa-solid fa-xmark clear-btn" data-target="setting-text" title="Törlés"></i>
+                </label>
                 <div class="input-group">
                     <select id="setting-select" class="prompt-select"></select>
                     <button class="add-button" data-key="addButton">Hozzáad</button>
                 </div>
-                <textarea id="setting-text" class="prompt-textarea" data-key="settingPlaceholder" placeholder="Itt szerkesztheted a kiválasztott helyszíneket..."></textarea>
+                <textarea id="setting-text" class="prompt-textarea" data-key="settingPlaceholder" placeholder="..."></textarea>
             </div>
+
             <div class="prompt-section">
-                <label for="extra-select"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="extraLabel">Extra:</span></label>
+                <label for="extra-select">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 
+                    <span data-key="extraLabel">Extra:</span>
+                    <i class="fa-solid fa-xmark clear-btn" data-target="extra-text" title="Törlés"></i>
+                </label>
                 <div class="input-group">
                     <select id="extra-select" class="prompt-select"></select>
                     <button class="add-button" data-key="addButton">Hozzáad</button>
                 </div>
-                <textarea id="extra-text" class="prompt-textarea" data-key="extraPlaceholder" placeholder="Itt szerkesztheted a kiválasztott extrákat..."></textarea>
+                <textarea id="extra-text" class="prompt-textarea" data-key="extraPlaceholder" placeholder="..."></textarea>
             </div>
+
             <div class="final-prompt-section">
                 <label for="final-prompt" data-key="finalPromptLabel">Végleges prompt (angolul)</label>
-                <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="Az összeállított prompt itt fog megjelenni..."></textarea>
+                <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="..."></textarea>
                 <div class="button-group">
+                    <button id="save-prompt-button" title="Kedvenc mentése"><i class="fa-solid fa-star"></i> <span data-key="saveButton">Mentés</span></button>
                     <button id="copy-button" data-key="copyButton">Prompt másolása</button>
                     <button id="translate-button" data-key="translateButton">Fordítás Angolra</button>
                 </div>
             </div>
+            
+            <section id="saved-prompts-section">
+                <h2><i class="fa-solid fa-star"></i> <span data-key="savedPromptsTitle">Mentett Promptok</span></h2>
+                <div id="saved-prompts-list">
+                    </div>
+            </section>
+
         </main>
         
         <section class="chat-section">

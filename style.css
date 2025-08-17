@@ -2,6 +2,22 @@
     box-sizing: border-box; 
 }
 
+/* ÚJ: Egyedi görgetősáv stílusok */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: #a46de5;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #c89eff;
+}
+
 body {
     background-color: #121212;
     color: #e0e0e0;
@@ -15,14 +31,8 @@ body {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 #main-container {
@@ -42,29 +52,15 @@ body {
     animation: fadeIn 0.6s ease-out 0.2s forwards;
 }
 
-
 #lang-switcher {
     position: absolute;
     top: 20px;
     right: 25px;
     font-size: 0.9em;
 }
-
-#lang-switcher a {
-    color: #888;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px;
-    transition: color 0.3s ease;
-}
-
-#lang-switcher a:hover {
-    color: #c89eff;
-}
-
-#lang-switcher a.active {
-    color: #e0e0e0;
-}
+#lang-switcher a { color: #888; text-decoration: none; font-weight: bold; padding: 5px; transition: color 0.3s ease; }
+#lang-switcher a:hover { color: #c89eff; }
+#lang-switcher a.active { color: #e0e0e0; }
 
 header {
     text-align: center;
@@ -72,46 +68,22 @@ header {
     border-bottom: 1px solid #a46de5;
     padding-bottom: 20px;
 }
+#logo-container { width: 170px; height: 170px; margin: 0 auto 15px auto; border-radius: 50%; box-shadow: 0 0 15px rgba(190, 128, 255, 0.8); display: flex; justify-content: center; align-items: center; }
+#logo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }
+header h1 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 2.5em; margin: 10px 0 5px 0; }
+header p { color: #b3b3b3; font-size: 1.1em; margin: 0; }
 
-#logo-container {
-    width: 170px;
-    height: 170px;
-    margin: 0 auto 15px auto;
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(190, 128, 255, 0.8);
+/* ÚJ: Fő akciógombok (Véletlen, Törlés) tárolója */
+.main-actions {
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-#logo {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-header h1 {
-    font-family: 'Pacifico', cursive;
-    color: #c89eff;
-    font-size: 2.5em;
-    margin: 10px 0 5px 0;
-}
-
-header p {
-    color: #b3b3b3;
-    font-size: 1.1em;
-    margin: 0;
-}
-
-.random-prompt-section {
-    text-align: center;
+    gap: 15px;
     margin-bottom: 30px;
     padding-bottom: 30px;
     border-bottom: 1px solid #444;
 }
 
-#random-button {
+#random-button, #clear-all-button {
     background-color: transparent;
     border: 2px solid #a46de5;
     color: #a46de5;
@@ -125,185 +97,91 @@ header p {
     align-items: center;
     gap: 10px;
 }
-
-#random-button:hover {
+#random-button:hover, #clear-all-button:hover {
     background-color: #a46de5;
     color: #121212;
     box-shadow: 0 0 15px rgba(164, 109, 229, 0.5);
     transform: translateY(-3px);
 }
+#clear-all-button { border-color: #555; color: #888; }
+#clear-all-button:hover { background-color: #555; color: #fff; box-shadow: 0 0 15px rgba(100,100,100,0.5); }
 
-.prompt-section, .final-prompt-section {
-    margin-bottom: 25px;
+
+.prompt-section, .final-prompt-section { margin-bottom: 25px; }
+
+label { display: flex; align-items: center; margin-bottom: 8px; color: #c89eff; font-weight: bold; font-size: 1.1em; }
+label i { margin-right: 10px; color: #be80ff; font-size: 0.9em; transition: transform 0.2s ease; }
+label:hover i:first-child { transform: scale(1.2); }
+
+/* ÚJ: Kis törlés gomb stílusa */
+.clear-btn {
+    margin-left: auto; /* Jobbra tolja a gombot */
+    font-size: 1em;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
-
-label {
-    display: flex; 
-    align-items: center;
-    margin-bottom: 8px;
+.clear-btn:hover {
     color: #c89eff;
-    font-weight: bold;
-    font-size: 1.1em;
+    transform: rotate(90deg) scale(1.2);
 }
 
-label i {
-    margin-right: 10px;
-    color: #be80ff;
-    font-size: 0.9em;
-    transition: transform 0.2s ease;
-}
+.input-group { display: flex; gap: 10px; }
+.prompt-select { flex-grow: 1; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; cursor: pointer; min-width: 0; }
+.prompt-select:focus { outline: none; border-color: #a46de5; }
+.prompt-textarea { width: 100%; margin-top: 10px; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; resize: vertical; }
+.prompt-textarea:focus { outline: none; border-color: #a46de5; }
+#final-prompt { background-color: #252525; }
 
-label:hover i {
-    transform: scale(1.2);
-}
+.button-group { margin-top: 10px; display: flex; gap: 10px; }
 
+#save-prompt-button, .add-button, #copy-button, #translate-button { background-color: #a46de5; color: #121212; border: none; border-radius: 5px; padding: 10px 20px; font-weight: bold; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease-out; }
+#save-prompt-button { background-color: transparent; border: 1px solid #a46de5; color: #a46de5; } /* Mentés gomb egyedi stílusa */
 
-.input-group {
-    display: flex;
-    gap: 10px;
-}
+.button-group > button { flex-grow: 1; }
+#save-prompt-button:hover, .add-button:hover, #copy-button:hover, #translate-button:hover { background-color: #c89eff; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); color: #121212; }
 
-.prompt-select {
-    flex-grow: 1;
-    background-color: #2d2d2d;
-    color: #e0e0e0;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    cursor: pointer;
-    min-width: 0;
-}
-
-.prompt-select:focus {
-    outline: none;
-    border-color: #a46de5;
-}
-
-.prompt-textarea {
-    width: 100%;
-    margin-top: 10px;
-    background-color: #2d2d2d;
-    color: #e0e0e0;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    resize: vertical;
-}
-
-.prompt-textarea:focus {
-    outline: none;
-    border-color: #a46de5;
-}
-
-#final-prompt {
-    background-color: #252525;
-}
-
-.button-group {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px; 
-}
-
-.add-button, #copy-button, #translate-button {
-    background-color: #a46de5;
-    color: #121212;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.2s ease-out;
-}
-
-.button-group > button {
-    flex-grow: 1;
-}
-
-.add-button:hover, #copy-button:hover, #translate-button:hover {
-    background-color: #c89eff;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.chat-section {
+/* ÚJ: Mentett promptok szekciójának stílusa */
+#saved-prompts-section {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #a46de5;
-    text-align: center;
 }
-
-.chat-section h2 {
-    font-family: 'Pacifico', cursive;
-    color: #c89eff;
-    font-size: 1.8em;
-    margin-bottom: 20px;
+#saved-prompts-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+#saved-prompts-list { display: flex; flex-direction: column; gap: 10px; }
+.saved-prompt-item {
+    background-color: #2d2d2d;
+    padding: 10px 15px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    gap: 15px;
+    border-left: 3px solid #a46de5;
+    transition: background-color 0.2s ease;
 }
+.saved-prompt-item:hover { background-color: #3f3f3f; }
+.saved-prompt-text { flex-grow: 1; text-align: left; font-size: 0.9em; color: #e0e0e0; }
+.saved-prompt-actions button { background: none; border: none; color: #888; font-size: 1.1em; cursor: pointer; transition: color 0.2s ease; }
+.saved-prompt-actions button:hover { color: #c89eff; }
 
-footer {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #a46de5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.footer-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-}
+.chat-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; text-align: center; }
+.chat-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #a46de5; display: flex; justify-content: space-between; align-items: center; }
+.footer-item { display: flex; align-items: center; justify-content: center; flex: 1; }
 .footer-item:first-child { justify-content: flex-start; }
 .footer-item:last-child { justify-content: flex-end; }
 .footer-item a { white-space: nowrap; }
+footer a { color: #c89eff; text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
+footer a:hover { color: #ffffff; text-decoration: underline; }
+footer a i { margin-right: 8px; color: #be80ff; }
 
-
-footer a {
-    color: #c89eff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #ffffff;
-    text-decoration: underline; 
-}
-
-footer a i {
-    margin-right: 8px;
-    color: #be80ff;
-}
-
-.hidden {
-    display: none;
-}
+.hidden { display: none; }
 
 @media (max-width: 768px) {
-    #main-container {
-        padding: 20px;
-    }
-
-    footer {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .footer-item, 
-    .footer-item:first-child, 
-    .footer-item:last-child {
-        justify-content: center;
-        width: 100%;
-    }
+    #main-container { padding: 20px; }
+    .main-actions { flex-direction: column; }
+    footer { flex-direction: column; gap: 20px; }
+    .footer-item, .footer-item:first-child, .footer-item:last-child { justify-content: center; width: 100%; }
 }
