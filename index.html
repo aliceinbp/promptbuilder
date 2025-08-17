@@ -88,7 +88,10 @@
                 <textarea id="extra-text" class="prompt-textarea" data-key="extraPlaceholder" placeholder="..."></textarea>
             </div>
             <div class="final-prompt-section">
-                <label for="final-prompt" data-key="finalPromptLabel">Végleges prompt (angolul)</label>
+                <label for="final-prompt">
+                    <span data-key="finalPromptLabel">Végleges prompt (angolul)</span>
+                    <button id="history-button" title="Előzmények"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                </label>
                 <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="..."></textarea>
             </div>
             <div class="negative-prompt-section">
@@ -125,20 +128,25 @@
 
     <div id="modal-overlay" class="hidden"></div>
     <div id="info-modal" class="modal hidden">
-        <button id="close-info-modal" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
         <h2 data-key="infoModalTitle">A Prompt Builderről</h2>
         <p data-key="infoModalText1">Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.</p>
         <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
         <p>❤️</p>
     </div>
     <div id="manage-prompts-modal" class="modal hidden">
-        <button id="close-manage-modal" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
         <h2 id="manage-modal-title">Saját Promptok Kezelése</h2>
         <div id="manage-prompts-list"></div>
         <div class="add-new-prompt-form">
             <input type="text" id="new-prompt-input" placeholder="Új prompt hozzáadása...">
             <button id="add-new-prompt-btn">Hozzáad</button>
         </div>
+    </div>
+    <div id="history-modal" class="modal hidden">
+        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-key="historyModalTitle">Prompt Előzmények</h2>
+        <div id="history-list"></div>
     </div>
 
     <script src="script.js"></script>
