@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // KIBŐVÍTETT FORDÍTÁSOK
     const translations = {
         hu: {
             randomButton: "Véletlen Prompt",
@@ -27,6 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
             copyButtonSuccess: "Másolva!",
             translateButton: "Fordítás Angolra",
             chatTitle: "Vendégkönyv / Chat",
+            linksTitle: "Ajánlott AI Képalkotó Oldalak",
+            nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
+            leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
+            copilotDesc: "A legújabb DALL-E 3 modellt használja, és teljesen ingyenes egy Microsoft fiókkal. Kiváló minőséget produkál.",
+            playgroundDesc: "Naponta rengeteg ingyenes kép készíthető vele. Nagyon letisztult, könnyen kezelhető felület, ideális kezdőknek is.",
+            visitButton: "Oldal Megnyitása",
             selectDefault: "Válassz egyet a(z) {category} kategóriából..."
         },
         en: {
@@ -54,15 +59,20 @@ document.addEventListener('DOMContentLoaded', function() {
             copyButtonSuccess: "Copied!",
             translateButton: "Translate to English",
             chatTitle: "Guestbook / Chat",
+            linksTitle: "Recommended AI Image Generators",
+            nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
+            leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
+            copilotDesc: "Uses the latest DALL-E 3 model and is completely free with a Microsoft account. Produces excellent quality.",
+            playgroundDesc: "You can create a large number of free images daily. Very clean, easy-to-use interface, also ideal for beginners.",
+            visitButton: "Visit Site",
             selectDefault: "Choose an option from {category}..."
         }
     };
 
-    // Alapértelmezett promptok
     const defaultPrompts = {
         en: {
             style: [ "Photorealistic", "Oil painting", "Pencil sketch", "Watercolor", "Impressionism by Claude Monet", "Surrealism by Salvador Dalí", "Cubism by Pablo Picasso", "Art Nouveau by Alphonse Mucha", "Pop Art by Andy Warhol", "Concept art", "Digital painting by Greg Rutkowski", "Steampunk aesthetic", "Cyberpunk neon noir", "Biomechanical art by H.R. Giger", "Fantasy art by Frank Frazetta", "Studio Ghibli anime style", "Disney animation style", "Tim Burton style", "Art Deco", "Baroque painting", "Minimalist line art", "Ukiyo-e Japanese art", "Vintage photography", "Double exposure", "Synthwave", "Solarpunk", "Gothic art", "Cosmic horror", "Abstract expressionism", "Cinematic still from a movie" ],
-            subject: [ "A lone astronaut discovering an alien artifact", "A wise old dragon coiled on a mountain of gold", "A cyberpunk detective in a rain-soaked neon city", "A beautiful sorceress casting a complex spell", "A group of adventurers gathered around a campfire", "A majestic white wolf howling at a blood moon", "A secret agent in a high-speed chase", "A mythical phoenix rising from ashes", "A steampunk inventor in her workshop", "A tranquil forest spirit meditating", "A knight in shining armor facing a colossal beast", "An android questioning its own existence", "A cat wearing a tiny wizard hat", "A pirate captain on the deck of her ship", "A mermaid exploring a sunken city", "A time traveler witnessing the fall of Rome", "A sentient robot tending to a garden", "A gothic vampire in a lavish castle", "A post-apokaliptikus túlélő egy kibernetikus kutyával", "A warrior queen leading her army into battle", "An ancient tree with glowing runes carved into it", "A mysterious figure in a Venetian mask", "A giant space whale carrying a city on its back", "A half-elf woman with ice-blue eyes", "A guardian golem made of stone and vines", "A child releasing a glowing lantern into the sky", "A scholar in a library of floating scrolls", "A futuristic soldier in powered armor", "A deity of the cosmos shaping galaxies", "A talking animal sidekick on an adventure" ],
+            subject: [ "A lone astronaut discovering an alien artifact", "A wise old dragon coiled on a mountain of gold", "A cyberpunk detective in a rain-soaked neon city", "A beautiful sorceress casting a complex spell", "A group of adventurers gathered around a campfire", "A majestic white wolf howling at a blood moon", "A secret agent in a high-speed chase", "A mythical phoenix rising from ashes", "A steampunk inventor in her workshop", "A tranquil forest spirit meditating", "A knight in shining armor facing a colossal beast", "An android questioning its own existence", "A cat wearing a tiny wizard hat", "A pirate captain on the deck of her ship", "A mermaid exploring a sunken city", "A time traveler witnessing the fall of Rome", "A sentient robot tending to a garden", "A gothic vampire in a lavish castle", "A post-apocalyptic survivor with a cybernetic dog", "A warrior queen leading her army into battle", "An ancient tree with glowing runes carved into it", "A mysterious figure in a Venetian mask", "A giant space whale carrying a city on its back", "A half-elf woman with ice-blue eyes", "A guardian golem made of stone and vines", "A child releasing a glowing lantern into the sky", "A scholar in a library of floating scrolls", "A futuristic soldier in powered armor", "A deity of the cosmos shaping galaxies", "A talking animal sidekick on an adventure" ],
             setting: [ "An enchanted forest with glowing mushrooms", "A futuristic city with flying cars and holograms", "The grand library of Alexandria, reimagined", "A forgotten temple deep in the jungle", "A space station orbiting a black hole", "An underwater kingdom of coral and light", "A floating island in a sea of clouds", "A post-apocalyptic wasteland with crumbling skyscrapers", "A Victorian-era London street shrouded in fog", "The throne room of a long-lost elven king", "A magical university resembling Hogwarts", "A bustling market in a medieval fantasy city", "A serene Japanese garden with a koi pond", "A desolate alien planet with two suns", "A colossal cave system with giant crystals", "The inside of a massive, ancient clockwork machine", "A vibrant coral reef teeming with alien sea life", "A hidden monastery high in the snowy mountains", "A surreal dreamscape where gravity is optional", "A volcanic landscape with rivers of lava", "A sun-drenched beach on a tropical island", "A dark, haunted mansion on a hill", "A Roman-style city on Mars", "A whimsical village where houses are made of candy", "An alien bazaar on a desert planet", "A derelict spaceship adrift in a nebula", "A battlefield after an epic magical war", "A tranquil meadow under a starry sky", "A dwarven city carved into the heart of a mountain", "The peak of Mount Olympus" ],
             extra: [ "Cinematic lighting", "Volumetric lighting, god rays", "Dynamic pose", "Hyperrealistic, 8K resolution", "Shallow depth of field", "Detailed line work, manga style", "Soft pastel palette, ethereal feel", "Vibrant colors, high contrast", "Monochromatic, black and white", "Trending on ArtStation", "Octane render, photorealistic", "Unreal Engine 5 screenshot", "Matte painting", "Golden hour lighting", "Moody and atmospheric", "Minimalist", "Intricate details", "Epic scale, wide-angle shot", "Close-up portrait", "Dynamic action scene", "Glitch effect, digital distortion", "Subsurface scattering", "Lush and overgrown with nature", "Elegant and ornate", "Dark and gritty", "Whimsical and charming", "Mystical and magical atmosphere", "Ominous and foreboding", "Peaceful and serene", "Retro 80s aesthetic" ]
         },
@@ -85,8 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearAllButton = document.getElementById('clear-all-button');
     const savePromptButton = document.getElementById('save-prompt-button');
     const savedPromptsList = document.getElementById('saved-prompts-list');
-
-    // Modal elemek
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const managePromptsModal = document.getElementById('manage-prompts-modal');
@@ -98,33 +106,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const newPromptInput = document.getElementById('new-prompt-input');
     const addNewPromptBtn = document.getElementById('add-new-prompt-btn');
 
-
-    // --- ÚJ FUNKCIÓK ---
-
-    // Saját promptok lekérése a localStorage-ból
-    function getCustomPrompts() {
-        return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] };
-    }
-    
-    // Saját promptok mentése a localStorage-ba
-    function saveCustomPrompts(customPrompts) {
-        localStorage.setItem('customPrompts', JSON.stringify(customPrompts));
-    }
-
-    function openModal(modal) {
-        overlay.classList.remove('hidden');
-        modal.classList.remove('hidden');
-    }
-
-    function closeModal() {
-        overlay.classList.add('hidden');
-        infoModal.classList.add('hidden');
-        managePromptsModal.classList.add('hidden');
-    }
+    function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
+    function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
+    function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
+    function closeModal() { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); managePromptsModal.classList.add('hidden'); }
 
     function openManageModal(category) {
         currentManagedCategory = category;
-        manageModalTitle.textContent = `"${translations[currentLanguage][category + 'Label']}" promptok kezelése`;
+        const categoryLabelKey = category + 'Label';
+        manageModalTitle.textContent = `"${translations[currentLanguage][categoryLabelKey]}" - Sajátok`;
         renderManageList();
         openModal(managePromptsModal);
     }
@@ -133,30 +123,30 @@ document.addEventListener('DOMContentLoaded', function() {
         managePromptsList.innerHTML = '';
         const customPrompts = getCustomPrompts();
         const promptsForCategory = customPrompts[currentManagedCategory] || [];
-        
-        promptsForCategory.forEach((prompt, index) => {
-            const item = document.createElement('div');
-            item.className = 'manage-list-item';
-            item.innerHTML = `
-                <span>${prompt}</span>
-                <button class="delete-custom-prompt-btn" data-index="${index}" title="Törlés"><i class="fa-solid fa-trash"></i></button>
-            `;
-            managePromptsList.appendChild(item);
-        });
+        if(promptsForCategory.length === 0){
+             managePromptsList.innerHTML = `<p style="text-align: center; color: #888;">Itt még nincsenek saját promptjaid.</p>`;
+        } else {
+            promptsForCategory.forEach((prompt, index) => {
+                const item = document.createElement('div');
+                item.className = 'manage-list-item';
+                item.innerHTML = `<span>${prompt}</span><button class="delete-custom-prompt-btn" data-index="${index}" title="Törlés"><i class="fa-solid fa-trash"></i></button>`;
+                managePromptsList.appendChild(item);
+            });
+        }
     }
 
     function addNewCustomPrompt() {
         const newPrompt = newPromptInput.value.trim();
         if (newPrompt === '' || !currentManagedCategory) return;
-
         const customPrompts = getCustomPrompts();
         if (!customPrompts[currentManagedCategory].includes(newPrompt)) {
             customPrompts[currentManagedCategory].push(newPrompt);
             saveCustomPrompts(customPrompts);
             renderManageList();
-            populateSelects(); // Frissíti a főoldali legördülőt
+            populateSelects();
         }
         newPromptInput.value = '';
+        newPromptInput.focus();
     }
 
     function deleteCustomPrompt(index) {
@@ -164,12 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
         customPrompts[currentManagedCategory].splice(index, 1);
         saveCustomPrompts(customPrompts);
         renderManageList();
-        populateSelects(); // Frissíti a főoldali legördülőt
+        populateSelects();
     }
 
     function generateRandomPrompt() {
         const langPrompts = getCombinedPrompts(currentLanguage);
-        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const getRandomItem = (arr) => arr.length > 0 ? arr[Math.floor(Math.random() * arr.length)] : '';
         textareas.style.value = getRandomItem(langPrompts.style);
         textareas.subject.value = getRandomItem(langPrompts.subject);
         textareas.setting.value = getRandomItem(langPrompts.setting);
@@ -178,10 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function clearAllTextareas() {
-        for (const key in textareas) {
-            textareas[key].value = '';
-        }
-        negativePromptTextarea.value = ''; // Negatív promptot is törli
+        for (const key in textareas) { textareas[key].value = ''; }
+        negativePromptTextarea.value = '';
         updateFinalPrompt();
     }
 
@@ -189,24 +177,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const promptToSave = finalPromptTextarea.value.trim();
         if (promptToSave === '') return;
         let saved = getSavedPrompts();
-        if (!saved.includes(promptToSave)) {
-            saved.unshift(promptToSave); // Az elejére teszi az újat
-            localStorage.setItem('savedPrompts', JSON.stringify(saved));
-            renderSavedPrompts();
-        }
+        if (!saved.includes(promptToSave)) { saved.unshift(promptToSave); localStorage.setItem('savedPrompts', JSON.stringify(saved)); renderSavedPrompts(); }
     }
 
-    function getSavedPrompts() {
-        return JSON.parse(localStorage.getItem('savedPrompts')) || [];
-    }
+    function getSavedPrompts() { return JSON.parse(localStorage.getItem('savedPrompts')) || []; }
     
     function renderSavedPrompts() {
         savedPromptsList.innerHTML = '';
         const saved = getSavedPrompts();
-        if(saved.length === 0){
-            savedPromptsList.innerHTML = `<p style="text-align: center; color: #888;">Nincsenek mentett promptjaid.</p>`;
-            return;
-        }
+        if(saved.length === 0){ savedPromptsList.innerHTML = `<p style="text-align: center; color: #888;">Nincsenek mentett promptjaid.</p>`; return; }
         saved.forEach((prompt, index) => {
             const item = document.createElement('div');
             item.className = 'saved-prompt-item';
@@ -224,9 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (target.classList.contains('delete-prompt-btn')) { saved.splice(index, 1); localStorage.setItem('savedPrompts', JSON.stringify(saved)); renderSavedPrompts(); }
     }
 
-
-    // --- MEGLÉVŐ FUNKCIÓK FRISSÍTVE ---
-
     function updateFinalPrompt() {
         const promptParts = [textareas.style.value, textareas.subject.value, textareas.setting.value, textareas.extra.value].map(part => part.trim()).filter(part => part !== "");
         finalPromptTextarea.value = promptParts.join(', ');
@@ -240,13 +216,13 @@ document.addEventListener('DOMContentLoaded', function() {
         translateButton.classList.toggle('hidden', lang !== 'hu');
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
-            const target = elem.querySelector('span') || elem;
             if (translations[lang] && translations[lang][key]) {
-                if (target.placeholder !== undefined) { target.placeholder = translations[lang][key]; }
-                else { target.textContent = translations[lang][key]; }
+                if (elem.placeholder !== undefined) { elem.placeholder = translations[lang][key]; }
+                else { elem.querySelector('span') ? elem.querySelector('span').textContent = translations[lang][key] : elem.textContent = translations[lang][key]; }
             }
         });
         populateSelects();
+        renderSavedPrompts();
     }
     
     function getCombinedPrompts(lang) {
@@ -254,7 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const defaults = defaultPrompts[lang];
         let combined = {};
         for(const category in defaults){
-            combined[category] = [...new Set([...defaults[category], ...(custom[category] || [])])];
+            const defaultSet = new Set(defaults[category]);
+            const customSet = new Set(custom[category] || []);
+            combined[category] = [...defaultSet, ...customSet];
         }
         return combined;
     }
@@ -280,32 +258,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // --- ESEMÉNYFIGYELŐK ---
-
-    infoButton.addEventListener('click', () => openModal(infoModal));
-    closeInfoModalBtn.addEventListener('click', closeModal);
-    closeManageModalBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', closeModal);
-    
-    document.querySelectorAll('.manage-prompts-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            openManageModal(this.dataset.category);
-        });
-    });
-
-    addNewPromptBtn.addEventListener('click', addNewCustomPrompt);
-    managePromptsList.addEventListener('click', function(event) {
-        const target = event.target.closest('.delete-custom-prompt-btn');
-        if (target) {
-            deleteCustomPrompt(parseInt(target.dataset.index, 10));
-        }
-    });
-
-    randomButton.addEventListener('click', generateRandomPrompt);
-    clearAllButton.addEventListener('click', clearAllTextareas);
-    savePromptButton.addEventListener('click', saveCurrentPrompt);
-    savedPromptsList.addEventListener('click', handleSavedListClick);
-
     document.querySelectorAll('.add-button').forEach(button => {
         button.addEventListener('click', function() {
             const selectElement = this.previousElementSibling;
@@ -325,16 +277,12 @@ document.addEventListener('DOMContentLoaded', function() {
     copyButton.addEventListener('click', function() {
         let textToCopy = finalPromptTextarea.value.trim();
         const negativeText = negativePromptTextarea.value.trim();
-        if(negativeText !== ''){
-            textToCopy += ` --no ${negativeText}`; // Negatív prompt hozzáadása
-        }
-        
+        if(negativeText !== ''){ textToCopy += ` --no ${negativeText}`; }
         navigator.clipboard.writeText(textToCopy).then(() => {
-            const originalText = this.querySelector('span').textContent;
-            this.querySelector('span').textContent = translations[currentLanguage].copyButtonSuccess;
-            setTimeout(() => {
-                this.querySelector('span').textContent = originalText;
-            }, 1500);
+            const buttonTextSpan = this.querySelector('span');
+            const originalText = buttonTextSpan.textContent;
+            buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
+            setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500);
         });
     });
 
@@ -345,12 +293,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`;
         window.open(translateUrl, '_blank');
     });
-
+    
+    infoButton.addEventListener('click', () => openModal(infoModal));
+    closeInfoModalBtn.addEventListener('click', closeModal);
+    closeManageModalBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+    
+    document.querySelectorAll('.manage-prompts-btn').forEach(btn => { btn.addEventListener('click', function() { openManageModal(this.dataset.category); }); });
+    addNewPromptBtn.addEventListener('click', addNewCustomPrompt);
+    newPromptInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') addNewCustomPrompt(); });
+    managePromptsList.addEventListener('click', function(event) { const target = event.target.closest('.delete-custom-prompt-btn'); if (target) { deleteCustomPrompt(parseInt(target.dataset.index, 10)); } });
+    randomButton.addEventListener('click', generateRandomPrompt);
+    clearAllButton.addEventListener('click', clearAllTextareas);
+    savePromptButton.addEventListener('click', saveCurrentPrompt);
+    savedPromptsList.addEventListener('click', handleSavedListClick);
     document.getElementById('lang-hu').addEventListener('click', (e) => { e.preventDefault(); setLanguage('hu'); });
     document.getElementById('lang-en').addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
 
-    // --- INICIALIZÁLÁS ---
-    
     setLanguage(currentLanguage);
     renderSavedPrompts();
     updateFinalPrompt();
