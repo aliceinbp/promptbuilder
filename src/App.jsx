@@ -10,7 +10,7 @@ const THEME = {
   accent: "#a855f7",       // gombok, kiemelések
   accentSoft: "#c084fc",   // hover/fénylés
   frame: "barbed",          // "barbed" | "dashed"
-  logoSize: 80,
+  logoSize: 200,
 };
 
 // Szögesdrót SVG
@@ -24,7 +24,7 @@ function makeBarbedDataUrl(color = THEME.border) {
 
 export default function PromptBuilderDark() {
   // Opciók
-const styleOptions = [
+  const styleOptions = [
     "Jean-Michel Basquiat + Cy Twombly, textúra és expresszív absztrakció",
     "Albert Bierstadt + Bob Ross, fenséges tájképek, buja részletekkel",
     "Hayao Miyazaki + Makoto Shinkai, vibráló, érzelmes anime látványvilág",
@@ -63,8 +63,9 @@ const styleOptions = [
     "Moebius (Jean Giraud) + Studio Ghibli art, digitális művészet, lebegő sziget hatalmas fákkal.",
     "Edward Weston + Michael Kenna, fotórealista, fekete-fehér, elhagyatott móló.",
     "Claude Monet + Vincent van Gogh, impresszionista, napfelkelte a mező felett."
-  ];  
-const subjectOptions = [
+  ];
+
+  const subjectOptions = [
     "a fierce woman with flowing blonde hair, barefoot, holding a worn sword, flanked by two wolves",
     "lonely detective in trench coat, cigarette, hat brim shadow",
     "sensual figure half-draped, introspective gaze",
@@ -94,7 +95,8 @@ const subjectOptions = [
     "a ghost ship sailing on dark, stormy waters",
     "a tree whose roots lead to another dimension"
   ];
-const settingOptions = [
+
+  const settingOptions = [
     "a magical library with floating books and glowing runes",
     "a sun-drenched, overgrown ruin with ancient statues",
     "a bioluminescent cave filled with glowing fungi",
@@ -115,8 +117,9 @@ const settingOptions = [
     "a vast underground cavern with giant crystals",
     "a chaotic wizard's laboratory with glowing potions and scrolls",
     "a floating celestial garden in a starry sky"
-  ];  
-const extraOptions = [
+  ];
+
+  const extraOptions = [
     "detailed line work, manga style, dynamic pose",
     "watercolor art, soft pastel palette, ethereal feel",
     "pixel art, retro 8-bit aesthetic, vibrant tones",
@@ -172,14 +175,18 @@ const extraOptions = [
     <div className="min-h-screen w-full flex flex-col items-center" style={{ color: THEME.text, background: THEME.bg }}>
       <div aria-hidden className="fixed inset-0 -z-10 opacity-50" style={{background:"radial-gradient(800px 400px at 50% -10%, rgba(168,85,247,0.12), transparent), radial-gradient(600px 300px at 100% 10%, rgba(192,132,252,0.10), transparent)"}}/>
       <header className="w-full border-b" style={{ borderColor: THEME.border }}>
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="rounded-full flex items-center justify-center overflow-hidden" style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
-              <img src={myLogo} alt="Logo" className="w-full h-full object-cover" />
+        <div className="mx-auto max-w-5xl px-6 py-4">
+          <div className="grid grid-cols-2 items-center gap-4">
+            <div className="flex items-center justify-center">
+              <div className="rounded-full overflow-hidden" style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+                <img src={myLogo} alt="Logo" className="w-full h-full object-cover" />
+              </div>
             </div>
-            <h1 className="text-lg md:text-xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+            <div className="flex flex-col justify-center">
+              <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+              <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+            </div>
           </div>
-          <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
