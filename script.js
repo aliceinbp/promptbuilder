@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // JAVÍTVA: Ez a két sor biztosítja, hogy az oldal tetejére ugorjon frissítéskor
+    // ÚJ: Az oldal tetejére ugrik betöltéskor
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
@@ -8,10 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const translations = {
         hu: {
-            navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria",
+            navHome: "Főoldal", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek",
+            artistsTitle: "Művész Adatbázis",
+            artistDescBasquiat: "Ez a párosítás a nyers, graffiti-szerű neo-expresszionizmust ötvözi az elvont, kalligrafikus firkákkal. Az eredmény energikus, texturált és mélyen szimbolikus.",
+            artistDescMiyazaki: "Két anime mester találkozása. A Studio Ghibli varázslatos, emberközpontú világa keveredik Shinkai fotórealisztikus, érzelmes és fényben úszó tájképeivel.",
+            artistDescRutkowski: "A modern digitális fantasy festészet (epikus fények, drámai pózok) és a szecesszió eleganciájának (díszes vonalak, organikus minták) fúziója.",
+            artistDescGiger: "A biomechanikus horror és a pszichológiai mélységű, torz figurák párosa. Sötét, nyugtalanító és szürreális látványvilágot eredményez.",
+            artistDescDali: "A szürrealizmus és a kora reneszánsz vizionárius festészetének találkozása. Álomszerű, bizarr lényekkel és szimbolizmussal teli, fantasztikus világokat hoz létre.",
+            artistDescBurton: "Jellegzetes gótikus, mesei stílus, ami egyszerre sötét és játékos. Hosszú, vékony karakterek, spirális formák és egy melankolikus, mégis bájos hangulat jellemzi.",
             galleryTitle: "Galéria", comingSoon: "Hamarosan...",
-            galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic",
-            galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
+            galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
             linksTitle: "Ajánlott AI Képalkotó Oldalak",
             nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
             leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
@@ -32,10 +38,16 @@ document.addEventListener('DOMContentLoaded', function() {
             chatTitle: "Vendégkönyv / Chat", selectDefault: "Válassz egyet a(z) {category} kategóriából..."
         },
         en: {
-            navHome: "Home", navLinks: "Links", navGallery: "Gallery",
+            navHome: "Home", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists",
+            artistsTitle: "Artist Database",
+            artistDescBasquiat: "This pairing combines the raw, graffiti-like neo-expressionism with abstract, calligraphic scribbles. The result is energetic, textured, and deeply symbolic.",
+            artistDescMiyazaki: "A meeting of two anime masters. The magical, human-centric world of Studio Ghibli blends with Shinkai's photorealistic, emotional, and light-filled landscapes.",
+            artistDescRutkowski: "A fusion of modern digital fantasy painting (epic lights, dramatic poses) and the elegance of Art Nouveau (ornate lines, organic patterns).",
+            artistDescGiger: "The pairing of biomechanical horror and psychologically deep, distorted figures. It results in a dark, unsettling, and surreal visual world.",
+            artistDescDali: "The meeting of surrealism and early Renaissance visionary painting. It creates dreamlike, fantastic worlds filled with bizarre creatures and symbolism.",
+            artistDescBurton: "A distinctive gothic, fairytale style that is both dark and playful. Characterized by long, thin characters, spiral shapes, and a melancholic yet charming atmosphere.",
             galleryTitle: "Gallery", comingSoon: "Coming Soon...",
-            galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic",
-            galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",
+            galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",
             linksTitle: "Recommended AI Image Generators",
             nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
             leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
@@ -62,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function setLanguage(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
-        
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (translations[lang] && translations[lang][key]) {
@@ -71,30 +82,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 else { elem.textContent = text; }
             }
         });
-
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
-        if(langHu && langEn){
+        if (langHu && langEn) {
             langHu.classList.toggle('active', lang === 'hu');
             langEn.classList.toggle('active', lang === 'en');
         }
-
         const translateButton = document.getElementById('translate-button');
-        if(translateButton) {
+        if (translateButton) {
             translateButton.classList.toggle('hidden', lang !== 'hu');
         }
-        
         if (typeof populateSelects === 'function') {
             populateSelects();
         }
-         if (typeof renderSavedPrompts === 'function') {
+        if (typeof renderSavedPrompts === 'function') {
             renderSavedPrompts();
         }
     }
 
     const langHu = document.getElementById('lang-hu');
     const langEn = document.getElementById('lang-en');
-    if(langHu && langEn){
+    if (langHu && langEn) {
         langHu.addEventListener('click', (e) => { e.preventDefault(); setLanguage('hu'); });
         langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
     }
@@ -102,37 +110,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const infoButton = document.getElementById('info-button');
-    
-    if(infoButton && infoModal && overlay){
+    if (infoButton && infoModal && overlay) {
         const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
         const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
         const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
-     }
+    }
      
-     if(overlay){
-         overlay.addEventListener('click', () => {
+    if (overlay) {
+        overlay.addEventListener('click', () => {
             document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
             overlay.classList.add('hidden');
-         });
-     }
+        });
+    }
 
     if (document.getElementById('random-button')) {
-    
         const defaultPrompts = {
-            en: {
-                style: [ "Photorealistic", "Oil painting", "Pencil sketch", "Watercolor", "Impressionism by Claude Monet", "Surrealism by Salvador Dalí", "Cubism by Pablo Picasso", "Art Nouveau by Alphonse Mucha", "Pop Art by Andy Warhol", "Concept art", "Digital painting by Greg Rutkowski", "Steampunk aesthetic", "Cyberpunk neon noir", "Biomechanical art by H.R. Giger", "Fantasy art by Frank Frazetta", "Studio Ghibli anime style", "Disney animation style", "Tim Burton style", "Art Deco", "Baroque painting", "Minimalist line art", "Ukiyo-e Japanese art", "Vintage photography", "Double exposure", "Synthwave", "Solarpunk", "Gothic art", "Cosmic horror", "Abstract expressionism", "Cinematic still from a movie" ],
-                subject: [ "A lone astronaut discovering an alien artifact", "A wise old dragon coiled on a mountain of gold", "A cyberpunk detective in a rain-soaked neon city", "A beautiful sorceress casting a complex spell", "A group of adventurers gathered around a campfire", "A majestic white wolf howling at a blood moon", "A secret agent in a high-speed chase", "A mythical phoenix rising from ashes", "A steampunk inventor in her workshop", "A tranquil forest spirit meditating", "A knight in shining armor facing a colossal beast", "An android questioning its own existence", "A cat wearing a tiny wizard hat", "A pirate captain on the deck of her ship", "A mermaid exploring a sunken city", "A time traveler witnessing the fall of Rome", "A sentient robot tending to a garden", "A gothic vampire in a lavish castle", "A post-apocalyptic survivor with a cybernetic dog", "A warrior queen leading her army into battle", "An ancient tree with glowing runes carved into it", "A mysterious figure in a Venetian mask", "A giant space whale carrying a city on its back", "A half-elf woman with ice-blue eyes", "A guardian golem made of stone and vines", "A child releasing a glowing lantern into the sky", "A scholar in a library of floating scrolls", "A futuristic soldier in powered armor", "A deity of the cosmos shaping galaxies", "A talking animal sidekick on an adventure" ],
-                setting: [ "An enchanted forest with glowing mushrooms", "A futuristic city with flying cars and holograms", "The grand library of Alexandria, reimagined", "A forgotten temple deep in the jungle", "A space station orbiting a black hole", "An underwater kingdom of coral and light", "A floating island in a sea of clouds", "A post-apocalyptic wasteland with crumbling skyscrapers", "A Victorian-era London street shrouded in fog", "The throne room of a long-lost elven king", "A magical university resembling Hogwarts", "A bustling market in a medieval fantasy city", "A serene Japanese garden with a koi pond", "A desolate alien planet with two suns", "A colossal cave system with giant crystals", "The inside of a massive, ancient clockwork machine", "A vibrant coral reef teeming with alien sea life", "A hidden monastery high in the snowy mountains", "A surreal dreamscape where gravity is optional", "A volcanic landscape with rivers of lava", "A sun-drenched beach on a tropical island", "A dark, haunted mansion on a hill", "A Roman-style city on Mars", "A whimsical village where houses are made of candy", "An alien bazaar on a desert planet", "A derelict spaceship adrift in a nebula", "A battlefield after an epic magical war", "A tranquil meadow under a starry sky", "A dwarven city carved into the heart of a mountain", "The peak of Mount Olympus" ],
-                extra: [ "Cinematic lighting", "Volumetric lighting, god rays", "Dynamic pose", "Hyperrealistic, 8K resolution", "Shallow depth of field", "Detailed line work, manga style", "Soft pastel palette, ethereal feel", "Vibrant colors, high contrast", "Monochromatic, black and white", "Trending on ArtStation", "Octane render, photorealistic", "Unreal Engine 5 screenshot", "Matte painting", "Golden hour lighting", "Moody and atmospheric", "Minimalist", "Intricate details", "Epic scale, wide-angle shot", "Close-up portrait", "Dynamic action scene", "Glitch effect, digital distortion", "Subsurface scattering", "Lush and overgrown with nature", "Elegant and ornate", "Dark and gritty", "Whimsical and charming", "Mystical and magical atmosphere", "Ominous and foreboding", "Peaceful and serene", "Retro 80s aesthetic" ]
-            },
-            hu: {
-                style: [ "Fotórealisztikus", "Olajfestmény", "Ceruzavázlat", "Akvarell", "Impresszionizmus, Claude Monet stílusában", "Szürrealizmus, Salvador Dalí stílusában", "Kubizmus, Pablo Picasso stílusában", "Szecesszió, Alphonse Mucha stílusában", "Pop Art, Andy Warhol stílusában", "Koncepciórajz", "Digitális festmény, Greg Rutkowski stílusában", "Steampunk esztétika", "Cyberpunk neon noir", "Biomechanikus művészet, H.R. Giger stílusában", "Fantasy művészet, Frank Frazetta stílusában", "Studio Ghibli anime stílus", "Disney animációs stílus", "Tim Burton stílus", "Art Deco", "Barokk festmény", "Minimalista vonalrajz", "Ukiyo-e japán művészet", "Vintage fotográfia", "Dupla expozíció", "Synthwave", "Solarpunk", "Gótikus művészet", "Kozmikus horror", "Absztrakt expresszionizmus", "Filmszerű állókép egy moziból" ],
-                subject: [ "Egy magányos űrhajós egy idegen ereklyét fedez fel", "Egy bölcs, öreg sárkány aranyhegyen tekeregve", "Egy cyberpunk detektív egy esőáztatta neon városban", "Egy gyönyörű varázslónő egy bonyolult varázslatot szór", "Egy csapat kalandor egy tábortűz körül", "Egy fenséges fehér farkas egy vérholdra üvölt", "Egy titkosügynök egy nagy sebességű autósüldözésben", "Egy mitikus főnix, ami feltámad a hamvaiból", "Egy steampunk feltaláló a műhelyében", "Egy nyugodt erdei szellem meditál", "Egy lovag fényes páncélban egy kolosszális szörnnyel szemben", "Egy android, aki megkérdőjelezi saját létezését", "Egy macska, aki apró varázslósüveget visel", "Egy kalózkapitány a hajója fedélzetén", "Egy hableány egy elsüllyedt várost fedez fel", "Egy időutazó, aki Róma bukásának tanúja", "Egy öntudattal rendelkező robot, aki egy kertet gondoz", "Egy gótikus vámpír egy pazar kastélyban", "Egy poszt-apokaliptikus túlélő egy kibernetikus kutyával", "Egy harcos királynő, aki csatába vezeti seregét", "Egy ősi fa, melynek törzsébe fénylő rúnákat véstek", "Egy rejtélyes alak velencei maszkban", "Egy óriási űrbálna, ami egy várost cipel a hátán", "Egy félelf nő jégkék szemekkel", "Egy kőből és indákból készült védelmező gólem", "Egy gyermek, aki egy fénylő lampiont enged az égbe", "Egy tudós egy lebegő tekercsekkel teli könyvtárban", "Egy futurisztikus katona motorizált páncélban", "A kozmosz istensége, aki galaxisokat formál", "Egy beszélő állat segítőtárs egy kalandban" ],
-                setting: [ "Egy elvarázsolt erdő izzó gombákkal", "Egy futurisztikus város repülő autókkal és hologramokkal", "Az alexandriai nagykönyvtár, újragondolva", "Egy elfeledett templom mélyen a dzsungelben", "Egy űrállomás, ami egy fekete lyuk körül kering", "Egy vízalatti királyság korallból és fényből", "Egy lebegő sziget a felhők tengerében", "Egy poszt-apokaliptikus pusztaság omladozó felhőkarcolókkal", "Egy viktoriánus kori londoni utca ködbe burkolózva", "Egy rég elveszett tünde király trónterme", "Egy Roxfortra emlékeztető mágikus egyetem", "Egy nyüzsgő piac egy középkori fantasy városban", "Egy békés japán kert koi-tóval", "Egy kietlen idegen bolygó két nappal", "Egy kolosszális barlangrendszer óriási kristályokkal", "Egy hatalmas, ősi óramű gépezet belseje", "Egy vibráló korallzátony, ami hemzseg az idegen tengeri élettől", "Egy rejtett kolostor magasan a havas hegyekben", "Egy szürreális álomvilág, ahol a gravitáció opcionális", "Egy vulkanikus táj lávafolyamokkal", "Egy napsütötte tengerpart egy trópusi szigeten", "Egy sötét, kísértetjárta kúria egy dombon", "Egy római stílusú város a Marson", "Egy mókás falu, ahol a házak cukorkából vannak", "Egy idegen bazár egy sivatagos bolygón", "Egy elhagyatott űrhajó, ami egy ködben sodródik", "Egy csatatér egy epikus mágikus háború után", "Egy békés rét egy csillagos égbolt alatt", "Egy törp város, amit egy hegy szívébe vájtak", "Az Olümposz hegy csúcsa" ],
-                extra: [ "Filmszerű megvilágítás", "Volumetrikus fény, fénysugarak", "Dinamikus póz", "Hiperrealisztikus, 8K felbontás", "Sekély mélységélesség", "Részletes vonalvezetés, manga stílus", "Lágy pasztell paletta, éteri hangulat", "Élénk színek, magas kontraszt", "Monokróm, fekete-fehér", "Népszerű az ArtStation-ön", "Octane render, fotorealisztikus", "Unreal Engine 5 képernyőkép", "Matte painting", "Arany óra megvilágítás", "Hangulatos és atmoszférikus", "Minimalista", "Bonyolult részletek", "Epikus méret, nagylátószögű felvétel", "Közeli portré", "Dinamikus akciójelenet", "Glitch effekt, digitális torzítás", "Subsurface scattering", "Dús és benőtt növényzet", "Elegáns és díszes", "Sötét és nyers", "Mókás és bájos", "Misztikus és mágikus atmoszféra", "Baljós és vészjósló", "Békés és nyugodt", "Retro 80-as évek esztétika" ]
-            }
+            en: { style: [ "Photorealistic", "Oil painting", "Pencil sketch", "Watercolor", "Impressionism by Claude Monet", "Surrealism by Salvador Dalí", "Cubism by Pablo Picasso", "Art Nouveau by Alphonse Mucha", "Pop Art by Andy Warhol", "Concept art", "Digital painting by Greg Rutkowski", "Steampunk aesthetic", "Cyberpunk neon noir", "Biomechanical art by H.R. Giger", "Fantasy art by Frank Frazetta", "Studio Ghibli anime style", "Disney animation style", "Tim Burton style", "Art Deco", "Baroque painting", "Minimalist line art", "Ukiyo-e Japanese art", "Vintage photography", "Double exposure", "Synthwave", "Solarpunk", "Gothic art", "Cosmic horror", "Abstract expressionism", "Cinematic still from a movie" ], subject: [ "A lone astronaut discovering an alien artifact", "A wise old dragon coiled on a mountain of gold", "A cyberpunk detective in a rain-soaked neon city", "A beautiful sorceress casting a complex spell", "A group of adventurers gathered around a campfire", "A majestic white wolf howling at a blood moon", "A secret agent in a high-speed chase", "A mythical phoenix rising from ashes", "A steampunk inventor in her workshop", "A tranquil forest spirit meditating", "A knight in shining armor facing a colossal beast", "An android questioning its own existence", "A cat wearing a tiny wizard hat", "A pirate captain on the deck of her ship", "A mermaid exploring a sunken city", "A time traveler witnessing the fall of Rome", "A sentient robot tending to a garden", "A gothic vampire in a lavish castle", "A post-apocalyptic survivor with a cybernetic dog", "A warrior queen leading her army into battle", "An ancient tree with glowing runes carved into it", "A mysterious figure in a Venetian mask", "A giant space whale carrying a city on its back", "A half-elf woman with ice-blue eyes", "A guardian golem made of stone and vines", "A child releasing a glowing lantern into the sky", "A scholar in a library of floating scrolls", "A futuristic soldier in powered armor", "A deity of the cosmos shaping galaxies", "A talking animal sidekick on an adventure" ], setting: [ "An enchanted forest with glowing mushrooms", "A futuristic city with flying cars and holograms", "The grand library of Alexandria, reimagined", "A forgotten temple deep in the jungle", "A space station orbiting a black hole", "An underwater kingdom of coral and light", "A floating island in a sea of clouds", "A post-apocalyptic wasteland with crumbling skyscrapers", "A Victorian-era London street shrouded in fog", "The throne room of a long-lost elven king", "A magical university resembling Hogwarts", "A bustling market in a medieval fantasy city", "A serene Japanese garden with a koi pond", "A desolate alien planet with two suns", "A colossal cave system with giant crystals", "The inside of a massive, ancient clockwork machine", "A vibrant coral reef teeming with alien sea life", "A hidden monastery high in the snowy mountains", "A surreal dreamscape where gravity is optional", "A volcanic landscape with rivers of lava", "A sun-drenched beach on a tropical island", "A dark, haunted mansion on a hill", "A Roman-style city on Mars", "A whimsical village where houses are made of candy", "An alien bazaar on a desert planet", "A derelict spaceship adrift in a nebula", "A battlefield after an epic magical war", "A tranquil meadow under a starry sky", "A dwarven city carved into the heart of a mountain", "The peak of Mount Olympus" ], extra: [ "Cinematic lighting", "Volumetric lighting, god rays", "Dynamic pose", "Hyperrealistic, 8K resolution", "Shallow depth of field", "Detailed line work, manga style", "Soft pastel palette, ethereal feel", "Vibrant colors, high contrast", "Monochromatic, black and white", "Trending on ArtStation", "Octane render, photorealistic", "Unreal Engine 5 screenshot", "Matte painting", "Golden hour lighting", "Moody and atmospheric", "Minimalist", "Intricate details", "Epic scale, wide-angle shot", "Close-up portrait", "Dynamic action scene", "Glitch effect, digital distortion", "Subsurface scattering", "Lush and overgrown with nature", "Elegant and ornate", "Dark and gritty", "Whimsical and charming", "Mystical and magical atmosphere", "Ominous and foreboding", "Peaceful and serene", "Retro 80s aesthetic" ] },
+            hu: { style: [ "Fotórealisztikus", "Olajfestmény", "Ceruzavázlat", "Akvarell", "Impresszionizmus, Claude Monet stílusában", "Szürrealizmus, Salvador Dalí stílusában", "Kubizmus, Pablo Picasso stílusában", "Szecesszió, Alphonse Mucha stílusában", "Pop Art, Andy Warhol stílusában", "Koncepciórajz", "Digitális festmény, Greg Rutkowski stílusában", "Steampunk esztétika", "Cyberpunk neon noir", "Biomechanikus művészet, H.R. Giger stílusában", "Fantasy művészet, Frank Frazetta stílusában", "Studio Ghibli anime stílus", "Disney animációs stílus", "Tim Burton stílus", "Art Deco", "Barokk festmény", "Minimalista vonalrajz", "Ukiyo-e japán művészet", "Vintage fotográfia", "Dupla expozíció", "Synthwave", "Solarpunk", "Gótikus művészet", "Kozmikus horror", "Absztrakt expresszionizmus", "Filmszerű állókép egy moziból" ], subject: [ "Egy magányos űrhajós egy idegen ereklyét fedez fel", "Egy bölcs, öreg sárkány aranyhegyen tekeregve", "Egy cyberpunk detektív egy esőáztatta neon városban", "Egy gyönyörű varázslónő egy bonyolult varázslatot szór", "Egy csapat kalandor egy tábortűz körül", "Egy fenséges fehér farkas egy vérholdra üvölt", "Egy titkosügynök egy nagy sebességű autósüldözésben", "Egy mitikus főnix, ami feltámad a hamvaiból", "Egy steampunk feltaláló a műhelyében", "Egy nyugodt erdei szellem meditál", "Egy lovag fényes páncélban egy kolosszális szörnnyel szemben", "Egy android, aki megkérdőjelezi saját létezését", "Egy macska, aki apró varázslósüveget visel", "Egy kalózkapitány a hajója fedélzetén", "Egy hableány egy elsüllyedt várost fedez fel", "Egy időutazó, aki Róma bukásának tanúja", "Egy öntudattal rendelkező robot, aki egy kertet gondoz", "Egy gótikus vámpír egy pazar kastélyban", "Egy poszt-apokaliptikus túlélő egy kibernetikus kutyával", "Egy harcos királynő, aki csatába vezeti seregét", "Egy ősi fa, melynek törzsébe fénylő rúnákat véstek", "Egy rejtélyes alak velencei maszkban", "Egy óriási űrbálna, ami egy várost cipel a hátán", "Egy félelf nő jégkék szemekkel", "Egy kőből és indákból készült védelmező gólem", "Egy gyermek, aki egy fénylő lampiont enged az égbe", "Egy tudós egy lebegő tekercsekkel teli könyvtárban", "Egy futurisztikus katona motorizált páncélban", "A kozmosz istensége, aki galaxisokat formál", "Egy beszélő állat segítőtárs egy kalandban" ], setting: [ "Egy elvarázsolt erdő izzó gombákkal", "Egy futurisztikus város repülő autókkal és hologramokkal", "Az alexandriai nagykönyvtár, újragondolva", "Egy elfeledett templom mélyen a dzsungelben", "Egy űrállomás, ami egy fekete lyuk körül kering", "Egy vízalatti királyság korallból és fényből", "Egy lebegő sziget a felhők tengerében", "Egy poszt-apokaliptikus pusztaság omladozó felhőkarcolókkal", "Egy viktoriánus kori londoni utca ködbe burkolózva", "Egy rég elveszett tünde király trónterme", "Egy Roxfortra emlékeztető mágikus egyetem", "Egy nyüzsgő piac egy középkori fantasy városban", "Egy békés japán kert koi-tóval", "Egy kietlen idegen bolygó két nappal", "Egy kolosszális barlangrendszer óriási kristályokkal", "Egy hatalmas, ősi óramű gépezet belseje", "Egy vibráló korallzátony, ami hemzseg az idegen tengeri élettől", "Egy rejtett kolostor magasan a havas hegyekben", "Egy szürreális álomvilág, ahol a gravitáció opcionális", "Egy vulkanikus táj lávafolyamokkal", "Egy napsütötte tengerpart egy trópusi szigeten", "Egy sötét, kísértetjárta kúria egy dombon", "Egy római stílusú város a Marson", "Egy mókás falu, ahol a házak cukorkából vannak", "Egy idegen bazár egy sivatagos bolygón", "Egy elhagyatott űrhajó, ami egy ködben sodródik", "Egy csatatér egy epikus mágikus háború után", "Egy békés rét egy csillagos égbolt alatt", "Egy törp város, amit egy hegy szívébe vájtak", "Az Olümposz hegy csúcsa" ], extra: [ "Filmszerű megvilágítás", "Volumetrikus fény, fénysugarak", "Dinamikus póz", "Hiperrealisztikus, 8K felbontás", "Sekély mélységélesség", "Részletes vonalvezetés, manga stílus", "Lágy pasztell paletta, éteri hangulat", "Élénk színek, magas kontraszt", "Monokróm, fekete-fehér", "Népszerű az ArtStation-ön", "Octane render, fotorealisztikus", "Unreal Engine 5 képernyőkép", "Matte painting", "Arany óra megvilágítás", "Hangulatos és atmoszférikus", "Minimalista", "Bonyolult részletek", "Epikus méret, nagylátószögű felvétel", "Közeli portré", "Dinamikus akciójelenet", "Glitch effekt, digitális torzítás", "Subsurface scattering", "Dús és benőtt növényzet", "Elegáns és díszes", "Sötét és nyers", "Mókás és bájos", "Misztikus és mágikus atmoszféra", "Baljós és vészjósló", "Békés és nyugodt", "Retro 80-as évek esztétika" ] }
         };
 
         let currentManagedCategory = '';
@@ -161,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
-        
+
         function openManageModal(category) {
             currentManagedCategory = category;
             const categoryLabelKey = category + 'Label';
@@ -346,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         translateButton.addEventListener('click', function() { const promptText = finalPromptTextarea.value; if (promptText.trim() === '') return; const encodedText = encodeURIComponent(promptText); const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`; window.open(translateUrl, '_blank'); });
         historyButton.addEventListener('click', () => { renderHistory(); openModal(historyModal); });
         closeHistoryModalBtn.addEventListener('click', () => { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); });
-        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; updateFinalPrompt(); overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
+        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; /*updateFinalPrompt();*/ overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
         
         renderSavedPrompts();
         updateFinalPrompt();

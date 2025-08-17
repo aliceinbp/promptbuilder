@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajánlások - Prompt Builder</title>
+    <title>Művészek - Prompt Builder</title>
     <link rel="stylesheet" href="style.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -27,23 +27,49 @@
             <p>Prompt generator for AI images</p>
             <div id="header-nav-container">
                 <nav id="main-nav">
-    <a href="index.html" data-key="navHome">Főoldal</a>
-    <a href="links.html" class="active" data-key="navLinks">Ajánlások</a>
-    <a href="gallery.html" data-key="navGallery">Galéria</a>
-    <a href="artists.html" data-key="navArtists">Művészek</a>
-</nav>
+                    <a href="index.html" data-key="navHome">Főoldal</a>
+                    <a href="links.html" data-key="navLinks">Ajánlások</a>
+                    <a href="gallery.html" data-key="navGallery">Galéria</a>
+                    <a href="artists.html" class="active" data-key="navArtists">Művészek</a>
+                </nav>
             </div>
         </header>
 
         <main>
-             <section id="links-section">
-                <h2><i class="fa-solid fa-link"></i> <span data-key="linksTitle">Ajánlott AI Képalkotó Oldalak</span></h2>
-                <div class="links-grid">
-                    <div class="link-card"><h3>NightCafe Studio</h3><p data-key="nightcafeDesc">Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.</p><a href="https://creator.nightcafe.studio/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Leonardo.Ai</h3><p data-key="leonardoDesc">Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.</p><a href="https://leonardo.ai/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>ImgToImg.ai</h3><p data-key="imgtoimgDesc">Napi bejelentkezéssel ad ingyenes krediteket. Képes a meglévő képeket átalakítani promptok alapján.</p><a href="https://imgtoimg.ai/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Microsoft Copilot (DALL-E 3)</h3><p data-key="copilotDesc">A legújabb DALL-E 3 modellt használja, és teljesen ingyenes egy Microsoft fiókkal. Kiváló minőséget produkál.</p><a href="https://copilot.microsoft.com/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Playground AI</h3><p data-key="playgroundDesc">Naponta rengeteg ingyenes kép készíthető vele. Nagyon letisztult, könnyen kezelhető felület, ideális kezdőknek is.</p><a href="https://playgroundai.com/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
+             <section id="artists-section">
+                <h2><i class="fa-solid fa-palette"></i> <span data-key="artistsTitle">Művész Adatbázis</span></h2>
+                <div class="artist-grid">
+                    
+                    <div class="artist-card">
+                        <h3>Jean-Michel Basquiat + Cy Twombly</h3>
+                        <p data-key="artistDescBasquiat">Ez a párosítás a nyers, graffiti-szerű neo-expresszionizmust ötvözi az elvont, kalligrafikus firkákkal. Az eredmény energikus, texturált és mélyen szimbolikus.</p>
+                    </div>
+
+                    <div class="artist-card">
+                        <h3>Hayao Miyazaki + Makoto Shinkai</h3>
+                        <p data-key="artistDescMiyazaki">Két anime mester találkozása. A Studio Ghibli varázslatos, emberközpontú világa keveredik Shinkai fotórealisztikus, érzelmes és fényben úszó tájképeivel.</p>
+                    </div>
+
+                    <div class="artist-card">
+                        <h3>Greg Rutkowski + Alphonse Mucha</h3>
+                        <p data-key="artistDescRutkowski">A modern digitális fantasy festészet (epikus fények, drámai pózok) és a szecesszió eleganciájának (díszes vonalak, organikus minták) fúziója.</p>
+                    </div>
+
+                    <div class="artist-card">
+                        <h3>H.R. Giger + Francis Bacon</h3>
+                        <p data-key="artistDescGiger">A biomechanikus horror és a pszichológiai mélységű, torz figurák párosa. Sötét, nyugtalanító és szürreális látványvilágot eredményez.</p>
+                    </div>
+
+                     <div class="artist-card">
+                        <h3>Salvador Dalí + Hieronymus Bosch</h3>
+                        <p data-key="artistDescDali">A szürrealizmus és a kora reneszánsz vizionárius festészetének találkozása. Álomszerű, bizarr lényekkel és szimbolizmussal teli, fantasztikus világokat hoz létre.</p>
+                    </div>
+
+                     <div class="artist-card">
+                        <h3>Tim Burton</h3>
+                        <p data-key="artistDescBurton">Jellegzetes gótikus, mesei stílus, ami egyszerre sötét és játékos. Hosszú, vékony karakterek, spirális formák és egy melankolikus, mégis bájos hangulat jellemzi.</p>
+                    </div>
+
                 </div>
             </section>
         </main>
