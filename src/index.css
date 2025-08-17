@@ -1,8 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Ez egy üres CSS fájl, amely a main.jsx fájlban szereplő hivatkozást oldja meg. */
-/* Fix szélesség a legördülő sávoknak */
+
 select {
-  width: 300px; /* Vagy bármilyen más méret, ami megfelelő */
-} 
+  width: 300px;
+}
