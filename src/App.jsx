@@ -178,9 +178,12 @@ export default function PromptBuilderDark() {
         <div className="mx-auto max-w-5xl px-6 py-4">
           <div className="grid grid-cols-2 items-center gap-4">
             <div className="flex items-center justify-center">
-              <div className="rounded-full overflow-hidden" style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
-                <img src={myLogo} alt="Logo" className="w-full h-full object-cover" />
-              </div>
+              <<div className="flex items-center justify-center">
+  <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+    <img src={myLogo} alt="Logo" className="w-full h-full" />
+  </div>
+</div>
+</div>
             </div>
             <div className="flex flex-col justify-center">
               <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
