@@ -14,7 +14,6 @@ body {
     margin: 0;
 }
 
-/* ÚJ: Animáció az oldal betöltéséhez */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -35,12 +34,12 @@ body {
     padding: 25px 40px;
     box-shadow: 0 0 20px rgba(164, 109, 229, 0.3);
     position: relative; 
-    animation: fadeIn 0.6s ease-out forwards; /* ÚJ: Animáció alkalmazása */
+    animation: fadeIn 0.6s ease-out forwards;
 }
 
 #lang-switcher, header, main, footer, .chat-section {
-    opacity: 0; /* Kezdetben láthatatlan */
-    animation: fadeIn 0.6s ease-out 0.2s forwards; /* Késleltetett animáció */
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 0.2s forwards;
 }
 
 
@@ -105,7 +104,6 @@ header p {
     margin: 0;
 }
 
-/* ÚJ: Véletlen prompt gomb szekció */
 .random-prompt-section {
     text-align: center;
     margin-bottom: 30px;
@@ -152,11 +150,11 @@ label i {
     margin-right: 10px;
     color: #be80ff;
     font-size: 0.9em;
-    transition: transform 0.2s ease; /* ÚJ: animáció az ikonnak */
+    transition: transform 0.2s ease;
 }
 
 label:hover i {
-    transform: scale(1.2); /* ÚJ: Ikon kiemelése hoverre */
+    transform: scale(1.2);
 }
 
 
@@ -220,7 +218,7 @@ label:hover i {
     font-weight: bold;
     cursor: pointer;
     flex-shrink: 0;
-    transition: all 0.2s ease-out; /* MÓDOSÍTVA: animációhoz */
+    transition: all 0.2s ease-out;
 }
 
 .button-group > button {
@@ -229,8 +227,8 @@ label:hover i {
 
 .add-button:hover, #copy-button:hover, #translate-button:hover {
     background-color: #c89eff;
-    transform: translateY(-3px); /* ÚJ: gomb megemelkedik */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* ÚJ: árnyék a gombnak */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .chat-section {
@@ -245,8 +243,9 @@ label:hover i {
     color: #c89eff;
     font-size: 1.8em;
     margin-bottom: 20px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -291,21 +290,20 @@ footer a i {
     display: none;
 }
 
-/* ÚJ: Mobilnézet javítások (Reszponzivitás) */
 @media (max-width: 768px) {
     #main-container {
         padding: 20px;
     }
 
     footer {
-        flex-direction: column; /* Egymás alá rendezi az elemeket */
-        gap: 20px; /* Térköz az elemek között */
+        flex-direction: column;
+        gap: 20px;
     }
 
     .footer-item, 
     .footer-item:first-child, 
     .footer-item:last-child {
-        justify-content: center; /* Mindent középre igazít */
+        justify-content: center;
         width: 100%;
     }
 }

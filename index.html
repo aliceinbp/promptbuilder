@@ -26,11 +26,9 @@
         </header>
 
         <main>
-
             <div class="random-prompt-section">
                 <button id="random-button"><i class="fa-solid fa-dice"></i> <span data-key="randomButton">Véletlen Prompt</span></button>
             </div>
-
             <div class="prompt-section">
                 <label for="style-select"><i class="fa-solid fa-palette"></i> <span data-key="styleLabel">Style:</span></label>
                 <div class="input-group">
@@ -39,7 +37,6 @@
                 </div>
                 <textarea id="style-text" class="prompt-textarea" data-key="stylePlaceholder" placeholder="Itt szerkesztheted a kiválasztott stílusokat..."></textarea>
             </div>
-
             <div class="prompt-section">
                 <label for="subject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="subjectLabel">Subject:</span></label>
                 <div class="input-group">
@@ -48,7 +45,6 @@
                 </div>
                 <textarea id="subject-text" class="prompt-textarea" data-key="subjectPlaceholder" placeholder="Itt szerkesztheted a kiválasztott témákat..."></textarea>
             </div>
-
             <div class="prompt-section">
                 <label for="setting-select"><i class="fa-solid fa-mountain-sun"></i> <span data-key="settingLabel">Setting:</span></label>
                 <div class="input-group">
@@ -57,7 +53,6 @@
                 </div>
                 <textarea id="setting-text" class="prompt-textarea" data-key="settingPlaceholder" placeholder="Itt szerkesztheted a kiválasztott helyszíneket..."></textarea>
             </div>
-
             <div class="prompt-section">
                 <label for="extra-select"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="extraLabel">Extra:</span></label>
                 <div class="input-group">
@@ -66,7 +61,6 @@
                 </div>
                 <textarea id="extra-text" class="prompt-textarea" data-key="extraPlaceholder" placeholder="Itt szerkesztheted a kiválasztott extrákat..."></textarea>
             </div>
-
             <div class="final-prompt-section">
                 <label for="final-prompt" data-key="finalPromptLabel">Végleges prompt (angolul)</label>
                 <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="Az összeállított prompt itt fog megjelenni..."></textarea>
@@ -79,7 +73,9 @@
         
         <section class="chat-section">
             <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
-            <script id="cid0020000416433965702" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 250px;height: 200px;">{"handle":"aliceinbpchat","arch":"js","styles":{"a":"1e1e1e","b":100,"c":"e0e0e0","d":"e0e0e0","k":"a46de5","l":"a46de5","m":"a46de5","n":"FFFFFF","p":"10","q":"252525","r":100}}</script>
+            <div id="chat-wrapper">
+                <script id="cid0020000416433965702" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 250px;height: 200px;">{"handle":"aliceinbpchat","arch":"js","styles":{"a":"1e1e1e","b":100,"c":"e0e0e0","d":"e0e0e0","k":"a46de5","l":"a46de5","m":"a46de5","n":"FFFFFF","p":"10","q":"252525","r":100}}</script>
+            </div>
         </section>
 
         <footer>
