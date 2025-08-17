@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // ÚJ STRUKTÚRA: A prompt opciók fordításai
+    // A prompt opciók fordításai
     const prompts = {
         en: {
             style: [
@@ -228,37 +228,35 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (translations[lang] && translations[lang][key]) {
-                const translationData = translations[lang][key];
-                if (elem.placeholder !== undefined && typeof translationData === 'string') {
-                     elem.placeholder = translationData;
-                } else if(typeof translationData === 'string') {
-                    elem.textContent = translationData;
+                if (elem.placeholder !== undefined) {
+                    elem.placeholder = translations[lang][key];
+                } else {
+                    elem.textContent = translations[lang][key];
                 }
             }
         });
-        // FONTOS: A legördülő menüket újra kell tölteni a fordítás miatt
         populateSelects();
     }
 
-    // MÓDOSÍTOTT FUNKCIÓ
     function populateSelects() {
-        for (const category in prompts[currentLanguage]) { // Módosítva: a prompts[currentLanguage]-en iterál
+        for (const category in prompts[currentLanguage]) {
             const selectElement = document.getElementById(`${category}-select`);
-            selectElement.innerHTML = '';
-            
-            const defaultOption = document.createElement('option');
-            let defaultText = translations[currentLanguage].selectDefault.replace('{category}', category);
-            defaultOption.textContent = defaultText;
-            defaultOption.value = "";
-            selectElement.appendChild(defaultOption);
+            if (selectElement) {
+                selectElement.innerHTML = '';
+                
+                const defaultOption = document.createElement('option');
+                let defaultText = translations[currentLanguage].selectDefault.replace('{category}', category);
+                defaultOption.textContent = defaultText;
+                defaultOption.value = "";
+                selectElement.appendChild(defaultOption);
 
-            // Módosítva: a helyes, lefordított listát használja
-            prompts[currentLanguage][category].forEach(optionText => {
-                const option = document.createElement('option');
-                option.value = optionText;
-                option.textContent = optionText;
-                selectElement.appendChild(option);
-            });
+                prompts[currentLanguage][category].forEach(optionText => {
+                    const option = document.createElement('option');
+                    option.value = optionText;
+                    option.textContent = optionText;
+                    selectElement.appendChild(option);
+                });
+            }
         }
     }
 
