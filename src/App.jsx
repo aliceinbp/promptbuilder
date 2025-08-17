@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ TÉMA: Minden szín, keret és méret itt állítható a könnyű szerkeszthetőségért
 const THEME = {
-  bg: "#0a0a0a",
-  text: "#d8b4fe",
-  card: "#141018",
-  border: "#5b21b6",
-  accent: "#a855f7",
-  accentSoft: "#c084fc",
-  logoSize: "200px",
-  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace",
+  bg: "#0a0a0a", // Teljes háttér (fekete)
+  text: "#d8b4fe", // Halványlila szöveg
+  card: "#141018", // Kártyák háttere (nagyon sötét lila-fekete)
+  border: "#5b21b6", // Lila keret
+  accent: "#a855f7", // Gombok, kiemelések
+  accentSoft: "#c084fc", // Hover/fénylés
+  logoSize: "200px", // A logó mérete
+  font: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace", // Betűtípus
 };
 
 export default function PromptBuilder() {
@@ -133,13 +133,6 @@ export default function PromptBuilder() {
   const [subject, setSubject] = useState("");
   const [setting, setSetting] = useState("");
   const [extra, setExtra] = useState("");
-  const [finalPrompt, setFinalPrompt] = useState("");
-
-  // useEffect hook: frissíti a végső promptot, amikor a 4 mező bármelyike megváltozik
-  useEffect(() => {
-    const combinedPrompt = [style, subject, setting, extra].filter(Boolean).join("\n");
-    setFinalPrompt(combinedPrompt);
-  }, [style, subject, setting, extra]);
 
   // Segédfüggvények
   const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
@@ -167,6 +160,9 @@ export default function PromptBuilder() {
       document.body.removeChild(ta);
     }
   };
+
+  // A végső prompt frissítése a 4 mező alapján
+  const finalPrompt = [style, subject, setting, extra].filter(Boolean).join("\n");
 
   // Komponens a kártyákhoz
   const Card = ({ label, children }) => (
@@ -360,7 +356,7 @@ export default function PromptBuilder() {
             <textarea
               className="w-full rounded-xl p-3 text-xs md:text-sm"
               rows={8}
-              onChange={(e) => setFinalPrompt(e.target.value)}
+              readOnly={true} // A végleges prompt mező nem szerkeszthető, a 4 fenti mező adatai alapján frissül
               style={{
                 background: THEME.bg,
                 color: THEME.text,
