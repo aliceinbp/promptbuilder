@@ -1,15 +1,15 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import myLogo from './assets/myLogo.jpg';
 
 // ⚙️ TÉMA – minden szín/keret itt állítható VS Code-ban
 const THEME = {
-  bg: "#0a0a0a",           // teljes háttér (fekete)
-  text: "#d8b4fe",         // halványlila szöveg
-  card: "#141018",         // kártyák háttere (sötét lila-fekete)
-  border: "#a855f7",       // lila keret (szögesdróthoz is ez megy)
-  accent: "#a855f7",       // gombok, kiemelések
-  accentSoft: "#c084fc",   // hover/fénylés
-  frame: "barbed",          // "barbed" | "dashed"
+  bg: "#0a0a0a",
+  text: "#d8b4fe",
+  card: "#141018",
+  border: "#a855f7",
+  accent: "#a855f7",
+  accentSoft: "#c084fc",
+  frame: "barbed",
   logoSize: 200,
 };
 
@@ -169,119 +169,89 @@ export default function PromptBuilderDark() {
     <button onClick={onClick} className="px-3 py-1.5 rounded-xl text-xs md:text-sm transition" style={{ color: THEME.text, background: variant==="solid"?THEME.accent:THEME.bg, border:`1px solid ${THEME.border}` }}>{children}</button>
   );
 
+  const ControlledTextarea = ({ value, onChange, placeholder }) => {
+    const ref = useRef(null);
+
+    useEffect(() => {
+      if (ref.current) {
+        ref.current.value = value;
+      }
+    }, [value]);
+
+    return (
+      <textarea
+        ref={ref}
+        className="rounded-xl p-3 text-xs md:text-sm mt-3"
+        style={{
+          background: THEME.bg,
+          color: THEME.text,
+          border:`1px solid ${THEME.border}`,
+          width: "300px",
+          height: "100px"
+        }}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+      />
+    );
+  };
+
   const frameStyle = THEME.frame==='barbed'?{borderWidth:'16px',borderStyle:'solid',borderImage:`${makeBarbedDataUrl(THEME.border)} 32 round`,background:THEME.card,margin:'20px',borderRadius:'20px'}:{borderWidth:'4px',borderStyle:'dashed',borderColor:THEME.border,background:THEME.card,margin:'20px',borderRadius:'20px'};
 
   return (
-  <div className="min-h-screen w-full flex flex-col items-center" style={{ color: THEME.text, background: THEME.bg }}>
-    <div aria-hidden className="fixed inset-0 -z-10 opacity-50" style={{background:"radial-gradient(800px 400px at 50% -10%, rgba(168,85,247,0.12), transparent), radial-gradient(600px 300px at 100% 10%, rgba(192,132,252,0.10), transparent)"}}/>
-    <header className="w-full border-b" style={{ borderColor: THEME.border }}>
-      <div className="mx-auto max-w-5xl px-6 py-4">
-        <div className="grid grid-cols-2 items-center gap-4">
-          <div className="flex items-center justify-center">
-            <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
-              <img src={myLogo} alt="Logo" className="w-full h-full" />
+    <div className="min-h-screen w-full flex flex-col items-center" style={{ color: THEME.text, background: THEME.bg }}>
+      <div aria-hidden className="fixed inset-0 -z-10 opacity-50" style={{background:"radial-gradient(800px 400px at 50% -10%, rgba(168,85,247,0.12), transparent), radial-gradient(600px 300px at 100% 10%, rgba(192,132,252,0.10), transparent)"}}/>
+      <header className="w-full border-b" style={{ borderColor: THEME.border }}>
+        <div className="mx-auto max-w-5xl px-6 py-4">
+          <div className="grid grid-cols-2 items-center gap-4">
+            <div className="flex items-center justify-center">
+              <div style={{ border:`2px solid ${THEME.border}`, width:THEME.logoSize, height:THEME.logoSize}}>
+                <img src={myLogo} alt="Logo" className="w-full h-full" />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center">
+              <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
+              <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
             </div>
           </div>
-          <div className="flex flex-col justify-center">
-            <h1 className="text-xl md:text-2xl font-semibold tracking-widest">★ Prompt Builder ★</h1>
-            <p className="text-xs md:text-sm opacity-90">Prompt generator for AI images</p>
+        </div>
+      </header>
+      <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
+        <div className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8" style={frameStyle}>
+          <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
+            <div className="flex gap-2 md:gap-3">
+              <Button onClick={shuffleAll} variant="solid">Shuffle All</Button>
+              <Button onClick={clearAll}>Clear</Button>
+              <Button onClick={copy}>Copy</Button>
+            </div>
+            <div className="text-xs opacity-80">Chrome-kompatibilis • reszponzív</div>
           </div>
-        </div>
-      </div>
-    </header>
-    <main className="mx-auto max-w-5xl px-6 py-8 md:py-12 flex-1 w-full">
-      <div className="rounded-3xl p-5 md:p-8 space-y-6 md:space-y-8" style={frameStyle}>
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 justify-between">
-          <div className="flex gap-2 md:gap-3">
-            <Button onClick={shuffleAll} variant="solid">Shuffle All</Button>
-            <Button onClick={clearAll}>Clear</Button>
-            <Button onClick={copy}>Copy</Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            <Card label="🎨 Style">
+              <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
+              <div className="flex gap-2"><Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button></div>
+              <ControlledTextarea value={style} onChange={setStyle} placeholder="Vagy írd ide a saját stílusodat..." />
+            </Card>
+            <Card label="👤 Subject">
+              <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
+              <div className="flex gap-2"><Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button></div>
+              <ControlledTextarea value={subject} onChange={setSubject} placeholder="Vagy írd ide a saját témádat..." />
+            </Card>
+            <Card label="🏞 Setting">
+              <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
+              <div className="flex gap-2"><Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button></div>
+              <ControlledTextarea value={setting} onChange={setSetting} placeholder="Vagy írd ide a saját helyszínedet..." />
+            </Card>
+            <Card label="✨ Extra">
+              <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
+              <div className="flex gap-2"><Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button></div>
+              <ControlledTextarea value={extra} onChange={setExtra} placeholder="Vagy írd ide a saját extrádat..." />
+            </Card>
           </div>
-          <div className="text-xs opacity-80">Chrome-kompatibilis • reszponzív</div>
+          <Card label="📝 Final Prompt">
+            <textarea className="w-full rounded-xl p-3 text-xs md:text-sm" rows={8} readOnly style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}} value={finalPrompt}/>
+          </Card>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          <Card label="🎨 Style">
-  <Select value={style} onChange={setStyle} options={styleOptions} placeholder="Válassz stílust…" />
-  <div className="flex gap-2 mt-2">
-    <Button onClick={()=>setStyle(pickRandom(styleOptions))}>Random</Button>
-  </div>
-  <textarea
-    className="rounded-xl p-3 text-xs md:text-sm mt-3"
-    style={{
-      background: THEME.bg,
-      color: THEME.text,
-      border:`1px solid ${THEME.border}`,
-      width: "300px",
-      height: "100px"
-    }}
-    value={style}
-    onChange={(e) => setStyle(e.target.value)}
-    key="style-textarea"
-  />
-</Card>
-          <Card label="👤 Subject">
-  <Select value={subject} onChange={setSubject} options={subjectOptions} placeholder="Válassz témát…" />
-  <div className="flex gap-2 mt-2">
-    <Button onClick={()=>setSubject(pickRandom(subjectOptions))}>Random</Button>
-  </div>
-  <textarea
-    className="rounded-xl p-3 text-xs md:text-sm mt-3"
-    style={{
-      background: THEME.bg,
-      color: THEME.text,
-      border:`1px solid ${THEME.border}`,
-      width: "300px",
-      height: "100px"
-    }}
-    value={subject}
-    onChange={(e) => setSubject(e.target.value)}
-    key="subject-textarea"
-  />
-</Card>
-         <Card label="🏞 Setting">
-  <Select value={setting} onChange={setSetting} options={settingOptions} placeholder="Válassz helyszínt…" />
-  <div className="flex gap-2 mt-2">
-    <Button onClick={()=>setSetting(pickRandom(settingOptions))}>Random</Button>
-  </div>
-  <textarea
-    className="rounded-xl p-3 text-xs md:text-sm mt-3"
-    style={{
-      background: THEME.bg,
-      color: THEME.text,
-      border:`1px solid ${THEME.border}`,
-      width: "300px",
-      height: "100px"
-    }}
-    value={setting}
-    onChange={(e) => setSetting(e.target.value)}
-    key="setting-textarea"
-  />
-</Card>
-         <Card label="✨ Extra">
-  <Select value={extra} onChange={setExtra} options={extraOptions} placeholder="Válassz extrát…" />
-  <div className="flex gap-2 mt-2">
-    <Button onClick={()=>setExtra(pickRandom(extraOptions))}>Random</Button>
-  </div>
-  <textarea
-    className="rounded-xl p-3 text-xs md:text-sm mt-3"
-    style={{
-      background: THEME.bg,
-      color: THEME.text,
-      border:`1px solid ${THEME.border}`,
-      width: "300px",
-      height: "100px"
-    }}
-    value={extra}
-    onChange={(e) => setExtra(e.target.value)}
-    key="extra-textarea"
-  />
-</Card>
-        </div>
-        <Card label="📝 Final Prompt">
-          <textarea className="w-full rounded-xl p-3 text-xs md:text-sm" rows={8} readOnly style={{background:THEME.bg,color:THEME.text,border:`1px solid ${THEME.border}`}} value={finalPrompt}/>
-        </Card>
-      </div>
-    </main>
-  </div>
-);
+      </main>
+    </div>
+  );
 }
