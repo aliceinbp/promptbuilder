@@ -29,12 +29,13 @@ const translations = {
         copyButton: "Prompt másolása", copyButtonSuccess: "Másolva!", translateButton: "Fordítás Angolra",
         chatTitle: "Vendégkönyv / Chat",
         guestbookPlaceholder: "Ez a szekció jelenleg fejlesztés alatt áll. Hamarosan új vendégkönyvvel jelentkezem!",
-        
         artistsSubtitle: "Inspiráció a stílusod megtalálásához. Kattints a másolás ikonra a név egyszerű felhasználásához!",
         copyTooltip: "Név másolása",
+        backToTopTooltip: "Vissza a tetejére",
         artistDescToriyama: "Dinamikus manga stílus a Dragon Ball alkotójától, tiszta vonalakkal és élénk akciójelenetekkel.",
-        // ... (a többi művész leírás, ahogy korábban volt)
-        
+        artistDescGrey: "Spirituális és pszichedelikus látomások, anatómiai pontossággal ábrázolt fénylő alakokkal.",
+        artistDescMucha: "Díszes, organikus vonalvezetésű szecessziós plakátok, idealizált női alakokkal.",
+        // ... és a többi művész leírása ...
         selectDefault: "Válassz egyet a(z) {category} kategóriából..."
     },
     en: {
@@ -73,9 +74,9 @@ const translations = {
         translateButton: "Translate to English",
         chatTitle: "Guestbook / Chat",
         guestbookPlaceholder: "This section is currently under development. I will be back with a new guestbook soon!",
-        
         artistsSubtitle: "Inspiration for finding your style. Click the copy icon to easily use the name!",
         copyTooltip: "Copy name",
+        backToTopTooltip: "Back to top",
         artistDescToriyama: "Dynamic manga style from the creator of Dragon Ball, with clean lines and vibrant action scenes.",
         artistDescGrey: "Spiritual and psychedelic visions, featuring luminous figures with anatomical precision.",
         artistDescMucha: "Ornate Art Nouveau posters and paintings with organic lines and idealized female figures.",
