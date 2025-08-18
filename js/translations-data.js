@@ -36,6 +36,8 @@ const translations = {
         formLabelMessage: "Üzeneted:",
         formButtonSubmit: "Üzenet elküldése",
         loadingGuestbook: "Vendégkönyv betöltése...",
+        guestbookNoComments: "Még nincsenek bejegyzések. Légy te az első!",
+        guestbookError: "Hoppá, a kommenteket most nem sikerült betölteni.",
         
         artistDescToriyama: "Dinamikus manga stílus a Dragon Ball alkotójától, tiszta vonalakkal és élénk akciójelenetekkel.",
         artistDescGrey: "Spirituális és pszichedelikus látomások, anatómiai pontossággal ábrázolt fénylő alakokkal.",
@@ -86,6 +88,8 @@ const translations = {
         formLabelMessage: "Your Message:",
         formButtonSubmit: "Send Message",
         loadingGuestbook: "Loading guestbook...",
+        guestbookNoComments: "No entries yet. Be the first to comment!",
+        guestbookError: "Oops, the comments could not be loaded right now.",
         artistDescToriyama: "Dynamic manga style from the creator of Dragon Ball, with clean lines and vibrant action scenes.",
         artistDescGrey: "Spiritual and psychedelic visions, featuring luminous figures with anatomical precision.",
         artistDescMucha: "Ornate Art Nouveau posters and paintings with organic lines and idealized female figures.",
