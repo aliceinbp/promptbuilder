@@ -323,6 +323,37 @@ document.addEventListener('DOMContentLoaded', function() {
         
         initializeGenerator();
     }
-    
+    // ARTIST PAGE - COPY BUTTON LOGIC
+    if (document.querySelector('.copy-artist-btn')) {
+        const copyButtons = document.querySelectorAll('.copy-artist-btn');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const artistName = button.dataset.artist;
+                navigator.clipboard.writeText(artistName).then(() => {
+                    // Vizuális visszajelzés
+                    const originalIcon = button.innerHTML;
+                    button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    button.classList.add('copied');
+                    
+                    // Korábbi gombok alaphelyzetbe állítása
+                    copyButtons.forEach(btn => {
+                        if (btn !== button && btn.classList.contains('copied')) {
+                            btn.innerHTML = '<i class="fa-solid fa-copy"></i>';
+                            btn.classList.remove('copied');
+                        }
+                    });
+
+                    // Visszaállítás egy idő után
+                    setTimeout(() => {
+                        button.innerHTML = originalIcon;
+                        button.classList.remove('copied');
+                    }, 1500);
+                }).catch(err => {
+                    console.error('Hiba a másolás során:', err);
+                });
+            });
+        });
+    }
     setLanguage(currentLanguage);
 });
