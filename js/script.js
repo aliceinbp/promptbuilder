@@ -417,7 +417,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+// NEGATIVE PROMPT COPY BUTTON LOGIC
+    const copyNegativeButton = document.getElementById('copy-negative-button');
+    if (copyNegativeButton) {
+        copyNegativeButton.addEventListener('click', () => {
+            const negativePromptText = document.getElementById('negative-prompt').value;
+            navigator.clipboard.writeText(negativePromptText).then(() => {
+                const originalIcon = copyNegativeButton.innerHTML;
+                copyNegativeButton.innerHTML = '<i class="fa-solid fa-check"></i>';
+                copyNegativeButton.classList.add('copied');
 
+                setTimeout(() => {
+                    copyNegativeButton.innerHTML = originalIcon;
+                    copyNegativeButton.classList.remove('copied');
+                }, 1500);
+            });
+        });
+    }
     // Vendégkönyv kommentek betöltése (JAVÍTOTT VERZIÓ)
     function loadComments() {
         const commentsContainer = document.getElementById('comments-list');

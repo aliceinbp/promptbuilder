@@ -306,4 +306,22 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .footer-socials a:hover {
     color: var(--color-primary-light);
     transform: scale(1.2);
+}.copy-small-btn {
+    margin-left: auto; /* Jobbra tolja a gombot */
+    background: none;
+    border: none;
+    color: var(--color-text-subtle);
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.2s ease;
+}
+
+.copy-small-btn:hover {
+    color: var(--color-primary-light);
+    transform: scale(1.2);
+}
+
+.copy-small-btn.copied {
+    color: var(--color-primary);
 }
