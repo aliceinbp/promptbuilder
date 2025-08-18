@@ -265,4 +265,19 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     line-height: 1.6;
     margin: 0;
     word-wrap: break-word;
+}/* Footer Social Icons */
+.footer-socials {
+    display: flex;
+    gap: 20px;
+    font-size: 1.5em;
+}
+
+.footer-socials a {
+    color: var(--color-text-subtle);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+    color: var(--color-primary-light);
+    transform: scale(1.2);
 }
