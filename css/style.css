@@ -150,7 +150,33 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .copy-artist-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-subtle); border-radius: 5px; padding: 5px 10px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
 .copy-artist-btn:hover { color: var(--color-primary-light); border-color: var(--color-primary-light); transform: scale(1.1); }
 .copy-artist-btn.copied { background-color: var(--color-primary); color: var(--color-text-inverted); border-color: var(--color-primary); }
+/* ... (a teljes CSS kód, ahogy korábban volt) ... */
 
+/* Explainer Icon */
+.explainer-icon {
+    margin-left: 10px;
+    color: var(--color-text-subtle);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.explainer-icon:hover {
+    color: var(--color-primary-light);
+    transform: scale(1.2);
+}
+
+/* Explainer Modal Text Formatting */
+#explainer-modal-text p {
+    margin-bottom: 1em;
+    line-height: 1.7;
+}
+
+#explainer-modal-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Back to Top Button Styles */
+/* ... (a többi CSS kód változatlan) ... */
 /* Back to Top Button Styles */
 #back-to-top {
     position: fixed;

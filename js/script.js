@@ -1,5 +1,42 @@
 document.addEventListener('DOMContentLoaded', function() {
+// ÚJ RÉSZ: EXPLAINER MODAL LOGIC
+    const explainerModal = document.getElementById('explainer-modal');
+    if (explainerModal) {
+        const explainerTitle = document.getElementById('explainer-modal-title');
+        const explainerText = document.getElementById('explainer-modal-text');
+        const explainerIcons = document.querySelectorAll('.explainer-icon');
+        const closeExplainerModalBtn = explainerModal.querySelector('.close-modal-btn');
 
+        explainerIcons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                const category = e.currentTarget.dataset.category;
+                const lang = currentLanguage;
+
+                const titleKey = `explainerTitle${category.charAt(0).toUpperCase() + category.slice(1)}`;
+                const textKey = `explainerText${category.charAt(0).toUpperCase() + category.slice(1)}`;
+                
+                if (translations[lang] && translations[lang][titleKey] && translations[lang][textKey]) {
+                    explainerTitle.textContent = translations[lang][titleKey];
+                    // A \n sortöréseket <p> tagekké alakítjuk a szebb megjelenésért
+                    const rawText = translations[lang][textKey];
+                    explainerText.innerHTML = rawText.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('');
+                    
+                    overlay.classList.remove('hidden');
+                    explainerModal.classList.remove('hidden');
+                }
+            });
+        });
+
+        closeExplainerModalBtn.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+            explainerModal.classList.add('hidden');
+        });
+    }
+
+
+    setLanguage(currentLanguage);
+    loadComments(); 
+});
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
@@ -435,4 +472,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setLanguage(currentLanguage);
     loadComments(); 
-});

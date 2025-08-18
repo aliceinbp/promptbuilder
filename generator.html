@@ -53,6 +53,7 @@
                 <label for="style-select">
                     <i class="fa-solid fa-palette"></i> 
                     <span data-key="styleLabel">Style:</span>
+                    <i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i>
                     <i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i>
                 </label>
                 <div class="input-group">
@@ -65,6 +66,7 @@
                 <label for="subject-select">
                     <i class="fa-solid fa-image-portrait"></i> 
                     <span data-key="subjectLabel">Subject:</span>
+                    <i class="fa-solid fa-circle-info explainer-icon" data-category="subject" title="Tippek a témához"></i>
                     <i class="fa-solid fa-gear manage-prompts-btn" data-category="subject" title="Saját promptok kezelése"></i>
                 </label>
                 <div class="input-group">
@@ -77,6 +79,7 @@
                 <label for="setting-select">
                     <i class="fa-solid fa-mountain-sun"></i> 
                     <span data-key="settingLabel">Setting:</span>
+                    <i class="fa-solid fa-circle-info explainer-icon" data-category="setting" title="Tippek a helyszínhez"></i>
                     <i class="fa-solid fa-gear manage-prompts-btn" data-category="setting" title="Saját promptok kezelése"></i>
                 </label>
                 <div class="input-group">
@@ -89,6 +92,7 @@
                 <label for="extra-select">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> 
                     <span data-key="extraLabel">Extra:</span>
+                    <i class="fa-solid fa-circle-info explainer-icon" data-category="extra" title="Tippek az extrákhoz"></i>
                     <i class="fa-solid fa-gear manage-prompts-btn" data-category="extra" title="Saját promptok kezelése"></i>
                 </label>
                 <div class="input-group">
@@ -121,8 +125,8 @@
         
         <footer>
             <div class="footer-item footer-socials">
-                <a href="mailto:renata.solyom@gmailco" target="_blank" title="Email küldése"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://www.instagram.com/aliceinb_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:TE-GMAIL-CIMED" target="_blank" title="Email küldése"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://www.instagram.com/TE-INSTAGRAM-PROFILOD/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
             </div>
             <div class="footer-item">
                 <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
@@ -156,11 +160,16 @@
         <div id="history-list"></div>
     </div>
 
+    <div id="explainer-modal" class="modal hidden">
+        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <h2 id="explainer-modal-title" data-key="explainerModalTitle"></h2>
+        <div id="explainer-modal-text"></div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="js/prompts-data.js"></script>
     <script src="js/translations-data.js"></script>
     <script src="js/script.js"></script>
-<script src="js/script.js"></script>
-
-    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a></body>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+</body>
 </html>
