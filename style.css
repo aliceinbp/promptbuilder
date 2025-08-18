@@ -8,8 +8,8 @@ body { background-color: #121212; color: #e0e0e0; font-family: 'Poppins', sans-s
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-#main-container { width: 100%; max-width: 900px; background-color: #1e1e1e; border: 3px solid transparent; border-radius: 15px; padding: 25px 40px; box-shadow: 0 0 20px rgba(164, 109, 229, 0.3); position: relative; background-clip: padding-box, border-box; background-image: linear-gradient(#1e1e1e, #1e1e1e), linear-gradient(135deg, #c89eff, #a46de5, #ff6bde); animation: fadeIn 0.6s ease-out forwards; }
-#lang-switcher, header, main, footer, .chat-section, #links-section, #gallery-section, #artists-section { opacity: 0; animation: fadeIn 0.6s ease-out 0.2s forwards; }
+#main-container { width: 100%; max-width: 900px; background-color: #1e1e1e; border: 3px solid transparent; border-radius: 15px; padding: 25px 40px; box-shadow: 0 0 20px rgba(164, 109, 229, 0.3); position: relative;  animation: fadeIn 0.6s ease-out forwards; background-clip: padding-box, border-box; background-image: linear-gradient(#1e1e1e, #1e1e1e), linear-gradient(135deg, #c89eff, #a46de5, #ff6bde); }
+#lang-switcher, header, main, footer, .chat-section, #links-section, #gallery-section, #artists-section, #homepage-welcome, #featured-gallery { opacity: 0; animation: fadeIn 0.6s ease-out 0.2s forwards; }
 
 header { text-align: center; }
 #header-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; }
@@ -33,6 +33,14 @@ header p { color: #b3b3b3; font-size: 1.1em; margin: 0; }
 
 main { padding-top: 30px; }
 
+#homepage-welcome, #featured-gallery { text-align: center; padding: 30px 0; border-bottom: 1px solid #444; }
+#featured-gallery { border-bottom: none; }
+#homepage-welcome h2 { font-size: 2em; margin-top: 0; color: #e0e0e0; }
+#homepage-welcome p { color: #b3b3b3; max-width: 600px; margin: 15px auto 30px auto; line-height: 1.7; }
+.cta-button { display: inline-block; background-image: linear-gradient(45deg, #a46de5, #c89eff); color: #121212; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2em; transition: all 0.3s ease; }
+.cta-button:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(164, 109, 229, 0.4); }
+#featured-gallery h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; }
+
 .main-actions { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #444; }
 #random-button, #clear-all-button { background-color: transparent; border: 2px solid #a46de5; color: #a46de5; padding: 12px 25px; font-size: 1.1em; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
 #random-button:hover, #clear-all-button:hover { background-color: #a46de5; color: #121212; box-shadow: 0 0 15px rgba(164, 109, 229, 0.5); transform: translateY(-3px); }
@@ -50,8 +58,8 @@ label:hover > i:first-child { transform: scale(1.2); }
 #history-button { margin-left: auto; background: none; border: none; color: #888; font-size: 1.1em; cursor: pointer; transition: color 0.2s ease; }
 #history-button:hover { color: #c89eff; }
 
-.input-group { display: flex; gap: 10px; }
-.prompt-select { flex-grow: 1; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; cursor: pointer; min-width: 0; }
+.input-group { display: flex; gap: 10px; align-items: center; }
+
 .prompt-textarea, #negative-prompt { width: 100%; margin-top: 10px; background-color: #2d2d2d; color: #e0e0e0; border: 1px solid #555; border-radius: 5px; padding: 10px; font-family: 'Poppins', sans-serif; font-size: 1em; resize: vertical; }
 #final-prompt { background-color: #252525; }
 
@@ -61,8 +69,8 @@ label:hover > i:first-child { transform: scale(1.2); }
 .button-group > button { flex-grow: 1; }
 #save-prompt-button:hover, .add-button:hover, #copy-button:hover, #translate-button:hover { background-color: #c89eff; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); color: #121212; }
 
-#saved-prompts-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; }
-#saved-prompts-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+#saved-prompts-section, #links-section, .chat-section, #gallery-section, #artists-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; text-align: center; }
+#saved-prompts-section h2, #links-section h2, .chat-section h2, #gallery-section h2, #artists-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; }
 #saved-prompts-list { display: flex; flex-direction: column; gap: 10px; }
 .saved-prompt-item { background-color: #2d2d2d; padding: 10px 15px; border-radius: 5px; display: flex; align-items: center; gap: 15px; border-left: 3px solid #a46de5; transition: background-color 0.2s ease; }
 .saved-prompt-item:hover { background-color: #3f3f3f; }
@@ -70,8 +78,6 @@ label:hover > i:first-child { transform: scale(1.2); }
 .saved-prompt-actions button { background: none; border: none; color: #888; font-size: 1.1em; cursor: pointer; transition: color 0.2s ease; }
 .saved-prompt-actions button:hover { color: #c89eff; }
 
-#links-section, .chat-section, #gallery-section, #artists-section { margin-top: 40px; padding-top: 20px; border-top: 1px solid #a46de5; text-align: center; }
-#links-section h2, .chat-section h2, #gallery-section h2, #artists-section h2 { font-family: 'Pacifico', cursive; color: #c89eff; font-size: 1.8em; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; }
 .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left; }
 .link-card { background-color: #2d2d2d; border-radius: 8px; padding: 20px; border: 1px solid #444; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .link-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(164, 109, 229, 0.2); border-color: #a46de5; }
@@ -91,8 +97,6 @@ label:hover > i:first-child { transform: scale(1.2); }
 .gallery-item { padding: 8px; border: 2px solid #a46de5; background-color: #121212; border-radius: 8px; box-shadow: 0 0 15px rgba(164, 109, 229, 0.2); transition: transform 0.3s ease; }
 .gallery-item:hover { transform: scale(1.03); }
 .gallery-item img { width: 100%; height: auto; display: block; border-radius: 4px; }
-
-.coming-soon { font-size: 1.5em; color: #888; font-style: italic; }
 
 footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #a46de5; display: flex; justify-content: space-between; align-items: center; }
 .footer-item { display: flex; align-items: center; justify-content: center; flex: 1; }
@@ -125,11 +129,28 @@ footer a i { margin-right: 8px; color: #be80ff; }
 .history-item:hover { background-color: #3f3f3f; }
 .history-item:last-child { border-bottom: none; }
 
+.choices { font-family: 'Poppins', sans-serif; margin-bottom: 0; }
+.choices__inner { background-color: #2d2d2d; border: 1px solid #555; border-radius: 5px; padding: 6px 10px; font-size: 1em; color: #e0e0e0; }
+.choices[data-type*="select-one"]::after { border-color: #a46de5 transparent transparent; }
+.choices.is-open[data-type*="select-one"]::after { border-color: transparent transparent #a46de5; margin-top: -2.5px; }
+.choices__list--dropdown { background-color: #2d2d2d; border: 1px solid #a46de5; border-radius: 5px; }
+.choices__list--dropdown .choices__item--selectable.is-highlighted { background-color: #a46de5; color: #121212; }
+.choices__input { background-color: #3f3f3f !important; color: #e0e0e0 !important; }
+.choices__item { font-size: 0.9em; }
+
+
 @media (max-width: 768px) {
     #main-container { padding: 20px 15px; }
     .main-actions { flex-direction: column; }
     #header-nav-container { margin-top: 20px; padding-bottom: 20px; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    #featured-gallery .gallery-grid { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 20px; }
     .footer-item, .footer-item:first-child, .footer-item:last-child { justify-content: center; width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .links-grid {
+        grid-template-columns: 1fr;
+    }
 }
