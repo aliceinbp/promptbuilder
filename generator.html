@@ -109,7 +109,11 @@
                 <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="..."></textarea>
             </div>
             <div class="negative-prompt-section">
-                <label for="negative-prompt"><i class="fa-solid fa-ban"></i> <span data-key="negativePromptLabel">Negatív Prompt (amit NE tartalmazzon a kép)</span></label>
+                <label for="negative-prompt">
+                    <i class="fa-solid fa-ban"></i> 
+                    <span data-key="negativePromptLabel">Negatív Prompt</span>
+                    <i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i>
+                </label>
                 <textarea id="negative-prompt" rows="3" data-key="negativePromptPlaceholder" placeholder="pl. elmosódott, rossz minőségű, extra ujjak..."></textarea>
             </div>
             <div class="button-group">
@@ -162,7 +166,7 @@
 
     <div id="explainer-modal" class="modal hidden">
         <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 id="explainer-modal-title" data-key="explainerModalTitle"></h2>
+        <h2 id="explainer-modal-title"></h2>
         <div id="explainer-modal-text"></div>
     </div>
 
