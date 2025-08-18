@@ -45,6 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Handle title attributes for translation
+        document.querySelectorAll('[data-key-title]').forEach(elem => {
+            const key = elem.dataset.keyTitle;
+            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
+                elem.setAttribute('title', translations[lang][key]);
+            }
+        });
+
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
         if(langHu && langEn){
@@ -79,14 +87,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
-     }
-     
-     if(overlay){
-         overlay.addEventListener('click', () => {
-            document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            overlay.classList.add('hidden');
-         });
-     }
+       }
+       
+       if(overlay){
+           overlay.addEventListener('click', () => {
+               document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+               overlay.classList.add('hidden');
+           });
+       }
 
     if (document.getElementById('random-button')) {
         
@@ -323,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         initializeGenerator();
     }
+    
     // ARTIST PAGE - COPY BUTTON LOGIC
     if (document.querySelector('.copy-artist-btn')) {
         const copyButtons = document.querySelectorAll('.copy-artist-btn');
@@ -331,12 +340,10 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', () => {
                 const artistName = button.dataset.artist;
                 navigator.clipboard.writeText(artistName).then(() => {
-                    // Vizuális visszajelzés
                     const originalIcon = button.innerHTML;
                     button.innerHTML = '<i class="fa-solid fa-check"></i>';
                     button.classList.add('copied');
                     
-                    // Korábbi gombok alaphelyzetbe állítása
                     copyButtons.forEach(btn => {
                         if (btn !== button && btn.classList.contains('copied')) {
                             btn.innerHTML = '<i class="fa-solid fa-copy"></i>';
@@ -344,7 +351,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
 
-                    // Visszaállítás egy idő után
                     setTimeout(() => {
                         button.innerHTML = originalIcon;
                         button.classList.remove('copied');
@@ -355,5 +361,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
     setLanguage(currentLanguage);
 });
