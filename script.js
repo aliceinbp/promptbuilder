@@ -3,78 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
-    const translations = {
-        hu: {
-            navHome: "Főoldal", navGenerator: "Generátor", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek",
-            siteSubtitle: "AI Képalkotó Segédlet by Aliceinbp",
-            welcomeTitle: "Engedd szabadjára a kreativitásod!",
-            welcomeText: "Üdv a Prompt Lab-ben! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló AI művészet rajongóknak a lehető legjobb képeket alkotni. Itt minden eszközt megtalálsz, amire szükséged lehet a tökéletes prompt összeállításához.",
-            welcomeButton: "Irány a Generátor!",
-            featuredTitle: "Ízelítő a Galériából",
-            galleryTitle: "Galéria", comingSoon: "Hamarosan...",
-            galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
-            linksTitle: "Ajánlott AI Képalkotó Oldalak",
-            nightcafeDesc: "Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.",
-            leonardoDesc: "Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.",
-            imgtoimgDesc: "Napi bejelentkezéssel ad ingyenes krediteket. Képes a meglévő képeket átalakítani promptok alapján.",
-            copilotDesc: "A legújabb DALL-E 3 modellt használja, és teljesen ingyenes egy Microsoft fiókkal. Kiváló minőséget produkál.",
-            playgroundDesc: "Naponta rengeteg ingyenes kép készíthető vele. Nagyon letisztult, könnyen kezelhető felület, ideális kezdőknek is.",
-            visitButton: "Oldal Megnyitása",
-            randomButton: "Véletlen Prompt", clearAllButton: "Mindent Töröl", saveButton: "Mentés", savedPromptsTitle: "Mentett Promptok",
-            negativePromptLabel: "Negatív Prompt (amit NE tartalmazzon a kép)", negativePromptPlaceholder: "pl. elmosódott, rossz minőségű, extra ujjak...",
-            infoModalTitle: "A Prompt Lab-ről",
-            infoModalText1: "Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.",
-            infoModalText2: "Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!",
-            historyModalTitle: "Prompt Előzmények",
-            artistsTitle: "Művész Adatbázis",
-            artistsSubtitle: "Tisztelgés a művészek előtt",
-            styleLabel: "Stílus:", subjectLabel: "Téma:", settingLabel: "Helyszín:", extraLabel: "Extrák:", addButton: "Hozzáad",
-            stylePlaceholder: "Itt szerkesztheted a kiválasztott stílusokat... vagy alkosd meg a sajátod", subjectPlaceholder: "Itt szerkesztheted a kiválasztott témákat... vagy alkosd meg a sajátod",
-            settingPlaceholder: "Itt szerkesztheted a kiválasztott helyszíneket... vagy alkosd meg a sajátod", extraPlaceholder: "Itt szerkesztheted a kiválasztott extrákat... vagy alkosd meg a sajátod",
-            finalPromptLabel: "Végleges prompt (angolul)", finalPromptPlaceholder: "Az összeállított prompt itt fog megjelenni...",
-            copyButton: "Prompt másolása", copyButtonSuccess: "Másolva!", translateButton: "Fordítás Angolra",
-            chatTitle: "Vendégkönyv / Chat", selectDefault: "Válassz egyet a(z) {category} kategóriából..."
-        },
-        en: {
-            navHome: "Home", navGenerator: "Generator", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists",
-            siteSubtitle: "AI Image Creation Helper by Aliceinbp",
-            welcomeTitle: "Unleash Your Creativity!",
-            welcomeText: "Welcome to the Prompt Lab! I created this site to help AI art fans like myself to create the best possible images. Here you will find all the tools you need to build the perfect prompt.",
-            welcomeButton: "Go to the Generator!",
-            featuredTitle: "Featured from the Gallery",
-            galleryTitle: "Gallery", comingSoon: "Coming Soon...",
-            galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic",
-            galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",
-            linksTitle: "Recommended AI Image Generators",
-            nightcafeDesc: "Very user-friendly, provides daily free credits. Uses multiple AI models and has a strong community aspect.",
-            leonardoDesc: "Professional interface, also with daily free credits. Especially good for consistent characters and training your own models.",
-            imgtoimgDesc: "Provides free credits with daily login. Capable of transforming existing images based on prompts.",
-            copilotDesc: "Uses the latest DALL-E 3 model and is completely free with a Microsoft account. Produces excellent quality.",
-            playgroundDesc: "You can create a large number of free images daily. Very clean, easy-to-use interface, also ideal for beginners.",
-            visitButton: "Visit Site",
-            randomButton: "Random Prompt", clearAllButton: "Clear All", saveButton: "Save", savedPromptsTitle: "Saved Prompts",
-            negativePromptLabel: "Negative Prompt (what the image should NOT contain)", negativePromptPlaceholder: "e.g. blurry, bad quality, extra fingers...",
-            infoModalTitle: "About The Prompt Lab",
-            infoModalText1: "Hi! This site was created to help you generate amazing prompts for AI image generators.",
-            infoModalText2: "Use the dropdowns, or type in your own ideas. Combine styles, subjects, and settings, save your favorites, and create something wonderful!",
-            historyModalTitle: "Prompt History",
-            artistsTitle: "Artist Database",
-            artistsSubtitle: "A tribute to the artists",
-            styleLabel: "Style:", subjectLabel: "Subject:", settingLabel: "Setting:", extraLabel: "Extra:", addButton: "Add",
-            stylePlaceholder: "You can edit the selected styles here... or create your own",
-            subjectPlaceholder: "You can edit the selected subjects here... or create your own",
-            settingPlaceholder: "You can edit the selected settings here... or create your own",
-            extraPlaceholder: "You can edit the selected extras here... or create your own",
-            finalPromptLabel: "Final prompt (English)",
-            finalPromptPlaceholder: "The combined prompt will appear here...",
-            copyButton: "Copy Prompt",
-            copyButtonSuccess: "Copied!",
-            translateButton: "Translate to English",
-            chatTitle: "Guestbook / Chat",
-            selectDefault: "Choose an option from {category}..."
-        }
-    };
-
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
     function setLanguage(lang) {
@@ -82,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('preferredLanguage', lang);
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
-            if (translations[lang] && translations[lang][key]) {
+            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
                 const text = translations[lang][key];
                 if (elem.placeholder !== undefined) { elem.placeholder = text; } 
                 else { elem.textContent = text; }
@@ -128,9 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === CSAK A GENERÁTOR OLDALON (generator.html) SZÜKSÉGES LOGIKA ===
     if (document.getElementById('random-button')) {
-        // A defaultPrompts változó a prompts-data.js fájlból jön, ezért itt nem kell deklarálni
         let currentManagedCategory = '';
         const textareas = { style: document.getElementById('style-text'), subject: document.getElementById('subject-text'), setting: document.getElementById('setting-text'), extra: document.getElementById('extra-text') };
         const finalPromptTextarea = document.getElementById('final-prompt');
@@ -283,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function getCombinedPrompts(lang) {
             const custom = getCustomPrompts();
-            const defaults = defaultPrompts[lang]; // Ez a prompts-data.js fájlból jön
+            const defaults = defaultPrompts[lang];
             let combined = {};
             for(const category in defaults){
                 const defaultSet = new Set(defaults[category]);
@@ -298,26 +224,19 @@ document.addEventListener('DOMContentLoaded', function() {
             ['style', 'subject', 'setting', 'extra'].forEach(category => {
                 const selectElement = document.getElementById(`${category}-select`);
                 if (!selectElement) return;
-
                 if (choiceInstances[category]) {
                     choiceInstances[category].destroy();
                 }
-                
                 const options = combinedPrompts[category].map(item => ({ value: item, label: item }));
-
                 choiceInstances[category] = new Choices(selectElement, {
-                    choices: options,
-                    searchPlaceholderValue: "Keress...",
-                    itemSelectText: "Kiválaszt",
-                    allowHTML: false,
-                    shouldSort: false,
-                    placeholder: true,
+                    choices: options, searchPlaceholderValue: "Keress...", itemSelectText: "Kiválaszt",
+                    allowHTML: false, shouldSort: false, placeholder: true,
                     placeholderValue: translations[currentLanguage].selectDefault.replace('{category}', translations[currentLanguage][category + 'Label'].replace(':', '')),
                 });
             });
         }
-
-        function initializeGenerator() {
+        
+        window.initializeGenerator = function() {
             initializeChoices();
             renderSavedPrompts();
             updateFinalPrompt();
@@ -338,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const choice = Object.values(choiceInstances).find(inst => inst.containerOuter.element === selectContainer);
             const selectedValue = choice ? choice.getValue(true) : null;
             
-            if (selectedValue) {
+            if (selectedValue && selectedValue !== "") {
                 const category = Object.keys(choiceInstances).find(key => choiceInstances[key] === choice);
                 const targetTextarea = textareas[category];
                 targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
