@@ -61,21 +61,22 @@
 
             <section class="chat-section">
                 <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
-                <script src="https://giscus.app/client.js"
-                        data-repo="aliceinbp/promptbuilder"
-                        data-repo-id="R_kgDOPfT7Ww"
-                        data-category="Vendégkönyv"
-                        data-category-id="DIC_kwDOPfT7W84CuTno"
-                        data-mapping="pathname"
-                        data-strict="0"
-                        data-reactions-enabled="1"
-                        data-emit-metadata="0"
-                        data-input-position="bottom"
-                        data-theme="dark_dimmed"
-                        data-lang="hu"
-                        crossorigin="anonymous"
-                        async>
+                
+                <div class="commentbox"></div>
+                <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+                <script>
+                    commentBox('5675948456280064-proj', {
+                        // Alap téma (a sötét színekhez)
+                        theme: 'dark', 
+                        
+                        // Egyedi színek a te oldaladhoz igazítva
+                        accentColor: '#a46de5',        // A gombok és kiemelések lila színe
+                        textColor: '#e0e0e0',          // A fő szövegszín
+                        backgroundColor: '#1e1e1e',    // A háttér (a fő "dobozod" színe)
+                        inputBackgroundColor: '#2d2d2d' // A beviteli mező háttere
+                    });
                 </script>
+
             </section>
         </main>
 
