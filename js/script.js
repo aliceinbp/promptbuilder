@@ -3,11 +3,39 @@ document.addEventListener('DOMContentLoaded', function() {
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
+    // TÉMAVÁLASZTÓ LOGIKA
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        } else {
+            document.body.classList.remove('light-theme');
+            if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        }
+    }
+
+    applyTheme(currentTheme); 
+
+    if(themeToggleButton){
+        themeToggleButton.addEventListener('click', () => {
+            let theme = 'dark';
+            if (document.body.classList.toggle('light-theme')) {
+                theme = 'light';
+            }
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+        });
+    }
+
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
     function setLanguage(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
+        
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
@@ -16,16 +44,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 else { elem.textContent = text; }
             }
         });
+
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
-        if (langHu && langEn) {
+        if(langHu && langEn){
             langHu.classList.toggle('active', lang === 'hu');
             langEn.classList.toggle('active', lang === 'en');
         }
+
         const translateButton = document.getElementById('translate-button');
-        if (translateButton) {
+        if(translateButton) {
             translateButton.classList.toggle('hidden', lang !== 'hu');
         }
+        
         if (typeof initializeGenerator === 'function') {
             initializeGenerator();
         }
@@ -33,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const langHu = document.getElementById('lang-hu');
     const langEn = document.getElementById('lang-en');
-    if (langHu && langEn) {
+    if(langHu && langEn){
         langHu.addEventListener('click', (e) => { e.preventDefault(); setLanguage('hu'); });
         langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
     }
@@ -41,22 +72,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const infoButton = document.getElementById('info-button');
-    if (infoButton && infoModal && overlay) {
+    
+    if(infoButton && infoModal && overlay){
         const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
         const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
         const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
-    }
+     }
      
-    if (overlay) {
-        overlay.addEventListener('click', () => {
+     if(overlay){
+         overlay.addEventListener('click', () => {
             document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
             overlay.classList.add('hidden');
-        });
-    }
+         });
+     }
 
     if (document.getElementById('random-button')) {
+        
         let currentManagedCategory = '';
         const textareas = { style: document.getElementById('style-text'), subject: document.getElementById('subject-text'), setting: document.getElementById('setting-text'), extra: document.getElementById('extra-text') };
         const finalPromptTextarea = document.getElementById('final-prompt');
@@ -224,10 +257,13 @@ document.addEventListener('DOMContentLoaded', function() {
             ['style', 'subject', 'setting', 'extra'].forEach(category => {
                 const selectElement = document.getElementById(`${category}-select`);
                 if (!selectElement) return;
+
                 if (choiceInstances[category]) {
                     choiceInstances[category].destroy();
                 }
+                
                 const options = combinedPrompts[category].map(item => ({ value: item, label: item }));
+
                 choiceInstances[category] = new Choices(selectElement, {
                     choices: options, searchPlaceholderValue: "Keress...", itemSelectText: "Kiválaszt",
                     allowHTML: false, shouldSort: false, placeholder: true,

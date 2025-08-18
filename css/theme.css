@@ -1,0 +1,41 @@
+:root {
+    /* --- SÖTÉT TÉMA (ALAPÉRTELMEZETT) --- */
+    --color-bg: #121212;
+    --color-surface: #1e1e1e;
+    --color-surface-alt: #2d2d2d;
+    --color-surface-darker: #252525;
+    --color-primary: #a46de5;
+    --color-primary-light: #c89eff;
+    --color-primary-highlight: #be80ff;
+    --color-primary-accent: #ff6bde;
+    --color-text-main: #e0e0e0;
+    --color-text-secondary: #b3b3b3;
+    --color-text-subtle: #888;
+    --color-border: #444;
+    --color-border-accent: #a46de5;
+    --color-border-soft: rgba(164, 109, 229, 0.5);
+    --color-shadow: rgba(164, 109, 229, 0.3);
+    --color-text-inverted: #121212;
+    --color-white-pure: #ffffff;
+}
+
+body.light-theme {
+    /* --- VILÁGOS TÉMA (KÉK ÁRNYALATOKKAL) --- */
+    --color-bg: #f0f2f5;
+    --color-surface: #ffffff;
+    --color-surface-alt: #e9ecef;
+    --color-surface-darker: #dee2e6;
+    --color-primary: #007bff;
+    --color-primary-light: #4ea8ff;
+    --color-primary-highlight: #0056b3;
+    --color-primary-accent: #0056b3;
+    --color-text-main: #212529;
+    --color-text-secondary: #495057;
+    --color-text-subtle: #6c757d;
+    --color-border: #dee2e6;
+    --color-border-accent: #007bff;
+    --color-border-soft: rgba(0, 123, 255, 0.5);
+    --color-shadow: rgba(0, 123, 255, 0.2);
+    --color-text-inverted: #ffffff;
+    --color-white-pure: #ffffff;
+}
