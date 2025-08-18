@@ -1,5 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
+function loadComments() {
+        const commentsContainer = document.getElementById('comments-list');
+        // Csak akkor fusson le, ha létezik a komment szekció az oldalon
+        if (!commentsContainer) {
+            return;
+        }
 
+        fetch('/_data/comments.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Hálózati hiba: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(comments => {
+                commentsContainer.innerHTML = ''; // Töröljük a "betöltés..." szöveget
+                if (comments.length === 0) {
+                    commentsContainer.innerHTML = '<p>Még nincsenek bejegyzések. Légy te az első!</p>';
+                    return;
+                }
+                
+                // Megfordítjuk a tömböt, hogy a legújabb komment legyen legelöl
+                comments.reverse().forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment-item';
+                    
+                    const header = document.createElement('div');
+                    header.className = 'comment-header';
+                    
+                    const name = document.createElement('strong');
+                    name.textContent = comment.name;
+                    
+                    const date = document.createElement('span');
+                    date.className = 'comment-date';
+                    date.textContent = comment.date;
+                    
+                    header.appendChild(name);
+                    header.appendChild(date);
+                    
+                    const message = document.createElement('p');
+                    message.className = 'comment-message';
+                    message.textContent = comment.message;
+                    
+                    commentElement.appendChild(header);
+                    commentElement.appendChild(message);
+                    
+                    commentsContainer.appendChild(commentElement);
+                });
+            })
+            .catch(error => {
+                console.error('Hiba a kommentek betöltése közben:', error);
+                commentsContainer.innerHTML = '<p>Hoppá, a kommenteket most nem sikerült betölteni.</p>';
+            });
+    }
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 

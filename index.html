@@ -62,20 +62,25 @@
             <section class="chat-section">
                 <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
                 
-                <div class="commentbox"></div>
-                <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
-                <script>
-                    commentBox('5675948456280064-proj', {
-                        // Alap téma (a sötét színekhez)
-                        theme: 'dark', 
-                        
-                        // Egyedi színek a te oldaladhoz igazítva
-                        accentColor: '#a46de5',        // A gombok és kiemelések lila színe
-                        textColor: '#e0e0e0',          // A fő szövegszín
-                        backgroundColor: '#1e1e1e',    // A háttér (a fő "dobozod" színe)
-                        inputBackgroundColor: '#2d2d2d' // A beviteli mező háttere
-                    });
-                </script>
+                <form name="guestbook" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="guestbook-form">
+                    <input type="hidden" name="form-name" value="guestbook" />
+                    <p class="hidden">
+                        <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+                    </p>
+                    <div class="form-group">
+                        <label for="name">Neved:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Üzeneted:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit">Üzenet elküldése</button>
+                </form>
+
+                <div id="comments-list">
+                    <p>Vendégkönyv betöltése...</p>
+                </div>
 
             </section>
         </main>
