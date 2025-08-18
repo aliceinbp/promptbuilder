@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -43,20 +44,25 @@
         </header>
 
         <main>
-             <section id="homepage-welcome">
+            <section id="homepage-welcome">
                 <h2 data-key="welcomeTitle">Engedd szabadjára a kreativitásod!</h2>
                 <p data-key="welcomeText">Üdv a Prompt Lab-ben! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló AI művészet rajongóknak a lehető legjobb képeket alkotni. Itt minden eszközt megtalálsz, amire szükséged lehet a tökéletes prompt összeállításához.</p>
                 <a href="generator.html" class="cta-button" data-key="welcomeButton">Irány a Generátor! <i class="fa-solid fa-arrow-right"></i></a>
-             </section>
-             
-             <section id="featured-gallery">
-                 <h2 data-key="featuredTitle">Ízelítő a Galériából</h2>
-                 <div class="gallery-grid">
+            </section>
+            
+            <section id="featured-gallery">
+                <h2 data-key="featuredTitle">Ízelítő a Galériából</h2>
+                <div class="gallery-grid">
                     <div class="gallery-item"><a href="gallery.html"><img src="src/gallery-images/landscape-07.jpg" alt="Ízelítő kép 1"></a></div>
                     <div class="gallery-item"><a href="gallery.html"><img src="src/gallery-images/fantasy-01.jpg" alt="Ízelítő kép 2"></a></div>
                     <div class="gallery-item"><a href="gallery.html"><img src="src/gallery-images/ect-07.jpg" alt="Ízelítő kép 3"></a></div>
-                 </div>
-             </section>
+                </div>
+            </section>
+
+            <section class="chat-section">
+                <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
+                <p style="color: var(--color-text-secondary); font-style: italic;">Ez a szekció jelenleg fejlesztés alatt áll. Hamarosan új vendégkönyvvel jelentkezem!</p>
+            </section>
         </main>
 
         <footer>

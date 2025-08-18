@@ -138,48 +138,18 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .choices__inner { background-color: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 5px; padding: 6px 10px; font-size: 1em; color: var(--color-text-main); min-height: 40px; }
 .choices[data-type*="select-one"]::after { border-color: var(--color-primary) transparent transparent; }
 .choices.is-open[data-type*="select-one"]::after { border-color: transparent transparent var(--color-primary); margin-top: -2.5px; }
-.choices__list--dropdown { background-color: var(--color-surface); border: 1px solid var(--color-primary); border-radius: 5px; }
+.choices__list--dropdown { background-color: var(--color-surface); border: 1px solid var(--color-primary); border-radius: 5px; color: var(--color-text-main); }
 .choices__list--dropdown .choices__item--selectable { color: var(--color-text-main); }
 .choices__list--dropdown .choices__item--selectable.is-highlighted { background-color: var(--color-primary); color: var(--color-text-inverted); }
 .choices__input { background-color: var(--color-surface-alt) !important; color: var(--color-text-main) !important; }
 .choices__item { font-size: 0.9em; }
 
 /* Artist Card - Copy Button Styles */
-.artist-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.artist-card-header h3 {
-    margin: 0;
-}
-
-.copy-artist-btn {
-    background: transparent;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-subtle);
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.copy-artist-btn:hover {
-    color: var(--color-primary-light);
-    border-color: var(--color-primary-light);
-    transform: scale(1.1);
-}
-
-.copy-artist-btn.copied {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverted);
-    border-color: var(--color-primary);
-}
-
+.artist-card-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 10px; }
+.artist-card-header h3 { margin: 0; }
+.copy-artist-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-subtle); border-radius: 5px; padding: 5px 10px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
+.copy-artist-btn:hover { color: var(--color-primary-light); border-color: var(--color-primary-light); transform: scale(1.1); }
+.copy-artist-btn.copied { background-color: var(--color-primary); color: var(--color-text-inverted); border-color: var(--color-primary); }
 
 @media (max-width: 768px) {
     #main-container { padding: 20px 15px; }
