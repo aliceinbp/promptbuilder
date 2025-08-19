@@ -242,6 +242,8 @@ document.addEventListener('DOMContentLoaded', function() {
         function getSavedPrompts() { return JSON.parse(localStorage.getItem('savedPrompts')) || []; }
 
         function renderSavedPrompts() {
+            const savedPromptsList = document.getElementById('saved-prompts-list');
+            if(!savedPromptsList) return;
             savedPromptsList.innerHTML = '';
             const saved = getSavedPrompts();
             if (saved.length === 0) {
@@ -376,11 +378,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.add-button').forEach(button => {
             button.addEventListener('click', function() {
-                const selectContainer = button.previousElementSibling;
+                const selectContainer = this.closest('.input-group').querySelector('.choices__inner').parentElement;
                 const choice = Object.values(choiceInstances).find(inst => inst.containerOuter.element === selectContainer);
                 const selectedValue = choice ? choice.getValue(true) : null;
                 if (selectedValue && selectedValue !== "") {
-                    const category = Object.keys(choiceInstances).find(key => choiceInstances[key] === choice);
+                    const category = selectContainer.id.replace('-select', '');
                     const targetTextarea = textareas[category];
                     targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
                     updateFinalPrompt();
@@ -497,16 +499,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Indítás
-    applyTheme(currentTheme);
-    setLanguage(currentLanguage);
-    loadComments();
-// A FÁJL VÉGÉRE, DE MÉG AZ UTOLSÓ }); ELÉ ILLSZD BE:
-
     // --- BLOG LOGIKA ---
     
     // Először létrehozzuk a markdown konvertert
-    const markdownConverter = new showdown.Converter();
+    const markdownConverter = typeof showdown !== 'undefined' ? new showdown.Converter() : null;
 
     // Függvény a bejegyzés metaadatainak (frontmatter) kinyerésére
     function parseFrontmatter(markdown) {
@@ -533,32 +529,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Függvény a blogbejegyzések listázásához a blog.html oldalon
     async function loadBlogPosts() {
         const container = document.getElementById('blog-posts-container');
-        if (!container) return;
+        if (!container || !markdownConverter) return;
         
+        const GITHUB_API_URL = 'https://api.github.com/repos/aliceinbp/promptbuilder/contents/blog';
+
         try {
-            // Netlify API-n keresztül lekérjük a 'blog' mappa tartalmát
-            const response = await fetch('/.netlify/git/github/contents/blog');
-            if (!response.ok) throw new Error('Nem sikerült lekérni a bejegyzéseket.');
+            const response = await fetch(GITHUB_API_URL);
+            if (!response.ok) throw new Error('Nem sikerült lekérni a bejegyzéseket a GitHubról.');
             
-            let posts = await response.json();
+            let files = await response.json();
             
-            // Fájlok feldolgozása
-            const postPromises = posts
-                .filter(file => file.name.endsWith('.md'))
+            if (!Array.isArray(files)) {
+                console.error("GitHub API did not return an array:", files.message);
+                container.innerHTML = `<p>${translations[currentLanguage].blogError || 'Hiba a bejegyzések formátumával.'}</p>`;
+                return;
+            }
+
+            const postPromises = files
+                .filter(file => file.name && file.name.endsWith('.md'))
                 .map(async (file) => {
                     const postResponse = await fetch(file.download_url);
                     const markdown = await postResponse.text();
                     const { frontmatter } = parseFrontmatter(markdown);
-                    frontmatter.slug = file.name.replace('.md', ''); // Fájlnév slugként
+                    frontmatter.slug = file.name.replace('.md', '');
                     return frontmatter;
                 });
 
             let postData = await Promise.all(postPromises);
             
-            // Rendezés dátum szerint csökkenő sorrendbe
             postData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-            container.innerHTML = ''; // Töröljük a "betöltés" üzenetet
+            container.innerHTML = ''; 
 
             if (postData.length === 0) {
                  container.innerHTML = `<p>${translations[currentLanguage].noPostsFound}</p>`;
@@ -567,8 +568,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             postData.forEach(post => {
                 const title = currentLanguage === 'hu' ? post.title_hu : post.title_en;
-                const body = currentLanguage === 'hu' ? post.body_hu : post.body_en;
-                const excerpt = body ? body.substring(0, 150) + '...' : '';
+                const bodyMarkdown = currentLanguage === 'hu' ? post.body_hu : post.body_en;
+                
+                const bodyHtml = markdownConverter.makeHtml(bodyMarkdown || '');
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = bodyHtml;
+                const plainText = tempDiv.textContent || tempDiv.innerText || "";
+                const excerpt = plainText.substring(0, 150) + '...';
+
                 const postDate = new Date(post.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', {
                     year: 'numeric', month: 'long', day: 'numeric'
                 });
@@ -576,9 +583,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const card = document.createElement('div');
                 card.className = 'blog-card';
                 card.innerHTML = `
-                    <img src="${post.image}" alt="${title}" class="blog-card-image">
+                    <a href="post.html?slug=${post.slug}"><img src="${post.image}" alt="${title}" class="blog-card-image"></a>
                     <div class="blog-card-content">
-                        <h3>${title}</h3>
+                        <h3><a href="post.html?slug=${post.slug}" style="text-decoration:none; color: inherit;">${title}</a></h3>
                         <p class="blog-card-meta">${translations[currentLanguage].postedOn} ${postDate}</p>
                         <p class="blog-card-excerpt">${excerpt}</p>
                         <a href="post.html?slug=${post.slug}" class="blog-card-read-more">${translations[currentLanguage].readMore}</a>
@@ -589,14 +596,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             console.error('Hiba a blogbejegyzések betöltésekor:', error);
-            container.innerHTML = `<p>${translations[currentLanguage].guestbookError}</p>`;
+            container.innerHTML = `<p>${translations[currentLanguage].blogError || 'Hiba a bejegyzések betöltése közben.'}</p>`;
         }
     }
 
     // Függvény egyetlen bejegyzés betöltéséhez a post.html oldalon
     async function loadSinglePost() {
         const container = document.getElementById('post-content-container');
-        if (!container) return;
+        if (!container || !markdownConverter) return;
 
         const params = new URLSearchParams(window.location.search);
         const slug = params.get('slug');
@@ -606,22 +613,23 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        const POST_URL = `https://raw.githubusercontent.com/aliceinbp/promptbuilder/main/blog/${slug}.md`;
+
         try {
-            const response = await fetch(`/blog/${slug}.md`);
+            const response = await fetch(POST_URL);
             if (!response.ok) throw new Error('A bejegyzés nem található.');
 
             const markdown = await response.text();
             const { frontmatter, content } = parseFrontmatter(markdown);
             
             const title = currentLanguage === 'hu' ? frontmatter.title_hu : frontmatter.title_en;
-            const bodyMarkdown = currentLanguage === 'hu' ? frontmatter.body_hu : frontmatter.body_en;
-
+            const bodyMarkdown = content;
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
             const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', {
                 year: 'numeric', month: 'long', day: 'numeric'
             });
             
-            document.title = `${title} - Prompt Lab Blog`; // Oldal címének frissítése
+            document.title = `${title} - Prompt Lab Blog`;
 
             container.innerHTML = `
                 <div class="post-header">
@@ -640,11 +648,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Indítjuk a megfelelő blog funkciót az aktuális oldaltól függően
+    // --- Indítás ---
+    applyTheme(currentTheme);
+    setLanguage(currentLanguage);
+    loadComments();
+
+    // Blog funkciók indítása, csak ha a megfelelő oldalon vagyunk
     if (document.getElementById('blog-posts-container')) {
         loadBlogPosts();
     }
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
+
 });
