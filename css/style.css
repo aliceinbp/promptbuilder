@@ -151,6 +151,19 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     -webkit-overflow-scrolling: touch !important; /* Sima görgetés iOS-re */
     z-index: 1050 !important; /* Biztos, hogy minden felett van */
     pointer-events: auto !important; /* Biztos, hogy fogadja a kattintást/érintést */
+}/* --- EZ A LEGFONTOSABB, MÓDOSÍTOTT RÉSZ --- */
+.choices__list--dropdown { 
+    background-color: var(--color-surface) !important; 
+    border: 1px solid var(--color-primary) !important; 
+    color: var(--color-text-main) !important; 
+
+    /* Kényszerített beállítások a mobil görgetéshez */
+    max-height: 30vh !important; /* A képernyő magasságának 30%-a, hogy legyen hely */
+    overflow-y: auto !important;   /* KIKÉNYSZERÍTI a görgetősávot */
+    -webkit-overflow-scrolling: touch !important; /* Sima görgetés iOS-re */
+    touch-action: pan-y !important; /* <<< EZ AZ ÚJ, DÖNTŐ FONTOSSÁGÚ SOR */
+    z-index: 1050 !important; /* Biztos, hogy minden felett van */
+    pointer-events: auto !important; /* Biztos, hogy fogadja a kattintást/érintést */
 }
 
 .choices__list--dropdown .choices__item--selectable { color: var(--color-text-main); }
