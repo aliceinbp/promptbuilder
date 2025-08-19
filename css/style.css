@@ -144,10 +144,9 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     border: 1px solid var(--color-primary); 
     border-radius: 5px; 
     color: var(--color-text-main); 
-    /* --- EZ AZ ÚJ RÉSZ --- */
-    max-height: 200px; /* Korlátozza a magasságot */
-    overflow-y: auto;   /* Hozzáadja a görgetősávot, ha szükséges */
-    /* --- ÚJ RÉSZ VÉGE --- */
+    max-height: 200px; /* Alap magasság korlát */
+    overflow-y: auto;   /* Engedélyezi a görgetést */
+    -webkit-overflow-scrolling: touch; /* <-- EZ AZ ÚJ SOR A MOBILOS GÖRGETÉSHEZ */
 }
 
 .choices__list--dropdown .choices__item--selectable { color: var(--color-text-main); }
