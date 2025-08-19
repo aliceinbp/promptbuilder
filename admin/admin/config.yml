@@ -1,0 +1,20 @@
+backend:
+  name: git-gateway
+  branch: main # Vagy master, attól függően, melyik az elsődleges branch a GitHub repódban
+
+media_folder: "src/blog-images" # Ide kerülnek a feltöltött képek
+public_folder: "/src/blog-images" # Így hivatkozik rájuk a kód
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "blog" # A bejegyzések ebben a mappában lesznek .md fájlokként elmentve
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Cím (Magyar)", name: "title_hu", widget: "string" }
+      - { label: "Title (English)", name: "title_en", widget: "string" }
+      - { label: "Publikálás Dátuma", name: "date", widget: "datetime" }
+      - { label: "Borítókép", name: "image", widget: "image" }
+      - { label: "Bejegyzés Szövege (Magyar)", name: "body_hu", widget: "markdown" }
+      - { label: "Post Body (English)", name: "body_en", widget: "markdown" }

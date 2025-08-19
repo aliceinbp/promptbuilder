@@ -1,6 +1,12 @@
 const translations = {
     hu: {
-        navHome: "Főoldal", navGenerator: "Generátor", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek",
+        navBlog: "Blog",
+blogTitle: "Blog",
+loadingPosts: "Bejegyzések betöltése...",
+readMore: "Tovább olvasom",
+postedOn: "Publikálva",
+noPostsFound: "Úgy tűnik, még nincsenek bejegyzések. Nézz vissza később!",
+navHome: "Főoldal", navGenerator: "Generátor", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek",
         siteSubtitle: "AI Képalkotó Segédlet by Aliceinbp",
         welcomeTitle: "Engedd szabadjára a kreativitásod!",
         welcomeText: "Üdv a Prompt Lab-ben! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló AI művészet rajongóknak a lehető legjobb képeket alkotni. Itt minden eszközt megtalálsz, amire szükséged lehet a tökéletes prompt összeállításához.",
@@ -108,7 +114,13 @@ const translations = {
         selectDefault: "Válassz egyet a(z) {category} kategóriából..."
     },
     en: {
-        navHome: "Home", navGenerator: "Generator", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists",
+        navBlog: "Blog",
+blogTitle: "Blog",
+loadingPosts: "Loading posts...",
+readMore: "Read More",
+postedOn: "Posted on",
+noPostsFound: "It seems there are no posts yet. Check back later!",
+navHome: "Home", navGenerator: "Generator", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists",
         siteSubtitle: "AI Image Creation Helper by Aliceinbp",
         welcomeTitle: "Unleash Your Creativity!",
         welcomeText: "Welcome to the Prompt Lab! I created this site to help AI art fans like myself to create the best possible images. Here you will find all the tools you need to build the perfect prompt.",
