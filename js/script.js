@@ -501,29 +501,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- BLOG LOGIKA ---
     
-    // Először létrehozzuk a markdown konvertert
     const markdownConverter = typeof showdown !== 'undefined' ? new showdown.Converter() : null;
 
-    // Függvény a bejegyzés metaadatainak (frontmatter) kinyerésére
+    // Függvény a bejegyzés metaadatainak (frontmatter) kinyerésére - JAVÍTOTT VERZIÓ
     function parseFrontmatter(markdown) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
         const match = markdown.match(frontmatterRegex);
         
-        const frontmatter = {};
-        if (match) {
-            const yaml = match[1];
-            yaml.split('\n').forEach(line => {
-                const parts = line.split(':');
-                if (parts.length >= 2) {
-                    const key = parts[0].trim();
-                    const value = parts.slice(1).join(':').trim().replace(/^['"]|['"]$/g, '');
-                    frontmatter[key] = value;
-                }
-            });
+        if (!match) {
+            return { frontmatter: {}, content: markdown };
         }
-        
+
+        const yamlString = match[1];
         const content = markdown.replace(frontmatterRegex, '');
-        return { frontmatter, content };
+        
+        try {
+            // A js-yaml könyvtárat használjuk a megbízható feldolgozáshoz
+            const frontmatter = jsyaml.load(yamlString);
+            return { frontmatter, content };
+        } catch (error) {
+            console.error("Hiba a YAML feldolgozása közben:", error);
+            return { frontmatter: {}, content: content };
+        }
     }
 
     // Függvény a blogbejegyzések listázásához a blog.html oldalon
@@ -620,12 +619,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) throw new Error('A bejegyzés nem található.');
 
             const markdown = await response.text();
-            // Most már csak a frontmatter kell nekünk, a content rész üres lesz
             const { frontmatter } = parseFrontmatter(markdown);
             
             const title = currentLanguage === 'hu' ? frontmatter.title_hu : frontmatter.title_en;
-            
-            // *** EZ A JAVÍTOTT, LÉNYEGES SOR: A frontmatter-ből olvassuk ki a szöveget ***
             const bodyMarkdown = currentLanguage === 'hu' ? frontmatter.body_hu : frontmatter.body_en;
             
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
