@@ -138,7 +138,18 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .choices__inner { background-color: var(--color-surface-alt) !important; border: 1px solid var(--color-border); border-radius: 5px; padding: 6px 10px; font-size: 1em; color: var(--color-text-main); min-height: 40px; }
 .choices[data-type*="select-one"]::after { border-color: var(--color-primary) transparent transparent; }
 .choices.is-open[data-type*="select-one"]::after { border-color: transparent transparent var(--color-primary); margin-top: -2.5px; }
-.choices__list--dropdown { background-color: var(--color-surface) !important; border: 1px solid var(--color-primary); border-radius: 5px; color: var(--color-text-main); }
+
+.choices__list--dropdown { 
+    background-color: var(--color-surface) !important; 
+    border: 1px solid var(--color-primary); 
+    border-radius: 5px; 
+    color: var(--color-text-main); 
+    /* --- EZ AZ ÚJ RÉSZ --- */
+    max-height: 200px; /* Korlátozza a magasságot */
+    overflow-y: auto;   /* Hozzáadja a görgetősávot, ha szükséges */
+    /* --- ÚJ RÉSZ VÉGE --- */
+}
+
 .choices__list--dropdown .choices__item--selectable { color: var(--color-text-main); }
 .choices__list--dropdown .choices__item--selectable.is-highlighted { background-color: var(--color-primary); color: var(--color-text-inverted); }
 .choices__input { background-color: var(--color-surface-alt) !important; color: var(--color-text-main) !important; }
