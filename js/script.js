@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-// ÚJ RÉSZ: EXPLAINER MODAL LOGIC
+    // ÚJ RÉSZ: EXPLAINER MODAL LOGIC
     const explainerModal = document.getElementById('explainer-modal');
     if (explainerModal) {
         const explainerTitle = document.getElementById('explainer-modal-title');
@@ -313,6 +313,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     allowHTML: false, shouldSort: false, placeholder: true,
                     placeholderValue: translations[currentLanguage].selectDefault.replace('{category}', translations[currentLanguage][category + 'Label'].replace(':', '')),
                 });
+                
+                // --- EZ AZ ÚJ, JAVÍTOTT RÉSZ ---
+                // Eseményfigyelő, ami a legördülő menü megnyitásakor lefut
+                selectElement.addEventListener('showDropdown.choices', function() {
+                    // Közvetlenül a JavaScript által létrehozott legördülő elemre hatunk
+                    const dropdown = choiceInstances[category].dropdown.element;
+                    // Beállítjuk a maximális magasságot a képernyő magasságának 25%-ára.
+                    // Ez reszponzív, így minden mobil képernyőn jól működik.
+                    dropdown.style.maxHeight = '25vh'; 
+                    // Engedélyezzük a függőleges görgetést.
+                    dropdown.style.overflowY = 'auto';
+                }, false);
+                // --- A JAVÍTÁS VÉGE ---
+
             });
         }
         
@@ -487,4 +501,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     setLanguage(currentLanguage);
-    loadComments(); 
+    loadComments();
