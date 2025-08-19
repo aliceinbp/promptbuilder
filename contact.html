@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajánlott AI Képalkotók - Prompt Lab by Aliceinbp</title>
+    <title>Galéria | AI Művészet Inspiráció - Prompt Lab by Aliceinbp</title>
     <meta property="og:type" content="website">
 <meta property="og:url" content="https://aliceinbp.com/">
 <meta property="og:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
@@ -15,7 +15,7 @@
 <meta property="twitter:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
 <meta property="twitter:description" content="Alkoss lenyűgöző képeket az AI segítségével! A Prompt Lab egy ingyenes eszköz, ami segít a tökéletes promptok összeállításában.">
 <meta property="twitter:image" content="https://aliceinbp.com/src/og-image.png">
-    <meta name="description" content="Fedezd fel a legjobb ingyenes és fizetős AI képalkotó oldalakat, mint a NightCafe, Leonardo.Ai és a Microsoft Copilot. Ajánlások és leírások egy helyen.">
+    <meta name="description" content="Meríts ihletet a Prompt Lab galériájából! Válogatás a legszebb AI által generált képekből, fantasy, dark és egyéb kategóriákban.">
 
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/style.css">
@@ -52,22 +52,35 @@
     <a href="artists.html" data-key="navArtists">Művészek</a>
     <a href="contact.html" data-key="navContact">Kapcsolat</a> </nav>
             </div>
-        </header>
+        </header><section class="contact-section">
+    <h2><i class="fa-solid fa-paper-plane"></i> <span data-key="contactTitle">Kapcsolat</span></h2>
+    <p data-key="contactSubtitle">Kérdésed van, vagy csak köszönnél? Írj bátran!</p>
 
-        <main>
-             <section id="links-section">
-                <h2><i class="fa-solid fa-link"></i> <span data-key="linksTitle">Ajánlott AI Képalkotó Oldalak</span></h2>
-                <div class="links-grid">
-                    <div class="link-card"><h3>NightCafe Studio</h3><p data-key="nightcafeDesc">Nagyon felhasználóbarát, naponta ad ingyenes krediteket. Többféle AI modellt is használ, és erős a közösségi része.</p><a href="https://creator.nightcafe.studio/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Leonardo.Ai</h3><p data-key="leonardoDesc">Profi felület, szintén napi ingyenes kreditekkel. Különösen jó konzisztens karakterek és saját modellek tanítására.</p><a href="https://leonardo.ai/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>ImgToImg.ai</h3><p data-key="imgtoimgDesc">Napi bejelentkezéssel ad ingyenes krediteket. Képes a meglévő képeket átalakítani promptok alapján.</p><a href="https://imgtoimg.ai/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Microsoft Copilot (DALL-E 3)</h3><p data-key="copilotDesc">A legújabb DALL-E 3 modellt használja, és teljesen ingyenes egy Microsoft fiókkal. Kiváló minőséget produkál.</p><a href="https://copilot.microsoft.com/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                    <div class="link-card"><h3>Playground AI</h3><p data-key="playgroundDesc">Naponta rengeteg ingyenes kép készíthető vele. Nagyon letisztult, könnyen kezelhető felület, ideális kezdőknek is.</p><a href="https://playgroundai.com/" target="_blank" data-key="visitButton">Oldal Megnyitása</a></div>
-                </div>
-            </section>
-        </main>
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" class="contact-form">
+        <input type="hidden" name="form-name" value="contact" />
+        
+        <p class="hidden">
+            <label>Ezt a mezőt hagyd üresen: <input name="bot-field" /></label>
+        </p>
 
-        <footer>
+        <div class="form-group">
+            <label for="name" data-key="formLabelName">Neved:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email" data-key="formLabelEmail">Email címed:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="message" data-key="formLabelMessage">Üzeneted:</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        
+        <button type="submit" data-key="formButtonSubmit">Üzenet elküldése</button>
+    </form>
+</section><footer>
             <div class="footer-item footer-socials">
                 <a href="mailto:solyom.reni@gmail.com" target="_blank" title="Email küldése"><i class="fa-solid fa-envelope"></i></a>
                 <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
@@ -89,9 +102,17 @@
         <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
         <p>❤️</p>
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="js/translations-data.js"></script>
+    <script src="js/script.js"></script>
+    ...
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <script src="js/translations-data.js"></script>
     <script src="js/script.js"></script>
 
-    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a></body>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+</body>
 </html>
