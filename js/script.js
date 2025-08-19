@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ÚJ RÉSZ: EXPLAINER MODAL LOGIC
+    // A szkript teljes logikája mostantól ezen az eseményfigyelőn belül van,
+    // biztosítva, hogy minden csak egyszer és a DOM betöltődése után fusson le.
+
+    // EXPLAINER MODAL LOGIC
     const explainerModal = document.getElementById('explainer-modal');
     if (explainerModal) {
         const explainerTitle = document.getElementById('explainer-modal-title');
@@ -11,16 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.addEventListener('click', (e) => {
                 const category = e.currentTarget.dataset.category;
                 const lang = currentLanguage;
-
                 const titleKey = `explainerTitle${category.charAt(0).toUpperCase() + category.slice(1)}`;
                 const textKey = `explainerText${category.charAt(0).toUpperCase() + category.slice(1)}`;
-                
                 if (translations[lang] && translations[lang][titleKey] && translations[lang][textKey]) {
                     explainerTitle.textContent = translations[lang][titleKey];
-                    // A \n sortöréseket <p> tagekké alakítjuk a szebb megjelenésért
                     const rawText = translations[lang][textKey];
                     explainerText.innerHTML = rawText.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('');
-                    
                     overlay.classList.remove('hidden');
                     explainerModal.classList.remove('hidden');
                 }
@@ -33,10 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
-    setLanguage(currentLanguage);
-    loadComments(); 
-});
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
@@ -47,21 +42,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyTheme(theme) {
         if (theme === 'light') {
             document.body.classList.add('light-theme');
-            if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
         } else {
             document.body.classList.remove('light-theme');
-            if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
         }
     }
 
-    applyTheme(currentTheme); 
-
-    if(themeToggleButton){
+    if (themeToggleButton) {
         themeToggleButton.addEventListener('click', () => {
-            let theme = 'dark';
-            if (document.body.classList.toggle('light-theme')) {
-                theme = 'light';
-            }
+            let theme = document.body.classList.toggle('light-theme') ? 'light' : 'dark';
             localStorage.setItem('theme', theme);
             applyTheme(theme);
         });
@@ -72,13 +62,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function setLanguage(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
-        
+
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
                 const text = translations[lang][key];
-                if (elem.placeholder !== undefined) { elem.placeholder = text; } 
-                else { elem.textContent = text; }
+                if (elem.placeholder !== undefined) {
+                    elem.placeholder = text;
+                } else {
+                    elem.textContent = text;
+                }
             }
         });
 
@@ -91,16 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
-        if(langHu && langEn){
+        if (langHu && langEn) {
             langHu.classList.toggle('active', lang === 'hu');
             langEn.classList.toggle('active', lang === 'en');
         }
 
-        const translateButton = document.getElementById('translate-button');
-        if(translateButton) {
-            translateButton.classList.toggle('hidden', lang !== 'hu');
+        if (document.getElementById('translate-button')) {
+            document.getElementById('translate-button').classList.toggle('hidden', lang !== 'hu');
         }
-        
+
         if (typeof initializeGenerator === 'function') {
             initializeGenerator();
         }
@@ -108,52 +100,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const langHu = document.getElementById('lang-hu');
     const langEn = document.getElementById('lang-en');
-    if(langHu && langEn){
-        langHu.addEventListener('click', (e) => { e.preventDefault(); setLanguage('hu'); });
-        langEn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+    if (langHu && langEn) {
+        langHu.addEventListener('click', (e) => {
+            e.preventDefault();
+            setLanguage('hu');
+        });
+        langEn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setLanguage('en');
+        });
     }
 
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const infoButton = document.getElementById('info-button');
-    
-    if(infoButton && infoModal && overlay){
+
+    if (infoButton && infoModal && overlay) {
         const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
-        const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
-        const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
+        const open = () => {
+            overlay.classList.remove('hidden');
+            infoModal.classList.remove('hidden');
+        };
+        const close = () => {
+            overlay.classList.add('hidden');
+            infoModal.classList.add('hidden');
+        };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
-       }
-       
-       if(overlay){
-           overlay.addEventListener('click', () => {
-               document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-               overlay.classList.add('hidden');
-           });
-       }
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+            overlay.classList.add('hidden');
+        });
+    }
 
     if (document.getElementById('random-button')) {
-        
         let currentManagedCategory = '';
-        const textareas = { style: document.getElementById('style-text'), subject: document.getElementById('subject-text'), setting: document.getElementById('setting-text'), extra: document.getElementById('extra-text') };
+        const textareas = {
+            style: document.getElementById('style-text'),
+            subject: document.getElementById('subject-text'),
+            setting: document.getElementById('setting-text'),
+            extra: document.getElementById('extra-text')
+        };
         const finalPromptTextarea = document.getElementById('final-prompt');
         const negativePromptTextarea = document.getElementById('negative-prompt');
         const copyButton = document.getElementById('copy-button');
-        const translateButton = document.getElementById('translate-button');
         const randomButton = document.getElementById('random-button');
         const clearAllButton = document.getElementById('clear-all-button');
         const savePromptButton = document.getElementById('save-prompt-button');
         const savedPromptsList = document.getElementById('saved-prompts-list');
         const managePromptsModal = document.getElementById('manage-prompts-modal');
-        const closeManageModalBtn = managePromptsModal.querySelector('.close-modal-btn');
-        const manageModalTitle = document.getElementById('manage-modal-title');
-        const managePromptsList = document.getElementById('manage-prompts-list');
-        const newPromptInput = document.getElementById('new-prompt-input');
-        const addNewPromptBtn = document.getElementById('add-new-prompt-btn');
         const historyModal = document.getElementById('history-modal');
         const historyButton = document.getElementById('history-button');
         const historyList = document.getElementById('history-list');
-        const closeHistoryModalBtn = historyModal.querySelector('.close-modal-btn');
         let promptHistory = [];
         let historyTimeout;
         let choiceInstances = {};
@@ -164,17 +165,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function openManageModal(category) {
             currentManagedCategory = category;
+            const manageModalTitle = document.getElementById('manage-modal-title');
             const categoryLabelKey = category + 'Label';
             manageModalTitle.textContent = `"${translations[currentLanguage][categoryLabelKey].replace(':', '')}" - Sajátok`;
             renderManageList();
             openModal(managePromptsModal);
         }
-        
+
         function renderManageList() {
+            const managePromptsList = document.getElementById('manage-prompts-list');
             managePromptsList.innerHTML = '';
             const customPrompts = getCustomPrompts();
             const promptsForCategory = customPrompts[currentManagedCategory] || [];
-            if(promptsForCategory.length === 0){
+            if (promptsForCategory.length === 0) {
                 managePromptsList.innerHTML = `<p style="text-align: center; color: #888;">Itt még nincsenek saját promptjaid.</p>`;
             } else {
                 promptsForCategory.forEach((prompt, index) => {
@@ -187,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function addNewCustomPrompt() {
+            const newPromptInput = document.getElementById('new-prompt-input');
             const newPrompt = newPromptInput.value.trim();
             if (newPrompt === '' || !currentManagedCategory) return;
             const customPrompts = getCustomPrompts();
@@ -228,15 +232,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const promptToSave = finalPromptTextarea.value.trim();
             if (promptToSave === '') return;
             let saved = getSavedPrompts();
-            if (!saved.includes(promptToSave)) { saved.unshift(promptToSave); localStorage.setItem('savedPrompts', JSON.stringify(saved)); renderSavedPrompts(); }
+            if (!saved.includes(promptToSave)) {
+                saved.unshift(promptToSave);
+                localStorage.setItem('savedPrompts', JSON.stringify(saved));
+                renderSavedPrompts();
+            }
         }
 
         function getSavedPrompts() { return JSON.parse(localStorage.getItem('savedPrompts')) || []; }
-        
+
         function renderSavedPrompts() {
             savedPromptsList.innerHTML = '';
             const saved = getSavedPrompts();
-            if(saved.length === 0){ savedPromptsList.innerHTML = `<p style="text-align: center; color: #888;">Nincsenek mentett promptjaid.</p>`; return; }
+            if (saved.length === 0) {
+                savedPromptsList.innerHTML = `<p style="text-align: center; color: #888;">Nincsenek mentett promptjaid.</p>`;
+                return;
+            }
             saved.forEach((prompt, index) => {
                 const item = document.createElement('div');
                 item.className = 'saved-prompt-item';
@@ -250,10 +261,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!target) return;
             const index = parseInt(target.dataset.index, 10);
             let saved = getSavedPrompts();
-            if (target.classList.contains('load-prompt-btn')) { finalPromptTextarea.value = saved[index]; }
-            if (target.classList.contains('delete-prompt-btn')) { saved.splice(index, 1); localStorage.setItem('savedPrompts', JSON.stringify(saved)); renderSavedPrompts(); }
+            if (target.classList.contains('load-prompt-btn')) {
+                finalPromptTextarea.value = saved[index];
+            }
+            if (target.classList.contains('delete-prompt-btn')) {
+                saved.splice(index, 1);
+                localStorage.setItem('savedPrompts', JSON.stringify(saved));
+                renderSavedPrompts();
+            }
         }
-        
+
         function saveToHistory(prompt) {
             if (!prompt || prompt === promptHistory[0]) return;
             promptHistory.unshift(prompt);
@@ -288,10 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const custom = getCustomPrompts();
             const defaults = defaultPrompts[lang];
             let combined = {};
-            for(const category in defaults){
-                const defaultSet = new Set(defaults[category]);
-                const customSet = new Set(custom[category] || []);
-                combined[category] = [...defaultSet, ...customSet];
+            for (const category in defaults) {
+                const combinedSet = new Set([...(defaults[category] || []), ...(custom[category] || [])]);
+                combined[category] = [...combinedSet];
             }
             return combined;
         }
@@ -305,133 +321,135 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (choiceInstances[category]) {
                     choiceInstances[category].destroy();
                 }
-                
+
                 const options = combinedPrompts[category].map(item => ({ value: item, label: item }));
 
                 choiceInstances[category] = new Choices(selectElement, {
-                    choices: options, searchPlaceholderValue: "Keress...", itemSelectText: "Kiválaszt",
-                    allowHTML: false, shouldSort: false, placeholder: true,
+                    choices: options,
+                    searchPlaceholderValue: "Keress...",
+                    itemSelectText: "Kiválaszt",
+                    allowHTML: false,
+                    shouldSort: false,
+                    placeholder: true,
                     placeholderValue: translations[currentLanguage].selectDefault.replace('{category}', translations[currentLanguage][category + 'Label'].replace(':', '')),
                 });
-                
-                // --- EZ AZ ÚJ, JAVÍTOTT RÉSZ ---
-                // Eseményfigyelő, ami a legördülő menü megnyitásakor lefut
+
                 selectElement.addEventListener('showDropdown.choices', function() {
-                    // Közvetlenül a JavaScript által létrehozott legördülő elemre hatunk
                     const dropdown = choiceInstances[category].dropdown.element;
-                    // Beállítjuk a maximális magasságot a képernyő magasságának 25%-ára.
-                    // Ez reszponzív, így minden mobil képernyőn jól működik.
-                    dropdown.style.maxHeight = '25vh'; 
-                    // Engedélyezzük a függőleges görgetést.
+                    dropdown.style.maxHeight = '25vh';
                     dropdown.style.overflowY = 'auto';
                 }, false);
-                // --- A JAVÍTÁS VÉGE ---
-
             });
         }
-        
+
         window.initializeGenerator = function() {
             initializeChoices();
             renderSavedPrompts();
             updateFinalPrompt();
-        }
-        
+        };
+
         randomButton.addEventListener('click', generateRandomPrompt);
         clearAllButton.addEventListener('click', clearAllTextareas);
         savePromptButton.addEventListener('click', saveCurrentPrompt);
         savedPromptsList.addEventListener('click', handleSavedListClick);
-        closeManageModalBtn.addEventListener('click', () => {overlay.classList.add('hidden'); managePromptsModal.classList.add('hidden');});
-        document.querySelectorAll('.manage-prompts-btn').forEach(btn => { btn.addEventListener('click', function() { openManageModal(this.dataset.category); }); });
-        addNewPromptBtn.addEventListener('click', addNewCustomPrompt);
-        newPromptInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); addNewCustomPrompt(); } });
-        managePromptsList.addEventListener('click', function(event) { const target = event.target.closest('.delete-custom-prompt-btn'); if (target) { deleteCustomPrompt(parseInt(target.dataset.index, 10)); } });
-        
-        document.querySelectorAll('.add-button').forEach(button => { button.addEventListener('click', function() {
-            const selectContainer = button.previousElementSibling;
-            const choice = Object.values(choiceInstances).find(inst => inst.containerOuter.element === selectContainer);
-            const selectedValue = choice ? choice.getValue(true) : null;
-            
-            if (selectedValue && selectedValue !== "") {
-                const category = Object.keys(choiceInstances).find(key => choiceInstances[key] === choice);
-                const targetTextarea = textareas[category];
-                targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
-                updateFinalPrompt();
-                choice.clearInput();
-                choice.setChoiceByValue('');
-            }
-        }); });
+
+        if (managePromptsModal) {
+            managePromptsModal.querySelector('.close-modal-btn').addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                managePromptsModal.classList.add('hidden');
+            });
+            document.querySelectorAll('.manage-prompts-btn').forEach(btn => {
+                btn.addEventListener('click', function() { openManageModal(this.dataset.category); });
+            });
+            document.getElementById('add-new-prompt-btn').addEventListener('click', addNewCustomPrompt);
+            document.getElementById('new-prompt-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addNewCustomPrompt();
+                }
+            });
+            document.getElementById('manage-prompts-list').addEventListener('click', function(event) {
+                const target = event.target.closest('.delete-custom-prompt-btn');
+                if (target) { deleteCustomPrompt(parseInt(target.dataset.index, 10)); }
+            });
+        }
+
+        document.querySelectorAll('.add-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const selectContainer = button.previousElementSibling;
+                const choice = Object.values(choiceInstances).find(inst => inst.containerOuter.element === selectContainer);
+                const selectedValue = choice ? choice.getValue(true) : null;
+                if (selectedValue && selectedValue !== "") {
+                    const category = Object.keys(choiceInstances).find(key => choiceInstances[key] === choice);
+                    const targetTextarea = textareas[category];
+                    targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
+                    updateFinalPrompt();
+                    choice.clearInput();
+                    choice.setChoiceByValue('');
+                }
+            });
+        });
 
         Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
+
         copyButton.addEventListener('click', function() {
             let textToCopy = finalPromptTextarea.value.trim();
             const negativeText = negativePromptTextarea.value.trim();
-            if(negativeText !== ''){ textToCopy += ` --no ${negativeText}`; }
+            if (negativeText !== '') { textToCopy += ` --no ${negativeText}`; }
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const buttonTextSpan = this.querySelector('span');
-                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
-                const target = buttonTextSpan || this;
-                target.textContent = translations[currentLanguage].copyButtonSuccess;
-                setTimeout(() => { target.textContent = originalText; }, 1500);
+                const buttonTextSpan = this.querySelector('span') || this;
+                const originalText = buttonTextSpan.textContent;
+                buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
+                setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500);
             });
         });
-        translateButton.addEventListener('click', function() { const promptText = finalPromptTextarea.value; if (promptText.trim() === '') return; const encodedText = encodeURIComponent(promptText); const translateUrl = `https://translate.google.com/?sl=hu&tl=en&text=${encodedText}`; window.open(translateUrl, '_blank'); });
-        historyButton.addEventListener('click', () => { renderHistory(); openModal(historyModal); });
-        closeHistoryModalBtn.addEventListener('click', () => { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); });
-        historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { finalPromptTextarea.value = e.target.textContent; overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
-        
-        initializeGenerator();
+
+        if (historyButton && historyModal) {
+            historyButton.addEventListener('click', () => {
+                renderHistory();
+                openModal(historyModal);
+            });
+            historyModal.querySelector('.close-modal-btn').addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                historyModal.classList.add('hidden');
+            });
+            historyList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('history-item')) {
+                    finalPromptTextarea.value = e.target.textContent;
+                    overlay.classList.add('hidden');
+                    historyModal.classList.add('hidden');
+                }
+            });
+        }
     }
-    
-    // ARTIST PAGE - COPY BUTTON LOGIC
+
     if (document.querySelector('.copy-artist-btn')) {
-        const copyButtons = document.querySelectorAll('.copy-artist-btn');
-        
-        copyButtons.forEach(button => {
+        document.querySelectorAll('.copy-artist-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const artistName = button.dataset.artist;
                 navigator.clipboard.writeText(artistName).then(() => {
-                    const originalIcon = button.innerHTML;
                     button.innerHTML = '<i class="fa-solid fa-check"></i>';
                     button.classList.add('copied');
-                    
-                    copyButtons.forEach(btn => {
-                        if (btn !== button && btn.classList.contains('copied')) {
-                            btn.innerHTML = '<i class="fa-solid fa-copy"></i>';
-                            btn.classList.remove('copied');
-                        }
-                    });
-
                     setTimeout(() => {
-                        button.innerHTML = originalIcon;
+                        button.innerHTML = '<i class="fa-solid fa-copy"></i>';
                         button.classList.remove('copied');
                     }, 1500);
-                }).catch(err => {
-                    console.error('Hiba a másolás során:', err);
                 });
             });
         });
     }
 
-    // BACK TO TOP BUTTON LOGIC
     const backToTopButton = document.getElementById('back-to-top');
     if (backToTopButton) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.remove('hidden');
-            } else {
-                backToTopButton.classList.add('hidden');
-            }
+            backToTopButton.classList.toggle('hidden', window.scrollY <= 300);
         });
-
         backToTopButton.addEventListener('click', (e) => {
             e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-// NEGATIVE PROMPT COPY BUTTON LOGIC
+
     const copyNegativeButton = document.getElementById('copy-negative-button');
     if (copyNegativeButton) {
         copyNegativeButton.addEventListener('click', () => {
@@ -440,7 +458,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const originalIcon = copyNegativeButton.innerHTML;
                 copyNegativeButton.innerHTML = '<i class="fa-solid fa-check"></i>';
                 copyNegativeButton.classList.add('copied');
-
                 setTimeout(() => {
                     copyNegativeButton.innerHTML = originalIcon;
                     copyNegativeButton.classList.remove('copied');
@@ -448,49 +465,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    // Vendégkönyv kommentek betöltése (JAVÍTOTT VERZIÓ)
+
     function loadComments() {
         const commentsContainer = document.getElementById('comments-list');
-        if (!commentsContainer) {
-            return;
-        }
+        if (!commentsContainer) return;
 
         fetch('/_data/comments.json')
-            .then(response => {
-                if (!response.ok) { throw new Error('Hálózati hiba'); }
-                return response.json();
-            })
+            .then(response => { if (!response.ok) { throw new Error('Network response was not ok'); } return response.json(); })
             .then(comments => {
-                commentsContainer.innerHTML = ''; 
+                commentsContainer.innerHTML = '';
                 if (comments.length === 0) {
                     commentsContainer.innerHTML = `<p>${translations[currentLanguage].guestbookNoComments}</p>`;
                     return;
                 }
-                
                 comments.reverse().forEach(comment => {
                     const commentElement = document.createElement('div');
                     commentElement.className = 'comment-item';
-                    
-                    const header = document.createElement('div');
-                    header.className = 'comment-header';
-                    
-                    const name = document.createElement('strong');
-                    name.textContent = comment.name;
-                    
-                    const date = document.createElement('span');
-                    date.className = 'comment-date';
-                    date.textContent = comment.date;
-                    
-                    header.appendChild(name);
-                    header.appendChild(date);
-                    
-                    const message = document.createElement('p');
-                    message.className = 'comment-message';
-                    message.textContent = comment.message;
-                    
-                    commentElement.appendChild(header);
-                    commentElement.appendChild(message);
-                    
+                    commentElement.innerHTML = `
+                        <div class="comment-header">
+                            <strong>${comment.name}</strong>
+                            <span class="comment-date">${comment.date}</span>
+                        </div>
+                        <p class="comment-message">${comment.message}</p>
+                    `;
                     commentsContainer.appendChild(commentElement);
                 });
             })
@@ -500,5 +497,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Indítás
+    applyTheme(currentTheme);
     setLanguage(currentLanguage);
     loadComments();
+
+});
