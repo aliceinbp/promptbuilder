@@ -620,10 +620,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) throw new Error('A bejegyzés nem található.');
 
             const markdown = await response.text();
-            const { frontmatter, content } = parseFrontmatter(markdown);
+            // Most már csak a frontmatter kell nekünk, a content rész üres lesz
+            const { frontmatter } = parseFrontmatter(markdown);
             
             const title = currentLanguage === 'hu' ? frontmatter.title_hu : frontmatter.title_en;
-            const bodyMarkdown = content;
+            
+            // *** EZ A JAVÍTOTT, LÉNYEGES SOR: A frontmatter-ből olvassuk ki a szöveget ***
+            const bodyMarkdown = currentLanguage === 'hu' ? frontmatter.body_hu : frontmatter.body_en;
+            
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
             const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', {
                 year: 'numeric', month: 'long', day: 'numeric'
