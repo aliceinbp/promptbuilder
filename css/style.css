@@ -139,14 +139,18 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .choices[data-type*="select-one"]::after { border-color: var(--color-primary) transparent transparent; }
 .choices.is-open[data-type*="select-one"]::after { border-color: transparent transparent var(--color-primary); margin-top: -2.5px; }
 
+/* --- EZ A VÉGLEGES, JAVÍTOTT RÉSZ --- */
 .choices__list--dropdown { 
     background-color: var(--color-surface) !important; 
-    border: 1px solid var(--color-primary); 
-    border-radius: 5px; 
-    color: var(--color-text-main); 
-    max-height: 200px; /* Alap magasság korlát */
-    overflow-y: auto;   /* Engedélyezi a görgetést */
-    -webkit-overflow-scrolling: touch; /* <-- EZ AZ ÚJ SOR A MOBILOS GÖRGETÉSHEZ */
+    border: 1px solid var(--color-primary) !important; 
+    color: var(--color-text-main) !important; 
+    
+    /* Kényszerített beállítások a mobil görgetéshez */
+    max-height: 30vh !important; /* A képernyő magasságának 30%-a, hogy legyen hely */
+    overflow-y: auto !important;   /* KIKÉNYSZERÍTI a görgetősávot */
+    -webkit-overflow-scrolling: touch !important; /* Sima görgetés iOS-re */
+    z-index: 1050 !important; /* Biztos, hogy minden felett van */
+    pointer-events: auto !important; /* Biztos, hogy fogadja a kattintást/érintést */
 }
 
 .choices__list--dropdown .choices__item--selectable { color: var(--color-text-main); }
@@ -160,7 +164,6 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .copy-artist-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-subtle); border-radius: 5px; padding: 5px 10px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
 .copy-artist-btn:hover { color: var(--color-primary-light); border-color: var(--color-primary-light); transform: scale(1.1); }
 .copy-artist-btn.copied { background-color: var(--color-primary); color: var(--color-text-inverted); border-color: var(--color-primary); }
-/* ... (a teljes CSS kód, ahogy korábban volt) ... */
 
 /* Explainer Icon */
 .explainer-icon {
@@ -169,7 +172,6 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     cursor: pointer;
     transition: color 0.2s ease, transform 0.2s ease;
 }
-
 .explainer-icon:hover {
     color: var(--color-primary-light);
     transform: scale(1.2);
@@ -180,13 +182,10 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     margin-bottom: 1em;
     line-height: 1.7;
 }
-
 #explainer-modal-text p:last-child {
     margin-bottom: 0;
 }
 
-/* Back to Top Button Styles */
-/* ... (a többi CSS kód változatlan) ... */
 /* Back to Top Button Styles */
 #back-to-top {
     position: fixed;
@@ -207,17 +206,14 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
     z-index: 100;
 }
-
 #back-to-top:not(.hidden) {
     opacity: 0.7;
     visibility: visible;
 }
-
 #back-to-top:hover {
     opacity: 1;
     transform: scale(1.1);
 }
-
 
 @media (max-width: 768px) {
     #main-container { padding: 20px 15px; }
@@ -231,7 +227,8 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 @media (max-width: 480px) {
     .links-grid { grid-template-columns: 1fr; }
     #featured-gallery .gallery-grid { grid-template-columns: 1fr; }
-}/* Guestbook Styles */
+}
+/* Guestbook Styles */
 .guestbook-form {
     text-align: left;
     max-width: 600px;
@@ -301,7 +298,8 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     line-height: 1.6;
     margin: 0;
     word-wrap: break-word;
-}/* Footer Social Icons */
+}
+/* Footer Social Icons */
 .footer-socials {
     display: flex;
     gap: 20px;
@@ -316,7 +314,8 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .footer-socials a:hover {
     color: var(--color-primary-light);
     transform: scale(1.2);
-}.copy-small-btn {
+}
+.copy-small-btn {
     margin-left: auto; /* Jobbra tolja a gombot */
     background: none;
     border: none;
