@@ -118,7 +118,8 @@
                     <span data-key="finalPromptLabel">Végleges prompt (angolul)</span>
                     <button id="history-button" title="Előzmények"><i class="fa-solid fa-clock-rotate-left"></i></button>
                 </label>
-                <textarea id="final-prompt" rows="6" data-key="finalPromptPlaceholder" placeholder="..."></textarea>
+                <div id="final-prompt-container" class="final-prompt-container"></div>
+<textarea id="final-prompt-hidden" style="display: none;"></textarea> ```
             </div>
             <div class="negative-prompt-section">
                 <label for="negative-prompt">
@@ -184,6 +185,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="js/prompts-data.js"></script>
     <script src="js/translations-data.js"></script>
     <script src="js/script.js"></script>

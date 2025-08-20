@@ -524,3 +524,38 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .cta-button-small:hover {
     background-color: var(--accent-color-hover);
 }
+/* Drag & Drop Prompt Container Styles */
+.final-prompt-container {
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+}
+
+.prompt-tag {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    cursor: move;
+    transition: background-color 0.2s;
+    user-select: none; /* Ne jelölje ki a szöveget mozgatás közben */
+}
+
+.prompt-tag:hover {
+    background-color: var(--accent-color-hover);
+}
+
+/* A mozgatás közbeni "szellem" elem stílusa */
+.prompt-tag.sortable-ghost {
+    background-color: var(--border-color);
+    color: transparent;
+}

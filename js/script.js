@@ -133,7 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (document.getElementById('random-button')) {
+    // --- GENERATOR OLDAL LOGIKÁJA ---
+    if (document.getElementById('generator.html') || document.querySelector('.prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
             style: document.getElementById('style-text'),
@@ -141,7 +142,11 @@ document.addEventListener('DOMContentLoaded', function() {
             setting: document.getElementById('setting-text'),
             extra: document.getElementById('extra-text')
         };
-        const finalPromptTextarea = document.getElementById('final-prompt');
+        
+        // A végleges prompt konténere és egy rejtett textarea a másoláshoz
+        const finalPromptContainer = document.getElementById('final-prompt-container');
+        const finalPromptHiddenTextarea = document.getElementById('final-prompt-hidden');
+        
         const negativePromptTextarea = document.getElementById('negative-prompt');
         const copyButton = document.getElementById('copy-button');
         const randomButton = document.getElementById('random-button');
@@ -155,7 +160,16 @@ document.addEventListener('DOMContentLoaded', function() {
         let promptHistory = [];
         let historyTimeout;
         let choiceInstances = {};
+        
+        // SortableJS inicializálása
+        if (finalPromptContainer) {
+            new Sortable(finalPromptContainer, {
+                animation: 150,
+                ghostClass: 'sortable-ghost'
+            });
+        }
 
+        // --- FUNKCIÓK ---
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
@@ -224,9 +238,16 @@ document.addEventListener('DOMContentLoaded', function() {
             negativePromptTextarea.value = '';
             updateFinalPrompt();
         }
+        
+        // Helper funkció a prompt szövegének kinyerésére a címkékből
+        function getPromptTextFromTags() {
+            const tags = finalPromptContainer.querySelectorAll('.prompt-tag');
+            const tagTexts = Array.from(tags).map(tag => tag.textContent);
+            return tagTexts.join(', ');
+        }
 
         function saveCurrentPrompt() {
-            const promptToSave = finalPromptTextarea.value.trim();
+            const promptToSave = getPromptTextFromTags();
             if (promptToSave === '') return;
             let saved = getSavedPrompts();
             if (!saved.includes(promptToSave)) {
@@ -239,7 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
         function getSavedPrompts() { return JSON.parse(localStorage.getItem('savedPrompts')) || []; }
 
         function renderSavedPrompts() {
-            const savedPromptsList = document.getElementById('saved-prompts-list');
             if(!savedPromptsList) return;
             savedPromptsList.innerHTML = '';
             const saved = getSavedPrompts();
@@ -254,14 +274,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 savedPromptsList.appendChild(item);
             });
         }
-
+        
+        // Módosított funkció a mentett promptok betöltésére
         function handleSavedListClick(event) {
             const target = event.target.closest('button');
             if (!target) return;
             const index = parseInt(target.dataset.index, 10);
             let saved = getSavedPrompts();
             if (target.classList.contains('load-prompt-btn')) {
-                finalPromptTextarea.value = saved[index];
+                // Töröljük a szerkesztőket és a címkéket
+                clearAllTextareas(); 
+                finalPromptContainer.innerHTML = '';
+                // Hozzáadunk egyetlen, nem mozgatható címkét a teljes prompttal
+                const prompt = saved[index];
+                const tag = document.createElement('span');
+                tag.className = 'prompt-tag';
+                tag.textContent = prompt;
+                finalPromptContainer.appendChild(tag);
+                finalPromptHiddenTextarea.value = prompt; // Frissítjük a rejtett mezőt
             }
             if (target.classList.contains('delete-prompt-btn')) {
                 saved.splice(index, 1);
@@ -289,14 +319,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 historyList.appendChild(item);
             });
         }
-
+        
+        // A LEGFONTOSABB VÁLTOZÁS: A végleges prompt frissítése címkékkel
         function updateFinalPrompt() {
-            const promptParts = [textareas.style.value, textareas.subject.value, textareas.setting.value, textareas.extra.value].map(part => part.trim()).filter(part => part !== "");
-            const finalPrompt = promptParts.join(', ');
-            finalPromptTextarea.value = finalPrompt;
+            finalPromptContainer.innerHTML = ''; // Konténer ürítése
+            const allParts = [];
+            
+            // Sorrendben összegyűjtjük a részeket
+            ['style', 'subject', 'setting', 'extra'].forEach(category => {
+                const text = textareas[category].value.trim();
+                if (text) {
+                    // Vessző mentén daraboljuk, ha több elem van egy mezőben
+                    text.split(',').forEach(part => {
+                        const trimmedPart = part.trim();
+                        if(trimmedPart) {
+                            allParts.push(trimmedPart);
+                        }
+                    });
+                }
+            });
+
+            // Létrehozzuk a címkéket
+            allParts.forEach(part => {
+                const tag = document.createElement('span');
+                tag.className = 'prompt-tag';
+                tag.textContent = part;
+                finalPromptContainer.appendChild(tag);
+            });
+            
+            const finalPromptText = getPromptTextFromTags();
+            finalPromptHiddenTextarea.value = finalPromptText; // Frissítjük a rejtett mezőt
+
             clearTimeout(historyTimeout);
             historyTimeout = setTimeout(() => {
-                saveToHistory(finalPrompt);
+                saveToHistory(finalPromptText);
             }, 1500);
         }
 
@@ -346,10 +402,13 @@ document.addEventListener('DOMContentLoaded', function() {
             updateFinalPrompt();
         };
 
+        // --- ESEMÉNYFIGYELŐK ---
         randomButton.addEventListener('click', generateRandomPrompt);
         clearAllButton.addEventListener('click', clearAllTextareas);
         savePromptButton.addEventListener('click', saveCurrentPrompt);
-        savedPromptsList.addEventListener('click', handleSavedListClick);
+        if(savedPromptsList) {
+            savedPromptsList.addEventListener('click', handleSavedListClick);
+        }
 
         if (managePromptsModal) {
             managePromptsModal.querySelector('.close-modal-btn').addEventListener('click', () => {
@@ -393,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
 
         copyButton.addEventListener('click', function() {
-            let textToCopy = finalPromptTextarea.value.trim();
+            let textToCopy = getPromptTextFromTags(); // Módosítva, hogy a címkékből olvasson
             const negativeText = negativePromptTextarea.value.trim();
             if (negativeText !== '') { textToCopy += ` --no ${negativeText}`; }
             navigator.clipboard.writeText(textToCopy).then(() => {
@@ -415,14 +474,21 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             historyList.addEventListener('click', (e) => {
                 if (e.target.classList.contains('history-item')) {
-                    finalPromptTextarea.value = e.target.textContent;
+                    clearAllTextareas();
+                    finalPromptContainer.innerHTML = '';
+                    const prompt = e.target.textContent;
+                    const tag = document.createElement('span');
+                    tag.className = 'prompt-tag';
+                    tag.textContent = prompt;
+                    finalPromptContainer.appendChild(tag);
+                    finalPromptHiddenTextarea.value = prompt;
                     overlay.classList.add('hidden');
                     historyModal.classList.add('hidden');
                 }
             });
         }
     }
-
+    
     function initializeArtistCopyButtons() {
         document.querySelectorAll('.copy-artist-btn').forEach(button => {
             if (button.dataset.listenerAttached) return;
@@ -469,69 +535,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function loadComments() {
-        const commentsContainer = document.getElementById('comments-list');
-        if (!commentsContainer) return;
-
-        fetch('/_data/comments.json')
-            .then(response => { if (!response.ok) { throw new Error('Network response was not ok'); } return response.json(); })
-            .then(comments => {
-                commentsContainer.innerHTML = '';
-                if (comments.length === 0) {
-                    commentsContainer.innerHTML = `<p>${translations[currentLanguage].guestbookNoComments}</p>`;
-                    return;
-                }
-                comments.reverse().forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    commentElement.className = 'comment-item';
-                    commentElement.innerHTML = `
-                        <div class="comment-header">
-                            <strong>${comment.name}</strong>
-                            <span class="comment-date">${comment.date}</span>
-                        </div>
-                        <p class="comment-message">${comment.message}</p>
-                    `;
-                    commentsContainer.appendChild(commentElement);
-                });
-            })
-            .catch(error => {
-                console.error('Hiba a kommentek betöltése közben:', error);
-                commentsContainer.innerHTML = `<p>${translations[currentLanguage].guestbookError}</p>`;
-            });
-    }
-    
-    // --- ÚJ DINAMIKUS TARTALOMBETÖLTŐ FUNKCIÓK ---
-
     async function loadArtists() {
         const container = document.querySelector('.artist-grid');
         if (!container) return;
-
         try {
             const response = await fetch('/_data/artists.json');
             const artists = await response.json();
-            
             container.innerHTML = '';
-            
             artists.forEach(artist => {
                 const card = document.createElement('div');
                 card.className = 'artist-card';
                 const copyName = artist.copyName || artist.name;
-                
-                card.innerHTML = `
-                    <div class="artist-card-header">
-                        <h3>${artist.name}</h3>
-                        <button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip">
-                            <i class="fa-solid fa-copy"></i>
-                        </button>
-                    </div>
-                    <p data-key="${artist.dataKey}"></p>
-                `;
+                card.innerHTML = `<div class="artist-card-header"><h3>${artist.name}</h3><button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip"><i class="fa-solid fa-copy"></i></button></div><p data-key="${artist.dataKey}"></p>`;
                 container.appendChild(card);
             });
-            
             initializeArtistCopyButtons();
             setLanguage(currentLanguage);
-
         } catch (error) {
             console.error('Hiba a művészek betöltésekor:', error);
             container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
@@ -541,100 +560,69 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadGallery() {
         const container = document.getElementById('gallery-section');
         if (!container) return;
-
         try {
             const response = await fetch('/_data/gallery.json');
             const galleryData = await response.json();
-            
             container.innerHTML = '';
-            
-            const categoryMap = {
-                fantasy: 'galleryCatFantasy',
-                dark: 'galleryCatDark',
-                worlds: 'galleryCatWorlds',
-                shards: 'galleryCatShards'
-            };
-
+            const categoryMap = { fantasy: 'galleryCatFantasy', dark: 'galleryCatDark', worlds: 'galleryCatWorlds', shards: 'galleryCatShards' };
             for (const categoryKey in galleryData) {
                 const images = galleryData[categoryKey];
                 const titleKey = categoryMap[categoryKey];
-
                 const title = document.createElement('h2');
                 title.className = 'gallery-category-title';
                 title.innerHTML = `<span data-key="${titleKey}"></span>`;
                 container.appendChild(title);
-                
                 const grid = document.createElement('div');
                 grid.className = 'gallery-grid';
-
                 images.forEach(image => {
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
-                    item.innerHTML = `
-                        <a href="src/gallery-images/${image.src}" target="_blank">
-                            <img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy">
-                        </a>
-                    `;
+                    item.innerHTML = `<a href="src/gallery-images/${image.src}" target="_blank"><img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy"></a>`;
                     grid.appendChild(item);
                 });
                 container.appendChild(grid);
             }
-            
             setLanguage(currentLanguage);
-
         } catch (error) {
             console.error('Hiba a galéria betöltésekor:', error);
             container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
         }
     }
 
-    // --- ÚJ "A NAP PROMPTJA" FUNKCIÓ ---
     async function loadDailyPrompt() {
         const container = document.getElementById('daily-prompt-section');
         if (!container) return;
-
         const promptTextElement = document.getElementById('daily-prompt-text');
         const copyBtn = document.getElementById('copy-daily-prompt-btn');
-
         try {
             const response = await fetch('/_data/daily_prompts.json');
             const prompts = await response.json();
-
             if (prompts.length === 0) {
                 promptTextElement.textContent = "Nincsenek elérhető promptok.";
                 return;
             }
-
-            // Dátum alapú kiválasztás
             const now = new Date();
             const startOfYear = new Date(now.getFullYear(), 0, 0);
             const diff = now - startOfYear;
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay);
-            
             const promptIndex = (dayOfYear - 1) % prompts.length;
             const selectedPrompt = prompts[promptIndex];
-
             promptTextElement.textContent = selectedPrompt;
-
-            // Másolás gomb eseménykezelője
             copyBtn.addEventListener('click', () => {
                 navigator.clipboard.writeText(selectedPrompt).then(() => {
                     const buttonTextSpan = copyBtn.querySelector('span');
                     const originalText = buttonTextSpan.textContent;
                     const icon = copyBtn.querySelector('i');
-                    
                     buttonTextSpan.textContent = translations[currentLanguage].dailyPromptCopySuccess;
                     icon.className = 'fa-solid fa-check';
-                    
                     setTimeout(() => {
                         buttonTextSpan.textContent = originalText;
                         icon.className = 'fa-solid fa-copy';
-                        setLanguage(currentLanguage); // Visszaállítjuk a fordítást
+                        setLanguage(currentLanguage);
                     }, 2000);
                 });
             });
-
         } catch (error) {
             console.error("Hiba a nap promptjának betöltésekor:", error);
             promptTextElement.textContent = "A nap promptja jelenleg nem érhető el.";
@@ -648,17 +636,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function parseFrontmatter(markdown) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
         const match = markdown.match(frontmatterRegex);
-        
-        if (!match) {
-            return { frontmatter: {}, content: markdown };
-        }
-
+        if (!match) return { frontmatter: {}, content: markdown };
         const yamlString = match[1];
         const content = markdown.replace(frontmatterRegex, '');
-        
         try {
-            const frontmatter = jsyaml.load(yamlString);
-            return { frontmatter, content };
+            return { frontmatter: jsyaml.load(yamlString), content };
         } catch (error) {
             console.error("Hiba a YAML feldolgozása közben:", error);
             return { frontmatter: {}, content: content };
@@ -668,70 +650,44 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadBlogPosts() {
         const container = document.getElementById('blog-posts-container');
         if (!container || !markdownConverter) return;
-        
         const GITHUB_API_URL = 'https://api.github.com/repos/aliceinbp/promptbuilder/contents/blog';
-
         try {
             const response = await fetch(GITHUB_API_URL);
             if (!response.ok) throw new Error('Nem sikerült lekérni a bejegyzéseket a GitHubról.');
-            
             let files = await response.json();
-            
             if (!Array.isArray(files)) {
                 console.error("GitHub API did not return an array:", files.message);
                 container.innerHTML = `<p>${translations[currentLanguage].blogError || 'Hiba a bejegyzések formátumával.'}</p>`;
                 return;
             }
-
-            const postPromises = files
-                .filter(file => file.name && file.name.endsWith('.md'))
-                .map(async (file) => {
-                    const postResponse = await fetch(file.download_url);
-                    const markdown = await postResponse.text();
-                    const { frontmatter } = parseFrontmatter(markdown);
-                    frontmatter.slug = file.name.replace('.md', '');
-                    return frontmatter;
-                });
-
+            const postPromises = files.filter(file => file.name && file.name.endsWith('.md')).map(async (file) => {
+                const postResponse = await fetch(file.download_url);
+                const markdown = await postResponse.text();
+                const { frontmatter } = parseFrontmatter(markdown);
+                frontmatter.slug = file.name.replace('.md', '');
+                return frontmatter;
+            });
             let postData = await Promise.all(postPromises);
-            
             postData.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            container.innerHTML = ''; 
-
+            container.innerHTML = '';
             if (postData.length === 0) {
                  container.innerHTML = `<p>${translations[currentLanguage].noPostsFound}</p>`;
                  return;
             }
-
             postData.forEach(post => {
                 const title = currentLanguage === 'hu' ? post.title_hu : post.title_en;
                 const bodyMarkdown = currentLanguage === 'hu' ? post.body_hu : post.body_en;
-                
                 const bodyHtml = markdownConverter.makeHtml(bodyMarkdown || '');
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = bodyHtml;
                 const plainText = tempDiv.textContent || tempDiv.innerText || "";
                 const excerpt = plainText.substring(0, 150) + '...';
-
-                const postDate = new Date(post.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-
+                const postDate = new Date(post.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
                 const card = document.createElement('div');
                 card.className = 'blog-card';
-                card.innerHTML = `
-                    <a href="post.html?slug=${post.slug}"><img src="${post.image}" alt="${title}" class="blog-card-image"></a>
-                    <div class="blog-card-content">
-                        <h3><a href="post.html?slug=${post.slug}" style="text-decoration:none; color: inherit;">${title}</a></h3>
-                        <p class="blog-card-meta">${translations[currentLanguage].postedOn} ${postDate}</p>
-                        <p class="blog-card-excerpt">${excerpt}</p>
-                        <a href="post.html?slug=${post.slug}" class="blog-card-read-more">${translations[currentLanguage].readMore}</a>
-                    </div>
-                `;
+                card.innerHTML = `<a href="post.html?slug=${post.slug}"><img src="${post.image}" alt="${title}" class="blog-card-image"></a><div class="blog-card-content"><h3><a href="post.html?slug=${post.slug}" style="text-decoration:none; color: inherit;">${title}</a></h3><p class="blog-card-meta">${translations[currentLanguage].postedOn} ${postDate}</p><p class="blog-card-excerpt">${excerpt}</p><a href="post.html?slug=${post.slug}" class="blog-card-read-more">${translations[currentLanguage].readMore}</a></div>`;
                 container.appendChild(card);
             });
-
         } catch (error) {
             console.error('Hiba a blogbejegyzések betöltésekor:', error);
             container.innerHTML = `<p>${translations[currentLanguage].blogError || 'Hiba a bejegyzések betöltése közben.'}</p>`;
@@ -741,45 +697,24 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadSinglePost() {
         const container = document.getElementById('post-content-container');
         if (!container || !markdownConverter) return;
-
         const params = new URLSearchParams(window.location.search);
         const slug = params.get('slug');
-
         if (!slug) {
             container.innerHTML = 'Hiba: Nincs megadva bejegyzés azonosító.';
             return;
         }
-
         const POST_URL = `https://raw.githubusercontent.com/aliceinbp/promptbuilder/main/blog/${slug}.md`;
-
         try {
             const response = await fetch(POST_URL);
             if (!response.ok) throw new Error('A bejegyzés nem található.');
-
             const markdown = await response.text();
             const { frontmatter } = parseFrontmatter(markdown);
-            
             const title = currentLanguage === 'hu' ? frontmatter.title_hu : frontmatter.title_en;
             const bodyMarkdown = currentLanguage === 'hu' ? frontmatter.body_hu : frontmatter.body_en;
-            
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
-            const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
-            
+            const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             document.title = `${title} - Prompt Lab Blog`;
-
-            container.innerHTML = `
-                <div class="post-header">
-                    <h1>${title}</h1>
-                    <p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p>
-                </div>
-                <img src="${frontmatter.image}" alt="${title}" class="post-featured-image">
-                <div class="post-body">
-                    ${bodyHtml}
-                </div>
-            `;
-
+            container.innerHTML = `<div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div><img src="${frontmatter.image}" alt="${title}" class="post-featured-image"><div class="post-body">${bodyHtml}</div>`;
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
             container.innerHTML = '<p>A bejegyzés nem tölthető be.</p>';
@@ -789,10 +724,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Indítás ---
     applyTheme(currentTheme);
     setLanguage(currentLanguage);
-    loadComments();
     loadArtists();
     loadGallery();
-    loadDailyPrompt(); // ÚJ
+    loadDailyPrompt();
 
     if (document.getElementById('blog-posts-container')) {
         loadBlogPosts();
@@ -800,4 +734,5 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
+    // A guestbook/chat funkcióhoz tartozó hívás eltávolítva
 });
