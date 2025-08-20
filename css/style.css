@@ -526,7 +526,7 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 }
 /* Drag & Drop Prompt Container Styles */
 .final-prompt-container {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--primary-bg-color); /* EZ VÁLTOZOTT */
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 10px;
