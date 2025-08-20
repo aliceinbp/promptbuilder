@@ -559,26 +559,21 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     background-color: var(--border-color);
     color: transparent;
 }
-/* ===== CUSDIS VÉGSŐ FINOMHANGOLÁS ===== */
+/* ===== CUSDIS VÉGSŐ DIZÁJN ===== */
 
-/* 1. A vendégkönyv magasságának beállítása */
+#cusdis_thread {
+    border-radius: 10px;
+    padding: 3px; /* Ez adja a dupla keret vastagságát */
+    background: linear-gradient(45deg, #8a2be2, #ff00ff); /* A neonos színátmenet */
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.6); /* A lila ragyogás */
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
 #cusdis_thread iframe {
-    min-height: 350px; /* Alapértelmezett magasság, hogy a gomb is látszódjon */
-    transition: min-height 0.3s ease;
-}
-
-/* 2. Az 'Elküldés' gomb testreszabása sötét témán */
-body:not(.light-theme) #cusdis_thread {
-  --cusdis-btn-bg-color: #ff8f00;      /* A gomb háttérszíne (a te narancsod) */
-  --cusdis-btn-bg-hover-color: #ffac33; /* Kicsit világosabb narancs, ha ráviszed az egeret */
-  --cusdis-btn-color: #121212;         /* A gomb feliratának színe (sötét) */
-  --cusdis-btn-border-color: #ff8f00;  /* A gomb keretének színe */
-}
-
-/* Ugyanez világos témán, hogy ott is jól nézzen ki */
-body.light-theme #cusdis_thread {
-  --cusdis-btn-bg-color: #d66800;
-  --cusdis-btn-bg-hover-color: #e67e22;
-  --cusdis-btn-color: #ffffff;
-  --cusdis-btn-border-color: #d66800;
+    min-height: 350px;
+    border-radius: 8px; /* A belső rész sarkainak lekerekítése */
+    border: none; /* Eltüntetjük az iframe saját keretét */
+    display: block; /* Fontos a helyes igazításhoz */
+    width: 100%;
 }
