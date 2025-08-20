@@ -81,33 +81,41 @@
     <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
 
        <script>
-      // Lekérjük a beállításokat
-      const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-      const currentTheme = localStorage.getItem('theme') || 'dark';
+  // Lekérjük a beállításokat
+  const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+  const currentTheme = localStorage.getItem('theme') || 'dark';
 
-      // Létrehozzuk a nyelvi script tag-et, de CSAK HA magyar a nyelv
-      let langScriptTag = '';
-      if (currentLang === 'hu') {
-        langScriptTag = '<script defer src="https://cusdis.com/js/widget/lang/hu.js"><\/script>';
-      }
+  // Létrehozzuk a nyelvi script tag-et, de CSAK HA magyar a nyelv
+  let langScriptTag = '';
+  if (currentLang === 'hu') {
+    langScriptTag = '<script defer src="https://cusdis.com/js/widget/lang/hu.js"><\/script>';
+  }
 
-      // Kiírjuk a teljes HTML-t a helyes beállításokkal
-      document.write(`
-        <div id="cusdis_thread"
-          data-host="https://cusdis.com"
-          data-app-id="aee00228-8446-4e36-ab21-e793fae2519c" 
-          data-page-id="homepage-guestbook"
-          data-page-url="https://aliceinbp.com/"
-          data-page-title="Vendégkönyv"
-          data-theme="${currentTheme}"
-          data-auto-approve="true">
-        </div>
-        ${langScriptTag}
-        <script defer src="https://cusdis.com/js/cusdis.es.js"><\/script>
-      `);
-    </script>
-</section>
-</section>
+  // Kiírjuk a teljes HTML-t a helyes beállításokkal
+  document.write(`
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="aee00228-8446-4e36-ab21-e793fae2519c" 
+      data-page-id="homepage-guestbook"
+      data-page-url="https://aliceinbp.com/"
+      data-page-title="Vendégkönyv"
+      data-theme="${currentTheme}"
+      data-auto-approve="true">
+    </div>
+    ${langScriptTag}
+    <script defer src="https://cusdis.com/js/cusdis.es.js"><\/script>
+    <script>
+      window.addEventListener("message", function(event) {
+        if (event.data && event.data.from === "cusdis") {
+          if (event.data.type === "comment") {
+            // újratölti a hozzászólásokat
+            document.querySelector("#cusdis_thread iframe").contentWindow.location.reload();
+          }
+        }
+      });
+    <\/script>
+  `);
+</script>
 
 </section>
         </main>
