@@ -723,22 +723,24 @@ body:not(.light-theme) .contact-form textarea {
     box-shadow: 0 0 5px rgba(255, 143, 0, 0.5);
 }
 
-/* Az 'Elküldés' gomb, hogy passzoljon az oldal narancs gombjaihoz */
+/* Az 'Elküldés' gomb, hogy passzoljon a fejlécben lévő ikonok stílusához */
 .contact-form button[type="submit"] {
     display: block;
     width: 100%;
     padding: 0.8rem 1rem;
-    background-color: var(--accent-color);
-    color: #121212;
-    border: none;
+    background: transparent; /* A háttér legyen átlátszó */
+    border: 1px solid var(--border-color); /* Finom, a témához illő szegély */
+    color: var(--text-color); /* A szöveg színe legyen a normál szövegszín */
     border-radius: 5px;
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease; /* Minden tulajdonság változzon finoman */
 }
 
 .contact-form button[type="submit"]:hover {
-    background-color: var(--accent-color-hover);
+    color: var(--accent-color); /* A szöveg színe legyen narancs */
+    border-color: var(--accent-color); /* A szegély színe is legyen narancs */
+    box-shadow: 0 0 10px rgba(255, 143, 0, 0.5); /* És itt a narancssárga "felvillanás" */
     transform: translateY(-2px);
 }
