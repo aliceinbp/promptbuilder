@@ -132,10 +132,23 @@
         <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
         <p>❤️</p>
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-<script src="js/translations-data.js"></script>
-<script src="js/script.js"></script>
+
+    <div id="daily-quote-container" class="hidden">
+        <button id="close-quote-btn" title="Bezárás">&times;</button>
+        <div class="quote-content">
+            <blockquote id="quote-text"></blockquote>
+            <cite id="quote-author"></cite>
+        </div>
+    </div>
+
+    <script src="js/quotes-data.js"></script>
+    <script src="js/translations-data.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    
+    <script src="js/script.js"></script>
 
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+
 </body>
 </html>

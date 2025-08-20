@@ -777,4 +777,61 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
+    // ===== NAPI IDÉZET LOGIKA =====
+function displayDailyQuote() {
+    const quoteContainer = document.getElementById('daily-quote-container');
+    if (!quoteContainer) return; // Ha nem a főoldalon vagyunk, ne csináljon semmit
+
+    const quoteTextElem = document.getElementById('quote-text');
+    const quoteAuthorElem = document.getElementById('quote-author');
+    const closeBtn = document.getElementById('close-quote-btn');
+
+    // Dátum alapú idézet kiválasztása
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 0);
+    const diff = now - startOfYear;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    const quoteIndex = dayOfYear % dailyQuotes.length;
+    const todayQuote = dailyQuotes[quoteIndex];
+
+    // Ellenőrizzük, hogy a mai napon bezárta-e már
+    const lastClosedDay = localStorage.getItem('quoteClosedDay');
+    if (lastClosedDay == dayOfYear) {
+        quoteContainer.classList.add('hidden');
+        return;
+    }
+    
+    quoteContainer.classList.remove('hidden');
+
+    // Tartalom beállítása a nyelv alapján
+    function setQuoteContent() {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        quoteTextElem.textContent = (lang === 'hu') ? `„${todayQuote.quote_hu}”` : `“${todayQuote.quote_en}”`;
+        quoteAuthorElem.textContent = `– ${todayQuote.author}`;
+    }
+
+    setQuoteContent();
+
+    // Bezárás gomb
+    closeBtn.addEventListener('click', () => {
+        quoteContainer.classList.add('closing');
+        setTimeout(() => {
+            quoteContainer.classList.add('hidden');
+            quoteContainer.classList.remove('closing');
+        }, 500); // Megvárjuk az animáció végét
+        localStorage.setItem('quoteClosedDay', dayOfYear);
+    });
+    
+    // A nyelvváltó függvény kiegészítése
+    // Ez biztosítja, hogy a HUN/ENG gombra kattintva az idézet is leforduljon
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function(lang) {
+        originalSetLanguage(lang);
+        setQuoteContent();
+    }
+}
+
+// A fájl végén, ahol a többi indító függvény is van, hívd meg ezt is:
+displayDailyQuote();
 });

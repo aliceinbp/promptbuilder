@@ -577,3 +577,106 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     display: block; /* Fontos a helyes igazításhoz */
     width: 100%;
 }
+/* ===== NAPI IDÉZET ABLAK STÍLUS ===== */
+#daily-quote-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
+    border-radius: 10px;
+    padding: 3px;
+    background: linear-gradient(45deg, #8a2be2, #ff00ff);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.7);
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+#daily-quote-container.closing {
+    animation: slideOut 0.5s ease-in forwards;
+}
+
+#daily-quote-container.hidden {
+    display: none;
+}
+
+.quote-content {
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#close-quote-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+#quote-text {
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 0 0 15px 0;
+    border: none;
+    padding: 0;
+    font-style: italic;
+}
+
+#quote-author {
+    display: block;
+    text-align: right;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Sötét téma */
+body:not(.light-theme) .quote-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+body:not(.light-theme) #close-quote-btn {
+    color: #aaa;
+}
+body:not(.light-theme) #close-quote-btn:hover {
+    color: #fff;
+}
+
+/* Világos téma */
+body.light-theme .quote-content {
+    background-color: #fff;
+    color: #333;
+}
+body.light-theme #close-quote-btn {
+    color: #888;
+}
+body.light-theme #close-quote-btn:hover {
+    color: #000;
+}
+
+
+/* Animációk */
+@keyframes slideIn {
+    from {
+        transform: translateX(110%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(110%);
+        opacity: 0;
+    }
+}
