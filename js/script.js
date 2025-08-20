@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- GENERATOR OLDAL LOGIKÁJA ---
-    if (document.getElementById('generator.html') || document.querySelector('.prompt-section')) {
+    if (document.querySelector('.prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
             style: document.getElementById('style-text'),
@@ -143,10 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
             extra: document.getElementById('extra-text')
         };
         
-        // A végleges prompt konténere és egy rejtett textarea a másoláshoz
         const finalPromptContainer = document.getElementById('final-prompt-container');
         const finalPromptHiddenTextarea = document.getElementById('final-prompt-hidden');
-        
         const negativePromptTextarea = document.getElementById('negative-prompt');
         const copyButton = document.getElementById('copy-button');
         const randomButton = document.getElementById('random-button');
@@ -157,19 +155,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const historyModal = document.getElementById('history-modal');
         const historyButton = document.getElementById('history-button');
         const historyList = document.getElementById('history-list');
+        const translateButton = document.getElementById('translate-button'); // ÚJ
         let promptHistory = [];
         let historyTimeout;
         let choiceInstances = {};
         
-        // SortableJS inicializálása
-        if (finalPromptContainer) {
+        if (finalPromptContainer && typeof Sortable !== 'undefined') {
             new Sortable(finalPromptContainer, {
                 animation: 150,
                 ghostClass: 'sortable-ghost'
             });
         }
 
-        // --- FUNKCIÓK ---
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
@@ -239,8 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updateFinalPrompt();
         }
         
-        // Helper funkció a prompt szövegének kinyerésére a címkékből
         function getPromptTextFromTags() {
+            if (!finalPromptContainer) return '';
             const tags = finalPromptContainer.querySelectorAll('.prompt-tag');
             const tagTexts = Array.from(tags).map(tag => tag.textContent);
             return tagTexts.join(', ');
@@ -275,23 +272,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Módosított funkció a mentett promptok betöltésére
         function handleSavedListClick(event) {
             const target = event.target.closest('button');
             if (!target) return;
             const index = parseInt(target.dataset.index, 10);
             let saved = getSavedPrompts();
             if (target.classList.contains('load-prompt-btn')) {
-                // Töröljük a szerkesztőket és a címkéket
                 clearAllTextareas(); 
                 finalPromptContainer.innerHTML = '';
-                // Hozzáadunk egyetlen, nem mozgatható címkét a teljes prompttal
                 const prompt = saved[index];
                 const tag = document.createElement('span');
                 tag.className = 'prompt-tag';
                 tag.textContent = prompt;
                 finalPromptContainer.appendChild(tag);
-                finalPromptHiddenTextarea.value = prompt; // Frissítjük a rejtett mezőt
+                finalPromptHiddenTextarea.value = prompt;
             }
             if (target.classList.contains('delete-prompt-btn')) {
                 saved.splice(index, 1);
@@ -320,16 +314,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // A LEGFONTOSABB VÁLTOZÁS: A végleges prompt frissítése címkékkel
         function updateFinalPrompt() {
-            finalPromptContainer.innerHTML = ''; // Konténer ürítése
+            if (!finalPromptContainer) return;
+            finalPromptContainer.innerHTML = '';
             const allParts = [];
             
-            // Sorrendben összegyűjtjük a részeket
             ['style', 'subject', 'setting', 'extra'].forEach(category => {
                 const text = textareas[category].value.trim();
                 if (text) {
-                    // Vessző mentén daraboljuk, ha több elem van egy mezőben
                     text.split(',').forEach(part => {
                         const trimmedPart = part.trim();
                         if(trimmedPart) {
@@ -339,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Létrehozzuk a címkéket
             allParts.forEach(part => {
                 const tag = document.createElement('span');
                 tag.className = 'prompt-tag';
@@ -348,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             const finalPromptText = getPromptTextFromTags();
-            finalPromptHiddenTextarea.value = finalPromptText; // Frissítjük a rejtett mezőt
+            finalPromptHiddenTextarea.value = finalPromptText;
 
             clearTimeout(historyTimeout);
             historyTimeout = setTimeout(() => {
@@ -452,16 +443,68 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
 
         copyButton.addEventListener('click', function() {
-            let textToCopy = getPromptTextFromTags(); // Módosítva, hogy a címkékből olvasson
+            let textToCopy = getPromptTextFromTags();
             const negativeText = negativePromptTextarea.value.trim();
             if (negativeText !== '') { textToCopy += ` --no ${negativeText}`; }
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const buttonTextSpan = this.querySelector('span') || this;
-                const originalText = buttonTextSpan.textContent;
-                buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
-                setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500);
+                const buttonTextSpan = this.querySelector('span');
+                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
+                const target = buttonTextSpan || this;
+                target.textContent = translations[currentLanguage].copyButtonSuccess;
+                setTimeout(() => {
+                    target.textContent = originalText;
+                }, 1500);
             });
         });
+
+        // ÚJ FORDÍTÓ GOMB LOGIKA
+        if (translateButton) {
+            translateButton.addEventListener('click', async () => {
+                const buttonSpan = translateButton.querySelector('span') || translateButton;
+                const originalText = buttonSpan.textContent;
+                buttonSpan.textContent = 'Fordítás...';
+                translateButton.disabled = true;
+
+                try {
+                    for (const category in textareas) {
+                        const textarea = textareas[category];
+                        const text = textarea.value.trim();
+                        
+                        // Csak akkor fordítunk, ha van szöveg és valószínűleg magyar
+                        // Egyszerűsített ellenőrzés: nem fordítunk, ha tipikus angol kulcsszavakat tartalmaz
+                        if (text && !/by|style of|art by|realistic|8k|cinematic|artstation/i.test(text)) {
+                            const response = await fetch('/.netlify/functions/translate', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ text: text, target_lang: 'EN-US' })
+                            });
+
+                            if (!response.ok) {
+                                const errorData = await response.json();
+                                throw new Error(errorData.details || 'A fordítási szolgáltatás hibát adott.');
+                            }
+
+                            const data = await response.json();
+                            textarea.value = data.translatedText;
+                        }
+                    }
+                    
+                    updateFinalPrompt();
+                    buttonSpan.textContent = 'Fordítás kész!';
+
+                } catch (error) {
+                    console.error('Fordítási hiba:', error);
+                    buttonSpan.textContent = 'Hiba a fordításkor!';
+                    alert('Hiba történt a fordítás során: ' + error.message);
+                } finally {
+                    setTimeout(() => {
+                        buttonSpan.textContent = originalText;
+                        translateButton.disabled = false;
+                    }, 2500);
+                }
+            });
+        }
+
 
         if (historyButton && historyModal) {
             historyButton.addEventListener('click', () => {
@@ -734,5 +777,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
-    // A guestbook/chat funkcióhoz tartozó hívás eltávolítva
 });
