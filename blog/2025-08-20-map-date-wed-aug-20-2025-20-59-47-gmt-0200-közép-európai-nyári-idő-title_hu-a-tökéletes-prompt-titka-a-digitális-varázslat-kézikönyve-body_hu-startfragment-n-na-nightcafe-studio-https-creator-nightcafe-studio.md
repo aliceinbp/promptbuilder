@@ -27,13 +27,22 @@ body_hu: >-
   Ne feledd: A sorrend számít! Mindig a fő témával kezdj, hogy az AI arra fókuszáljon a legjobban.
 
 
+  <!--EndFragment-->
+
+
   - - -
 
 
-  **De mi van, ha nem akarsz sokat írni?** Néha kevesebb is elég! Hadd mutassak egy példát, ami nálam bevált, mindössze néhány kulcsszóból. Ehhez a **Flux Schnell** AI-modellt használtam. Ez az a motor, ami villámgyorsan, egyedi stílusban dolgozik. A te esetedben érdemes hasonló csodákat alkotni a generátorom segítségével:
+  **De mi van, ha nem akarsz sokat írni?** Néha kevesebb is elég! Hadd mutassak egy példát, ami nálam bevált, mindössze néhány kulcsszóból. Ehhez a **Flux Schnell** AI-modellt használtam. Ez az a motor, ami villámgyorsan, egyedi stílusban dolgozik. 
 
 
-  ![**Photorealistic**, **A swamp floating in a blood-red sunrise, with barren trees and tufts of grass.**, **Bold colors**. **Red and black dominance**. **High resolution**. **Hyperrealistic**](/src/blog-images/blog-01.jpg "Sunrise on the moor")
+  Érdemes hasonló csodákat alkotni a [generátorom](https://aliceinbp.com/generator) segítségével:
+
+
+  **Prompt:**  **A swamp floating in a blood-red sunrise, with barren trees and tufts of grass.**, **Photorealistic**, **Hperrealistic. Bold colorsy**. **Red and black dominance**. **High resolution**.
+
+
+  ![](/src/blog-images/blog-01.jpg "Sunrise on the moor")
 
 
   ![]()
@@ -68,10 +77,16 @@ body_en: >-
   - - -
 
 
-  **But what if you don't want to write a lot?** Sometimes less is more! Let me show you an example that worked for me with just a few keywords. For this, I used the **Flux Schnell** AI model. This is the engine that works lightning fast with a unique style. In your case, you should create similar wonders with my generator:
+  **But what if you don't want to write a lot?** Sometimes less is more! Let me show you an example that worked for me with just a few keywords. For this, I used the **Flux Schnell** AI model. 
 
 
-  ![**Photorealistic**, **A swamp floating in a blood-red sunrise, with barren trees and tufts of grass.**, **Bold colors**. **Red and black dominance**. **High resolution**. **Hyperrealistic**](/src/blog-images/blog-01.jpg "Sunrise on the moor")
+  This is the engine that works lightning fast with a unique style. In your case, you should create similar wonders with [my generator:](https://aliceinbp.com/generator)
+
+
+  **Prompt:**  **A swamp floating in a blood-red sunrise, with barren trees and tufts of grass.**, **Photorealistic**, **Hperrealistic. Bold colorsy**. **Red and black dominance**. **High resolution**.
+
+
+  ![](/src/blog-images/blog-01.jpg "Sunrise on the moor")
 
 
   .
