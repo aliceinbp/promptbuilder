@@ -559,3 +559,26 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     background-color: var(--border-color);
     color: transparent;
 }
+/* ===== CUSDIS VÉGSŐ FINOMHANGOLÁS ===== */
+
+/* 1. A vendégkönyv magasságának beállítása */
+#cusdis_thread iframe {
+    min-height: 400px; /* Alapértelmezett magasság, hogy a gomb is látszódjon */
+    transition: min-height 0.3s ease;
+}
+
+/* 2. Az 'Elküldés' gomb testreszabása sötét témán */
+body:not(.light-theme) #cusdis_thread {
+  --cusdis-btn-bg-color: #ff8f00;      /* A gomb háttérszíne (a te narancsod) */
+  --cusdis-btn-bg-hover-color: #ffac33; /* Kicsit világosabb narancs, ha ráviszed az egeret */
+  --cusdis-btn-color: #121212;         /* A gomb feliratának színe (sötét) */
+  --cusdis-btn-border-color: #ff8f00;  /* A gomb keretének színe */
+}
+
+/* Ugyanez világos témán, hogy ott is jól nézzen ki */
+body.light-theme #cusdis_thread {
+  --cusdis-btn-bg-color: #d66800;
+  --cusdis-btn-bg-hover-color: #e67e22;
+  --cusdis-btn-color: #ffffff;
+  --cusdis-btn-border-color: #d66800;
+}
