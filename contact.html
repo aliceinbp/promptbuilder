@@ -56,30 +56,32 @@
     <h2><i class="fa-solid fa-paper-plane"></i> <span data-key="contactTitle">Kapcsolat</span></h2>
     <p data-key="contactSubtitle">Kérdésed van, vagy csak köszönnél? Írj bátran!</p>
 
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" class="contact-form">
-        <input type="hidden" name="form-name" value="contact" />
-        
-        <p class="hidden">
-            <label>Ezt a mezőt hagyd üresen: <input name="bot-field" /></label>
-        </p>
+    <div class="form-container">
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" class="contact-form">
+            <input type="hidden" name="form-name" value="contact" />
+            
+             <p class="hidden">
+                 <label>Ezt a mezőt hagyd üresen: <input name="bot-field" /></label>
+             </p>
 
-        <div class="form-group">
-            <label for="name" data-key="formLabelName">Neved:</label>
-            <input type="text" id="name" name="name" required autocomplete>
-        </div>
+             <div class="form-group">
+                 <label for="name" data-key="formLabelName">Neved:</label>
+                 <input type="text" id="name" name="name" required autocomplete="name">
+             </div>
 
-        <div class="form-group">
-            <label for="email" data-key="formLabelEmail">Email címed:</label>
-            <input type="email" id="email" name="email" required autocomplete>
-        </div>
+             <div class="form-group">
+                 <label for="email" data-key="formLabelEmail">Email címed:</label>
+                 <input type="email" id="email" name="email" required autocomplete="email">
+             </div>
 
-        <div class="form-group">
-            <label for="message" data-key="formLabelMessage">Üzeneted:</label>
-            <textarea id="message" name="message" rows="6" required autocomplete></textarea>
-        </div>
-        
-        <button type="submit" data-key="formButtonSubmit">Üzenet elküldése</button>
-    </form>
+             <div class="form-group">
+                 <label for="message" data-key="formLabelMessage">Üzeneted:</label>
+                 <textarea id="message" name="message" rows="6" required></textarea>
+             </div>
+            
+             <button type="submit" data-key="formButtonSubmit">Üzenet elküldése</button>
+        </form>
+    </div>
 </section><footer>
             <div class="footer-item footer-socials">
                 
