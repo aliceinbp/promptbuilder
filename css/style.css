@@ -571,7 +571,7 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 }
 
 #cusdis_thread iframe {
-    min-height: 350px;
+    min-height: 500px;
     border-radius: 8px; /* A belső rész sarkainak lekerekítése */
     border: none; /* Eltüntetjük az iframe saját keretét */
     display: block; /* Fontos a helyes igazításhoz */
