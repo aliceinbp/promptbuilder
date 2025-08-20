@@ -559,3 +559,39 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     background-color: var(--border-color);
     color: transparent;
 }
+/* ===== CUSDIS VENDÉGKÖNYV STÍLUS ===== */
+
+/* Ezt a részt a sötét téma szabályozza */
+body:not(.light-theme) #cusdis_thread {
+  --cusdis-bg-color: #2b2b2b; /* Háttérszín (a te oldalad hátteréhez hasonló) */
+  --cusdis-text-color: #e0e0e0; /* Általános szövegszín */
+  --cusdis-link-color: #ff8f00; /* Linkek színe (narancssárga, mint a menüd) */
+  --cusdis-border-color: #444; /* Elválasztó vonalak, keretek színe */
+  --cusdis-input-bg-color: #1e1e1e; /* Az input mezők háttere */
+  --cusdis-input-border-color: #555; /* Az input mezők kerete */
+  --cusdis-btn-bg-color: #ff8f00; /* Gomb háttere */
+  --cusdis-btn-color: #121212;      /* Gomb szövegének színe */
+  --cusdis-avatar-bg-color: #444; /* Avatar helyőrző színe */
+  --cusdis-avatar-text-color: #ccc; /* Avatar helyőrző szöveg színe */
+}
+
+/* Ezt a részt pedig a világos téma */
+body.light-theme #cusdis_thread {
+  --cusdis-bg-color: #f9f9f9;
+  --cusdis-text-color: #222;
+  --cusdis-link-color: #d66800;
+  --cusdis-border-color: #e5e5e5;
+  --cusdis-input-bg-color: #ffffff;
+  --cusdis-input-border-color: #ccc;
+  --cusdis-btn-bg-color: #d66800;
+  --cusdis-btn-color: #ffffff;
+}
+
+/* Általános formázás mindkét témához */
+#cusdis_thread {
+    margin-top: 2rem;
+    border-radius: 8px; /* Lekerekített sarkok */
+    padding: 1rem;
+    background-color: var(--cusdis-bg-color);
+    transition: background-color 0.3s ease; /* Finom átmenet témaváltáskor */
+}
