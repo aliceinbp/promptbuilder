@@ -47,7 +47,9 @@ body_hu: >-
 
   ![]()
 
-   inspirációjából merítettem.
+
+  A cikkhez a NightCafe Studio inspirációjából merítettem.
+
 
   <!--EndFragment-->
 body_en: >-
@@ -89,8 +91,8 @@ body_en: >-
   ![](/src/blog-images/blog-01.jpg "Sunrise on the moor")
 
 
-  .
+  This article was inspired by the amazing resources from NightCafe Studio.
 
 
-  <!--EndFragment-->
+  <!--StartFragment-->
 ---
