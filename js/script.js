@@ -37,22 +37,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTheme = localStorage.getItem('theme');
 
     function applyTheme(theme) {
-        if (theme === 'light') {
-            document.body.classList.add('light-theme');
-            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
-        } else {
-            document.body.classList.remove('light-theme');
-            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
-        }
+    // Ez a rész már megvan, ez váltja az oldal témáját
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    } else {
+        document.body.classList.remove('light-theme');
+        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
     }
-
-    if (themeToggleButton) {
-        themeToggleButton.addEventListener('click', () => {
-            let theme = document.body.classList.toggle('light-theme') ? 'light' : 'dark';
-            localStorage.setItem('theme', theme);
-            applyTheme(theme);
-        });
+    const cusdisFrame = document.querySelector('#cusdis_thread iframe');
+    if (cusdisFrame) {
+        cusdisFrame.contentWindow.postMessage({
+            type: 'setTheme',
+            theme: theme === 'light' ? 'light' : 'dark'
+        }, 'https://cusdis.com');
     }
+}
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 

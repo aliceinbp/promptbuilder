@@ -563,7 +563,7 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 
 /* 1. A vendégkönyv magasságának beállítása */
 #cusdis_thread iframe {
-    min-height: 400px; /* Alapértelmezett magasság, hogy a gomb is látszódjon */
+    min-height: 350px; /* Alapértelmezett magasság, hogy a gomb is látszódjon */
     transition: min-height 0.3s ease;
 }
 
