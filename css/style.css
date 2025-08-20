@@ -685,7 +685,7 @@ body.light-theme #close-quote-btn:hover {
 /* Az űrlap doboza: sötét háttér, neonos lila keret és ragyogás */
 .contact-form {
     background: var(--section-bg-color); /* A weboldalad sötét háttérszíne */
-    border: 1px solid #8a2be2;           /* Egy vékony, lila alap szegély */
+    border: 1px solid #a46de5;           /* Egy vékony, lila alap szegély */
     box-shadow: 0 0 15px rgba(138, 43, 226, 0.6); /* Ez adja a neon "ragyogást" */
     border-radius: 10px;
     padding: 2.5rem; /* Nagyobb belső tér a szellősségért */
