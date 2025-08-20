@@ -526,8 +526,8 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 }
 /* Drag & Drop Prompt Container Styles */
 .final-prompt-container {
-    background-color: var(--primary-bg-color); /* EZ VÁLTOZOTT */
-    border: 1px solid var(--border-color);
+    background-color: var(--secondary-bg-color); 
+    border: 2px solid var(--accent-color); /* VASTAGABB ÉS SZÍNES KERET */
     border-radius: 5px;
     padding: 10px;
     min-height: 120px;
