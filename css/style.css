@@ -482,3 +482,45 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 .copy-small-btn.copied {
     color: var(--color-primary);
 }
+/* Daily Prompt Section Styles */
+#daily-prompt-section {
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 40px auto;
+    text-align: center;
+    max-width: 800px;
+}
+
+#daily-prompt-section h2 {
+    margin-top: 0;
+    color: var(--accent-color);
+}
+
+#daily-prompt-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.6;
+    min-height: 50px; /* Hogy ne ugráljon betöltéskor */
+    color: var(--primary-text-color);
+}
+
+.cta-button-small {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.cta-button-small:hover {
+    background-color: var(--accent-color-hover);
+}

@@ -423,10 +423,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ÚJ FUNKCIÓ: Művész másolás gombok inicializálása
     function initializeArtistCopyButtons() {
         document.querySelectorAll('.copy-artist-btn').forEach(button => {
-            // Hozzáadunk egy jelzőt, hogy ne duplázzuk az eseményfigyelőt
             if (button.dataset.listenerAttached) return;
             button.dataset.listenerAttached = 'true';
             
@@ -512,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('/_data/artists.json');
             const artists = await response.json();
             
-            container.innerHTML = ''; // Kiürítjük a konténert
+            container.innerHTML = '';
             
             artists.forEach(artist => {
                 const card = document.createElement('div');
@@ -531,8 +529,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.appendChild(card);
             });
             
-            initializeArtistCopyButtons(); // Újra kell futtatni, hogy az új gombok is működjenek
-            setLanguage(currentLanguage); // Frissítjük a leírásokat és tooltip-eket az aktuális nyelvre
+            initializeArtistCopyButtons();
+            setLanguage(currentLanguage);
 
         } catch (error) {
             console.error('Hiba a művészek betöltésekor:', error);
@@ -548,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch('/_data/gallery.json');
             const galleryData = await response.json();
             
-            container.innerHTML = ''; // Kiürítjük a teljes szekciót
+            container.innerHTML = '';
             
             const categoryMap = {
                 fantasy: 'galleryCatFantasy',
@@ -561,13 +559,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const images = galleryData[categoryKey];
                 const titleKey = categoryMap[categoryKey];
 
-                // Kategória cím létrehozása
                 const title = document.createElement('h2');
                 title.className = 'gallery-category-title';
                 title.innerHTML = `<span data-key="${titleKey}"></span>`;
                 container.appendChild(title);
                 
-                // Képrács létrehozása
                 const grid = document.createElement('div');
                 grid.className = 'gallery-grid';
 
@@ -584,11 +580,64 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.appendChild(grid);
             }
             
-            setLanguage(currentLanguage); // Frissítjük a címeket az aktuális nyelvre
+            setLanguage(currentLanguage);
 
         } catch (error) {
             console.error('Hiba a galéria betöltésekor:', error);
             container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
+        }
+    }
+
+    // --- ÚJ "A NAP PROMPTJA" FUNKCIÓ ---
+    async function loadDailyPrompt() {
+        const container = document.getElementById('daily-prompt-section');
+        if (!container) return;
+
+        const promptTextElement = document.getElementById('daily-prompt-text');
+        const copyBtn = document.getElementById('copy-daily-prompt-btn');
+
+        try {
+            const response = await fetch('/_data/daily_prompts.json');
+            const prompts = await response.json();
+
+            if (prompts.length === 0) {
+                promptTextElement.textContent = "Nincsenek elérhető promptok.";
+                return;
+            }
+
+            // Dátum alapú kiválasztás
+            const now = new Date();
+            const startOfYear = new Date(now.getFullYear(), 0, 0);
+            const diff = now - startOfYear;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            
+            const promptIndex = (dayOfYear - 1) % prompts.length;
+            const selectedPrompt = prompts[promptIndex];
+
+            promptTextElement.textContent = selectedPrompt;
+
+            // Másolás gomb eseménykezelője
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(selectedPrompt).then(() => {
+                    const buttonTextSpan = copyBtn.querySelector('span');
+                    const originalText = buttonTextSpan.textContent;
+                    const icon = copyBtn.querySelector('i');
+                    
+                    buttonTextSpan.textContent = translations[currentLanguage].dailyPromptCopySuccess;
+                    icon.className = 'fa-solid fa-check';
+                    
+                    setTimeout(() => {
+                        buttonTextSpan.textContent = originalText;
+                        icon.className = 'fa-solid fa-copy';
+                        setLanguage(currentLanguage); // Visszaállítjuk a fordítást
+                    }, 2000);
+                });
+            });
+
+        } catch (error) {
+            console.error("Hiba a nap promptjának betöltésekor:", error);
+            promptTextElement.textContent = "A nap promptja jelenleg nem érhető el.";
         }
     }
 
@@ -739,10 +788,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Indítás ---
     applyTheme(currentTheme);
-    setLanguage(currentLanguage); // Ez fontos, hogy a dinamikus tartalmak előtt fusson le
+    setLanguage(currentLanguage);
     loadComments();
-    loadArtists(); // ÚJ
-    loadGallery(); // ÚJ
+    loadArtists();
+    loadGallery();
+    loadDailyPrompt(); // ÚJ
 
     if (document.getElementById('blog-posts-container')) {
         loadBlogPosts();

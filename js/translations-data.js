@@ -57,7 +57,9 @@ navHome: "Főoldal", navGenerator: "Generátor", navLinks: "Ajánlások", navGal
         explainerTextExtra: "Ezek a 'fűszerek', amikkel tökéletesítheted a képet. Olyan technikai és művészi kulcsszavakat használj itt, amik a kép minőségét, megvilágítását és kompozícióját befolyásolják.\n\nNépszerű extrák:\n- Fények: `filmszerű megvilágítás`, `drámai fények`, `neon fények`\n- Minőség: `highly detailed`, `8K`, `ultra realistic`\n- Kamera: `nagylátószög`, `közeli portré`, `cinematic shot`",
         explainerTitleNegative: "A Negatív Prompt",
         explainerTextNegative: "Ide írd azokat a kulcsszavakat, amiket el szeretnél kerülni a képen. Ez segít az AI-nak kiszűrni a gyakori hibákat és a nem kívánt elemeket.\n\n**Hasznos kategóriák:**\n- Minőség: `rossz minőség, elmosódott, zajos, jpeg artifacts`\n- Anatómia: `extra ujjak, kevesebb ujj, torz arc, rossz anatómia, deformált`\n- Zavaró elemek: `szöveg, vízjel, aláírás, felhasználói felület, keret`\n\n**Általános Kezdőcsomag (Másolható):**\n`ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face, blurry, text, ui`",
-        
+        dailyPromptTitle: "A Nap Promptja",
+dailyPromptCopySuccess: "Nap promptja másolva!",
+
         artistDescToriyama: "Dinamikus manga stílus a Dragon Ball alkotójától, tiszta vonalakkal és élénk akciójelenetekkel.",
         artistDescGrey: "Spirituális és pszichedelikus látomások, anatómiai pontossággal ábrázolt fénylő alakokkal.",
         artistDescMucha: "Díszes, organikus vonalvezetésű szecessziós plakátok, idealizált női alakokkal.",
@@ -112,6 +114,7 @@ navHome: "Főoldal", navGenerator: "Generátor", navLinks: "Ajánlások", navGal
         artistDescAmano: "Elegáns, éteri és légies fantasy illusztrációk, a Final Fantasy játékok alkotója.",
         artistDescBeksinski: "Nyomasztó, disztópikus szürrealizmus, mely poszt-apokaliptikus tájakat és halál-közeli víziókat ábrázol.",
         selectDefault: "Válassz egyet a(z) {category} kategóriából..."
+
     },
     en: {
         navBlog: "Blog",
@@ -176,6 +179,9 @@ navHome: "Home", navGenerator: "Generator", navLinks: "Links", navGallery: "Gall
         explainerTitleNegative: "The Negative Prompt",
         copyNegativeTooltip: "Copy negative prompt",
         explainerTextNegative: "Enter keywords here that you want to avoid in the image. This helps the AI filter out common errors and unwanted elements.\n\n**Useful Categories:**\n- Quality: `low quality, blurry, noisy, jpeg artifacts`\n- Anatomy: `extra fingers, fewer fingers, distorted face, bad anatomy, deformed`\n- Distracting Elements: `text, watermark, signature, user interface, frame`\n\n**General Starter Pack (Copy-Paste Ready):**\n`ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face, blurry, text, ui`",
+        dailyPromptTitle: "Prompt of the Day",
+dailyPromptCopySuccess: "Prompt of the Day copied!",
+
         artistDescToriyama: "Dynamic manga style from the creator of Dragon Ball, with clean lines and vibrant action scenes.",
         artistDescGrey: "Spiritual and psychedelic visions, featuring luminous figures with anatomical precision.",
         artistDescMucha: "Ornate Art Nouveau posters and paintings with organic lines and idealized female figures.",
