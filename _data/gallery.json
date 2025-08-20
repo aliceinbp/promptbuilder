@@ -1,0 +1,42 @@
+{
+  "fantasy": [
+    { "src": "fantasy-01.jpg", "alt": "Fantasy Portré 1" },
+    { "src": "fantasy-02.jpg", "alt": "Fantasy Portré 2" },
+    { "src": "fantasy-03.jpg", "alt": "Fantasy Portré 3" },
+    { "src": "fantasy-04.jpg", "alt": "Fantasy Portré 4" },
+    { "src": "fantasy-05.jpg", "alt": "Fantasy Portré 5" },
+    { "src": "fantasy-06.jpg", "alt": "Fantasy Portré 6" },
+    { "src": "fantasy-07.jpg", "alt": "Fantasy Portré 7" },
+    { "src": "fantasy-08.jpg", "alt": "Fantasy Portré 8" }
+  ],
+  "dark": [
+    { "src": "dark-01.jpg", "alt": "Dark & Gothic 1" },
+    { "src": "dark-02.jpg", "alt": "Dark & Gothic 2" },
+    { "src": "dark-03.jpg", "alt": "Dark & Gothic 3" },
+    { "src": "dark-04.jpg", "alt": "Dark & Gothic 4" },
+    { "src": "dark-05.jpg", "alt": "Dark & Gothic 5" },
+    { "src": "dark-06.jpg", "alt": "Dark & Gothic 6" },
+    { "src": "dark-07.jpg", "alt": "Dark & Gothic 7" },
+    { "src": "dark-08.jpg", "alt": "Dark & Gothic 8" }
+  ],
+  "worlds": [
+    { "src": "landscape-01.jpg", "alt": "Mágikus Világ 1" },
+    { "src": "landscape-02.jpg", "alt": "Mágikus Világ 2" },
+    { "src": "landscape-03.jpg", "alt": "Mágikus Világ 3" },
+    { "src": "landscape-04.jpg", "alt": "Mágikus Világ 4" },
+    { "src": "landscape-05.jpg", "alt": "Mágikus Világ 5" },
+    { "src": "landscape-06.jpg", "alt": "Mágikus Világ 6" },
+    { "src": "landscape-07.jpg", "alt": "Mágikus Világ 7" },
+    { "src": "landscape-08.jpg", "alt": "Mágikus Világ 8" }
+  ],
+  "shards": [
+    { "src": "ect-01.jpg", "alt": "Fantázia Szilánk 1" },
+    { "src": "ect-02.jpg", "alt": "Fantázia Szilánk 2" },
+    { "src": "ect-03.jpg", "alt": "Fantázia Szilánk 3" },
+    { "src": "ect-04.jpg", "alt": "Fantázia Szilánk 4" },
+    { "src": "ect-05.jpg", "alt": "Fantázia Szilánk 5" },
+    { "src": "ect-06.jpg", "alt": "Fantázia Szilánk 6" },
+    { "src": "ect-07.jpg", "alt": "Fantázia Szilánk 7" },
+    { "src": "ect-08.jpg", "alt": "Fantázia Szilánk 8" }
+  ]
+}
