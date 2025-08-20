@@ -33,36 +33,39 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
     // TÉMAVÁLASZTÓ LOGIKA
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+const themeToggleButton = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme');
 
-    function applyTheme(theme) {
-    // Ez a rész már megvan, ez váltja az oldal témáját
-    if (theme === 'light') {
-        document.body.classList.add('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
-    } else {
-        document.body.classList.remove('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
-    }
-    const cusdisFrame = document.querySelector('#cusdis_thread iframe');
-    if (cusdisFrame) {
-        cusdisFrame.contentWindow.postMessage({
-            type: 'setTheme',
-            theme: theme === 'light' ? 'light' : 'dark'
-        }, 'https://cusdis.com');
-    }
-    // --- Javasolt kiegészítés a kódodhoz ---
+function applyTheme(theme) {
+    // Ez a rész már megvan, ez váltja az oldal témáját
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    } else {
+        document.body.classList.remove('light-theme');
+        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    }
+    const cusdisFrame = document.querySelector('#cusdis_thread iframe');
+    if (cusdisFrame) {
+        cusdisFrame.contentWindow.postMessage({
+            type: 'setTheme',
+            theme: theme === 'light' ? 'light' : 'dark'
+        }, 'https://cusdis.com');
+    }
+}
+
+// IDE KELL HELYEZNI AZ ESEMÉNYFIGYELŐT
 if (themeToggleButton) {
     themeToggleButton.addEventListener('click', () => {
-        let newTheme = 'light';
+        let newTheme = 'dark';
         if (document.body.classList.contains('light-theme')) {
             newTheme = 'dark';
+        } else {
+            newTheme = 'light';
         }
         localStorage.setItem('theme', newTheme);
         applyTheme(newTheme);
     });
-}
 }
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
