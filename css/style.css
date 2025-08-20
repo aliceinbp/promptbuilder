@@ -741,6 +741,6 @@ body:not(.light-theme) .contact-form textarea {
 .contact-form button[type="submit"]:hover {
     color: var(--accent-color); /* A szöveg színe legyen narancs */
     border-color: var(--accent-color); /* A szegély színe is legyen narancs */
-    box-shadow: 0 0 10px rgba(255, 143, 0, 0.5); /* És itt a narancssárga "felvillanás" */
-    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(244, 23, 252, 0.5); /* És itt a narancssárga "felvillanás" */
+    transform: translateY(-2px); 
 }
