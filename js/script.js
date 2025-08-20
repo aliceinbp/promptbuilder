@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
             theme: theme === 'light' ? 'light' : 'dark'
         }, 'https://cusdis.com');
     }
+    // --- Javasolt kiegészítés a kódodhoz ---
+if (themeToggleButton) {
+    themeToggleButton.addEventListener('click', () => {
+        let newTheme = 'light';
+        if (document.body.classList.contains('light-theme')) {
+            newTheme = 'dark';
+        }
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+    });
+}
 }
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
