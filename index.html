@@ -110,12 +110,35 @@
           if (event.data.type === "comment") {
             // újratölti a hozzászólásokat
             document.querySelector("#cusdis_thread iframe").contentWindow.location.reload();
+
+            // barátságos üzenet pending státuszra
+            if (event.data.comment && event.data.comment.status === "pending") {
+              showFriendlyMessage("✅ Thank you, your comment has been received and will appear shortly! ❤️");
+            }
           }
         }
       });
+
+      function showFriendlyMessage(msg) {
+        let div = document.createElement("div");
+        div.textContent = msg;
+        div.style.marginTop = "10px";
+        div.style.padding = "10px";
+        div.style.background = "#f0f0f0";
+        div.style.border = "1px solid #ccc";
+        div.style.borderRadius = "6px";
+        div.style.fontSize = "14px";
+        div.style.color = "#333";
+        div.style.fontFamily = "sans-serif";
+        document.getElementById("cusdis_thread").appendChild(div);
+
+        // 5 mp után eltűnik
+        setTimeout(() => div.remove(), 5000);
+      }
     <\/script>
   `);
 </script>
+
 
 </section>
         </main>
