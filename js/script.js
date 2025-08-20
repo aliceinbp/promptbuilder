@@ -37,35 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTheme = localStorage.getItem('theme');
 
     function applyTheme(theme) {
-    // --- EZ A RÉSZ MÁR MEGVOLT ---
-    if (theme === 'light') {
-        document.body.classList.add('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
-    } else {
-        document.body.classList.remove('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        } else {
+            document.body.classList.remove('light-theme');
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        }
     }
-
-    // --- EZT A RÉSZT ILLESZD BE A FÜGGVÉNY VÉGÉRE ---
-    // Cusdis téma beállítása
-    const cusdisFrame = document.querySelector('#cusdis_thread iframe');
-    const cusdisDiv = document.getElementById('cusdis_thread');
-
-    const newTheme = theme === 'light' ? 'light' : 'dark';
-
-    // Beállítjuk az attribútumot a div-en
-    if (cusdisDiv) {
-        cusdisDiv.setAttribute('data-theme', newTheme);
-    }
-
-    // Ha az iframe már betöltődött, üzenetet is küldünk neki
-    if (cusdisFrame) {
-        cusdisFrame.contentWindow.postMessage({
-            type: 'setTheme',
-            theme: newTheme
-        }, 'https://cusdis.com');
-    }
-}
 
     if (themeToggleButton) {
         themeToggleButton.addEventListener('click', () => {
