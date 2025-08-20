@@ -680,16 +680,23 @@ body.light-theme #close-quote-btn:hover {
         opacity: 0;
     }
 }
-/* ===== KAPCSOLAT ŰRLAP STÍLUS ===== */
+/* ===== KAPCSOLAT ŰRLAP STÍLUS (Javított) ===== */
 
+/* A külső neonos-lila keret és ragyogás */
 .form-container {
+    padding: 3px; /* Ez adja a dupla keret vastagságát */
+    background: linear-gradient(45deg, #8a2be2, #ff00ff);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.6);
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+/* A belső "kártya", amire az űrlap kerül */
+.contact-form {
     background: var(--section-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
     padding: 2rem;
-    max-width: 600px; /* Ne legyen túl széles az űrlap */
-    margin: 2rem auto; /* Középre igazítja */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px; /* Kicsit kisebb, mint a külső keret */
 }
 
 .contact-form .form-group {
@@ -703,21 +710,40 @@ body.light-theme #close-quote-btn:hover {
     color: var(--text-color);
 }
 
+/* --- A MEZŐK LÁTHATÓVÁ TÉTELE --- */
+
+/* A beviteli mezők általános stílusa */
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
     width: 100%;
     padding: 0.8rem 1rem;
     border-radius: 5px;
-    border: 1px solid var(--input-border-color);
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Fókusz effekt, amikor belekattint a user */
+/* A beviteli mezők stílusa SÖTÉT témában */
+body:not(.light-theme) .contact-form input[type="text"],
+body:not(.light-theme) .contact-form input[type="email"],
+body:not(.light-theme) .contact-form textarea {
+    background-color: #2c2c2c; /* A háttérnél világosabb szürke */
+    border: 1px solid #555;      /* Jól látható keret */
+    color: #e0e0e0;             /* Világos szövegszín */
+}
+
+/* A beviteli mezők stílusa VILÁGOS témában */
+body.light-theme .contact-form input[type="text"],
+body.light-theme .contact-form input[type="email"],
+body.light-theme .contact-form textarea {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+
+/* Fókusz effekt, ami mindkét témában jó */
 .contact-form input[type="text"]:focus,
 .contact-form input[type="email"]:focus,
 .contact-form textarea:focus {
@@ -726,6 +752,7 @@ body.light-theme #close-quote-btn:hover {
     box-shadow: 0 0 5px rgba(255, 143, 0, 0.5);
 }
 
+/* A gomb stílusa (ez már valószínűleg jó volt) */
 .contact-form button[type="submit"] {
     display: block;
     width: 100%;
