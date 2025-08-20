@@ -564,7 +564,7 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 #cusdis_thread {
     border-radius: 10px;
     padding: 3px; /* Ez adja a dupla keret vastagságát */
-    background: linear-gradient(45deg, #8a2be2, #ff00ff); /* A neonos színátmenet */
+    background: linear-gradient(45deg, #f060fb, #fc67fc); /* A neonos színátmenet */
     box-shadow: 0 0 15px rgba(138, 43, 226, 0.6); /* A lila ragyogás */
     transition: all 0.3s ease;
     margin-top: 2rem;
