@@ -1,7 +1,7 @@
 const translations = {
     hu: {
         // NAV & ÁLTALÁNOS
-        navHome: "Főoldal", navGenerator: "Generátor", navBlog: "Blog", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek", navContact: "Kapcsolat",
+        navHome: "Főoldal", navGenerator: "Generátor", navBlog: "Blog", navLinks: "Ajánlások", navGallery: "Galéria", navArtists: "Művészek", navContact: "Kapcsolat",quizNavTitle: "Stílus Kvíz",
         siteSubtitle: "AI Képalkotó Segédlet by Aliceinbp",
         backToTopTooltip: "Vissza a tetejére",
         
@@ -118,7 +118,7 @@ const translations = {
     },
     en: {
         // NAV & GENERAL
-        navHome: "Home", navGenerator: "Generator", navBlog: "Blog", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists", navContact: "Contact",
+        navHome: "Home", navGenerator: "Generator", navBlog: "Blog", navLinks: "Links", navGallery: "Gallery", navArtists: "Artists", navContact: "Contact", quizNavTitle: "Style Quiz",
         siteSubtitle: "AI Image Creation Helper by Aliceinbp",
         backToTopTooltip: "Back to top",
 
