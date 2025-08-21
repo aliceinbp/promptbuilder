@@ -809,9 +809,9 @@ main > .prompt-section-group {
     white-space: normal;
     text-align: left;
 }
-/* --- GENERATOR OLDAL JAVÍTÁSOK --- */
+/* --- GENERATOR OLDAL JAVÍTÁSOK (VÉGLEGES) --- */
 
-/* A "Részletek" szekció címe, hogy PONTOSAN úgy nézzen ki, mint a többi fő cím */
+/* A "Részletek" szekció címe */
 .details-section > .details-title {
     display: flex;
     align-items: center;
@@ -822,11 +822,16 @@ main > .prompt-section-group {
     font-size: 1.1em;
 }
 
-/* Az ikon stílusa a "Részletek" címben */
-.details-section > .details-title > i {
+/* Az ikon stílusa a "Részletek" címben - KIEGÉSZÍTVE A MEGJELENÉSHEZ */
+.details-section > .details-title > i.fa-solid {
+    /* Ezek a sorok kényszerítik az ikon megjelenítését */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900; /* A "solid" ikonokhoz ez a súly kell */
+    display: inline-block;
+
+    /* Vizuális stílusok */
     color: var(--color-primary-highlight);
     font-size: 0.9em;
-    transition: transform 0.2s ease;
 }
 
 /* Az al-szekciók behúzása és közelebb hozása egymáshoz */
