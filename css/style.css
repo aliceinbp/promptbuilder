@@ -744,7 +744,7 @@ body:not(.light-theme) .contact-form textarea {
     box-shadow: 0 0 10px rgba(244, 23, 252, 0.5); /* És itt a narancssárga "felvillanás" */
     transform: translateY(-2px); 
 }
-/* --- Új, letisztult Generátor Stílusok --- */
+/* --- Vizuálisan csoportosított Generátor Stílusok --- */
 
 /* Fejléc gombok közötti felesleges térköz javítása */
 .header-icons-left {
@@ -753,24 +753,39 @@ body:not(.light-theme) .contact-form textarea {
 
 /* Kisebb margó a fő szekciók között */
 main .prompt-section, 
-main .details-section {
+main .prompt-section-group {
     margin-top: 25px;
 }
 
-/* A "Részletek" al-szekciók legyenek kompaktabbak */
-.detail-subsection {
+/* Ez hozza létre a kiemelő dobozt a Részletek köré */
+.prompt-section-group {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.prompt-section-group h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    font-size: 1.1em;
+    color: var(--accent-color);
+}
+
+.prompt-section-group .detail-subsection {
     margin-top: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--divider-color);
 }
-.detail-subsection:last-of-type {
+.prompt-section-group .detail-subsection:last-of-type {
     border-bottom: none;
     padding-bottom: 0;
 }
-.details-section > .prompt-textarea {
+.prompt-section-group .prompt-textarea {
     margin-top: 15px;
 }
-
 
 /* Choices.js legördülő menü javítása, hogy a szöveg ne legyen függőleges */
 .choices__list--dropdown .choices__item--choice {

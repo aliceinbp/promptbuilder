@@ -77,43 +77,48 @@
         <textarea id="mainSubject-text" class="prompt-textarea" data-key="mainSubjectPlaceholder" placeholder="..."></textarea>
     </div>
     
-    <div class="details-section">
-        <div class="prompt-section detail-subsection">
-            <label for="detail-physical-select">
-                <i class="fa-solid fa-person-rays"></i> 
-                <span data-key="detailPhysicalLabel">Tulajdonságok:</span>
-                <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_physical" title="Tippek a tulajdonságokhoz"></i>
-                <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_physical" title="Saját promptok kezelése"></i>
-            </label>
-            <div class="input-group">
-                <select id="detail-physical-select"></select>
-                <button class="add-button" data-category="details">Hozzáad</button>
+    <div class="prompt-section-group">
+                <div class="details-section">
+                    <h3 data-key="detailsLabel">Részletek / Leírás:</h3>
+                    <div class="prompt-section detail-subsection">
+                        <label for="detail-physical-select">
+                            <i class="fa-solid fa-person-rays"></i> 
+                            <span data-key="detailPhysicalLabel">Tulajdonságok:</span>
+                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_physical" title="Tippek a tulajdonságokhoz"></i>
+                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_physical" title="Saját promptok kezelése"></i>
+                        </label>
+                        <div class="input-group">
+                            <select id="detail-physical-select"></select>
+                            <button class="add-button" data-category="details">Hozzáad</button>
+                        </div>
+                    </div>
+                    <div class="prompt-section detail-subsection">
+                        <label for="detail-environment-select">
+                            <i class="fa-solid fa-mountain-sun"></i> 
+                            <span data-key="detailEnvironmentLabel">Környezet:</span>
+                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_environment" title="Tippek a környezethez"></i>
+                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_environment" title="Saját promptok kezelése"></i>
+                        </label>
+                        <div class="input-group">
+                            <select id="detail-environment-select"></select>
+                            <button class="add-button" data-category="details">Hozzáad</button>
+                        </div>
+                    </div>
+                    <div class="prompt-section detail-subsection">
+                        <label for="detail-mood-select">
+                            <i class="fa-solid fa-masks-theater"></i> 
+                            <span data-key="detailMoodLabel">Hangulat:</span>
+                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_mood" title="Tippek a hangulathoz"></i>
+                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_mood" title="Saját promptok kezelése"></i>
+                        </label>
+                        <div class="input-group">
+                            <select id="detail-mood-select"></select>
+                            <button class="add-button" data-category="details">Hozzáad</button>
+                        </div>
+                    </div>
+                    <textarea id="details-text" class="prompt-textarea" data-key="detailsPlaceholder" placeholder="..."></textarea>
+                </div>
             </div>
-        </div>
-        <div class="prompt-section detail-subsection">
-            <label for="detail-environment-select">
-                <i class="fa-solid fa-mountain-sun"></i> 
-                <span data-key="detailEnvironmentLabel">Környezet:</span>
-                <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_environment" title="Tippek a környezethez"></i>
-                <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_environment" title="Saját promptok kezelése"></i>
-            </label>
-            <div class="input-group">
-                <select id="detail-environment-select"></select>
-                <button class="add-button" data-category="details">Hozzáad</button>
-            </div>
-        </div>
-        <div class="prompt-section detail-subsection">
-            <label for="detail-mood-select">
-                <i class="fa-solid fa-masks-theater"></i> 
-                <span data-key="detailMoodLabel">Hangulat:</span>
-                <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_mood" title="Tippek a hangulathoz"></i>
-                <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_mood" title="Saját promptok kezelése"></i>
-            </label>
-            <div class="input-group">
-                <select id="detail-mood-select"></select>
-                <button class="add-button" data-category="details">Hozzáad</button>
-            </div>
-        </div>
         <textarea id="details-text" class="prompt-textarea" data-key="detailsPlaceholder" placeholder="..."></textarea>
     </div>
     
