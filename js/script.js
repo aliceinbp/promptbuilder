@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- GENERATOR OLDAL LOGIKÁJA ---
+    // JAVÍTÁS ITT: A feltétel most egy létező elemre, a .final-prompt-section-re ellenőriz.
     if (document.querySelector('.final-prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
@@ -368,14 +369,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const categoryOrder = ['mainSubject', 'detail_physical', 'detail_environment', 'detail_mood', 'style', 'extra'];
 
             categoryOrder.forEach(category => {
-                const text = textareas[category].value.trim();
-                if (text) {
-                    text.split(',').forEach(part => {
-                        const trimmedPart = part.trim();
-                        if(trimmedPart) {
-                            allParts.push(trimmedPart);
-                        }
-                    });
+                if (textareas[category]) {
+                    const text = textareas[category].value.trim();
+                    if (text) {
+                        text.split(',').forEach(part => {
+                            const trimmedPart = part.trim();
+                            if(trimmedPart) {
+                                allParts.push(trimmedPart);
+                            }
+                        });
+                    }
                 }
             });
 
@@ -494,9 +497,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const category = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
                 const choice = choiceInstances[category];
                 const selectedValue = choice ? choice.getValue(true) : null;
-                if (selectedValue && selectedValue !== "") {
-                    const targetTextarea = textareas[category];
-                    targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
+                if (selectedValue && selectedValue !== "" && textareas[category]) {
+                    textareas[category].value += (textareas[category].value.trim() !== "" ? ", " : "") + selectedValue;
                     updateFinalPrompt();
                     choice.clearInput();
                     choice.setChoiceByValue('');
@@ -504,7 +506,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        Object.values(textareas).forEach(textarea => textarea.addEventListener('input', updateFinalPrompt));
+        Object.values(textareas).forEach(textarea => {
+            if(textarea) textarea.addEventListener('input', updateFinalPrompt)
+        });
 
         copyButton.addEventListener('click', function() {
             let textToCopy = getPromptTextFromTags();
@@ -531,22 +535,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     for (const category in textareas) {
                         const textarea = textareas[category];
-                        const text = textarea.value.trim();
-                        
-                        if (text && !/by|style of|art by|realistic|8k|cinematic|artstation/i.test(text)) {
-                            const response = await fetch('/.netlify/functions/translate', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ text: text, target_lang: 'EN-US' })
-                            });
+                        if (textarea) {
+                            const text = textarea.value.trim();
+                            
+                            if (text && !/by|style of|art by|realistic|8k|cinematic|artstation/i.test(text)) {
+                                const response = await fetch('/.netlify/functions/translate', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ text: text, target_lang: 'EN-US' })
+                                });
 
-                            if (!response.ok) {
-                                const errorData = await response.json();
-                                throw new Error(errorData.details || 'A fordítási szolgáltatás hibát adott.');
+                                if (!response.ok) {
+                                    const errorData = await response.json();
+                                    throw new Error(errorData.details || 'A fordítási szolgáltatás hibát adott.');
+                                }
+
+                                const data = await response.json();
+                                textarea.value = data.translatedText;
                             }
-
-                            const data = await response.json();
-                            textarea.value = data.translatedText;
                         }
                     }
                     
@@ -729,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         buttonTextSpan.textContent = originalText;
                         icon.className = 'fa-solid fa-copy';
-                        window.setLanguage(currentLanguage);
+                        // No need to call setLanguage here, just restore text
                     }, 2000);
                 });
             });
@@ -862,6 +868,7 @@ document.addEventListener('DOMContentLoaded', function() {
             quoteAuthorElem.textContent = `– ${todayQuote.author}`;
         }
 
+        // Set initial content when quote is first displayed
         setQuoteContent();
 
         closeBtn.addEventListener('click', () => {
@@ -875,9 +882,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Enhance the global setLanguage function to also update the quote
         const originalSetLanguage = window.setLanguage;
-        window.setLanguage = function(lang) {
-            originalSetLanguage(lang);
-            if (document.getElementById('daily-quote-container')) {
+        window.setLanguage = function(lang, ...args) {
+            originalSetLanguage.apply(this, [lang, ...args]);
+            if (document.getElementById('daily-quote-container') && !document.getElementById('daily-quote-container').classList.contains('hidden')) {
                 setQuoteContent();
             }
         }
