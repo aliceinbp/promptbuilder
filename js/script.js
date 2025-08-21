@@ -12,10 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const category = e.currentTarget.dataset.category;
                 const lang = currentLanguage;
                 
-                // Capitalize first letter helper for key construction
                 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-                
-                // Handle snake_case to camelCase conversion for keys
                 let camelCaseCategory = category.replace(/_([a-z])/g, g => g[1].toUpperCase());
 
                 const titleKey = `explainerTitle${capitalize(camelCaseCategory)}`;
@@ -54,10 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const cusdisFrame = document.querySelector('#cusdis_thread iframe');
         if (cusdisFrame) {
-            cusdisFrame.contentWindow.postMessage({
-                type: 'setTheme',
-                theme: theme === 'light' ? 'light' : 'dark'
-            }, 'https://cusdis.com');
+            cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme === 'light' ? 'light' : 'dark' }, 'https://cusdis.com');
         }
     }
 
@@ -71,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
-    // This is defined globally so displayDailyQuote can access it
     window.setLanguage = function(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
@@ -114,14 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const langHu = document.getElementById('lang-hu');
     const langEn = document.getElementById('lang-en');
     if (langHu && langEn) {
-        langHu.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.setLanguage('hu');
-        });
-        langEn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.setLanguage('en');
-        });
+        langHu.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('hu'); });
+        langEn.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('en'); });
     }
 
     const overlay = document.getElementById('modal-overlay');
@@ -130,14 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (infoButton && infoModal && overlay) {
         const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
-        const open = () => {
-            overlay.classList.remove('hidden');
-            infoModal.classList.remove('hidden');
-        };
-        const close = () => {
-            overlay.classList.add('hidden');
-            infoModal.classList.add('hidden');
-        };
+        const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
+        const close = () => { overlay.classList.add('hidden'); infoModal.classList.add('hidden'); };
         infoButton.addEventListener('click', open);
         closeInfoModalBtn.addEventListener('click', close);
     }
@@ -150,14 +131,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- GENERATOR OLDAL LOGIKÁJA ---
-    // JAVÍTÁS ITT: A feltétel most egy létező elemre, a .final-prompt-section-re ellenőriz.
     if (document.querySelector('.final-prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
             mainSubject: document.getElementById('mainSubject-text'),
-            detail_physical: document.getElementById('detail_physical-text'),
-            detail_environment: document.getElementById('detail_environment-text'),
-            detail_mood: document.getElementById('detail_mood-text'),
+            details: document.getElementById('details-text'),
             style: document.getElementById('style-text'),
             extra: document.getElementById('extra-text')
         };
@@ -180,10 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let choiceInstances = {};
         
         if (finalPromptContainer && typeof Sortable !== 'undefined') {
-            new Sortable(finalPromptContainer, {
-                animation: 150,
-                ghostClass: 'sortable-ghost'
-            });
+            new Sortable(finalPromptContainer, { animation: 150, ghostClass: 'sortable-ghost' });
         }
 
         function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { mainSubject: [], detail_physical: [], detail_environment: [], detail_mood: [], style: [], extra: [] }; }
@@ -259,9 +234,14 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const key in textareas) { textareas[key].value = ''; }
 
             textareas.mainSubject.value = getRandomItem(langPrompts.mainSubject);
-            textareas.detail_physical.value = getRandomItem(langPrompts.detail_physical);
-            textareas.detail_environment.value = getRandomItem(langPrompts.detail_environment);
-            textareas.detail_mood.value = getRandomItem(langPrompts.detail_mood);
+            
+            const randomDetails = [
+                getRandomItem(langPrompts.detail_physical),
+                getRandomItem(langPrompts.detail_environment),
+                getRandomItem(langPrompts.detail_mood)
+            ].filter(Boolean).join(', ');
+            textareas.details.value = randomDetails;
+            
             textareas.style.value = getRandomItem(langPrompts.style);
             textareas.extra.value = getRandomItem(langPrompts.extra);
             
@@ -277,8 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function getPromptTextFromTags() {
             if (!finalPromptContainer) return '';
             const tags = finalPromptContainer.querySelectorAll('.prompt-tag');
-            const tagTexts = Array.from(tags).map(tag => tag.textContent);
-            return tagTexts.join(', ');
+            return Array.from(tags).map(tag => tag.textContent).join(', ');
         }
 
         function saveCurrentPrompt() {
@@ -320,8 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 finalPromptContainer.innerHTML = '';
                 const prompt = saved[index];
                 
-                // This is a simple load, won't repopulate textareas, just the final prompt.
-                // A more complex implementation would parse the prompt back into categories.
                 prompt.split(',').forEach(part => {
                     const trimmedPart = part.trim();
                     if(trimmedPart) {
@@ -366,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
             finalPromptContainer.innerHTML = '';
             const allParts = [];
             
-            const categoryOrder = ['mainSubject', 'detail_physical', 'detail_environment', 'detail_mood', 'style', 'extra'];
+            const categoryOrder = ['mainSubject', 'details', 'style', 'extra'];
 
             categoryOrder.forEach(category => {
                 if (textareas[category]) {
@@ -478,10 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             document.getElementById('add-new-prompt-btn').addEventListener('click', addNewCustomPrompt);
             document.getElementById('new-prompt-input').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addNewCustomPrompt();
-                }
+                if (e.key === 'Enter') { e.preventDefault(); addNewCustomPrompt(); }
             });
             document.getElementById('manage-prompts-list').addEventListener('click', function(event) {
                 const target = event.target.closest('.delete-custom-prompt-btn');
@@ -491,14 +465,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.add-button').forEach(button => {
             button.addEventListener('click', function() {
+                const outputCategory = this.dataset.category;
                 const parentSection = this.closest('.prompt-section');
                 if (!parentSection) return;
+
                 const selectElement = parentSection.querySelector('select');
-                const category = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
-                const choice = choiceInstances[category];
+                const selectId = selectElement.id;
+                
+                const choiceCategory = selectId.replace(/-select$/, '').replace(/-/g, '_');
+                const choice = choiceInstances[choiceCategory];
                 const selectedValue = choice ? choice.getValue(true) : null;
-                if (selectedValue && selectedValue !== "" && textareas[category]) {
-                    textareas[category].value += (textareas[category].value.trim() !== "" ? ", " : "") + selectedValue;
+                
+                if (selectedValue && selectedValue !== "" && textareas[outputCategory]) {
+                    const targetTextarea = textareas[outputCategory];
+                    targetTextarea.value += (targetTextarea.value.trim() !== "" ? ", " : "") + selectedValue;
                     updateFinalPrompt();
                     choice.clearInput();
                     choice.setChoiceByValue('');
@@ -515,13 +495,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const negativeText = negativePromptTextarea.value.trim();
             if (negativeText !== '') { textToCopy += ` --no ${negativeText}`; }
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const buttonTextSpan = this.querySelector('span');
-                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
-                const target = buttonTextSpan || this;
-                target.textContent = translations[currentLanguage].copyButtonSuccess;
-                setTimeout(() => {
-                    target.textContent = originalText;
-                }, 1500);
+                const buttonTextSpan = this.querySelector('span') || this;
+                const originalText = buttonTextSpan.textContent;
+                buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
+                setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500);
             });
         });
 
@@ -735,7 +712,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         buttonTextSpan.textContent = originalText;
                         icon.className = 'fa-solid fa-copy';
-                        // No need to call setLanguage here, just restore text
                     }, 2000);
                 });
             });
@@ -845,6 +821,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const quoteTextElem = document.getElementById('quote-text');
         const quoteAuthorElem = document.getElementById('quote-author');
         const closeBtn = document.getElementById('close-quote-btn');
+        let isQuoteLogicEnhanced = false;
 
         const now = new Date();
         const startOfYear = new Date(now.getFullYear(), 0, 0);
@@ -868,7 +845,6 @@ document.addEventListener('DOMContentLoaded', function() {
             quoteAuthorElem.textContent = `– ${todayQuote.author}`;
         }
 
-        // Set initial content when quote is first displayed
         setQuoteContent();
 
         closeBtn.addEventListener('click', () => {
@@ -880,13 +856,15 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('quoteClosedDay', dayOfYear);
         });
         
-        // Enhance the global setLanguage function to also update the quote
-        const originalSetLanguage = window.setLanguage;
-        window.setLanguage = function(lang, ...args) {
-            originalSetLanguage.apply(this, [lang, ...args]);
-            if (document.getElementById('daily-quote-container') && !document.getElementById('daily-quote-container').classList.contains('hidden')) {
-                setQuoteContent();
+        if (!isQuoteLogicEnhanced) {
+            const originalSetLanguage = window.setLanguage;
+            window.setLanguage = function(lang, ...args) {
+                originalSetLanguage.apply(this, [lang, ...args]);
+                if (document.getElementById('daily-quote-container') && !document.getElementById('daily-quote-container').classList.contains('hidden')) {
+                    setQuoteContent();
+                }
             }
+            isQuoteLogicEnhanced = true;
         }
     }
 
