@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
             <h2><span data-key="quizResultTitle">${quizData.quizResultTitle}</span> ${resultData.title}</h2>
-            <img src="src/quiz-results/${resultStyle}.jpg" alt="${resultData.title}">
+            <img src="src/quiz-results/${resultStyle.replace(/([A-Z])/g, "-$1").toLowerCase()}.jpg" alt="${resultData.title}">
             <p>${resultData.description}</p>
             <p class="result-artists"><strong><span data-key="quizResultArtists">${quizData.quizResultArtists}</span></strong> ${resultData.artists}</p>
             <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA">${quizData.quizResultCTA}</a>
