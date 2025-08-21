@@ -37,12 +37,28 @@ document.addEventListener('DOMContentLoaded', function() {
     history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
-    // TÉMAVÁLASZTÓ LOGIKA
+    // ====================================================================
+    // ===== TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA (FEJLESZTETT VERZIÓ) =====
+    // ====================================================================
     const themeToggleButton = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
 
+    // Külön funkció a Cusdis téma frissítésére
+    function updateCusdisTheme(theme) {
+        const cusdisFrame = document.querySelector('#cusdis_thread iframe');
+        if (cusdisFrame) {
+            // Üzenetet küldünk az iframe-nek a téma nevével
+            cusdisFrame.contentWindow.postMessage({
+                type: 'setTheme',
+                theme: theme
+            }, 'https://cusdis.com');
+        }
+    }
+
+    // A fő funkció, ami beállítja a témát az egész oldalon
     function applyTheme(theme) {
         const logo = document.getElementById('logo');
+        // Téma és logó váltása
         if (theme === 'light') {
             document.body.classList.add('light-theme');
             if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
@@ -52,10 +68,29 @@ document.addEventListener('DOMContentLoaded', function() {
             if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
             if (logo) logo.src = 'src/myLogo.jpg';
         }
-        const cusdisFrame = document.querySelector('#cusdis_thread iframe');
-        if (cusdisFrame) {
-            cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme === 'light' ? 'light' : 'dark' }, 'https://cusdis.com');
-        }
+        // Vendégkönyv témájának frissítése
+        updateCusdisTheme(theme === 'light' ? 'light' : 'dark');
+    }
+    
+    // Figyelő, ami megvárja a Cusdis iframe betöltődését
+    function observeCusdis() {
+        const cusdisContainer = document.getElementById('cusdis_thread');
+        if (!cusdisContainer) return; // Csak akkor fut, ha van vendégkönyv
+
+        const observer = new MutationObserver((mutationsList, observer) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    const iframe = cusdisContainer.querySelector('iframe');
+                    if (iframe) { // Amint az iframe megjelenik...
+                        const storedTheme = localStorage.getItem('theme') || 'dark';
+                        updateCusdisTheme(storedTheme); // ...azonnal beállítjuk a témát
+                        observer.disconnect(); // és leállítjuk a figyelőt
+                        return;
+                    }
+                }
+            }
+        });
+        observer.observe(cusdisContainer, { childList: true, subtree: true });
     }
 
     if (themeToggleButton) {
@@ -65,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
             applyTheme(newTheme);
         });
     }
+    // ====================================================================
+    // ===== TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA VÉGE ===========================
+    // ====================================================================
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
@@ -871,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- Indítás ---
+    // --- OLDAL INDÍTÁSA ---
     applyTheme(currentTheme);
     window.setLanguage(currentLanguage);
     loadArtists();
@@ -886,4 +924,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     displayDailyQuote();
+    observeCusdis(); // A Cusdis figyelő elindítása a főoldalon
 });
