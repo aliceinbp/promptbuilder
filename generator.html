@@ -28,37 +28,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.css"/>
     
     <style>
-        /* A fő szekciók közötti általános térköz */
         main > .prompt-section,
         main > .details-section {
             margin-top: 25px;
         }
 
-        /* A "Részletek" szekció új címe, hogy úgy nézzen ki, mint a többi fő cím */
         .details-section > .details-title {
             display: flex;
             align-items: center;
-            gap: 0.6em; /* Térköz az ikon és a szöveg között */
+            gap: 0.6em;
             font-size: 1.1em;
             margin: 0 0 20px 0;
             font-weight: bold;
+            color: var(--text-color);
         }
 
-        /* Az al-szekciók behúzása és közelebb hozása egymáshoz */
         .details-section .detail-subsection {
-            margin-left: 25px; /* Behúzás a vizuális hierarchiáért */
-            margin-bottom: 15px; /* Térköz csökkentése */
+            margin-left: 25px;
+            margin-bottom: 15px;
         }
         
-        /* Az utolsó al-szekciónak ne legyen alsó margója */
         .details-section .detail-subsection:last-of-type {
             margin-bottom: 0;
         }
 
-        /* A "Részletek" szövegmezője is legyen behúzva és legyen alatta hely */
         .details-section > #details-text {
             margin-left: 25px;
-            width: calc(100% - 25px); /* Korrigáljuk a szélességet a behúzás miatt */
+            width: calc(100% - 25px);
             margin-top: 15px;
         }
     </style>
