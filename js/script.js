@@ -11,8 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.addEventListener('click', (e) => {
                 const category = e.currentTarget.dataset.category;
                 const lang = currentLanguage;
-                const titleKey = `explainerTitle${category.charAt(0).toUpperCase() + category.slice(1)}`;
-                const textKey = `explainerText${category.charAt(0).toUpperCase() + category.slice(1)}`;
+                
+                // Capitalize first letter helper for key construction
+                const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+                
+                // Handle snake_case to camelCase conversion for keys
+                let camelCaseCategory = category.replace(/_([a-z])/g, g => g[1].toUpperCase());
+
+                const titleKey = `explainerTitle${capitalize(camelCaseCategory)}`;
+                const textKey = `explainerText${capitalize(camelCaseCategory)}`;
+
                 if (translations[lang] && translations[lang][titleKey] && translations[lang][textKey]) {
                     explainerTitle.textContent = translations[lang][titleKey];
                     const rawText = translations[lang][textKey];
@@ -33,44 +41,38 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
     // TÉMAVÁLASZTÓ LOGIKA
-const themeToggleButton = document.getElementById('theme-toggle');
-const currentTheme = localStorage.getItem('theme');
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
 
-function applyTheme(theme) {
-    // Ez a rész már megvan, ez váltja az oldal témáját
-    if (theme === 'light') {
-        document.body.classList.add('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
-    } else {
-        document.body.classList.remove('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
-    }
-    const cusdisFrame = document.querySelector('#cusdis_thread iframe');
-    if (cusdisFrame) {
-        cusdisFrame.contentWindow.postMessage({
-            type: 'setTheme',
-            theme: theme === 'light' ? 'light' : 'dark'
-        }, 'https://cusdis.com');
-    }
-}
-
-// IDE KELL HELYEZNI AZ ESEMÉNYFIGYELŐT
-if (themeToggleButton) {
-    themeToggleButton.addEventListener('click', () => {
-        let newTheme = 'dark';
-        if (document.body.classList.contains('light-theme')) {
-            newTheme = 'dark';
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
         } else {
-            newTheme = 'light';
+            document.body.classList.remove('light-theme');
+            if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
         }
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-    });
-}
+        const cusdisFrame = document.querySelector('#cusdis_thread iframe');
+        if (cusdisFrame) {
+            cusdisFrame.contentWindow.postMessage({
+                type: 'setTheme',
+                theme: theme === 'light' ? 'light' : 'dark'
+            }, 'https://cusdis.com');
+        }
+    }
+
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', () => {
+            let newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+    }
 
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
-    function setLanguage(lang) {
+    // This is defined globally so displayDailyQuote can access it
+    window.setLanguage = function(lang) {
         currentLanguage = lang;
         localStorage.setItem('preferredLanguage', lang);
 
@@ -114,11 +116,11 @@ if (themeToggleButton) {
     if (langHu && langEn) {
         langHu.addEventListener('click', (e) => {
             e.preventDefault();
-            setLanguage('hu');
+            window.setLanguage('hu');
         });
         langEn.addEventListener('click', (e) => {
             e.preventDefault();
-            setLanguage('en');
+            window.setLanguage('en');
         });
     }
 
@@ -148,12 +150,14 @@ if (themeToggleButton) {
     }
 
     // --- GENERATOR OLDAL LOGIKÁJA ---
-    if (document.querySelector('.prompt-section')) {
+    if (document.querySelector('.final-prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
+            mainSubject: document.getElementById('mainSubject-text'),
+            detail_physical: document.getElementById('detail_physical-text'),
+            detail_environment: document.getElementById('detail_environment-text'),
+            detail_mood: document.getElementById('detail_mood-text'),
             style: document.getElementById('style-text'),
-            subject: document.getElementById('subject-text'),
-            setting: document.getElementById('setting-text'),
             extra: document.getElementById('extra-text')
         };
         
@@ -169,7 +173,7 @@ if (themeToggleButton) {
         const historyModal = document.getElementById('history-modal');
         const historyButton = document.getElementById('history-button');
         const historyList = document.getElementById('history-list');
-        const translateButton = document.getElementById('translate-button'); // ÚJ
+        const translateButton = document.getElementById('translate-button');
         let promptHistory = [];
         let historyTimeout;
         let choiceInstances = {};
@@ -181,14 +185,24 @@ if (themeToggleButton) {
             });
         }
 
-        function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { style: [], subject: [], setting: [], extra: [] }; }
+        function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { mainSubject: [], detail_physical: [], detail_environment: [], detail_mood: [], style: [], extra: [] }; }
         function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
         function openModal(modal) { overlay.classList.remove('hidden'); modal.classList.remove('hidden'); }
 
         function openManageModal(category) {
             currentManagedCategory = category;
             const manageModalTitle = document.getElementById('manage-modal-title');
-            const categoryLabelKey = category + 'Label';
+            
+            const categoryKeyMap = {
+                mainSubject: 'mainSubjectLabel',
+                detail_physical: 'detailPhysicalLabel',
+                detail_environment: 'detailEnvironmentLabel',
+                detail_mood: 'detailMoodLabel',
+                style: 'styleLabel',
+                extra: 'extraLabel'
+            };
+            const categoryLabelKey = categoryKeyMap[category] || category + 'Label';
+            
             manageModalTitle.textContent = `"${translations[currentLanguage][categoryLabelKey].replace(':', '')}" - Sajátok`;
             renderManageList();
             openModal(managePromptsModal);
@@ -216,6 +230,9 @@ if (themeToggleButton) {
             const newPrompt = newPromptInput.value.trim();
             if (newPrompt === '' || !currentManagedCategory) return;
             const customPrompts = getCustomPrompts();
+            if (!customPrompts[currentManagedCategory]) {
+                customPrompts[currentManagedCategory] = [];
+            }
             if (!customPrompts[currentManagedCategory].includes(newPrompt)) {
                 customPrompts[currentManagedCategory].push(newPrompt);
                 saveCustomPrompts(customPrompts);
@@ -237,10 +254,16 @@ if (themeToggleButton) {
         function generateRandomPrompt() {
             const langPrompts = getCombinedPrompts(currentLanguage);
             const getRandomItem = (arr) => arr.length > 0 ? arr[Math.floor(Math.random() * arr.length)] : '';
+            
+            for (const key in textareas) { textareas[key].value = ''; }
+
+            textareas.mainSubject.value = getRandomItem(langPrompts.mainSubject);
+            textareas.detail_physical.value = getRandomItem(langPrompts.detail_physical);
+            textareas.detail_environment.value = getRandomItem(langPrompts.detail_environment);
+            textareas.detail_mood.value = getRandomItem(langPrompts.detail_mood);
             textareas.style.value = getRandomItem(langPrompts.style);
-            textareas.subject.value = getRandomItem(langPrompts.subject);
-            textareas.setting.value = getRandomItem(langPrompts.setting);
             textareas.extra.value = getRandomItem(langPrompts.extra);
+            
             updateFinalPrompt();
         }
 
@@ -295,11 +318,20 @@ if (themeToggleButton) {
                 clearAllTextareas(); 
                 finalPromptContainer.innerHTML = '';
                 const prompt = saved[index];
-                const tag = document.createElement('span');
-                tag.className = 'prompt-tag';
-                tag.textContent = prompt;
-                finalPromptContainer.appendChild(tag);
-                finalPromptHiddenTextarea.value = prompt;
+                
+                // This is a simple load, won't repopulate textareas, just the final prompt.
+                // A more complex implementation would parse the prompt back into categories.
+                prompt.split(',').forEach(part => {
+                    const trimmedPart = part.trim();
+                    if(trimmedPart) {
+                        const tag = document.createElement('span');
+                        tag.className = 'prompt-tag';
+                        tag.textContent = trimmedPart;
+                        finalPromptContainer.appendChild(tag);
+                    }
+                });
+
+                finalPromptHiddenTextarea.value = getPromptTextFromTags();
             }
             if (target.classList.contains('delete-prompt-btn')) {
                 saved.splice(index, 1);
@@ -333,7 +365,9 @@ if (themeToggleButton) {
             finalPromptContainer.innerHTML = '';
             const allParts = [];
             
-            ['style', 'subject', 'setting', 'extra'].forEach(category => {
+            const categoryOrder = ['mainSubject', 'detail_physical', 'detail_environment', 'detail_mood', 'style', 'extra'];
+
+            categoryOrder.forEach(category => {
                 const text = textareas[category].value.trim();
                 if (text) {
                     text.split(',').forEach(part => {
@@ -366,7 +400,9 @@ if (themeToggleButton) {
             const defaults = defaultPrompts[lang];
             let combined = {};
             for (const category in defaults) {
-                const combinedSet = new Set([...(defaults[category] || []), ...(custom[category] || [])]);
+                const customPromptsForCategory = custom[category] || [];
+                const defaultPromptsForCategory = defaults[category] || [];
+                const combinedSet = new Set([...defaultPromptsForCategory, ...customPromptsForCategory]);
                 combined[category] = [...combinedSet];
             }
             return combined;
@@ -374,15 +410,29 @@ if (themeToggleButton) {
 
         function initializeChoices() {
             const combinedPrompts = getCombinedPrompts(currentLanguage);
-            ['style', 'subject', 'setting', 'extra'].forEach(category => {
-                const selectElement = document.getElementById(`${category}-select`);
+            const categories = ['mainSubject', 'detail_physical', 'detail_environment', 'detail_mood', 'style', 'extra'];
+            
+            const categoryKeyMap = {
+                mainSubject: 'mainSubjectLabel',
+                detail_physical: 'detailPhysicalLabel',
+                detail_environment: 'detailEnvironmentLabel',
+                detail_mood: 'detailMoodLabel',
+                style: 'styleLabel',
+                extra: 'extraLabel'
+            };
+
+            categories.forEach(category => {
+                const selectId = category.replace(/_/g, '-') + '-select';
+                const selectElement = document.getElementById(selectId);
                 if (!selectElement) return;
 
                 if (choiceInstances[category]) {
                     choiceInstances[category].destroy();
                 }
 
-                const options = combinedPrompts[category].map(item => ({ value: item, label: item }));
+                const options = (combinedPrompts[category] || []).map(item => ({ value: item, label: item }));
+                const labelKey = categoryKeyMap[category];
+                const placeholderText = translations[currentLanguage].selectDefault.replace('{category}', translations[currentLanguage][labelKey].replace(':', ''));
 
                 choiceInstances[category] = new Choices(selectElement, {
                     choices: options,
@@ -391,7 +441,7 @@ if (themeToggleButton) {
                     allowHTML: false,
                     shouldSort: false,
                     placeholder: true,
-                    placeholderValue: translations[currentLanguage].selectDefault.replace('{category}', translations[currentLanguage][category + 'Label'].replace(':', '')),
+                    placeholderValue: placeholderText,
                 });
 
                 selectElement.addEventListener('showDropdown.choices', function() {
@@ -441,7 +491,7 @@ if (themeToggleButton) {
                 const parentSection = this.closest('.prompt-section');
                 if (!parentSection) return;
                 const selectElement = parentSection.querySelector('select');
-                const category = selectElement.id.replace('-select', '');
+                const category = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
                 const choice = choiceInstances[category];
                 const selectedValue = choice ? choice.getValue(true) : null;
                 if (selectedValue && selectedValue !== "") {
@@ -471,7 +521,6 @@ if (themeToggleButton) {
             });
         });
 
-        // ÚJ FORDÍTÓ GOMB LOGIKA
         if (translateButton) {
             translateButton.addEventListener('click', async () => {
                 const buttonSpan = translateButton.querySelector('span') || translateButton;
@@ -484,8 +533,6 @@ if (themeToggleButton) {
                         const textarea = textareas[category];
                         const text = textarea.value.trim();
                         
-                        // Csak akkor fordítunk, ha van szöveg és valószínűleg magyar
-                        // Egyszerűsített ellenőrzés: nem fordítunk, ha tipikus angol kulcsszavakat tartalmaz
                         if (text && !/by|style of|art by|realistic|8k|cinematic|artstation/i.test(text)) {
                             const response = await fetch('/.netlify/functions/translate', {
                                 method: 'POST',
@@ -519,7 +566,6 @@ if (themeToggleButton) {
             });
         }
 
-
         if (historyButton && historyModal) {
             historyButton.addEventListener('click', () => {
                 renderHistory();
@@ -534,11 +580,18 @@ if (themeToggleButton) {
                     clearAllTextareas();
                     finalPromptContainer.innerHTML = '';
                     const prompt = e.target.textContent;
-                    const tag = document.createElement('span');
-                    tag.className = 'prompt-tag';
-                    tag.textContent = prompt;
-                    finalPromptContainer.appendChild(tag);
-                    finalPromptHiddenTextarea.value = prompt;
+                    
+                    prompt.split(',').forEach(part => {
+                       const trimmedPart = part.trim();
+                       if (trimmedPart) {
+                           const tag = document.createElement('span');
+                           tag.className = 'prompt-tag';
+                           tag.textContent = trimmedPart;
+                           finalPromptContainer.appendChild(tag);
+                       }
+                    });
+
+                    finalPromptHiddenTextarea.value = getPromptTextFromTags();
                     overlay.classList.add('hidden');
                     historyModal.classList.add('hidden');
                 }
@@ -607,7 +660,7 @@ if (themeToggleButton) {
                 container.appendChild(card);
             });
             initializeArtistCopyButtons();
-            setLanguage(currentLanguage);
+            window.setLanguage(currentLanguage);
         } catch (error) {
             console.error('Hiba a művészek betöltésekor:', error);
             container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
@@ -639,7 +692,7 @@ if (themeToggleButton) {
                 });
                 container.appendChild(grid);
             }
-            setLanguage(currentLanguage);
+            window.setLanguage(currentLanguage);
         } catch (error) {
             console.error('Hiba a galéria betöltésekor:', error);
             container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
@@ -676,7 +729,7 @@ if (themeToggleButton) {
                     setTimeout(() => {
                         buttonTextSpan.textContent = originalText;
                         icon.className = 'fa-solid fa-copy';
-                        setLanguage(currentLanguage);
+                        window.setLanguage(currentLanguage);
                     }, 2000);
                 });
             });
@@ -778,9 +831,61 @@ if (themeToggleButton) {
         }
     }
 
+    // ===== NAPI IDÉZET LOGIKA =====
+    function displayDailyQuote() {
+        const quoteContainer = document.getElementById('daily-quote-container');
+        if (!quoteContainer) return;
+
+        const quoteTextElem = document.getElementById('quote-text');
+        const quoteAuthorElem = document.getElementById('quote-author');
+        const closeBtn = document.getElementById('close-quote-btn');
+
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 0);
+        const diff = now - startOfYear;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
+        const quoteIndex = dayOfYear % dailyQuotes.length;
+        const todayQuote = dailyQuotes[quoteIndex];
+
+        const lastClosedDay = localStorage.getItem('quoteClosedDay');
+        if (lastClosedDay == dayOfYear) {
+            quoteContainer.classList.add('hidden');
+            return;
+        }
+        
+        quoteContainer.classList.remove('hidden');
+
+        function setQuoteContent() {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            quoteTextElem.textContent = (lang === 'hu') ? `„${todayQuote.quote_hu}”` : `“${todayQuote.quote_en}”`;
+            quoteAuthorElem.textContent = `– ${todayQuote.author}`;
+        }
+
+        setQuoteContent();
+
+        closeBtn.addEventListener('click', () => {
+            quoteContainer.classList.add('closing');
+            setTimeout(() => {
+                quoteContainer.classList.add('hidden');
+                quoteContainer.classList.remove('closing');
+            }, 500);
+            localStorage.setItem('quoteClosedDay', dayOfYear);
+        });
+        
+        // Enhance the global setLanguage function to also update the quote
+        const originalSetLanguage = window.setLanguage;
+        window.setLanguage = function(lang) {
+            originalSetLanguage(lang);
+            if (document.getElementById('daily-quote-container')) {
+                setQuoteContent();
+            }
+        }
+    }
+
     // --- Indítás ---
     applyTheme(currentTheme);
-    setLanguage(currentLanguage);
+    window.setLanguage(currentLanguage);
     loadArtists();
     loadGallery();
     loadDailyPrompt();
@@ -791,61 +896,6 @@ if (themeToggleButton) {
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
-    // ===== NAPI IDÉZET LOGIKA =====
-function displayDailyQuote() {
-    const quoteContainer = document.getElementById('daily-quote-container');
-    if (!quoteContainer) return; // Ha nem a főoldalon vagyunk, ne csináljon semmit
-
-    const quoteTextElem = document.getElementById('quote-text');
-    const quoteAuthorElem = document.getElementById('quote-author');
-    const closeBtn = document.getElementById('close-quote-btn');
-
-    // Dátum alapú idézet kiválasztása
-    const now = new Date();
-    const startOfYear = new Date(now.getFullYear(), 0, 0);
-    const diff = now - startOfYear;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay);
-    const quoteIndex = dayOfYear % dailyQuotes.length;
-    const todayQuote = dailyQuotes[quoteIndex];
-
-    // Ellenőrizzük, hogy a mai napon bezárta-e már
-    const lastClosedDay = localStorage.getItem('quoteClosedDay');
-    if (lastClosedDay == dayOfYear) {
-        quoteContainer.classList.add('hidden');
-        return;
-    }
     
-    quoteContainer.classList.remove('hidden');
-
-    // Tartalom beállítása a nyelv alapján
-    function setQuoteContent() {
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        quoteTextElem.textContent = (lang === 'hu') ? `„${todayQuote.quote_hu}”` : `“${todayQuote.quote_en}”`;
-        quoteAuthorElem.textContent = `– ${todayQuote.author}`;
-    }
-
-    setQuoteContent();
-
-    // Bezárás gomb
-    closeBtn.addEventListener('click', () => {
-        quoteContainer.classList.add('closing');
-        setTimeout(() => {
-            quoteContainer.classList.add('hidden');
-            quoteContainer.classList.remove('closing');
-        }, 500); // Megvárjuk az animáció végét
-        localStorage.setItem('quoteClosedDay', dayOfYear);
-    });
-    
-    // A nyelvváltó függvény kiegészítése
-    // Ez biztosítja, hogy a HUN/ENG gombra kattintva az idézet is leforduljon
-    const originalSetLanguage = window.setLanguage;
-    window.setLanguage = function(lang) {
-        originalSetLanguage(lang);
-        setQuoteContent();
-    }
-}
-
-// A fájl végén, ahol a többi indító függvény is van, hívd meg ezt is:
-displayDailyQuote();
+    displayDailyQuote();
 });
