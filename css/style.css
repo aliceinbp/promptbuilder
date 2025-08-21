@@ -809,3 +809,40 @@ main > .prompt-section-group {
     white-space: normal;
     text-align: left;
 }
+/* --- GENERATOR OLDAL JAVÍTÁSOK --- */
+
+/* A "Részletek" szekció címe, hogy PONTOSAN úgy nézzen ki, mint a többi fő cím */
+.details-section > .details-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: var(--color-primary-light);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Az ikon stílusa a "Részletek" címben */
+.details-section > .details-title > i {
+    color: var(--color-primary-highlight);
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+}
+
+/* Az al-szekciók behúzása és közelebb hozása egymáshoz */
+.details-section .detail-subsection {
+    margin-left: 25px; 
+    margin-bottom: 15px;
+}
+
+/* Az utolsó al-szekciónak ne legyen alsó margója */
+.details-section .detail-subsection:last-of-type {
+    margin-bottom: 0;
+}
+
+/* A "Részletek" szövegmezője is legyen behúzva és legyen alatta hely */
+.details-section > #details-text {
+    margin-left: 25px;
+    width: calc(100% - 25px);
+    margin-top: 15px;
+}
