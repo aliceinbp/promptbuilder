@@ -2,7 +2,7 @@
 title_hu: " Varázslat a szavak mögött: Első lépéseim az AI képgenerálás világában"
 title_en: "Magic Behind the Words: My First Steps in the World of AI Image Generation"
 date: 2025-08-19T18:54:48.127Z
-image: /src/blog-images/og-image.png
+image: /src/blog-images/logofejlec.png
 body_hu: >-
   <!--StartFragment-->
 
