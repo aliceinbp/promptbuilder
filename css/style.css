@@ -1002,3 +1002,20 @@ body.light-theme .choices__inner {
 .header-icon-link:hover {
     color: var(--accent-color-1);
 }
+/* ===== JAVÍTÁS: Paraméterek szekció ===== */
+
+/* A címke színét beállítjuk a többi címkével megegyezőre */
+.parameters-section > label {
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* Az aktív gomb stílusát definiáljuk, hogy látható legyen a kiválasztás */
+.param-btn.active {
+    background-color: var(--accent-color-1);
+    color: white;
+    border-color: var(--accent-color-1);
+}
