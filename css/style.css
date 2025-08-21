@@ -851,3 +851,61 @@ main > .prompt-section-group {
     width: calc(100% - 25px);
     margin-top: 15px;
 }
+/* ===== VILÁGOS MÓD FINOMHANGOLÁSA ===== */
+
+body.light-theme {
+  /* A "túl fehér" háttér helyett egy finom szürkéskék */
+  --main-bg-color: #f0f4f8; 
+  
+  /* A kereteken belüli tartalom háttere egy törtfehér árnyalat */
+  --content-bg-color: #fdfdfd; 
+  
+  /* Az alapértelmezett szövegszín sötétebb a jobb olvashatóságért */
+  --text-color: #1a1a2e;
+
+  /* A header átlátszósága, hogy illeszkedjen */
+  --header-bg-color: rgba(253, 253, 253, 0.9);
+}
+
+/* Gradiens keret a fő konténerre világos módban */
+body.light-theme #main-container {
+  border: 5px solid transparent;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to bottom right, #8a2be2, #00c6ff); /* Neonlila -> Kék átmenet */
+}
+
+/* A belső elemek (szekciók, kártyák) hátterének beállítása */
+body.light-theme section,
+body.light-theme .link-card,
+body.light-theme .artist-card,
+body.light-theme .modal,
+body.light-theme .blog-card,
+body.light-theme .form-container,
+body.light-theme .gallery-category-title {
+  background-color: var(--content-bg-color);
+  border: 1px solid #e1e4e8; /* Finomabb belső keret */
+}
+
+/* Input mezők és gombok stílusának igazítása */
+body.light-theme button,
+body.light-theme .cta-button,
+body.light-theme .cta-button-small {
+   background-color: #e8e8f0;
+   color: #1a1a2e;
+   border: 1px solid #ccc;
+}
+
+body.light-theme button:hover,
+body.light-theme .cta-button:hover,
+body.light-theme .cta-button-small:hover {
+   background-color: #d8d8e0;
+   border-color: #bbb;
+}
+
+body.light-theme input, 
+body.light-theme textarea,
+body.light-theme .choices__inner {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    color: var(--text-color);
+}

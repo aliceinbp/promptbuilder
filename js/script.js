@@ -42,12 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTheme = localStorage.getItem('theme');
 
     function applyTheme(theme) {
+        const logo = document.getElementById('logo');
         if (theme === 'light') {
             document.body.classList.add('light-theme');
             if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            if (logo) logo.src = 'src/myLogolight.jpg';
         } else {
             document.body.classList.remove('light-theme');
             if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            if (logo) logo.src = 'src/myLogo.jpg';
         }
         const cusdisFrame = document.querySelector('#cusdis_thread iframe');
         if (cusdisFrame) {
