@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prompt Generátor - Prompt Lab by Aliceinbp</title>
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aliceinbp.com/">
     <meta property="og:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
     <meta property="og:description" content="Alkoss lenyűgöző képeket az AI segítségével! A Prompt Lab egy ingyenes eszköz, ami segít a tökéletes promptok összeállításában.">
     <meta property="og:image" content="https://aliceinbp.com/src/og-image.png">
-
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://aliceinbp.com/">
     <meta property="twitter:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
@@ -17,8 +17,8 @@
     <meta property="twitter:image" content="https://aliceinbp.com/src/og-image.png">
     <meta name="description" content="Hozd létre a tökéletes AI promptot másodpercek alatt! Válogass stílusok, témák és extrák közül, mentsd el a kedvenceidet és alkoss a Prompt Lab generátorával.">
     
-    <link rel="stylesheet" href="css/theme.css?v=1.0.2">
-    <link rel="stylesheet" href="css/style.css?v=1.0.2">
+    <link rel="stylesheet" href="css/theme.css?v=1.0.3">
+    <link rel="stylesheet" href="css/style.css?v=1.0.3">
     
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -64,12 +64,7 @@
             </div>
     
             <div class="prompt-section">
-                <label for="mainSubject-select">
-                    <i class="fa-solid fa-image-portrait"></i>
-                    <span data-key="mainSubjectLabel">Fő téma:</span>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i>
-                    <i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i>
-                </label>
+                <label for="mainSubject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="mainSubjectLabel">Fő téma:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i></label>
                 <div class="input-group">
                     <select id="mainSubject-select"></select>
                     <button class="add-button" data-category="mainSubject">Hozzáad</button>
@@ -78,55 +73,33 @@
             </div>
     
             <div class="prompt-section-group">
-                <div class="details-section">
-                    <h3 data-key="detailsLabel"><i class="fa-solid fa-pen-to-square"></i> Részletek / Leírás:</h3>
-                    <div class="prompt-section detail-subsection">
-                        <label for="detail-physical-select">
-                            <i class="fa-solid fa-person-rays"></i>
-                            <span data-key="detailPhysicalLabel">Tulajdonságok:</span>
-                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_physical" title="Tippek a tulajdonságokhoz"></i>
-                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_physical" title="Saját promptok kezelése"></i>
-                        </label>
-                        <div class="input-group">
-                            <select id="detail-physical-select"></select>
-                            <button class="add-button" data-category="details">Hozzáad</button>
-                        </div>
+                <h3 data-key="detailsLabel"><i class="fa-solid fa-pen-to-square"></i> Részletek / Leírás:</h3>
+                <div class="prompt-section detail-subsection">
+                    <label for="detail-physical-select"><i class="fa-solid fa-person-rays"></i> <span data-key="detailPhysicalLabel">Tulajdonságok:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_physical" title="Tippek a tulajdonságokhoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_physical" title="Saját promptok kezelése"></i></label>
+                    <div class="input-group">
+                        <select id="detail-physical-select"></select>
+                        <button class="add-button" data-category="details">Hozzáad</button>
                     </div>
-                    <div class="prompt-section detail-subsection">
-                        <label for="detail-environment-select">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                            <span data-key="detailEnvironmentLabel">Környezet:</span>
-                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_environment" title="Tippek a környezethez"></i>
-                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_environment" title="Saját promptok kezelése"></i>
-                        </label>
-                        <div class="input-group">
-                            <select id="detail-environment-select"></select>
-                            <button class="add-button" data-category="details">Hozzáad</button>
-                        </div>
-                    </div>
-                    <div class="prompt-section detail-subsection">
-                        <label for="detail-mood-select">
-                            <i class="fa-solid fa-masks-theater"></i>
-                            <span data-key="detailMoodLabel">Hangulat:</span>
-                            <i class="fa-solid fa-circle-info explainer-icon" data-category="detail_mood" title="Tippek a hangulathoz"></i>
-                            <i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_mood" title="Saját promptok kezelése"></i>
-                        </label>
-                        <div class="input-group">
-                            <select id="detail-mood-select"></select>
-                            <button class="add-button" data-category="details">Hozzáad</button>
-                        </div>
-                    </div>
-                    <textarea id="details-text" class="prompt-textarea" data-key="detailsPlaceholder" placeholder="..."></textarea>
                 </div>
+                <div class="prompt-section detail-subsection">
+                    <label for="detail-environment-select"><i class="fa-solid fa-mountain-sun"></i> <span data-key="detailEnvironmentLabel">Környezet:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_environment" title="Tippek a környezethez"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_environment" title="Saját promptok kezelése"></i></label>
+                    <div class="input-group">
+                        <select id="detail-environment-select"></select>
+                        <button class="add-button" data-category="details">Hozzáad</button>
+                    </div>
+                </div>
+                <div class="prompt-section detail-subsection">
+                    <label for="detail-mood-select"><i class="fa-solid fa-masks-theater"></i> <span data-key="detailMoodLabel">Hangulat:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_mood" title="Tippek a hangulathoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_mood" title="Saját promptok kezelése"></i></label>
+                    <div class="input-group">
+                        <select id="detail-mood-select"></select>
+                        <button class="add-button" data-category="details">Hozzáad</button>
+                    </div>
+                </div>
+                <textarea id="details-text" class="prompt-textarea" data-key="detailsPlaceholder" placeholder="..."></textarea>
             </div>
     
             <div class="prompt-section">
-                <label for="style-select">
-                    <i class="fa-solid fa-palette"></i>
-                    <span data-key="styleLabel">Stílus:</span>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i>
-                    <i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i>
-                </label>
+                <label for="style-select"><i class="fa-solid fa-palette"></i> <span data-key="styleLabel">Stílus:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i></label>
                 <div class="input-group">
                     <select id="style-select"></select>
                     <button class="add-button" data-category="style">Hozzáad</button>
@@ -135,12 +108,7 @@
             </div>
     
             <div class="prompt-section">
-                <label for="extra-select">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span data-key="extraLabel">Extrák:</span>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="extra" title="Tippek az extrákhoz"></i>
-                    <i class="fa-solid fa-gear manage-prompts-btn" data-category="extra" title="Saját promptok kezelése"></i>
-                </label>
+                <label for="extra-select"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="extraLabel">Extrák:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="extra" title="Tippek az extrákhoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="extra" title="Saját promptok kezelése"></i></label>
                 <div class="input-group">
                     <select id="extra-select"></select>
                     <button class="add-button" data-category="extra">Hozzáad</button>
@@ -149,22 +117,14 @@
             </div>
     
             <div class="final-prompt-section">
-                <label for="final-prompt">
-                    <span data-key="finalPromptLabel">Végleges prompt (angolul)</span>
-                    <button id="history-button" title="Előzmények"><i class="fa-solid fa-clock-rotate-left"></i></button>
-                </label>
+                <label for="final-prompt"><span data-key="finalPromptLabel">Végleges prompt (angolul)</span><button id="history-button" title="Előzmények"><i class="fa-solid fa-clock-rotate-left"></i></button></label>
                 <div id="final-prompt-container" class="final-prompt-container"></div>
                 <textarea id="final-prompt-hidden" style="display: none;"></textarea>
             </div>
     
             <div class="negative-prompt-section">
-                <label for="negative-prompt">
-                    <i class="fa-solid fa-ban"></i>
-                    <span data-key="negativePromptLabel">Negatív Prompt</span>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i>
-                    <button id="copy-negative-button" class="copy-small-btn" data-key-title="copyNegativeTooltip"><i class="fa-solid fa-copy"></i></button>
-                </label>
-                <textarea id="negative-prompt" rows="3" data-key="negativePromptPlaceholder" placeholder="pl. elmosódott, rossz minőségű, extra ujjak..."></textarea>
+                <label for="negative-prompt"><i class="fa-solid fa-ban"></i> <span data-key="negativePromptLabel">Negatív Prompt</span><i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i><button id="copy-negative-button" class="copy-small-btn" data-key-title="copyNegativeTooltip"><i class="fa-solid fa-copy"></i></button></label>
+                <textarea id="negative-prompt" rows="3" data-key="negativePromptPlaceholder" placeholder="..."></textarea>
             </div>
     
             <div class="button-group">
@@ -214,7 +174,6 @@
         <h2 data-key="historyModalTitle">Prompt Előzmények</h2>
         <div id="history-list"></div>
     </div>
-
     <div id="explainer-modal" class="modal hidden">
         <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
         <h2 id="explainer-modal-title"></h2>
@@ -229,6 +188,5 @@
    <script src="js/script.js"></script>
 
    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
-
 </body>
 </html>
