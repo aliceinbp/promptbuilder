@@ -744,7 +744,20 @@ body:not(.light-theme) .contact-form textarea {
     box-shadow: 0 0 10px rgba(244, 23, 252, 0.5); /* És itt a narancssárga "felvillanás" */
     transform: translateY(-2px); 
 }
-/* --- Új Generátor Stílusok --- */
+/* --- Végleges Generátor Stílusok --- */
+
+/* Fejléc gombok közötti felesleges térköz javítása */
+.header-icons-left {
+    gap: 15px; /* Fix érték a térközre */
+}
+
+/* Kisebb margó a fő szekciók között */
+main .prompt-section, 
+main .details-section,
+main .final-prompt-section,
+main .negative-prompt-section {
+    margin-top: 20px;
+}
 
 .details-section h3 {
     margin-bottom: 10px;
@@ -754,19 +767,19 @@ body:not(.light-theme) .contact-form textarea {
 }
 
 .details-section-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px; /* Térköz az elemek között */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
     margin-bottom: 20px;
 }
 
 .detail-subsection {
-    flex: 1; /* Az elemek egyenlően osztoznak a helyen */
-    min-width: 280px; /* Mobilon ne zsugorodjanak túl kicsire */
-    margin-top: 0; /* Levesszük a felesleges felső margót */
+    margin-top: 0;
 }
 
-/* Kisebb margó a fő szekciók között is */
-.prompt-section, .details-section {
-    margin-top: 20px;
+/* Choices.js legördülő menü javítása, hogy a szöveg ne legyen függőleges */
+.choices__list--dropdown .choices__item--choice {
+    word-break: break-word;
+    white-space: normal;
+    text-align: left;
 }
