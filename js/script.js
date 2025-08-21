@@ -38,15 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
     // ====================================================================
-    // ===== TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA (VÉGLEGES VERZIÓ) =====
+    // ===== TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA =====
     // ====================================================================
     const themeToggleButton = document.getElementById('theme-toggle');
     
-    // Külön funkció a Cusdis téma frissítésére, diagnosztikával
     function updateCusdisTheme(theme) {
         const cusdisFrame = document.querySelector('#cusdis_thread iframe');
         if (cusdisFrame) {
-            // Adunk egy 100ms-os apró késleltetést, hogy az iframe biztosan készen álljon a parancs fogadására.
             setTimeout(() => {
                 console.log(`[Prompt Lab] Téma beállítása a vendégkönyvben: ${theme}`);
                 cusdisFrame.contentWindow.postMessage({
@@ -59,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // A fő funkció, ami beállítja a témát az egész oldalon
     function applyTheme(theme) {
         const logo = document.getElementById('logo');
         if (theme === 'light') {
@@ -74,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCusdisTheme(theme === 'light' ? 'light' : 'dark');
     }
     
-    // Figyelő, ami megvárja a Cusdis iframe betöltődését
     function observeCusdis() {
         const cusdisContainer = document.getElementById('cusdis_thread');
         if (!cusdisContainer) return;
@@ -103,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ====================================================================
+    // ===== NYELVKEZELÉS =====
+    // ====================================================================
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
 
     window.setLanguage = function(lang) {
@@ -151,6 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
         langEn.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('en'); });
     }
 
+    // ====================================================================
+    // ===== MODÁLIS ABLAKOK ÁLTALÁNOS LOGIKÁJA =====
+    // ====================================================================
     const overlay = document.getElementById('modal-overlay');
     const infoModal = document.getElementById('info-modal');
     const infoButton = document.getElementById('info-button');
@@ -170,6 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ====================================================================
+    // ===== GENERÁTOR OLDAL SPECIFIKUS LOGIKA =====
+    // ====================================================================
     if (document.querySelector('.final-prompt-section')) {
         let currentManagedCategory = '';
         const textareas = {
@@ -194,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let promptHistory = [];
         let historyTimeout;
         let choiceInstances = {};
+
         if (finalPromptContainer && typeof Sortable !== 'undefined') {
             new Sortable(finalPromptContainer, { animation: 150, ghostClass: 'sortable-ghost' });
         }
@@ -435,6 +441,27 @@ document.addEventListener('DOMContentLoaded', function() {
             renderSavedPrompts();
             updateFinalPrompt();
         };
+
+        // ===== ÚJ PARAMÉTER LOGIKA KEZDETE =====
+        let selectedParameter = ''; // Eltároljuk a kiválasztott paramétert
+
+        const paramButtons = document.querySelectorAll('.param-btn');
+        if (paramButtons.length > 0) {
+            // Az "Alapértelmezett" gomb legyen az aktív kezdetben
+            const defaultButton = Array.from(paramButtons).find(btn => btn.dataset.param === '');
+            if(defaultButton) defaultButton.classList.add('active'); 
+
+            paramButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    paramButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    selectedParameter = button.dataset.param;
+                });
+            });
+        }
+        // ===== ÚJ PARAMÉTER LOGIKA VÉGE =====
+
+
         randomButton.addEventListener('click', generateRandomPrompt);
         clearAllButton.addEventListener('click', clearAllTextareas);
         savePromptButton.addEventListener('click', saveCurrentPrompt);
@@ -480,17 +507,27 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.values(textareas).forEach(textarea => {
             if(textarea) textarea.addEventListener('input', updateFinalPrompt)
         });
+
+        // ===== FRISSÍTETT MÁSOLÁS GOMB LOGIKA =====
         copyButton.addEventListener('click', function() {
             let textToCopy = getPromptTextFromTags();
             const negativeText = negativePromptTextarea.value.trim();
+            
             if (negativeText !== '') { textToCopy += ` --no ${negativeText}`; }
+            if (selectedParameter !== '') { textToCopy += ` ${selectedParameter}`; }
+
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const buttonTextSpan = this.querySelector('span') || this;
-                const originalText = buttonTextSpan.textContent;
+                const originalText = translations[currentLanguage].copyButton; // Itt a javítás, a fordításból vesszük
                 buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
-                setTimeout(() => { buttonTextSpan.textContent = originalText; }, 1500);
+                setTimeout(() => { 
+                    // Újra beállítjuk az eredeti fordított szöveget
+                    buttonTextSpan.textContent = translations[currentLanguage].copyButton; 
+                }, 1500);
             });
         });
+        // ===== FRISSÍTETT MÁSOLÁS GOMB LOGIKA VÉGE =====
+
         if (translateButton) {
             translateButton.addEventListener('click', async () => {
                 const buttonSpan = translateButton.querySelector('span') || translateButton;
@@ -561,6 +598,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
+    // ====================================================================
+    // ===== EGYÉB OLDALAK LOGIKÁJA (MŰVÉSZEK, BLOG, STB.) =====
+    // ====================================================================
+
     function initializeArtistCopyButtons() {
         document.querySelectorAll('.copy-artist-btn').forEach(button => {
             if (button.dataset.listenerAttached) return;
@@ -578,6 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
     const backToTopButton = document.getElementById('back-to-top');
     if (backToTopButton) {
         window.addEventListener('scroll', () => {
@@ -588,6 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
     const copyNegativeButton = document.getElementById('copy-negative-button');
     if (copyNegativeButton) {
         copyNegativeButton.addEventListener('click', () => {
@@ -603,67 +647,101 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    
     async function loadArtists() {
-    const container = document.querySelector('.artist-grid');
-    if (!container) return;
-
-    try {
-        const response = await fetch('/_data/artists.json');
-        const artists = await response.json();
-        container.innerHTML = ''; // Töröljük a korábbi tartalmat
-
-        // 1. Művész kártyák létrehozása
-        artists.forEach(artist => {
-            const card = document.createElement('div');
-            // Hozzáadjuk a kategóriát a kártyához egy data attribútummal
-            card.className = `artist-card`;
-            card.dataset.category = artist.category; 
-
-            const copyName = artist.copyName || artist.name;
-            card.innerHTML = `
-                <div class="artist-card-header">
-                    <h3>${artist.name}</h3>
-                    <button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip">
-                        <i class="fa-solid fa-copy"></i>
-                    </button>
-                </div>
-                <p data-key="${artist.dataKey}"></p>
-            `;
-            container.appendChild(card);
-        });
-
-        // 2. Szűrő logika beállítása
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const artistCards = document.querySelectorAll('.artist-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Aktív gomb stílusának beállítása
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                const selectedCategory = button.dataset.category;
-
-                // Kártyák szűrése
-                artistCards.forEach(card => {
-                    if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+        const container = document.querySelector('.artist-grid');
+        if (!container) return;
+    
+        try {
+            const response = await fetch('/_data/artists.json');
+            const artists = await response.json();
+            container.innerHTML = ''; // Töröljük a korábbi tartalmat
+    
+            // 1. Művész kártyák létrehozása
+            artists.forEach(artist => {
+                const card = document.createElement('div');
+                // Hozzáadjuk a kategóriát a kártyához egy data attribútummal
+                card.className = `artist-card`;
+                if(artist.category) card.dataset.category = artist.category; 
+    
+                const copyName = artist.copyName || artist.name;
+                card.innerHTML = `
+                    <div class="artist-card-header">
+                        <h3>${artist.name}</h3>
+                        <button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                    </div>
+                    <p data-key="${artist.dataKey}"></p>
+                `;
+                container.appendChild(card);
+            });
+    
+            // 2. Szűrő logika beállítása
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const artistCards = document.querySelectorAll('.artist-card');
+    
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Aktív gomb stílusának beállítása
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+    
+                    const selectedCategory = button.dataset.category;
+    
+                    // Kártyák szűrése
+                    artistCards.forEach(card => {
+                        if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
-        });
-
-        // 3. Utómunkálatok (gombok, fordítás)
-        initializeArtistCopyButtons();
-        window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
-        
-    } catch (error) {
-        console.error('Hiba a művészek betöltésekor:', error);
-        container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
+    
+            // 3. Utómunkálatok (gombok, fordítás)
+            initializeArtistCopyButtons();
+            window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
+            
+        } catch (error) {
+            console.error('Hiba a művészek betöltésekor:', error);
+            container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
+        }
     }
-}
+    
+    async function loadGallery() {
+        const container = document.getElementById('gallery-section');
+        if (!container) return;
+        try {
+            const response = await fetch('/_data/gallery.json');
+            const galleryData = await response.json();
+            container.innerHTML = '';
+            const categoryMap = { fantasy: 'galleryCatFantasy', dark: 'galleryCatDark', worlds: 'galleryCatWorlds', shards: 'galleryCatShards' };
+            for (const categoryKey in galleryData) {
+                const images = galleryData[categoryKey];
+                const titleKey = categoryMap[categoryKey];
+                const title = document.createElement('h2');
+                title.className = 'gallery-category-title';
+                title.innerHTML = `<span data-key="${titleKey}"></span>`;
+                container.appendChild(title);
+                const grid = document.createElement('div');
+                grid.className = 'gallery-grid';
+                images.forEach(image => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `<a href="src/gallery-images/${image.src}" target="_blank"><img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy"></a>`;
+                    grid.appendChild(item);
+                });
+                container.appendChild(grid);
+            }
+            window.setLanguage(currentLanguage);
+        } catch (error) {
+            console.error('Hiba a galéria betöltésekor:', error);
+            container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
+        }
+    }
+
     async function loadDailyPrompt() {
         const container = document.getElementById('daily-prompt-section');
         if (!container) return;
@@ -702,6 +780,7 @@ document.addEventListener('DOMContentLoaded', function() {
             promptTextElement.textContent = "A nap promptja jelenleg nem érhető el.";
         }
     }
+
     const markdownConverter = typeof showdown !== 'undefined' ? new showdown.Converter() : null;
     function parseFrontmatter(markdown) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
@@ -716,6 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return { frontmatter: {}, content: content };
         }
     }
+
     async function loadBlogPosts() {
         const container = document.getElementById('blog-posts-container');
         if (!container || !markdownConverter) return;
@@ -762,6 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = `<p>${translations[currentLanguage].blogError || 'Hiba a bejegyzések betöltése közben.'}</p>`;
         }
     }
+
     async function loadSinglePost() {
         const container = document.getElementById('post-content-container');
         if (!container || !markdownConverter) return;
@@ -788,6 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = '<p>A bejegyzés nem tölthető be.</p>';
         }
     }
+
     function displayDailyQuote() {
         const quoteContainer = document.getElementById('daily-quote-container');
         if (!quoteContainer) return;
@@ -835,23 +917,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- OLDAL INDÍTÁSA ---
-    // A legelső témabeállítás most már az observer-en keresztül történik, amikor betölt a Cusdis.
-    // De a gombra kattintáshoz és az oldal többi részéhez továbbra is kell.
     const initialTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(initialTheme);
-
     window.setLanguage(currentLanguage);
     loadArtists();
     loadGallery();
     loadDailyPrompt();
-
     if (document.getElementById('blog-posts-container')) {
         loadBlogPosts();
     }
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
-    
     displayDailyQuote();
-    observeCusdis(); // A Cusdis figyelő elindítása
+    observeCusdis();
 });

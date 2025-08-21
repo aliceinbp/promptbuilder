@@ -115,6 +115,15 @@ const translations = {
             modernistRebel: { title: "A Modernista Lázadó", description: "Nem kötsz kompromisszumot. A te világod a merész színek, az éles kontrasztok és a modern kor lüktetése. Legyen az pop-art, cyberpunk vagy absztrakt, a lényeg a vizuális erő és a szabályok felrúgása. A te művészeted egy statement.", artists: "Andy Warhol, Josan 'Deathburger' Gonzalez, Synthwave aesthetic" },
             masterOfLight: { title: "A Fény Mestere", description: "Számodra a hangulat a minden. Mesterien bánsz a fényekkel és az árnyékokkal, hogy érzelmeket kelts. Képeid gyakran filmszerűek, festőiek, és egy-egy elkapott, meghitt pillanatot örökítenek meg. A te vásznad a levegő és a fény.", artists: "Claude Monet, Atey Ghailan, Cinematic Lighting" }
         },
+// GENERÁTOR PARAMÉTEREK
+        paramTitle: "Paraméterek (opcionális)",
+        paramAR: "Képarány:",
+        paramARDefault: "Alapértelmezett",
+        paramARSquare: "1:1 (Négyzet)",
+        paramARLandscape: "16:9 (Fekvő)",
+        paramARPortrait: "9:16 (Álló)",
+
+        styleArtistLinkTooltip: "Művész Adatbázis megnyitása új lapon",
 
         // MŰVÉSZ LEÍRÁSOK
         artistDescToriyama: "Dinamikus manga stílus a Dragon Ball alkotójától, tiszta vonalakkal és élénk akciójelenetekkel.",
@@ -293,6 +302,15 @@ const translations = {
             modernistRebel: { title: "The Modernist Rebel", description: "You don't compromise. Your world is one of bold colors, sharp contrasts, and the pulse of the modern age. Whether it's pop art, cyberpunk, or abstract, the essence is visual impact and breaking the rules. Your art is a statement.", artists: "Andy Warhol, Josan 'Deathburger' Gonzalez, Synthwave aesthetic" },
             masterOfLight: { title: "The Master of Light", description: "For you, mood is everything. You masterfully handle light and shadow to evoke emotion. Your images are often cinematic, painterly, and capture a single, intimate moment in time. Your canvas is the air and the light itself.", artists: "Claude Monet, Atey Ghailan, Cinematic Lighting" }
         },
+// GENERATOR PARAMETERS
+        paramTitle: "Parameters (optional)",
+        paramAR: "Aspect Ratio:",
+        paramARDefault: "Default",
+        paramARSquare: "1:1 (Square)",
+        paramARLandscape: "16:9 (Landscape)",
+        paramARPortrait: "9:16 (Portrait)",
+
+        styleArtistLinkTooltip: "Open Artist Database in a new tab",
 
         // ARTIST DESCRIPTIONS
         artistDescToriyama: "Dynamic manga style from the creator of Dragon Ball, with clean lines and vibrant action scenes.",
@@ -353,4 +371,5 @@ const translations = {
         artistDescCushart: "Dynamic, anime-inspired character design and illustrations, an expert in movement and form.",
         artistDescGonzalez: "Detailed, neon-drenched cyberpunk illustrations with influences from Moebius and 80s sci-fi."
     }
+    
 };

@@ -102,7 +102,13 @@
             </div>
     
             <div class="prompt-section">
-                <label for="style-select"><i class="fa-solid fa-palette"></i> <span data-key="styleLabel">Stílus:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i></label>
+                <label for="style-select">
+    <i class="fa-solid fa-palette"></i> 
+    <span data-key="styleLabel">Stílus:</span>
+    <a href="artists.html" class="header-icon-link" data-key-title="styleArtistLinkTooltip" target="_blank"><i class="fa-solid fa-book-open-reader"></i></a>
+    <i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i>
+    <i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i>
+</label>
                 <div class="input-group">
                     <select id="style-select"></select>
                     <button class="add-button" data-category="style">Hozzáad</button>
@@ -128,6 +134,18 @@
             <div class="negative-prompt-section">
                 <label for="negative-prompt"><i class="fa-solid fa-ban"></i> <span data-key="negativePromptLabel">Negatív Prompt</span><i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i><button id="copy-negative-button" class="copy-small-btn" data-key-title="copyNegativeTooltip"><i class="fa-solid fa-copy"></i></button></label>
                 <textarea id="negative-prompt" rows="3" data-key="negativePromptPlaceholder" placeholder="..."></textarea>
+            </div>
+            </div> <div class="parameters-section">
+                <label><i class="fa-solid fa-ruler-combined"></i> <span data-key="paramTitle">Paraméterek (opcionális)</span></label>
+                <div class="param-group">
+                    <span class="param-label" data-key="paramAR">Képarány:</span>
+                    <div class="param-buttons">
+                        <button class="param-btn" data-param=""><span data-key="paramARDefault">Alapértelmezett</span></button>
+                        <button class="param-btn" data-param="--ar 1:1"><span data-key="paramARSquare">1:1 (Négyzet)</span></button>
+                        <button class="param-btn" data-param="--ar 16:9"><span data-key="paramARLandscape">16:9 (Fekvő)</span></button>
+                        <button class="param-btn" data-param="--ar 9:16"><span data-key="paramARPortrait">9:16 (Álló)</span></button>
+                    </div>
+                </div>
             </div>
     
             <div class="button-group">
