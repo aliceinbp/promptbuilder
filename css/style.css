@@ -855,10 +855,10 @@ main > .prompt-section-group {
 
 body.light-theme {
   /* A "túl fehér" háttér helyett egy finom szürkéskék */
-  --main-bg-color: #f0f4f8; 
+  --main-bg-color: #90a6bc90; 
   
   /* A kereteken belüli tartalom háttere egy törtfehér árnyalat */
-  --content-bg-color: #fdfdfd; 
+  --content-bg-color: #f1f2f3b8; 
   
   /* Az alapértelmezett szövegszín sötétebb a jobb olvashatóságért */
   --text-color: #1a1a2e;
