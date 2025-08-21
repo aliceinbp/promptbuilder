@@ -200,6 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let historyTimeout;
         let choiceInstances = {};
 
+        // ===== ÚJ: Paraméter változó inicializálása =====
+        let selectedParameter = ''; 
+
         if (finalPromptContainer && typeof Sortable !== 'undefined') {
             new Sortable(finalPromptContainer, { animation: 150, ghostClass: 'sortable-ghost' });
         }
@@ -442,26 +445,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updateFinalPrompt();
         };
 
-        // ===== ÚJ PARAMÉTER LOGIKA KEZDETE =====
-        let selectedParameter = ''; // Eltároljuk a kiválasztott paramétert
-
-        const paramButtons = document.querySelectorAll('.param-btn');
-        if (paramButtons.length > 0) {
-            // Az "Alapértelmezett" gomb legyen az aktív kezdetben
-            const defaultButton = Array.from(paramButtons).find(btn => btn.dataset.param === '');
-            if(defaultButton) defaultButton.classList.add('active'); 
-
-            paramButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    paramButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    selectedParameter = button.dataset.param;
-                });
-            });
-        }
-        // ===== ÚJ PARAMÉTER LOGIKA VÉGE =====
-
-
         randomButton.addEventListener('click', generateRandomPrompt);
         clearAllButton.addEventListener('click', clearAllTextareas);
         savePromptButton.addEventListener('click', saveCurrentPrompt);
@@ -508,6 +491,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if(textarea) textarea.addEventListener('input', updateFinalPrompt)
         });
 
+        // ===== ÚJ PARAMÉTER LOGIKA =====
+        const paramButtons = document.querySelectorAll('.param-btn');
+        if (paramButtons.length > 0) {
+            const defaultButton = Array.from(paramButtons).find(btn => btn.dataset.param === '');
+            if(defaultButton) defaultButton.classList.add('active'); 
+
+            paramButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    paramButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    selectedParameter = button.dataset.param;
+                });
+            });
+        }
+        // ===== ÚJ PARAMÉTER LOGIKA VÉGE =====
+
         // ===== FRISSÍTETT MÁSOLÁS GOMB LOGIKA =====
         copyButton.addEventListener('click', function() {
             let textToCopy = getPromptTextFromTags();
@@ -518,10 +517,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const buttonTextSpan = this.querySelector('span') || this;
-                const originalText = translations[currentLanguage].copyButton; // Itt a javítás, a fordításból vesszük
+                const originalText = translations[currentLanguage].copyButton;
                 buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
                 setTimeout(() => { 
-                    // Újra beállítjuk az eredeti fordított szöveget
                     buttonTextSpan.textContent = translations[currentLanguage].copyButton; 
                 }, 1500);
             });
@@ -660,7 +658,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // 1. Művész kártyák létrehozása
             artists.forEach(artist => {
                 const card = document.createElement('div');
-                // Hozzáadjuk a kategóriát a kártyához egy data attribútummal
                 card.className = `artist-card`;
                 if(artist.category) card.dataset.category = artist.category; 
     
@@ -683,13 +680,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Aktív gomb stílusának beállítása
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
     
                     const selectedCategory = button.dataset.category;
     
-                    // Kártyák szűrése
                     artistCards.forEach(card => {
                         if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
                             card.style.display = 'block';
