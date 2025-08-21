@@ -1002,11 +1002,11 @@ body.light-theme .choices__inner {
 .header-icon-link:hover {
     color: var(--accent-color-1);
 }
-/* ===== JAVÍTÁS: Paraméterek szekció ===== */
+/* ===== JAVÍTÁS: Paraméterek szekció (Végleges) ===== */
 
 /* A címke színét beállítjuk a többi címkével megegyezőre */
 .parameters-section > label {
-    color: var(--text-color);
+    color: var(--text-color) !important; 
     font-weight: bold;
     font-size: 1.1em;
     display: block;
@@ -1015,7 +1015,7 @@ body.light-theme .choices__inner {
 
 /* Az aktív gomb stílusát definiáljuk, hogy látható legyen a kiválasztás */
 .param-btn.active {
-    background-color: var(--accent-color-1);
-    color: white;
-    border-color: var(--accent-color-1);
+    background-color: var(--accent-color-1) !important;
+    color: white !important;
+    border-color: var(--accent-color-1) !important;
 }
