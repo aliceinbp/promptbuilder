@@ -744,59 +744,66 @@ body:not(.light-theme) .contact-form textarea {
     box-shadow: 0 0 10px rgba(244, 23, 252, 0.5); /* És itt a narancssárga "felvillanás" */
     transform: translateY(-2px); 
 }
-/* --- Végleges, letisztult Generátor Stílusok --- */
+/* --- VÉGLEGES GENERÁTOR JAVÍTÁS --- */
 
 /* Fejléc gombok közötti felesleges térköz javítása */
 .header-icons-left {
     gap: 15px;
 }
 
-/* Kisebb margó a fő szekciók között */
-main .prompt-section, 
-main .prompt-section-group {
+/* Általános térköz a fő szekciók között */
+main > .prompt-section, 
+main > .prompt-section-group {
     margin-top: 25px;
 }
 
-/* A "Részletek" doboz stílusai */
+/* A "Részletek" doboz konténere */
 .prompt-section-group {
-    background-color: transparent; /* Eltávolítja a háttérszínt */
+    background-color: transparent;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 20px 20px 10px 20px; /* Csökkentett alsó belső margó */
-    margin-top: 30px;
+    padding: 20px 20px 15px 20px; 
 }
 
+/* A "Részletek" doboz címe és az új ikon */
 .prompt-section-group h3 {
     margin-top: 0;
-    margin-bottom: 20px; /* Nagyobb térköz a cím és az első elem között */
+    margin-bottom: 20px;
     margin-left: 0;
     font-size: 1.1em;
     color: var(--accent-color);
-    display: flex; /* Ikon és szöveg igazításához */
+    display: flex;
     align-items: center;
 }
-
 .prompt-section-group h3 i {
-    margin-right: 10px; /* Térköz az ikon és a szöveg között */
+    margin-right: 10px;
+}
+
+/* ITT A LÉNYEG: Felülírjuk az általános .prompt-section stílust a dobozon belül */
+.prompt-section-group .prompt-section {
+    padding: 0; /* Levesszük a belső távolságot */
+    margin-top: 0;
+    background-color: transparent; /* Levesszük a hátteret */
+    border: none; /* Levesszük a keretet */
+    border-radius: 0;
 }
 
 /* Kisebb térköz a "Részletek" al-szekciói között */
 .prompt-section-group .detail-subsection {
-    margin-top: 0;
-    padding-bottom: 5px; /* Kisebb belső térköz */
-    margin-bottom: 10px; /* Kisebb alsó margó */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
     border-bottom: 1px solid var(--divider-color);
 }
 .prompt-section-group .detail-subsection:last-of-type {
     border-bottom: none;
-    padding-bottom: 0;
     margin-bottom: 0;
+    padding-bottom: 0;
 }
 .prompt-section-group .prompt-textarea {
     margin-top: 20px;
 }
 
-/* Choices.js legördülő menü javítása, hogy a szöveg ne legyen függőleges */
+/* Choices.js legördülő menü javítása */
 .choices__list--dropdown .choices__item--choice {
     word-break: break-word;
     white-space: normal;
