@@ -112,21 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const key = elem.dataset.key;
             if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
                 const text = translations[lang][key];
-                if (elem.placeholder !== undefined) {
-                    elem.placeholder = text;
+                
+                const target = elem.tagName === 'A' || elem.tagName === 'BUTTON' ? (elem.querySelector('span') || elem) : elem;
+
+                if (target.placeholder !== undefined) {
+                    target.placeholder = text;
                 } else {
-                    // Módosítás: Csak bizonyos elemek teljes tartalmát cseréljük, hogy az ikonok megmaradjanak
-                    if (elem.tagName === 'SPAN' || elem.tagName === 'P' || elem.tagName === 'H1' || elem.tagName === 'H2' || elem.tagName === 'H3' || elem.tagName === 'BUTTON' || elem.tagName === 'A') {
-                       // Ha van benne span, csak azt cseréljük
-                       const innerSpan = elem.querySelector('span[data-key]');
-                       if (innerSpan) {
-                           innerSpan.textContent = text;
-                       } else {
-                           elem.textContent = text;
-                       }
-                    } else {
-                         elem.textContent = text;
-                    }
+                    target.textContent = text;
                 }
             }
         });
@@ -145,8 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
             langEn.classList.toggle('active', lang === 'en');
         }
 
-        if (document.getElementById('translate-button')) {
-            document.getElementById('translate-button').classList.toggle('hidden', lang !== 'hu');
+        const translateButton = document.getElementById('translate-button');
+        if (translateButton) {
+            translateButton.style.display = lang === 'hu' ? 'flex' : 'none';
         }
 
         if (typeof initializeGenerator === 'function') {
@@ -184,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ====================================================================
-    // ===== GENERÁTOR OLDAL SPECIFIKUS LOGIKA (ÁTÍRT VERZIÓ) =====
+    // ===== GENERÁTOR OLDAL SPECIFIKUS LOGIKA =====
     // ====================================================================
     if (document.querySelector('.final-prompt-section')) {
         let currentManagedCategory = '';
@@ -218,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             new Sortable(finalPromptContainer, { 
                 animation: 150, 
                 ghostClass: 'sortable-ghost',
-                onEnd: updateFinalPrompt
+                onEnd: updateFinalPrompt 
             });
         }
         
@@ -615,7 +608,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('mainSubject-container').scrollIntoView({ behavior: 'smooth' });
             });
         
-            // Kezdeti feltöltés
             Object.keys(resultDivs).forEach(key => reroll(key));
         }
 
@@ -672,17 +664,62 @@ document.addEventListener('DOMContentLoaded', function() {
             if (selectedParameter !== '') { textToCopy += ` ${selectedParameter}`; }
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const buttonTextSpan = this.querySelector('span') || this;
-                const originalText = buttonTextSpan.textContent;
-                buttonTextSpan.textContent = translations[currentLanguage].copyButtonSuccess;
+                const buttonTextSpan = this.querySelector('span');
+                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
+                this.innerHTML = `<i class="fa-solid fa-check"></i> ${translations[currentLanguage].copyButtonSuccess}`;
                 setTimeout(() => { 
-                    buttonTextSpan.textContent = translations[currentLanguage].copyButton; 
+                    this.innerHTML = `<i class="fa-solid fa-copy"></i> <span data-key="copyButton">${translations[currentLanguage].copyButton}</span>`;
                 }, 1500);
             });
         });
 
         if (translateButton) {
-            translateButton.style.display = 'none'; // A fordítás bonyolultabb a címkékkel, ideiglenesen kikapcsolva
+            translateButton.addEventListener('click', async () => {
+                const originalIcon = translateButton.innerHTML;
+                translateButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                translateButton.disabled = true;
+
+                try {
+                    for (const category in tagContainers) {
+                        const container = tagContainers[category];
+                        if (container) {
+                            const tags = Array.from(container.querySelectorAll('.prompt-input-tag'));
+                            const textsToTranslate = tags.map(tag => tag.firstChild.textContent.trim());
+
+                            if (textsToTranslate.length > 0) {
+                                const combinedText = textsToTranslate.join('|||');
+                                
+                                const response = await fetch('/.netlify/functions/translate', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ text: combinedText, target_lang: 'EN-US' })
+                                });
+
+                                if (!response.ok) {
+                                    const errorData = await response.json();
+                                    throw new Error(errorData.details || 'A fordítási szolgáltatás hibát adott.');
+                                }
+
+                                const data = await response.json();
+                                const translatedTexts = data.translatedText.split('|||');
+
+                                tags.forEach((tag, index) => {
+                                    if (translatedTexts[index]) {
+                                        tag.firstChild.textContent = translatedTexts[index].trim();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    updateFinalPrompt();
+                } catch (error) {
+                    console.error('Fordítási hiba:', error);
+                    alert('Hiba történt a fordítás során: ' + error.message);
+                } finally {
+                    translateButton.innerHTML = originalIcon;
+                    translateButton.disabled = false;
+                }
+            });
         }
         
         if (historyButton && historyModal) {

@@ -68,6 +68,7 @@ const translations = {
         
         // TÖBBI OLDAL
         galleryTitle: "Galéria",
+        translateButtonTooltip: "Minden kategória fordítása angolra",
         galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
         linksTitle: "Ajánlott AI Képalkotó Oldalak",
         visitButton: "Oldal Megnyitása",
@@ -262,6 +263,7 @@ const translations = {
 
         // OTHER PAGES
         galleryTitle: "Gallery",
+        translateButtonTooltip: "Translate all categories to English",
         galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic",
         galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",
         linksTitle: "Recommended AI Image Generators",
