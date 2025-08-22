@@ -1308,3 +1308,22 @@ body.light-theme .gradient-border-box {
     transform: translate(-50%, -50%) scale(1);
     visibility: visible;
 }
+/* ===== Paraméterek Szekció Javítása ===== */
+
+/* A "Paraméterek (opcionális)" címke színének javítása */
+.parameters-section > label {
+    color: var(--color-primary-light);
+}
+
+/* A "Képarány:" felirat színének javítása */
+.param-label {
+    color: var(--color-text-secondary);
+}
+
+/* Az aktív gomb kinézetének javítása, hogy egyértelmű legyen */
+.param-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverted);
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 8px var(--color-shadow);
+}
