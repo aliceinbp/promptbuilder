@@ -1033,3 +1033,44 @@ body.light-theme .choices__inner {
     transform: scale(1.1); /* Finoman megnagyobbodik */
     text-shadow: 0 0 8px var(--color-primary-accent); /* EZ ADJA A NEON RAGYOGÁST! */
 }
+/* ===== Navigációs Menü Optimalizálása ===== */
+#main-nav {
+    gap: 10px; /* Csökkenti a menüpontok közötti vízszintes távolságot */
+}
+/* ===== Daily Artist Section Styles ===== */
+#daily-artist-section {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border-accent);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 40px auto;
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 0 15px var(--color-shadow);
+}
+
+#daily-artist-section h2 {
+    margin-top: 0;
+    font-family: 'Pacifico', cursive;
+    color: var(--color-primary-light);
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#daily-artist-name {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--color-text-main);
+    font-size: 1.5em;
+}
+
+#daily-artist-desc {
+    font-size: 1em;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    min-height: 40px; /* Megakadályozza az ugrálást betöltéskor */
+    margin-bottom: 25px;
+}

@@ -776,6 +776,60 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    async function loadDailyArtist() {
+        const container = document.getElementById('daily-artist-section');
+        if (!container) return;
+    
+        const nameElement = document.getElementById('daily-artist-name');
+        const descElement = document.getElementById('daily-artist-desc');
+    
+        try {
+            const response = await fetch('/_data/artists.json');
+            const artists = await response.json();
+    
+            if (artists.length === 0) {
+                nameElement.textContent = "Nincsenek elérhető művészek.";
+                return;
+            }
+    
+            const now = new Date();
+            const startOfYear = new Date(now.getFullYear(), 0, 0);
+            const diff = now - startOfYear;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            const artistIndex = (dayOfYear - 1) % artists.length;
+            
+            const selectedArtist = artists[artistIndex];
+            
+            // A leírás beállítása a nyelvváltó függvényen keresztül
+            const setArtistDescription = () => {
+                const lang = localStorage.getItem('preferredLanguage') || 'en';
+                nameElement.textContent = selectedArtist.name;
+                if (translations[lang] && translations[lang][selectedArtist.dataKey]) {
+                    descElement.textContent = translations[lang][selectedArtist.dataKey];
+                }
+            };
+    
+            setArtistDescription(); // Első beállítás
+    
+            // A nyelvváltó függvény kiterjesztése, hogy ezt is frissítse
+            if (!window.artistUpdaterAttached) {
+                const originalSetLanguage = window.setLanguage;
+                window.setLanguage = function(lang, ...args) {
+                    originalSetLanguage.apply(this, [lang, ...args]);
+                    if (document.getElementById('daily-artist-section')) {
+                         setArtistDescription();
+                    }
+                }
+                window.artistUpdaterAttached = true;
+            }
+    
+        } catch (error) {
+            console.error("Hiba a nap művészének betöltésekor:", error);
+            nameElement.textContent = "A nap művésze jelenleg nem érhető el.";
+        }
+    }
+
     const markdownConverter = typeof showdown !== 'undefined' ? new showdown.Converter() : null;
     function parseFrontmatter(markdown) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
@@ -954,6 +1008,7 @@ document.head.appendChild(schemaScript);
     if (document.getElementById('post-content-container')) {
         loadSinglePost();
     }
+    loadDailyArtist();
     displayDailyQuote();
     observeCusdis();
 });

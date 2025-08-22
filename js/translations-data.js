@@ -13,7 +13,9 @@ const translations = {
         featuredTitle: "Ízelítő a Galériából",
         dailyPromptTitle: "A Nap Promptja",
         dailyPromptCopySuccess: "Nap promptja másolva!",
-        chatTitle: "Vendégkönyv / Chat",
+        chatTitle: "Vendégkönyv",
+        dailyArtistTitle: "A Nap Művésze",
+        dailyArtistLink: "Irány a Művészek!",
 
         // GENERÁTOR
         mainSubjectLabel: "Fő téma:",
@@ -199,7 +201,9 @@ const translations = {
         featuredTitle: "Featured from the Gallery",
         dailyPromptTitle: "Prompt of the Day",
         dailyPromptCopySuccess: "Prompt of the Day copied!",
-        chatTitle: "Guestbook / Chat",
+        chatTitle: "Guestbook",
+        dailyArtistTitle: "Artist of the Day",
+        dailyArtistLink: "Go to Artists!",
 
         // GENERATOR
         mainSubjectLabel: "Main Subject:",
