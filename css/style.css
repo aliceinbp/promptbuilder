@@ -1327,3 +1327,36 @@ body.light-theme .gradient-border-box {
     border-color: var(--color-primary-light);
     box-shadow: 0 0 8px var(--color-shadow);
 }
+/* ===== Kvíz CTA Banner (Művészek oldal) ===== */
+.quiz-cta-banner {
+    background-color: var(--color-surface-alt);
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Mobilon egymás alá kerül */
+    gap: 15px;
+    border: 1px solid var(--color-border-accent);
+}
+
+.quiz-cta-banner h3 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif; /* Nem a Pacifico, hogy ne legyen túl harsány */
+    font-weight: bold;
+    color: var(--color-text-main);
+    font-size: 1.2em;
+}
+
+.quiz-cta-banner .cta-button-small {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverted);
+    font-weight: bold;
+    padding: 10px 20px;
+    white-space: nowrap; /* Ne törjön két sorba a gomb szövege */
+}
+
+.quiz-cta-banner .cta-button-small:hover {
+    background-color: var(--color-primary-light);
+}

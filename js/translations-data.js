@@ -68,6 +68,8 @@ const translations = {
         
         // TÖBBI OLDAL
         galleryTitle: "Galéria",
+        quizCtaTitle: "Bizonytalan vagy a stílusodban?",
+        quizCtaButton: "Töltsd ki a Stílus Kvízt!",
         finalPromptPlaceholder: "Az alkotóelemekből összeállított varázsigéd itt fog megjelenni...",
         translateButtonTooltip: "Minden kategória fordítása angolra",
         galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
@@ -264,6 +266,8 @@ const translations = {
 
         // OTHER PAGES
         galleryTitle: "Gallery",
+        quizCtaTitle: "Unsure about your style?",
+        quizCtaButton: "Take the Style Quiz!",
         finalPromptPlaceholder: "Your assembled magic spell will appear here...",
         translateButtonTooltip: "Translate all categories to English",
         galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic",
