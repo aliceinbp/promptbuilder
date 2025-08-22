@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
                 const text = translations[lang][key];
                 
-                const target = elem.tagName === 'A' || elem.tagName === 'BUTTON' ? (elem.querySelector('span') || elem) : elem;
+                const target = elem.querySelector('span[data-key]') || elem;
 
                 if (target.placeholder !== undefined) {
                     target.placeholder = text;
@@ -136,11 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
             langHu.classList.toggle('active', lang === 'hu');
             langEn.classList.toggle('active', lang === 'en');
         }
-
+        
         const translateButton = document.getElementById('translate-button');
         if (translateButton) {
             translateButton.style.display = lang === 'hu' ? 'flex' : 'none';
         }
+
 
         if (typeof initializeGenerator === 'function') {
             initializeGenerator();
@@ -664,11 +665,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (selectedParameter !== '') { textToCopy += ` ${selectedParameter}`; }
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const buttonTextSpan = this.querySelector('span');
-                const originalText = buttonTextSpan ? buttonTextSpan.textContent : this.textContent;
-                this.innerHTML = `<i class="fa-solid fa-check"></i> ${translations[currentLanguage].copyButtonSuccess}`;
+                const originalContent = this.innerHTML;
+                this.innerHTML = `<i class="fa-solid fa-check"></i> <span data-key="copyButtonSuccess">${translations[currentLanguage].copyButtonSuccess}</span>`;
                 setTimeout(() => { 
-                    this.innerHTML = `<i class="fa-solid fa-copy"></i> <span data-key="copyButton">${translations[currentLanguage].copyButton}</span>`;
+                    this.innerHTML = `<i class="fa-solid fa-copy"></i> <span data-key="copyButton">${translations[currentLanguage].copyButton}</span>`; 
                 }, 1500);
             });
         });
@@ -733,7 +733,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             historyList.addEventListener('click', (e) => {
                 if (e.target.classList.contains('history-item')) {
-                    // Ezt a funkciót újra kellene gondolni a címkés rendszerrel.
+                    // This would need to be re-implemented to work with tags
                     overlay.classList.add('hidden');
                     historyModal.classList.add('hidden');
                 }
