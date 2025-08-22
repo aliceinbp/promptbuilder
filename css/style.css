@@ -1019,3 +1019,17 @@ body.light-theme .choices__inner {
     color: white !important;
     border-color: var(--accent-color-1) !important;
 }
+/* ===== Navigációs Menü Ikonok Stílusa ===== */
+
+#main-nav a i {
+    margin-right: 8px; /* Egy kis térköz az ikon és a szöveg között */
+    color: var(--color-primary-light); /* Az ikon színe illeszkedik a lila témához */
+    font-size: 0.9em; /* Egy picit kisebb, hogy ne legyen tolakodó */
+    transition: all 0.3s ease; /* Finom átmenet minden változásra */
+}
+
+/* Lebegő (hover) effektus: az ikon elkezd ragyogni */
+#main-nav a:hover i {
+    transform: scale(1.1); /* Finoman megnagyobbodik */
+    text-shadow: 0 0 8px var(--color-primary-accent); /* EZ ADJA A NEON RAGYOGÁST! */
+}
