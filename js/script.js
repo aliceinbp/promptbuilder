@@ -289,7 +289,9 @@ document.addEventListener('DOMContentLoaded', function() {
         function updateFinalPrompt() {
             if (!finalPromptContainer) return;
 
-            finalPromptContainer.innerHTML = '';
+            const oldTags = finalPromptContainer.querySelectorAll('.prompt-tag');
+            oldTags.forEach(tag => tag.remove());
+
             const allParts = [];
             const categoryOrder = ['mainSubject', 'details', 'style', 'extra'];
 
@@ -313,6 +315,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const finalPromptText = getPromptTextFromTags(finalPromptContainer);
             finalPromptHiddenTextarea.value = finalPromptText;
+            
+            const placeholder = finalPromptContainer.querySelector('.placeholder-text');
+            if (placeholder) {
+                placeholder.style.display = allParts.length > 0 ? 'none' : 'flex';
+            }
 
             clearTimeout(historyTimeout);
             historyTimeout = setTimeout(() => {
@@ -484,11 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  renderSavedPrompts();
              }
         }
-// A placeholder szöveg elrejtése/megjelenítése
-    const placeholder = finalPromptContainer.querySelector('.placeholder-text');
-    if (placeholder) {
-        placeholder.style.display = allParts.length > 0 ? 'none' : 'flex';
-    }
+
         function saveToHistory(prompt) {
             if (!prompt || prompt === promptHistory[0]) return;
             promptHistory.unshift(prompt);
@@ -672,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const originalContent = this.innerHTML;
                 this.innerHTML = `<i class="fa-solid fa-check"></i> <span data-key="copyButtonSuccess">${translations[currentLanguage].copyButtonSuccess}</span>`;
                 setTimeout(() => { 
-                    this.innerHTML = `<i class="fa-solid fa-copy"></i> <span data-key="copyButton">${translations[currentLanguage].copyButton}</span>`; 
+                    this.innerHTML = originalContent; 
                 }, 1500);
             });
         });
