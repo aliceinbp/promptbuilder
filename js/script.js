@@ -858,6 +858,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
             const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             document.title = `${title} - Prompt Lab Blog`;
+            const metaDescriptionTag = document.querySelector('meta[name="description"]');
+if (metaDescriptionTag) {
+    const excerpt = bodyHtml.replace(/<[^>]*>?/gm, '').substring(0, 155); // Létrehoz egy 155 karakteres kivonatot a szövegből
+    metaDescriptionTag.setAttribute('content', excerpt);
+}
             container.innerHTML = `<div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div><img src="${frontmatter.image}" alt="${title}" class="post-featured-image"><div class="post-body">${bodyHtml}</div>`;
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
