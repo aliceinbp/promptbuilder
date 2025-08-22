@@ -1067,3 +1067,44 @@ body.light-theme .choices__inner {
     align-items: center;
     gap: 10px;
 }
+/* ===== Interaktív Prompt Címkék Stílusa ===== */
+.tag-container {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    min-height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.prompt-input-tag {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverted);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+}
+
+.delete-tag {
+    background: none;
+    border: none;
+    color: var(--color-text-inverted);
+    opacity: 0.7;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.delete-tag:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
