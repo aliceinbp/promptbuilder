@@ -1108,3 +1108,81 @@ body.light-theme .choices__inner {
     opacity: 1;
     transform: scale(1.2);
 }
+/* ===== Stílus Keverő Szekció ===== */
+#style-mixer-section {
+    background-color: var(--color-surface-alt);
+    border: 1px dashed var(--color-border-accent);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+#style-mixer-section h2 {
+    margin-top: 0;
+    font-family: 'Pacifico', cursive;
+    color: var(--color-primary-light);
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mixer-columns {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Mobilon egymás alá kerülnek */
+}
+
+.mixer-column {
+    flex: 1;
+    min-width: 180px; /* Mobilon ne legyen túl keskeny */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mixer-column h3 {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+.mixer-result {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    flex-grow: 1;
+}
+
+.reroll-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-text-subtle);
+    color: var(--color-text-subtle);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reroll-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+#apply-mixer-btn {
+    width: 100%;
+    padding: 12px;
+}

@@ -89,6 +89,36 @@
         <button id="clear-all-button"><i class="fa-solid fa-trash-can"></i> <span data-key="clearAllButton">Mindent Töröl</span></button>
     </div>
 
+    <section id="style-mixer-section">
+                <h2><i class="fa-solid fa-shuffle"></i> <span data-key="mixerTitle">Stílus Keverő</span></h2>
+                <div class="mixer-columns">
+                    <div class="mixer-column">
+                        <h3 data-key="mixerSubject">Téma</h3>
+                        <div class="mixer-result" id="mixer-result-subject">...</div>
+                        <button class="reroll-btn" data-category="mainSubject" data-target="mixer-result-subject">
+                            <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
+                        </button>
+                    </div>
+                    <div class="mixer-column">
+                        <h3 data-key="mixerStyle">Stílus</h3>
+                        <div class="mixer-result" id="mixer-result-style">...</div>
+                        <button class="reroll-btn" data-category="style" data-target="mixer-result-style">
+                            <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
+                        </button>
+                    </div>
+                    <div class="mixer-column">
+                        <h3 data-key="mixerMood">Hangulat</h3>
+                        <div class="mixer-result" id="mixer-result-mood">...</div>
+                        <button class="reroll-btn" data-category="detail_mood" data-target="mixer-result-mood">
+                            <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
+                        </button>
+                    </div>
+                </div>
+                <button id="apply-mixer-btn" class="cta-button">
+                    <i class="fa-solid fa-check"></i> <span data-key="mixerApply">Kombináció Alkalmazása</span>
+                </button>
+            </section>
+
     <div class="prompt-section">
         <label for="mainSubject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="mainSubjectLabel">Fő téma:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i></label>
         <div class="input-group">

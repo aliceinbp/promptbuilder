@@ -43,6 +43,12 @@ const translations = {
         translateButton: "Fordítás Angolra",
         historyModalTitle: "Prompt Előzmények",
         selectDefault: "Válassz egyet a(z) {category} kategóriából...",
+        mixerTitle: "Stílus Keverő - Gyors Inspiráció",
+        mixerSubject: "Téma",
+        mixerStyle: "Stílus",
+        mixerMood: "Hangulat",
+        mixerReroll: "Újrapörget",
+        mixerApply: "Kombináció Alkalmazása a Generátorban",
 
         // EXPLAINER MODAL
         explainerTitleMainSubject: "A Fő Téma",
@@ -231,6 +237,12 @@ const translations = {
         translateButton: "Translate to English",
         historyModalTitle: "Prompt History",
         selectDefault: "Choose an option from {category}...",
+        mixerTitle: "Style Mixer - Quick Inspiration",
+        mixerSubject: "Subject",
+        mixerStyle: "Style",
+        mixerMood: "Mood",
+        mixerReroll: "Reroll",
+        mixerApply: "Apply Combination to Generator",
 
         // EXPLAINER MODAL
         explainerTitleMainSubject: "The Main Subject",

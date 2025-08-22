@@ -202,6 +202,74 @@ document.addEventListener('DOMContentLoaded', function() {
         let historyTimeout;
         let choiceInstances = {};
         let selectedParameter = '';
+        function initializeStyleMixer() {
+            const mixerSection = document.getElementById('style-mixer-section');
+            if (!mixerSection) return;
+        
+            const rerollButtons = mixerSection.querySelectorAll('.reroll-btn');
+            const applyButton = document.getElementById('apply-mixer-btn');
+            const resultDivs = {
+                mainSubject: document.getElementById('mixer-result-subject'),
+                style: document.getElementById('mixer-result-style'),
+                detail_mood: document.getElementById('mixer-result-mood')
+            };
+        
+            function reroll(category) {
+                const langPrompts = getCombinedPrompts(currentLanguage);
+                const items = langPrompts[category];
+                if (items && items.length > 0) {
+                    const randomItem = items[Math.floor(Math.random() * items.length)];
+                    if (resultDivs[category]) {
+                        resultDivs[category].textContent = randomItem;
+                    }
+                }
+            }
+        
+            rerollButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const category = button.dataset.category;
+                    reroll(category);
+                });
+            });
+        
+            applyButton.addEventListener('click', () => {
+                const subject = resultDivs.mainSubject.textContent.trim();
+                const style = resultDivs.style.textContent.trim();
+                const mood = resultDivs.detail_mood.textContent.trim();
+        
+                // Kitöröljük a régi címkéket és hozzáadjuk az újakat
+                clearAll();
+        
+                // Függvény egy címke létrehozásához
+                const createTag = (text, container) => {
+                    if (text && container) {
+                        const tag = document.createElement('span');
+                        tag.className = 'prompt-input-tag';
+                        tag.textContent = text;
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-tag';
+                        deleteBtn.innerHTML = '&times;';
+                        deleteBtn.title = 'Törlés';
+                        tag.appendChild(deleteBtn);
+                        container.appendChild(tag);
+                    }
+                };
+        
+                createTag(subject, tagContainers.mainSubject);
+                createTag(style, tagContainers.style);
+                createTag(mood, tagContainers.details);
+        
+                updateFinalPrompt();
+                
+                // Görgessen le a generátorhoz
+                document.getElementById('mainSubject-container').scrollIntoView({ behavior: 'smooth' });
+            });
+        
+            // Kezdeti feltöltés
+            reroll('mainSubject');
+            reroll('style');
+            reroll('detail_mood');
+        }
 
         if (finalPromptContainer && typeof Sortable !== 'undefined') {
             new Sortable(finalPromptContainer, { 
@@ -751,6 +819,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.appendChild(grid);
             }
             window.setLanguage(currentLanguage);
+            if (document.getElementById('style-mixer-section')) {
+        initializeStyleMixer();
+    }
         } catch (error) {
             console.error('Hiba a galéria betöltésekor:', error);
             container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
