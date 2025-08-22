@@ -871,7 +871,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 images.forEach(image => {
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
-                    item.innerHTML = `<a href="src/gallery-images/${image.src}" target="_blank"><img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy"></a>`;
+                    item.innerHTML = `
+    <a href="src/gallery-images/${image.src}" target="_blank">
+        <img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy">
+        <div class="gallery-prompt-overlay">
+            <p>${image.prompt || ''}</p>
+        </div>
+    </a>
+`;
                     grid.appendChild(item);
                 });
                 container.appendChild(grid);

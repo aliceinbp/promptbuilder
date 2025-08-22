@@ -1360,3 +1360,33 @@ body.light-theme .gradient-border-box {
 .quiz-cta-banner .cta-button-small:hover {
     background-color: var(--color-primary-light);
 }
+/* ===== Galéria Prompt Felfedése Effekt ===== */
+
+.gallery-item a {
+    position: relative; /* Ez kell, hogy az overlay pozíciója ehhez igazodjon */
+    display: block; /* Biztosítja a helyes működést */
+}
+
+.gallery-prompt-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    line-height: 1.4;
+    
+    /* Alapból elrejtjük */
+    opacity: 0;
+    transform: translateY(20px); /* Kicsit alulról fog beúszni */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Amikor a kép fölé visszük az egeret, megjelenik */
+.gallery-item a:hover .gallery-prompt-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
