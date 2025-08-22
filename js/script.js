@@ -863,6 +863,31 @@ if (metaDescriptionTag) {
     const excerpt = bodyHtml.replace(/<[^>]*>?/gm, '').substring(0, 155); // Létrehoz egy 155 karakteres kivonatot a szövegből
     metaDescriptionTag.setAttribute('content', excerpt);
 }
+const oldSchema = document.getElementById('blog-post-schema');
+if (oldSchema) {
+    oldSchema.remove();
+}
+
+// Létrehozzuk az új szkript elemet
+const schemaScript = document.createElement('script');
+schemaScript.type = 'application/ld+json';
+schemaScript.id = 'blog-post-schema'; // Adunk neki egy azonosítót
+
+// Definiáljuk a séma tartalmát a bejegyzés adataival
+schemaScript.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "image": frontmatter.image,
+    "datePublished": frontmatter.date,
+    "author": {
+        "@type": "Person",
+        "name": "Aliceinbp"
+    }
+});
+
+// Hozzáadjuk a szkriptet a <head> részhez
+document.head.appendChild(schemaScript);
             container.innerHTML = `<div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div><img src="${frontmatter.image}" alt="${title}" class="post-featured-image"><div class="post-body">${bodyHtml}</div>`;
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
