@@ -1280,3 +1280,31 @@ body.light-theme .gradient-border-box {
     background-image: linear-gradient(var(--color-surface), var(--color-surface)), 
                       linear-gradient(135deg, #8a2be2, #00c6ff);
 }
+.placeholder-text {
+    color: var(--color-text-subtle);
+    font-style: italic;
+    margin: auto; /* Tökéletesen középre teszi a szöveget */
+    font-size: 0.9em;
+    pointer-events: none; /* Ne lehessen rákattintani */
+}
+/* ===== Finom Animációk és Átmenetek ===== */
+
+/* A fő gombok kapnak egy "benyomás" effektust kattintáskor */
+.button-group > button:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* A modális ablakok finoman beúsznak és kinagyítódnak */
+.modal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    visibility: hidden;
+}
+
+.modal:not(.hidden) {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    visibility: visible;
+}

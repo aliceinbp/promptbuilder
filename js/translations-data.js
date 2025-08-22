@@ -68,6 +68,7 @@ const translations = {
         
         // TÖBBI OLDAL
         galleryTitle: "Galéria",
+        finalPromptPlaceholder: "Az alkotóelemekből összeállított varázsigéd itt fog megjelenni...",
         translateButtonTooltip: "Minden kategória fordítása angolra",
         galleryCatFantasy: "Fantasy Portrék", galleryCatDark: "Dark & Gothic", galleryCatWorlds: "Mágikus Világok", galleryCatShards: "Fantázia Szilánkok",
         linksTitle: "Ajánlott AI Képalkotó Oldalak",
@@ -263,6 +264,7 @@ const translations = {
 
         // OTHER PAGES
         galleryTitle: "Gallery",
+        finalPromptPlaceholder: "Your assembled magic spell will appear here...",
         translateButtonTooltip: "Translate all categories to English",
         galleryCatFantasy: "Fantasy Portraits", galleryCatDark: "Dark & Gothic",
         galleryCatWorlds: "Magical Worlds", galleryCatShards: "Shards of Fantasy",

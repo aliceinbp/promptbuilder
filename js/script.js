@@ -484,7 +484,11 @@ document.addEventListener('DOMContentLoaded', function() {
                  renderSavedPrompts();
              }
         }
-
+// A placeholder szöveg elrejtése/megjelenítése
+    const placeholder = finalPromptContainer.querySelector('.placeholder-text');
+    if (placeholder) {
+        placeholder.style.display = allParts.length > 0 ? 'none' : 'flex';
+    }
         function saveToHistory(prompt) {
             if (!prompt || prompt === promptHistory[0]) return;
             promptHistory.unshift(prompt);
