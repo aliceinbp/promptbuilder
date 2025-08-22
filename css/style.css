@@ -483,20 +483,6 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     color: var(--color-primary);
 }
 /* Daily Prompt Section Styles */
-#daily-prompt-section {
-    background-color: var(--secondary-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 40px auto;
-    text-align: center;
-    max-width: 800px;
-}
-
-#daily-prompt-section h2 {
-    margin-top: 0;
-    color: var(--accent-color);
-}
 
 #daily-prompt-text {
     font-family: 'Poppins', sans-serif;
@@ -1038,27 +1024,6 @@ body.light-theme .choices__inner {
     gap: 10px; /* Csökkenti a menüpontok közötti vízszintes távolságot */
 }
 /* ===== Daily Artist Section Styles ===== */
-#daily-artist-section {
-    background-color: var(--color-surface-alt);
-    border: 1px solid var(--color-border-accent);
-    border-radius: 8px;
-    padding: 25px;
-    margin: 40px auto;
-    text-align: center;
-    max-width: 800px;
-    box-shadow: 0 0 15px var(--color-shadow);
-}
-
-#daily-artist-section h2 {
-    margin-top: 0;
-    font-family: 'Pacifico', cursive;
-    color: var(--color-primary-light);
-    font-size: 1.8em;
-    margin-bottom: 25px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
 
 #daily-artist-name {
     margin-top: 0;
@@ -1073,4 +1038,32 @@ body.light-theme .choices__inner {
     line-height: 1.6;
     min-height: 40px; /* Megakadályozza az ugrálást betöltéskor */
     margin-bottom: 25px;
+}
+/* ===== Főoldali Kiemelt Dobozok (Prompt & Művész) ===== */
+.daily-feature-box {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border-accent);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 40px auto;
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 0 15px var(--color-shadow);
+    transition: all 0.3s ease-in-out;
+}
+
+.daily-feature-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px var(--color-shadow);
+}
+
+.daily-feature-box h2 {
+    margin-top: 0;
+    font-family: 'Pacifico', cursive;
+    color: var(--color-primary-light);
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
