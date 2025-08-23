@@ -1198,4 +1198,56 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+// ===== KIHÍVÁS OLDAL LOGIKA =====
+    const generateChallengeBtn = document.getElementById('generate-challenge-btn');
+    if (generateChallengeBtn) {
+        const challengeDisplay = document.getElementById('challenge-display');
+        const subjectEl = document.getElementById('challenge-subject');
+        const styleEl = document.getElementById('challenge-style');
+        const moodEl = document.getElementById('challenge-mood');
+
+        generateChallengeBtn.addEventListener('click', () => {
+            const langPrompts = defaultPrompts[currentLanguage]; // Csak az alap listákból sorsolunk
+            const getRandomItem = (arr) => arr.length > 0 ? arr[Math.floor(Math.random() * arr.length)] : '...';
+
+            subjectEl.textContent = getRandomItem(langPrompts.mainSubject);
+            styleEl.textContent = getRandomItem(langPrompts.style);
+            moodEl.textContent = getRandomItem(langPrompts.detail_mood);
+
+            challengeDisplay.classList.remove('hidden');
+        });
+    }
+
+    async function loadSubmissions() {
+        const container = document.getElementById('submission-gallery-grid');
+        if (!container) return;
+        try {
+            const response = await fetch('/_data/submissions.json');
+            const submissions = await response.json();
+            container.innerHTML = ''; 
+
+            if (submissions.length === 0) {
+                 container.innerHTML = `<p style="text-align: center; color: var(--color-text-secondary);">Még nincsenek beküldött alkotások. Légy te az első!</p>`;
+                 return;
+            }
+
+            submissions.forEach(image => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <a href="src/gallery-images/${image.src}" target="_blank">
+                        <img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy">
+                        <div class="gallery-prompt-overlay">
+                            <p>${image.prompt || ''}</p>
+                            <span class="submission-author">${image.author || 'Ismeretlen Alkotó'}</span>
+                        </div>
+                    </a>`;
+                container.appendChild(item);
+            });
+        } catch (error) {
+            console.error('Hiba a beküldött képek betöltésekor:', error);
+            container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
+        }
+    }
+    loadSubmissions(); // Lefuttatjuk az oldal betöltődésekor
 });

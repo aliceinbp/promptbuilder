@@ -1,0 +1,14 @@
+[
+    { 
+        "src": "submission-example-1.jpg", 
+        "alt": "AI kép, alkotó: Minta Alkotó", 
+        "prompt": "Egy szürreális, lebegő sziget, gótikus kastéllyal, drámai naplemente.", 
+        "author": "Minta Alkotó" 
+    },
+    { 
+        "src": "submission-example-2.jpg", 
+        "alt": "AI kép, alkotó: Kreatív Varázsló", 
+        "prompt": "Egy biomechanikus szarvas egy neonfényes erdőben.", 
+        "author": "Kreatív Varázsló" 
+    }
+]
