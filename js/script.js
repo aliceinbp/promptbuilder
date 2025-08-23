@@ -207,12 +207,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let historyTimeout;
         let choiceInstances = {};
         
-        // === ÚJ VÁLTOZÓK A SÚLYOZÁSHOZ ÉS PARAMÉTEREKHEZ ===
         let selectedParameter = '';
         let selectedWeight = 1.0;
         let activeWeightedTag = null;
 
-        // Segédfüggvény a súly alkalmazásához
         function applyWeight(tagElement, weight) {
             const originalText = tagElement.dataset.originalText;
             if (parseFloat(weight) === 1.0) {
@@ -221,16 +219,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 tagElement.textContent = `(${originalText}:${weight})`;
             }
         }
-
-        // Segédfüggvény a teljes prompt string összeállításához
+        
         function buildFinalPromptString() {
             if (!finalPromptContainer) return '';
-            const tags = finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)');
-            let promptParts = Array.from(tags).map(tag => tag.textContent);
+            let promptParts = [];
+            finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)').forEach(tag => {
+                promptParts.push(tag.textContent);
+            });
             let finalString = promptParts.join(', ');
 
-            // Hozzáadjuk a paramétereket is a stringhez
-            if (selectedParameter) finalString += ` ${selectedParameter}`;
+            if (selectedParameter) {
+                finalString += ` ${selectedParameter}`;
+            }
             return finalString;
         }
 
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             new Sortable(finalPromptContainer, { 
                 animation: 150, 
                 ghostClass: 'sortable-ghost',
-                onEnd: () => updateFinalPrompt(true) // Frissítés, de az aktív tagot megtartjuk
+                onEnd: () => updateFinalPrompt(true)
             });
         }
         
@@ -249,14 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function openManageModal(category) {
             currentManagedCategory = category;
             const manageModalTitle = document.getElementById('manage-modal-title');
-            const categoryKeyMap = {
-                mainSubject: 'mainSubjectLabel',
-                detail_physical: 'detailPhysicalLabel',
-                detail_environment: 'detailEnvironmentLabel',
-                detail_mood: 'detailMoodLabel',
-                style: 'styleLabel',
-                extra: 'extraLabel'
-            };
+            const categoryKeyMap = { mainSubject: 'mainSubjectLabel', detail_physical: 'detailPhysicalLabel', detail_environment: 'detailEnvironmentLabel', detail_mood: 'detailMoodLabel', style: 'styleLabel', extra: 'extraLabel' };
             const categoryLabelKey = categoryKeyMap[category] || category + 'Label';
             manageModalTitle.textContent = `"${translations[currentLanguage][categoryLabelKey].replace(':', '')}" - Sajátok`;
             renderManageList();
@@ -285,9 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const newPrompt = newPromptInput.value.trim();
             if (newPrompt === '' || !currentManagedCategory) return;
             const customPrompts = getCustomPrompts();
-            if (!customPrompts[currentManagedCategory]) {
-                customPrompts[currentManagedCategory] = [];
-            }
+            if (!customPrompts[currentManagedCategory]) customPrompts[currentManagedCategory] = [];
             if (!customPrompts[currentManagedCategory].includes(newPrompt)) {
                 customPrompts[currentManagedCategory].push(newPrompt);
                 saveCustomPrompts(customPrompts);
@@ -314,14 +305,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeTagContent = activeWeightedTag.dataset.originalText;
             }
 
-            finalPromptContainer.innerHTML = ''; // Mindig tisztítjuk
+            finalPromptContainer.innerHTML = ''; 
 
             const allParts = [];
             ['mainSubject', 'details', 'style', 'extra'].forEach(category => {
                 const container = tagContainers[category];
                 if (container) {
-                    const tags = container.querySelectorAll('.prompt-input-tag');
-                    tags.forEach(tag => {
+                    container.querySelectorAll('.prompt-input-tag').forEach(tag => {
                         const promptText = tag.firstChild.textContent.trim();
                         if (promptText) allParts.push(promptText);
                     });
@@ -354,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (selectedParameter) {
                 const paramTag = document.createElement('span');
-                paramTag.className = 'prompt-tag param-display-tag'; // Külön stílusosztály
+                paramTag.className = 'prompt-tag param-display-tag';
                 paramTag.textContent = selectedParameter;
                 finalPromptContainer.appendChild(paramTag);
             }
@@ -524,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearAll();
                 const promptString = saved[index];
                 const mainPromptPart = promptString.split(' --')[0];
-                const parts = mainPromptPart.split(',').map(p => p.trim().replace(/^\(?(.*?)(?::\d\.\d)?\)?$/, '$1')); // Kiveszi a súlyozást a betöltéshez
+                const parts = mainPromptPart.split(',').map(p => p.trim().replace(/^\(?(.*?)(?::\d\.\d)?\)?$/, '$1'));
 
                 parts.forEach(part => {
                      const tag = document.createElement('span');
@@ -583,14 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function initializeChoices() {
             const combinedPrompts = getCombinedPrompts(currentLanguage);
             const categories = ['mainSubject', 'detail_physical', 'detail_environment', 'detail_mood', 'style', 'extra'];
-            const categoryKeyMap = {
-                mainSubject: 'mainSubjectLabel',
-                detail_physical: 'detailPhysicalLabel',
-                detail_environment: 'detailEnvironmentLabel',
-                detail_mood: 'detailMoodLabel',
-                style: 'styleLabel',
-                extra: 'extraLabel'
-            };
+            const categoryKeyMap = { mainSubject: 'mainSubjectLabel', detail_physical: 'detailPhysicalLabel', detail_environment: 'detailEnvironmentLabel', detail_mood: 'detailMoodLabel', style: 'styleLabel', extra: 'extraLabel' };
             categories.forEach(category => {
                 const selectId = category.replace(/_/g, '-') + '-select';
                 const selectElement = document.getElementById(selectId);
@@ -705,11 +688,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // ===== ÚJ, ÁTÍRT ESEMÉNYFIGYELŐK A SÚLYOZÁSHOZ =====
+        // ===== JAVÍTOTT ESEMÉNYFIGYELŐK A SÚLYOZÁSHOZ =====
         const weightSlider = document.getElementById('weight-slider');
         const weightValueSpan = document.getElementById('weight-value');
 
-        // Paraméter gombok figyelése
         document.querySelectorAll('.param-btn').forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('.param-btn').forEach(btn => btn.classList.remove('active'));
@@ -719,7 +701,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Súlyozó csúszka figyelése
         if (weightSlider) {
             weightSlider.addEventListener('input', () => {
                 selectedWeight = parseFloat(weightSlider.value).toFixed(1);
@@ -731,7 +712,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Végleges prompt tagek kattintásának figyelése (súlyozáshoz)
         if (finalPromptContainer) {
             finalPromptContainer.addEventListener('click', (e) => {
                 const clickedTag = e.target.closest('.prompt-tag:not(.param-display-tag)');
@@ -764,7 +744,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         copyButton.addEventListener('click', function() {
-            const textToCopy = finalPromptHiddenTextarea.value;
+            const textToCopy = buildFinalPromptString(); // Itt már a helyes függvényt használjuk
             const negativeText = negativePromptTextarea.value.trim();
             let fullText = textToCopy;
             
@@ -792,11 +772,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const container = tagContainers[category];
                         if (container) {
                             const tags = Array.from(container.querySelectorAll('.prompt-input-tag'));
-                            const textsToTranslate = tags.map(tag => {
-                                const originalText = tag.firstChild.textContent.trim();
-                                // Ne fordítsuk le a már súlyozott szöveget
-                                return originalText.replace(/^\(?(.*?)(?::\d\.\d)?\)?$/, '$1');
-                            });
+                            const textsToTranslate = tags.map(tag => tag.firstChild.textContent.trim());
 
                             if (textsToTranslate.length > 0) {
                                 const combinedText = textsToTranslate.join('|||');
