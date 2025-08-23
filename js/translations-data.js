@@ -107,6 +107,8 @@ handbookCardCompDesc: "Lásd a különbséget! Vizuális útmutató, ami megmuta
 handbookCardCompBtn: "Irány az Összehasonlító!",
 paramWeight: "Súlyozás:",
 paramWeightInstruction: "Kattints egy elemre a \"Végleges prompt\" dobozban a súlyozáshoz!",
+paramWeightReset: "Visszaállítás",
+
         quizTitle: "Melyik AI Művészeti Stílus Illik Hozzád?", quizIntro: "Töltsd ki ezt a 10 kérdéses kvízt, és fedezd fel a benned rejlő AI művészt! Válaszolj őszintén, hogy megtudd, melyik stílus fejezi ki leginkább a kreatív személyiségedet.", quizStartButton: "Kvíz Indítása!",
         quizResultTitle: "A te stílusod:", quizResultArtists: "Ajánlott művészek/stílusok a kipróbáláshoz:", quizResultCTA: "Próbáld ki ezeket a stílusokat a Generátorban!",
         quizShareTwitter: "Megosztás Twitteren", quizShareFacebook: "Megosztás Facebookon", quizShareText: "Az én AI művészeti stílusom: {style}! Töltsd ki te is a kvízt a Prompt Lab oldalán!",
@@ -260,6 +262,7 @@ handbookCardCompDesc: "See the difference! A visual guide showing how a single k
 handbookCardCompBtn: "Go to the Comparison!",
 paramWeight: "Weighting:",
 paramWeightInstruction: "Click an item in the \"Final prompt\" box to apply weight!",
+paramWeightReset: "Reset",
 
         quizTitle: "Which AI Art Style Are You?", quizIntro: "Take this 10-question quiz and discover the AI artist within you! Answer honestly to find out which style best expresses your creative personality.", quizStartButton: "Start Quiz!",
         quizResultTitle: "Your style is:", quizResultArtists: "Recommended artists/styles to try:", quizResultCTA: "Try these styles in the Generator!",

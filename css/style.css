@@ -1668,3 +1668,43 @@ body.light-theme .accordion-header:hover {
     box-shadow: 0 0 10px var(--color-primary-accent);
     transform: scale(1.05);
 }
+/* ===== SÚLYOZÁS FEJLESZTETT STÍLUSOK ===== */
+.weight-control #reset-weights-btn {
+    padding: 5px 10px;
+    font-size: 0.8em;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid var(--color-text-subtle);
+    color: var(--color-text-subtle);
+}
+.weight-control #reset-weights-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: transparent;
+}
+
+/* Ez jelzi, hogy egy tag súlyozva van (de nem aktív) */
+#final-prompt-container .prompt-tag.is-weighted {
+    outline: 1px solid var(--color-primary-light);
+    outline-offset: 2px;
+}
+
+/* Ez jelzi az éppen szerkesztett taget (felülírja az is-weighted stílust) */
+#final-prompt-container .prompt-tag.active-weight {
+    background-color: var(--color-primary-accent);
+    color: var(--color-white-pure);
+    box-shadow: 0 0 10px var(--color-primary-accent);
+    transform: scale(1.05);
+    outline: none;
+}
+body.light-theme #final-prompt-container .prompt-tag.active-weight {
+     color: var(--color-white-pure);
+}
+
+/* A paraméter tag ne legyen kattintható stílusú */
+.param-display-tag {
+    background-color: var(--color-surface-alt) !important;
+    color: var(--color-text-secondary) !important;
+    cursor: default !important;
+    outline: none !important;
+}
