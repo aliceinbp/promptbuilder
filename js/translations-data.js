@@ -68,7 +68,7 @@ const translations = {
         
         // TÖBBI OLDAL
         galleryTitle: "Galéria",
-        orText: "vagy add meg a saját ötleted:",
+        yourIdeaPlaceholder: "Vagy add meg a saját ötleted...",
         quizCtaTitle: "Bizonytalan vagy a stílusodban?",
         quizCtaButton: "Töltsd ki a Stílus Kvízt!",
         finalPromptPlaceholder: "Az alkotóelemekből összeállított varázsigéd itt fog megjelenni...",
@@ -267,7 +267,7 @@ const translations = {
 
         // OTHER PAGES
         galleryTitle: "Gallery",
-        orText: "or add your own idea:",
+        yourIdeaPlaceholder: "Or add your own idea...",
         quizCtaTitle: "Unsure about your style?",
         quizCtaButton: "Take the Style Quiz!",
         finalPromptPlaceholder: "Your assembled magic spell will appear here...",
