@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Összehasonlító Sarok - Prompt Lab</title>
+    <meta name="description" content="Lásd a különbséget! Ugyanaz a prompt, különböző stílusok és kulcsszavak. Tanulj vizuálisan a Prompt Lab összehasonlító galériájával.">
+    </head>
+<body>
+    <div id="main-container">
+        <header>
+            </header>
+
+        <main>
+    <section id="comparison-intro" style="text-align: center;">
+        <h2><i class="fa-solid fa-layer-group"></i> <span data-key="comparisonTitle">Összehasonlító Sarok</span></h2>
+        <p class="artist-subtitle" data-key="comparisonSubtitle">Egy kép többet ér ezer szónál. Nézd meg, hogyan változtatja meg ugyanazt az ötletet egyetlen kulcsszó!</p>
+    </section>
+
+    <section class="comparison-set">
+        <h3 data-key="compSetArtists">1. Szett: Művész Stílusok</h3>
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <img src="src/gallery-images/comp-elf-original.jpg" alt="Elf királynő alap prompt">
+                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"portrait of a beautiful elven queen..."</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/comp-elf-mucha.jpg" alt="Elf királynő Mucha stílusában">
+                <p class="comparison-prompt">"... in the style of <strong>Alphonse Mucha</strong>"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/comp-elf-giger.jpg" alt="Elf királynő Giger stílusában">
+                <p class="comparison-prompt">"... in the style of <strong>H.R. Giger</strong>"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/comp-elf-miyazaki.jpg" alt="Elf királynő Miyazaki stílusában">
+                <p class="comparison-prompt">"... in the style of <strong>Hayao Miyazaki</strong>"</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="comparison-set">
+        <h3 data-key="compSetTech">2. Szett: Technikai Stílusok</h3>
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <img src="src/gallery-images/lighthouse-original.jpg" alt="Világítótorony alap prompt">
+                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"a lonely lighthouse on a rocky shore..."</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/lighthouse-watercolor.jpg" alt="Világítótorony akvarell">
+                <p class="comparison-prompt">"... beautiful <strong>watercolor painting</strong>"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/lighthouse-photo-realistic.jpg" alt="Világítótorony fotó">
+                <p class="comparison-prompt">"... <strong>photorealistic</strong>, 8k, detailed"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/lighthouse-ukiyo-e.jpg" alt="Világítótorony ukiyo-e">
+                <p class="comparison-prompt">"... <strong>ukiyo-e style</strong> illustration"</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison-set">
+        <h3 data-key="compSetWorlds">3. Szett: Tematikus Világok</h3>
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <img src="src/gallery-images/couple-original.jpg" alt="Szerelmespár alap prompt">
+                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"A couple in love is sitting on a cafe terrace"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/couple-cyberpunk.jpg" alt="Szerelmespár cyberpunk">
+                <p class="comparison-prompt">"... <strong>cyberpunk</strong>, neon lighting, rain"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/couple-steampunk.jpg" alt="Szerelmespár steampunk">
+                <p class="comparison-prompt">"... <strong>steampunk</strong>, brass and gears, victorian"</p>
+            </div>
+            <div class="comparison-item">
+                <img src="src/gallery-images/couple-solarpunk.jpg" alt="Szerelmespár solarpunk">
+                <p class="comparison-prompt">"... <strong>solarpunk</strong>, lush greenery, clean energy"</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+        <footer>
+            <div class="footer-item footer-socials">
+                <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+
+            <div class="footer-item">
+                <a href="contact.html" data-key="navContact"><i class="fa-solid fa-paper-plane"></i> Kapcsolat</a>
+            </div>
+            <div class="footer-item">
+                <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
+            </div>
+            <div class="footer-item" id="visitor-counter">
+                <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+            </div>
+        </footer>
+    </div>
+    
+    <div id="modal-overlay" class="hidden"></div>
+    <div id="info-modal" class="modal hidden">
+        <button id="close-info-modal" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-key="infoModalTitle">A Prompt Lab-ről</h2>
+        <p data-key="infoModalText1">Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.</p>
+        <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
+        <p>❤️</p>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+<script src="js/translations-data.js"></script>
+<script src="js/script.js"></script>
+
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a></body>
+</html>
