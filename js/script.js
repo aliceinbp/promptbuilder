@@ -1026,7 +1026,6 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadSinglePost() {
         const container = document.getElementById('post-content-container');
         if (!container || !markdownConverter) return;
-
         const params = new URLSearchParams(window.location.search);
         const slug = params.get('slug');
         if (!slug) {
@@ -1034,26 +1033,21 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         const POST_URL = `https://raw.githubusercontent.com/aliceinbp/promptbuilder/main/blog/${slug}.md`;
-
         try {
             const response = await fetch(POST_URL);
             if (!response.ok) throw new Error('A bejegyzés nem található.');
             const markdown = await response.text();
             const { frontmatter, content } = parseFrontmatter(markdown);
-
             const title = currentLanguage === 'hu' ? frontmatter.title_hu : frontmatter.title_en;
             const bodyMarkdown = currentLanguage === 'hu' ? frontmatter.body_hu : frontmatter.body_en;
             const bodyHtml = markdownConverter.makeHtml(bodyMarkdown || content);
             const postDate = new Date(frontmatter.date).toLocaleDateString(currentLanguage === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            
             document.title = `${title} - Prompt Lab Blog`;
-            
             const metaDescriptionTag = document.querySelector('meta[name="description"]');
             if (metaDescriptionTag) {
                 const excerpt = bodyHtml.replace(/<[^>]*>?/gm, '').substring(0, 155);
                 metaDescriptionTag.setAttribute('content', excerpt);
             }
-
             const oldSchema = document.getElementById('blog-post-schema');
             if (oldSchema) oldSchema.remove();
             const schemaScript = document.createElement('script');
@@ -1064,9 +1058,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             document.head.appendChild(schemaScript);
 
-            // ===== JAVÍTOTT RÉSZ KEZDETE =====
-
-            // 1. Összeállítjuk a LikeBtn HTML kódját, MÁR AZ EGYEDI AZONOSÍTÓVAL EGYÜTT
             const likeBtnHtml = `
                 <div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;">
                     <span class="likebtn-wrapper"
@@ -1083,7 +1074,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
 
-            // 2. A teljes tartalmat (poszt + gomb) egyszerre illesztjük be
             container.innerHTML = `
                 <div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div>
                 <img src="${frontmatter.image}" alt="${title}" class="post-featured-image">
@@ -1091,11 +1081,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${likeBtnHtml} 
             `;
 
-            // 3. Szólunk a LikeBtn scriptnek, hogy végezze el a dolgát
             if (window.likebtn) {
                 window.likebtn.init();
             }
-            // ===== JAVÍTOTT RÉSZ VÉGE =====
 
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
