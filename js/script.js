@@ -1058,6 +1058,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             document.head.appendChild(schemaScript);
             container.innerHTML = `<div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div><img src="${frontmatter.image}" alt="${title}" class="post-featured-image"><div class="post-body">${bodyHtml}</div>`;
+            // ===== LikeBtn DINAMIKUS BEILLESZTÉSE =====
+            const likeBtnWrapper = container.querySelector('.likebtn-wrapper');
+            if (likeBtnWrapper) {
+                likeBtnWrapper.setAttribute('data-identifier', slug);
+                if (window.likebtn) {
+                    window.likebtn.init();
+                }
+            }
+            // ===========================================
+            
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
             container.innerHTML = '<p>A bejegyzés nem tölthető be.</p>';
