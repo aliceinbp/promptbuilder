@@ -1174,4 +1174,28 @@ document.addEventListener('DOMContentLoaded', function() {
     loadDailyArtist();
     displayDailyQuote();
     observeCusdis();
+
+// ===== KISOKOS OLDAL - ACCORDION LOGIKA =====
+    if (document.querySelector('.accordion')) {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                const content = item.querySelector('.accordion-content');
+                const wasActive = item.classList.contains('active');
+
+                // Először minden mást bezárunk
+                accordionItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                });
+
+                // Ha nem a már aktívra kattintottunk, akkor kinyitjuk
+                if (!wasActive) {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+    }
 });
