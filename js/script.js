@@ -1048,12 +1048,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.title = `${title} - Prompt Lab Blog`;
             
-            // Meta és Schema adatok beállítása (ez a rész változatlan)
             const metaDescriptionTag = document.querySelector('meta[name="description"]');
             if (metaDescriptionTag) {
                 const excerpt = bodyHtml.replace(/<[^>]*>?/gm, '').substring(0, 155);
                 metaDescriptionTag.setAttribute('content', excerpt);
             }
+
             const oldSchema = document.getElementById('blog-post-schema');
             if (oldSchema) oldSchema.remove();
             const schemaScript = document.createElement('script');
@@ -1064,16 +1064,19 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             document.head.appendChild(schemaScript);
 
-            // ===== JAVÍTOTT RÉSZ KEZDETE =====
-
-            // 1. A LikeBtn HTML kódja MOST MÁR SEMMILYEN STÍLUST NEM TARTALMAZ, csak a helyét jelöli ki.
+            // Itt direkt a Twitter témát kérjük, ami ingyenes és szívet használ
             const likeBtnHtml = `
                 <div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;">
-                    <span class="likebtn-wrapper" data-identifier="${slug}"></span>
+                    <span class="likebtn-wrapper"
+                          data-theme="twitter"
+                          data-identifier="${slug}"
+                          data-lang="${currentLanguage}"
+                          data-dislike_enabled="false"
+                          data-rich_snippet="true">
+                    </span>
                 </div>
             `;
 
-            // 2. A teljes tartalmat (poszt + gomb) egyszerre illesztjük be.
             container.innerHTML = `
                 <div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div>
                 <img src="${frontmatter.image}" alt="${title}" class="post-featured-image">
@@ -1081,11 +1084,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${likeBtnHtml} 
             `;
 
-            // 3. Szólunk a LikeBtn scriptnek, hogy végezze el a dolgát.
+            // A GYIK SZERINTI HIVATALOS MÓDSZER:
+            // Miután beillesztettük a gombot, szólunk a LikeBtn-nek, hogy frissítsen.
             if (window.likebtn) {
                 window.likebtn.init();
             }
-            // ===== JAVÍTOTT RÉSZ VÉGE =====
 
         } catch (error) {
             console.error('Hiba a bejegyzés betöltésekor:', error);
