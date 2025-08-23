@@ -1582,3 +1582,15 @@ body.light-theme .accordion-header:hover {
     margin-top: 10px;
     color: var(--color-primary-light);
 }
+/* ===== A HÉT ALKOTÁSA STÍLUSOK ===== */
+.featured-creation-details {
+    margin-top: 20px;
+}
+.featured-creation-details .author, .featured-creation-details .prompt {
+    color: var(--color-text-secondary);
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+.featured-creation-details strong {
+    color: var(--color-primary-light);
+}
