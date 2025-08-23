@@ -1048,12 +1048,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.title = `${title} - Prompt Lab Blog`;
             
+            // Meta és Schema adatok beállítása (ez a rész változatlan)
             const metaDescriptionTag = document.querySelector('meta[name="description"]');
             if (metaDescriptionTag) {
                 const excerpt = bodyHtml.replace(/<[^>]*>?/gm, '').substring(0, 155);
                 metaDescriptionTag.setAttribute('content', excerpt);
             }
-
             const oldSchema = document.getElementById('blog-post-schema');
             if (oldSchema) oldSchema.remove();
             const schemaScript = document.createElement('script');
@@ -1066,20 +1066,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // ===== JAVÍTOTT RÉSZ KEZDETE =====
 
-            // 1. Összeállítjuk a LikeBtn HTML kódját, az egyedi azonosítóval együtt.
+            // 1. A LikeBtn HTML kódja MOST MÁR SEMMILYEN STÍLUST NEM TARTALMAZ, csak a helyét jelöli ki.
             const likeBtnHtml = `
                 <div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;">
-                    <span class="likebtn-wrapper"
-                          data-theme="custom"
-                          data-icon_l="heart"
-                          data-icon_l_c_voted="#a46de5"
-                          data-icon_l_c="#b3b3b3"
-                          data-rich_snippet="true"
-                          data-dislike_enabled="false"
-                          data-lazy_load="true"
-                          data-i18n_like="Értékelés"
-                          data-identifier="${slug}">
-                    </span>
+                    <span class="likebtn-wrapper" data-identifier="${slug}"></span>
                 </div>
             `;
 
@@ -1091,11 +1081,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${likeBtnHtml} 
             `;
 
-            // 3. A parancsot RÁTESSZÜK A VÁRÓLISTÁRA ahelyett, hogy azonnal futtatnánk.
-            if (window.likebtn_queue) {
-                window.likebtn_queue.push({
-                    init: true
-                });
+            // 3. Szólunk a LikeBtn scriptnek, hogy végezze el a dolgát.
+            if (window.likebtn) {
+                window.likebtn.init();
             }
             // ===== JAVÍTOTT RÉSZ VÉGE =====
 
