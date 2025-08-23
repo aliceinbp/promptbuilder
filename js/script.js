@@ -1059,6 +1059,23 @@ document.addEventListener('DOMContentLoaded', function() {
             document.head.appendChild(schemaScript);
             container.innerHTML = `<div class="post-header"><h1>${title}</h1><p class="post-meta">${translations[currentLanguage].postedOn} ${postDate}</p></div><img src="${frontmatter.image}" alt="${title}" class="post-featured-image"><div class="post-body">${bodyHtml}</div>`;
             // ===== LikeBtn DINAMIKUS BEILLESZTÉSE =====
+            const likeBtnHtml = `
+                <div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;">
+                    <span class="likebtn-wrapper"
+                          data-theme="custom"
+                          data-icon_l="heart"
+                          data-icon_l_c_voted="#a46de5"
+                          data-icon_l_c="#b3b3b3"
+                          data-rich_snippet="true"
+                          data-dislike_enabled="false"
+                          data-icon_dislike_show="false"
+                          data-lazy_load="true"
+                          data-i18n_like="Tetszik">
+                    </span>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', likeBtnHtml);
+
             const likeBtnWrapper = container.querySelector('.likebtn-wrapper');
             if (likeBtnWrapper) {
                 likeBtnWrapper.setAttribute('data-identifier', slug);
