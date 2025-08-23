@@ -328,37 +328,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         document.querySelectorAll('.add-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const outputCategory = this.dataset.category;
-                const parentSection = this.closest('.prompt-section, .detail-subsection');
-                if (!parentSection) return;
+    button.addEventListener('click', function() {
+        const outputCategory = this.dataset.category;
+        const parentSection = this.closest('.prompt-section, .detail-subsection');
+        if (!parentSection) return;
 
-                const selectElement = parentSection.querySelector('select');
+        const inputElement = parentSection.querySelector('.new-prompt-input');
+        const selectElement = parentSection.querySelector('select');
+        
+        let selectedValue = '';
+        if (inputElement && inputElement.value.trim() !== '') {
+            selectedValue = inputElement.value.trim();
+        } else if (selectElement) {
+            const selectId = selectElement.id;
+            const choiceCategory = selectId.replace(/-select$/, '').replace(/-/g, '_');
+            const choice = choiceInstances[choiceCategory];
+            selectedValue = choice ? choice.getValue(true) : '';
+        }
+
+        if (selectedValue && tagContainers[outputCategory]) {
+            const tagContainer = tagContainers[outputCategory];
+            const tag = document.createElement('span');
+            tag.className = 'prompt-input-tag';
+            tag.textContent = selectedValue;
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-tag';
+            deleteBtn.innerHTML = '&times;';
+            deleteBtn.title = 'Törlés';
+            tag.appendChild(deleteBtn);
+            
+            tagContainer.appendChild(tag);
+            updateFinalPrompt();
+
+            if (inputElement) {
+                inputElement.value = '';
+            }
+            if (selectElement) {
                 const selectId = selectElement.id;
                 const choiceCategory = selectId.replace(/-select$/, '').replace(/-/g, '_');
                 const choice = choiceInstances[choiceCategory];
-                const selectedValue = choice ? choice.getValue(true) : null;
-
-                if (selectedValue && selectedValue !== "" && tagContainers[outputCategory]) {
-                    const tagContainer = tagContainers[outputCategory];
-                    const tag = document.createElement('span');
-                    tag.className = 'prompt-input-tag';
-                    tag.textContent = selectedValue;
-                    
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-tag';
-                    deleteBtn.innerHTML = '&times;';
-                    deleteBtn.title = 'Törlés';
-                    tag.appendChild(deleteBtn);
-                    
-                    tagContainer.appendChild(tag);
-                    updateFinalPrompt();
-                    
+                if (choice) {
                     choice.clearInput();
                     choice.setChoiceByValue('');
                 }
-            });
-        });
+            }
+        }
+    });
+});
 
         document.querySelector('main').addEventListener('click', function(e) {
             if (e.target.classList.contains('delete-tag')) {
