@@ -1436,39 +1436,38 @@ body.light-theme .gradient-border-box {
 /* Az 'input-group' elrendezése, hogy a 'vagy...' szöveg is helyet kapjon */
 .input-group {
     display: flex;
-    align-items: center;
+    align-items: center; /* Ez az a sor, ami központosítja az elemeket */
     gap: 10px;
-    flex-wrap: wrap; /* Mobilon egymás alá kerülnek a mezők */
+    flex-wrap: wrap;
 }
 
-/* Az új beviteli mezők stílusa */
-.new-prompt-input {
-    flex-grow: 1; 
-    background-color: var(--color-surface-alt);
-    border: 1px solid var(--color-border);
-    border-radius: 5px;
-    padding: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    color: var(--color-text-main);
-    transition: all 0.2s ease;
+.input-group .choices,
+.input-group .new-prompt-input {
+    flex: 1 1 50%;
+    min-width: 150px;
 }
 
-.new-prompt-input:focus {
-    border-color: var(--color-primary);
-    outline: none;
-    box-shadow: 0 0 5px var(--color-shadow);
+/* Cseréld le a következőre: */
+.input-group {
+    display: flex;
+    align-items: center; /* Ez a sor biztosítja, hogy minden egy vonalban legyen! */
+    gap: 10px;
 }
 
-/* Kisebb felbontáson a mezők kitöltik a teljes szélességet */
+.input-group .choices {
+    flex-grow: 1; /* A Choices mező a maradék helyet töltse ki */
+}
+
+.input-group .new-prompt-input {
+    flex-grow: 1; /* Az új mező is a maradék helyet töltse ki */
+    min-height: 40px; /* Megfelel a Choices.js magasságának */
+    padding: 8px 12px; /* Finomhangolt belső térköz, hogy illeszkedjen */
+}
+
+/* A mobilos nézethez is hozzáadjuk a beíró boxot */
 @media (max-width: 768px) {
     .input-group .choices,
     .input-group .new-prompt-input {
-        width: 100%;
-    }
-    .input-group .or-text {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
+        flex: 1 1 100%;
     }
 }
