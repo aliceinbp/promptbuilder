@@ -1064,14 +1064,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             document.head.appendChild(schemaScript);
 
-            // Itt direkt a Twitter témát kérjük, ami ingyenes és szívet használ
             const likeBtnHtml = `
                 <div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;">
                     <span class="likebtn-wrapper"
-                          data-theme="twitter"
                           data-identifier="${slug}"
-                          data-lang="${currentLanguage}"
-                          data-dislike_enabled="false"
+                          data-lazy_load="true"
                           data-rich_snippet="true">
                     </span>
                 </div>
@@ -1084,10 +1081,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${likeBtnHtml} 
             `;
 
-            // A GYIK SZERINTI HIVATALOS MÓDSZER:
-            // Miután beillesztettük a gombot, szólunk a LikeBtn-nek, hogy frissítsen.
-            if (window.likebtn) {
-                window.likebtn.init();
+            // ITT A VÉGLEGES MEGOLDÁS: A parancsot a várólistára tesszük.
+            if (window.likebtn_queue) {
+                window.likebtn_queue.push({
+                    init: true
+                });
             }
 
         } catch (error) {
