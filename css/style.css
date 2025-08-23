@@ -1634,3 +1634,37 @@ body.light-theme .accordion-header:hover {
     color: var(--color-primary-light);
     font-style: normal;
 }
+/* ===== SÚLYOZÁS PARAMÉTER STÍLUSOK ===== */
+.weight-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+#weight-slider {
+    width: 100%;
+    cursor: pointer;
+}
+
+#weight-value {
+    font-weight: bold;
+    color: var(--color-primary-light);
+    min-width: 35px; /* Hogy ne ugráljon a méret */
+}
+
+.weight-instruction {
+    font-size: 0.8em;
+    font-style: italic;
+    color: var(--color-text-subtle);
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/* Kiemeli az aktívan súlyozott taget */
+#final-prompt-container .prompt-tag.active-weight {
+    background-color: var(--color-primary-accent);
+    box-shadow: 0 0 10px var(--color-primary-accent);
+    transform: scale(1.05);
+}
