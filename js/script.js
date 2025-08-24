@@ -213,6 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		const historyButton = document.getElementById('history-button');
 		const historyList = document.getElementById('history-list');
 		const translateButton = document.getElementById('translate-button');
+		const shareTwitterBtn = document.getElementById('share-twitter-btn');
+		const shareFacebookBtn = document.getElementById('share-facebook-btn');
 		let promptHistory = [];
 		let historyTimeout;
 		let choiceInstances = {};
@@ -732,6 +734,43 @@ document.addEventListener('DOMContentLoaded', function() {
 				setTimeout(() => { this.innerHTML = originalContent; }, 1500);
 			});
 		});
+
+		function sharePrompt(network) {
+    const promptText = buildFinalPromptString();
+    if (promptText.trim() === '') return; // Ne osszon meg üres promptot
+
+    const url = 'https://aliceinbp.com';
+    const rawShareText = translations[currentLanguage].sharePromptText || 'I created this prompt with the Prompt Lab: "{prompt}" Try it out!';
+    const shareText = rawShareText.replace('{prompt}', promptText);
+
+    const encodedUrl = encodeURIComponent(url);
+    const encodedText = encodeURIComponent(shareText);
+    
+    let shareUrl;
+
+    if (network === 'twitter') {
+        shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+    } else if (network === 'facebook') {
+        // Facebook a quote paramétert használja a szöveghez
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+    }
+
+    if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+}
+
+if (shareTwitterBtn && shareFacebookBtn) {
+    shareTwitterBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sharePrompt('twitter');
+    });
+
+    shareFacebookBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sharePrompt('facebook');
+    });
+}
 
 		if (translateButton) {
 			translateButton.addEventListener('click', async () => {

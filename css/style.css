@@ -1900,3 +1900,45 @@ body.light-theme .pagefind-ui__modal {
         flex-direction: column;
     }
 }
+/* ======================================== */
+/* ===== GENERÁTOR MEGOSZTÁS GOMBOK ===== */
+/* ======================================== */
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap; /* Mobilon jobban tördelődik */
+    align-items: center; /* Függőlegesen középre igazít */
+    gap: 10px;
+}
+
+.share-buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; /* Jobbra tolja a megosztás gombokat */
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+.share-btn.twitter {
+    background-color: #1DA1F2;
+}
+
+.share-btn.facebook {
+    background-color: #1877F2;
+}

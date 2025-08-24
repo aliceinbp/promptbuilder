@@ -228,9 +228,18 @@
                 </button>
             </div>
             <div class="button-group">
-                <button id="save-prompt-button" title="Kedvenc mentése"><i class="fa-solid fa-star"></i> <span data-key="saveButton">Mentés</span></button>
-                <button id="copy-button"><i class="fa-solid fa-copy"></i> <span data-key="copyButton">Prompt másolása</span></button>
-            </div>
+    <button id="save-prompt-button" title="Kedvenc mentése"><i class="fa-solid fa-star"></i> <span data-key="saveButton">Mentés</span></button>
+    <button id="copy-button"><i class="fa-solid fa-copy"></i> <span data-key="copyButton">Prompt másolása</span></button>
+
+    <div class="share-buttons-container">
+        <a href="#" id="share-twitter-btn" class="share-btn twitter" data-key-title="shareTwitterTooltip">
+            <i class="fa-brands fa-twitter"></i>
+        </a>
+        <a href="#" id="share-facebook-btn" class="share-btn facebook" data-key-title="shareFacebookTooltip">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+    </div>
+</div>
             <section id="saved-prompts-section">
                 <h2><i class="fa-solid fa-star"></i> <span data-key="savedPromptsTitle">Mentett Promptok</span></h2>
                 <div id="saved-prompts-list"></div>
