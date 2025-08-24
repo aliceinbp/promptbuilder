@@ -101,15 +101,6 @@ body.light-theme .saved-prompt-item:hover { background-color: #dee2e6; }
 .gallery-item:hover { transform: scale(1.03); }
 .gallery-item img { width: 100%; height: auto; display: block; border-radius: 4px; }
 
-footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--color-border-accent); display: flex; justify-content: space-between; align-items: center; }
-.footer-item { display: flex; align-items: center; justify-content: center; flex: 1; }
-.footer-item:first-child { justify-content: flex-start; }
-.footer-item:last-child { justify-content: flex-end; }
-.footer-item a { white-space: nowrap; }
-footer a { color: var(--color-primary-light); text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
-footer a:hover { color: var(--color-text-main); text-decoration: underline; }
-footer a i { margin-right: 8px; color: var(--color-primary-highlight); }
-
 .hidden { display: none !important; }
 
 #modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; }
@@ -2064,16 +2055,43 @@ body.light-theme .pagefind-ui__modal {
     }
 }
 /* ======================================== */
-/* ===== HÍRLEVÉL FORMA A LÁBLÉCBEN ===== */
+/* ===== VÉGLEGES LÁBLÉC STÍLUSOK ===== */
 /* ======================================== */
 
-.newsletter-form label {
-    display: block;
-    font-weight: bold;
-    font-size: 0.9em;
-    margin-bottom: 8px;
+.footer-main {
+    border-top: 1px solid var(--color-border-accent);
+    padding: 40px 20px 20px 20px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Felső rész: Hírlevél és Támogatás */
+.footer-top {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-widget {
+    flex: 1;
+    min-width: 250px;
     text-align: center;
+}
+
+.footer-widget h4 {
     color: var(--color-text-secondary);
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Hírlevél űrlap stílusa a widgeten belül */
+.newsletter-form label {
+    display: none; /* A widget címe a label, így ezt elrejtjük */
 }
 
 .newsletter-input-group {
@@ -2087,8 +2105,8 @@ body.light-theme .pagefind-ui__modal {
     border: 1px solid var(--color-border);
     background-color: var(--color-surface-alt);
     color: var(--color-text-main);
-    border-radius: 5px 0 0 5px; /* A bal oldala kerekített */
-    border-right: none; /* A jobb oldali keretet levesszük */
+    border-radius: 5px 0 0 5px;
+    border-right: none;
 }
 
 .newsletter-input-group input[type="email"]:focus {
@@ -2101,7 +2119,7 @@ body.light-theme .pagefind-ui__modal {
     border: 1px solid var(--color-border);
     background-color: var(--color-surface-alt);
     color: var(--color-primary-light);
-    border-radius: 0 5px 5px 0; /* A jobb oldala kerekített */
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 1.1em;
     transition: background-color 0.2s ease;
@@ -2111,4 +2129,79 @@ body.light-theme .pagefind-ui__modal {
     background-color: var(--color-primary);
     color: var(--color-text-inverted);
     border-color: var(--color-primary);
+}
+
+/* Ko-fi gomb stílus */
+.kofi-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #a46de5;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+.kofi-button:hover {
+    background-color: #c89eff;
+}
+.kofi-img {
+    width: 24px;
+    margin-right: 10px;
+}
+
+/* Középső rész: Linkek és Social */
+.footer-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.footer-links a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary-light);
+}
+
+.footer-socials a {
+    font-size: 1.8em;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: var(--color-primary-light);
+    transform: scale(1.1);
+}
+
+/* Alsó rész: Copyright és Számláló */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    gap: 15px;
+    font-size: 0.8em;
+    color: var(--color-text-subtle);
+}
+
+.copyright-text {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+#visitor-counter {
+    opacity: 0.7;
 }
