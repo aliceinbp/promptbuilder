@@ -1708,24 +1708,25 @@ body.light-theme #final-prompt-container .prompt-tag.active-weight {
     cursor: default !important;
     outline: none !important;
 }
-/* ===== Pagefind Search Styles (Javított) ===== */
+/* ===== Pagefind Search Styles (JAVÍTOTT) ===== */
 #search-container {
-    padding: 20px 0 25px 0;
+    padding: 15px 0;
     margin: 0 40px;
     border-bottom: 1px solid var(--color-border-accent);
+    margin-top: 15px;
 }
 
 .pagefind-ui__search-input {
     width: 100%;
-    padding: 8px 15px; /* Kisebb belső térköz */
-    font-size: 1em; /* Normál betűméret */
-    border-radius: 20px; /* Lekerekített sarkok */
+    max-width: 450px; /* Korlátozza a maximális szélességet */
+    margin: 0 auto; /* Középre igazítja */
+    padding: 8px 15px;
+    font-size: 1em;
+    border-radius: 20px;
     background-color: var(--color-surface-alt);
     border: 1px solid var(--color-border);
     color: var(--color-text-main);
     transition: all 0.2s ease;
-    max-width: 400px; /* Maximális szélesség, hogy ne legyen túl nagy */
-    margin: 0 auto; /* Középre igazítás */
 }
 
 .pagefind-ui__search-input:focus {
@@ -1735,12 +1736,13 @@ body.light-theme #final-prompt-container .prompt-tag.active-weight {
 }
 
 .pagefind-ui__modal {
-    background-color: rgba(18, 18, 18, 0.8);
-    backdrop-filter: blur(5px);
+    background-color: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 body.light-theme .pagefind-ui__modal {
-     background-color: rgba(240, 242, 245, 0.8);
+     background-color: rgba(240, 242, 245, 0.85);
 }
 
 .pagefind-ui__result-link {
