@@ -26,6 +26,7 @@ const translations = {
         handbookSubtitle: "Minden, amit a tökéletes AI képekről tudni érdemes. Egy helyen.",
         basicsTitle: "A Promptolás Alapjai",
         glossaryTitle: "Stílus- és Fogalomtár",
+        glossaryArtNouveauTitle: "Mi az, hogy... Art Nouveau (Szecesszió)?",
         glossaryArtNouveauText: "A 19-20. század fordulójának díszítőművészeti stílusa. Jellemzői a hullámzó, organikus vonalak, a természetes formák (virágok, indák) és az elegáns, gyakran idealizált női alakok. Kulcsszavak: `Art Nouveau, Mucha style, organic patterns, flowing lines, decorative`.",
         glossaryBiomechanicalTitle: "Mi az, hogy... Biomechanical?",
         glossaryBiomechanicalText: "Organikus, emberi vagy állati formák és gépi, mechanikus elemek fúziója. Gyakran sötét, szürreális és futurisztikus hangulatú. H.R. Giger (az Alien tervezője) munkássága a stílus legismertebb példája. Kulcsszavak: `biomechanical, Giger style, organic machinery, alien technology`.",
@@ -265,7 +266,7 @@ const translations = {
     searchLoadMore: "Load More",
     searchLabel: "Search",
     searchResults: "{count} results",
-    
+
         quizTitle: "Which AI Art Style Are You?", quizIntro: "Take this 10-question quiz and discover the AI artist within you! Answer honestly to find out which style best expresses your creative personality.", quizStartButton: "Start Quiz!",
         quizResultTitle: "Your style is:", quizResultArtists: "Recommended artists/styles to try:", quizResultCTA: "Try these styles in the Generator!",
         quizShareTwitter: "Share on Twitter", quizShareFacebook: "Share on Facebook", quizShareText: "My AI art style is: {style}! Find yours on the Prompt Lab website!",
