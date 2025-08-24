@@ -1,10 +1,10 @@
 [build]
-  command = "echo 'No build command'"
+  command = "npx -y pagefind --site ./"
   publish = "."
 
 [functions]
   directory = "netlify/functions/"
-  # --- EZ AZ ÚJ RÉSZ, AMI KIKAPCSOLJA A PROBLÉMÁS OPTIMALIZÁLÁST ---
+
 [build.processing]
   [build.processing.html]
     pretty_urls = false

@@ -66,7 +66,9 @@
             </div>
         </header>
 
-        <main>
+        <div id="search"></div>
+
+        <main data-pagefind-body>
             <section id="homepage-welcome">
                 <h2 data-key="welcomeTitle">Engedd szabadjára a kreativitásod!</h2>
                 <p data-key="welcomeText">Üdv a Prompt Lab-ben! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló AI művészet rajongóknak a lehető legjobb képeket alkotni. Itt minden eszközt megtalálsz, amire szükséged lehet a tökéletes prompt összeállításához.</p>
@@ -177,11 +179,17 @@
     </div>
 
     <script src="js/quotes-data.js"></script>
-    <script src="js/translations-data.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     
-    <script src="js/script.js"></script>
+    <script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
 
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 

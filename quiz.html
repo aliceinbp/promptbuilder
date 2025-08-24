@@ -66,7 +66,9 @@
             </div>
         </header>
 
-        <main>
+        <div id="search"></div>
+
+        <main data-pagefind-body>
             <section id="quiz-container">
                 <div id="quiz-start">
                     <h2 data-key="quizTitle">Melyik AI Művészeti Stílus Illik Hozzád?</h2>
@@ -100,8 +102,16 @@
     <div id="modal-overlay" class="hidden"></div>
     <div id="info-modal" class="modal hidden"></div>
 
-<script src="js/translations-data.js"></script>
-<script src="js/script.js"></script> <script>
+<script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
+    
 // A KVÍZ LOGIKA MOST MÁR A GLOBÁLIS FORDÍTÁSI FÁJLBÓL DOLGOZIK
 document.addEventListener('DOMContentLoaded', function() {
     const startBtn = document.getElementById('start-quiz-btn');

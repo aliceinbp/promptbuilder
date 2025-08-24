@@ -77,7 +77,10 @@
                 </nav>
             </div>
         </header>
-        <main>
+
+        <div id="search"></div>
+
+        <main data-pagefind-body>
             <div class="main-actions">
                 <button id="random-button"><i class="fa-solid fa-dice"></i> <span data-key="randomButton">Véletlen Prompt</span></button>
                 <button id="clear-all-button"><i class="fa-solid fa-trash-can"></i> <span data-key="clearAllButton">Mindent Töröl</span></button>
@@ -276,8 +279,16 @@
    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
    <script src="js/prompts-data.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-   <script src="js/translations-data.js"></script>
-   <script src="js/script.js"></script>
+   <script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
+    
    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>

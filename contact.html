@@ -62,12 +62,8 @@
 </nav>
             </div>
         </header>
-        </main>
-
         <div id="search"></div>
-
-        <footer>
-            <section class="contact-section">
+        <section class="contact-section">
     <title>Kapcsolat - Prompt Lab by Aliceinbp</title>
 <meta name="description" content="Kérdésed van a Prompt Lab-bel kapcsolatban? Vedd fel velünk a kapcsolatot ezen az oldalon!">
 
@@ -125,8 +121,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-<script src="js/translations-data.js"></script>
-<script src="js/script.js"></script>
+<script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
 
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>

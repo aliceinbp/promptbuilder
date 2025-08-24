@@ -1708,3 +1708,48 @@ body.light-theme #final-prompt-container .prompt-tag.active-weight {
     cursor: default !important;
     outline: none !important;
 }
+/* ===== Pagefind Search Styles ===== */
+#search-container {
+    padding: 0 40px 25px 40px;
+    margin-top: -15px;
+    border-bottom: 1px solid var(--color-border-accent);
+    margin-bottom: 30px;
+}
+
+.pagefind-ui__search-input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    transition: all 0.2s ease;
+}
+
+.pagefind-ui__search-input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 10px var(--color-shadow);
+}
+
+.pagefind-ui__modal {
+    background-color: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+body.light-theme .pagefind-ui__modal {
+     background-color: rgba(240, 242, 245, 0.8);
+}
+
+.pagefind-ui__result-link {
+    color: var(--color-primary-light) !important;
+}
+
+.pagefind-ui__result-title {
+    color: var(--color-text-main) !important;
+}
+
+.pagefind-ui__result-excerpt {
+    color: var(--color-text-secondary) !important;
+}

@@ -45,7 +45,9 @@
             
         </header>
 
-        <main>
+        <div id="search"></div>
+
+        <main data-pagefind-body>
             <section id="challenge-intro" style="text-align: center;">
                 <h2><i class="fa-solid fa-dice-d20"></i> <span data-key="challengeTitle">Prompt Kihívás</span></h2>
                 <p class="artist-subtitle" data-key="challengeIntro">Készen állsz egy kreatív kalandra? Pörgess egy véletlenszerű promptot, és mutasd meg, mit tudsz!</p>
@@ -114,9 +116,17 @@
         <p>❤️</p>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-<script src="js/translations-data.js"></script>
 <script src="js/prompts-data.js"></script> <script src="js/script.js"></script>
-<script src="js/script.js"></script>
+<script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
 
-    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a></body>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+</body>
 </html>

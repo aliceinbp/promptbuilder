@@ -62,18 +62,14 @@
             </div>
         </header>
 
-        </main>
-
-        <div id="search"></div>
-
-        <footer>
-
 <body>
     <div id="main-container">
         <header>
             </header>
 
-        <main>
+            <div id="search"></div>
+
+        <main data-pagefind-body>
             <section id="glossary-page">
                 <h2 style="text-align: center;"><i class="fa-solid fa-spell-check"></i> <span data-key="glossaryTitle">Stílus- és Fogalomtár</span></h2>
                 <p class="artist-subtitle" data-key="glossarySubtitle" style="text-align: center;">Kattints a nevekre a magyarázatért!</p>
@@ -171,8 +167,16 @@
         <p>❤️</p>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-<script src="js/translations-data.js"></script>
-<script src="js/script.js"></script>
+<script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
+    
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>

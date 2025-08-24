@@ -62,7 +62,9 @@
             </div>
         </header>
 
-        <main>
+        <div id="search"></div>
+
+        <main data-pagefind-body>
             <section id="handbook-intro" style="text-align: center;">
                 <h2><i class="fa-solid fa-book-open"></i> <span data-key="handbookTitle">Prompt Tudástár</span></h2>
                 <p class="artist-subtitle" data-key="handbookSubtitle" style="margin-bottom: 40px;">Minden, amit a tökéletes AI képekről tudni érdemes. Egy helyen.</p>
@@ -149,8 +151,15 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <script src="js/translations-data.js"></script>
-    <script src="js/script.js"></script>
+    <script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ez a függvény a script.js-ben lesz definiálva
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>
