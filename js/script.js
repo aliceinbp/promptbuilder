@@ -1,24 +1,20 @@
-// PROMPT LAB SCRIPT - PAGEFIND INTEGRÁCIÓVAL ÉS JAVÍTOTT ACCORDIONNAL
+// PROMPT LAB SCRIPT - VÉGLEGES JAVÍTÁSOKKAL
 document.addEventListener('DOMContentLoaded', function() {
-	// EXPLAINER MODAL LOGIC
+	// EXPLAINER MODAL LOGIC (VÁLTOZATLAN)
 	const explainerModal = document.getElementById('explainer-modal');
 	if (explainerModal) {
 		const explainerTitle = document.getElementById('explainer-modal-title');
 		const explainerText = document.getElementById('explainer-modal-text');
 		const explainerIcons = document.querySelectorAll('.explainer-icon');
 		const closeExplainerModalBtn = explainerModal.querySelector('.close-modal-btn');
-
 		explainerIcons.forEach(icon => {
 			icon.addEventListener('click', (e) => {
 				const category = e.currentTarget.dataset.category;
 				const lang = currentLanguage;
-				
 				const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 				let camelCaseCategory = category.replace(/_([a-z])/g, g => g[1].toUpperCase());
-
 				const titleKey = `explainerTitle${capitalize(camelCaseCategory)}`;
 				const textKey = `explainerText${capitalize(camelCaseCategory)}`;
-
 				if (translations[lang] && translations[lang][titleKey] && translations[lang][textKey]) {
 					explainerTitle.textContent = translations[lang][titleKey];
 					const rawText = translations[lang][textKey];
@@ -28,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			});
 		});
-
 		closeExplainerModalBtn.addEventListener('click', () => {
 			overlay.classList.add('hidden');
 			explainerModal.classList.add('hidden');
@@ -38,23 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	history.scrollRestoration = 'manual';
 	window.scrollTo(0, 0);
 
-	// ====================================================================
-	// ===== TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA =====
-	// ====================================================================
+	// TÉMAVÁLASZTÓ ÉS CUSDIS LOGIKA (VÁLTOZATLAN)
 	const themeToggleButton = document.getElementById('theme-toggle');
-	
 	function updateCusdisTheme(theme) {
 		const cusdisFrame = document.querySelector('#cusdis_thread iframe');
 		if (cusdisFrame) {
 			setTimeout(() => {
-				cusdisFrame.contentWindow.postMessage({
-					type: 'setTheme',
-					theme: theme
-				}, 'https://cusdis.com');
+				cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme }, 'https://cusdis.com');
 			}, 100);
 		}
 	}
-
 	function applyTheme(theme) {
 		const logo = document.getElementById('logo');
 		if (theme === 'light') {
@@ -68,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 		updateCusdisTheme(theme === 'light' ? 'light' : 'dark');
 	}
-	
 	function observeCusdis() {
 		const cusdisContainer = document.getElementById('cusdis_thread');
 		if (!cusdisContainer) return;
@@ -84,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 		observer.observe(cusdisContainer, { childList: true, subtree: true });
 	}
-
 	if (themeToggleButton) {
 		themeToggleButton.addEventListener('click', () => {
 			let newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
@@ -93,11 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 
-	// ====================================================================
-	// ===== NYELVKEZELÉS ÉS PAGEFIND INICIALIZÁLÁS =====
-	// ====================================================================
+	// NYELVKEZELÉS ÉS PAGEFIND INICIALIZÁLÁS
 	let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-    
     window.initializePagefind = () => {
         if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
             new PagefindUI({
@@ -113,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     };
-
 	window.setLanguage = function(lang) {
 		currentLanguage = lang;
 		localStorage.setItem('preferredLanguage', lang);
@@ -152,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
             initializePagefind();
         }
 	}
-
 	const langHu = document.getElementById('lang-hu');
 	const langEn = document.getElementById('lang-en');
 	if (langHu && langEn) {
@@ -160,13 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		langEn.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('en'); });
 	}
 
-	// ====================================================================
-	// ===== MODÁLIS ABLAKOK ÁLTALÁNOS LOGIKÁJA =====
-	// ====================================================================
+	// MODÁLIS ABLAKOK ÁLTALÁNOS LOGIKÁJA (VÁLTOZATLAN)
 	const overlay = document.getElementById('modal-overlay');
 	const infoModal = document.getElementById('info-modal');
 	const infoButton = document.getElementById('info-button');
-
 	if (infoButton && infoModal && overlay) {
 		const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
 		const open = () => { overlay.classList.remove('hidden'); infoModal.classList.remove('hidden'); };
@@ -174,13 +152,49 @@ document.addEventListener('DOMContentLoaded', function() {
 		infoButton.addEventListener('click', open);
 		closeInfoModalBtn.addEventListener('click', close);
 	}
-
 	if (overlay) {
 		overlay.addEventListener('click', () => {
 			document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
 			overlay.classList.add('hidden');
 		});
 	}
+
+	// ===== JAVÍTOTT ACCORDION LOGIKA (MINDEN OLDALRA) =====
+	const accordionItems = document.querySelectorAll('.accordion-item');
+	accordionItems.forEach(item => {
+		const header = item.querySelector('.accordion-header');
+		if (header) {
+			header.addEventListener('click', () => {
+				const content = item.querySelector('.accordion-content');
+				if (!content) return;
+
+				const wasActive = item.classList.contains('active');
+				
+				// Először minden mást bezárunk
+				document.querySelectorAll('.accordion-item').forEach(otherItem => {
+					if (otherItem !== item) {
+						otherItem.classList.remove('active');
+						const otherContent = otherItem.querySelector('.accordion-content');
+						if (otherContent) {
+							otherContent.style.maxHeight = null;
+						}
+					}
+				});
+
+				// Majd a kattintott elemet kezeljük
+				if (!wasActive) {
+					item.classList.add('active');
+					content.style.maxHeight = content.scrollHeight + "px";
+				} else {
+					item.classList.remove('active');
+					content.style.maxHeight = null;
+                }
+			});
+		}
+	});
+
+    // A GENERÁTOR ÉS MÁS OLDALAK LOGIKÁJA INNENTŐL VÁLTOZATLAN MARAD
+    // ... (Az összes többi függvény, mint pl. a generator, a galéria betöltése stb. itt következik)
 
 	// ====================================================================
 	// ===== GENERÁTOR OLDAL SPECIFIKUS LOGIKA =====
@@ -240,13 +254,15 @@ document.addEventListener('DOMContentLoaded', function() {
 					const finalTagOrder = finalTags.map(tag => tag.dataset.originalText);
 					
 					Object.values(tagContainers).forEach(container => {
-						const sourceTags = Array.from(container.querySelectorAll('.prompt-input-tag'));
-						sourceTags.sort((a, b) => {
-							const textA = a.firstChild.textContent.trim();
-							const textB = b.firstChild.textContent.trim();
-							return finalTagOrder.indexOf(textA) - finalTagOrder.indexOf(textB);
-						});
-						sourceTags.forEach(tag => container.appendChild(tag));
+						if (container) {
+							const sourceTags = Array.from(container.querySelectorAll('.prompt-input-tag'));
+							sourceTags.sort((a, b) => {
+								const textA = a.firstChild.textContent.trim();
+								const textB = b.firstChild.textContent.trim();
+								return finalTagOrder.indexOf(textA) - finalTagOrder.indexOf(textB);
+							});
+							sourceTags.forEach(tag => container.appendChild(tag));
+						}
 					});
 					updateFinalPrompt(true);
 				}
@@ -1147,38 +1163,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			localStorage.setItem('quoteClosedDay', dayOfYear);
 		});
 	}
-
-	// ===== JAVÍTOTT ACCORDION LOGIKA (MINDEN OLDALRA) =====
-	const accordionItems = document.querySelectorAll('.accordion-item');
-	accordionItems.forEach(item => {
-		const header = item.querySelector('.accordion-header');
-		if (header) {
-			header.addEventListener('click', () => {
-				const content = item.querySelector('.accordion-content');
-				const wasActive = item.classList.contains('active');
-				
-                // Először minden mást bezárunk
-				document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                    if (otherItem !== item) {
-					    otherItem.classList.remove('active');
-					    const otherContent = otherItem.querySelector('.accordion-content');
-					    if (otherContent) {
-						    otherContent.style.maxHeight = null;
-					    }
-                    }
-				});
-
-				// Majd a kattintott elemet kezeljük
-				if (!wasActive && content) {
-					item.classList.add('active');
-					content.style.maxHeight = content.scrollHeight + "px";
-				} else if (content) {
-                    item.classList.remove('active');
-					content.style.maxHeight = null;
-                }
-			});
-		}
-	});
 
 	// --- OLDAL INDÍTÁSA ---
 	const initialTheme = localStorage.getItem('theme') || 'dark';

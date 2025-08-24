@@ -1708,23 +1708,24 @@ body.light-theme #final-prompt-container .prompt-tag.active-weight {
     cursor: default !important;
     outline: none !important;
 }
-/* ===== Pagefind Search Styles ===== */
+/* ===== Pagefind Search Styles (Javított) ===== */
 #search-container {
-    padding: 0 40px 25px 40px;
-    margin-top: -15px;
+    padding: 20px 0 25px 0;
+    margin: 0 40px;
     border-bottom: 1px solid var(--color-border-accent);
-    margin-bottom: 30px;
 }
 
 .pagefind-ui__search-input {
     width: 100%;
-    padding: 12px 15px;
-    font-size: 1.1em;
-    border-radius: 8px;
+    padding: 8px 15px; /* Kisebb belső térköz */
+    font-size: 1em; /* Normál betűméret */
+    border-radius: 20px; /* Lekerekített sarkok */
     background-color: var(--color-surface-alt);
     border: 1px solid var(--color-border);
     color: var(--color-text-main);
     transition: all 0.2s ease;
+    max-width: 400px; /* Maximális szélesség, hogy ne legyen túl nagy */
+    margin: 0 auto; /* Középre igazítás */
 }
 
 .pagefind-ui__search-input:focus {
