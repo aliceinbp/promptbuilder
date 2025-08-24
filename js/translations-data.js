@@ -124,6 +124,9 @@ negativePromptPreset: "ugly, tiling, poorly drawn hands, poorly drawn feet, poor
 anatomyIntro: "Vidd az egeret a kiemelt prompt-részek fölé, és nézd meg, hogyan változtatják meg a képet valós időben!",
 kofiButtonText: "Támogass",
 kofiOverlayTitle: "Támogasd a Prompt Lab-et",
+newsletterLabel: "Iratkozz fel a Hírlevélre!",
+newsletterPlaceholder: "E-mail címed...",
+newsletterButtonTooltip: "Feliratkozás",
 
         quizTitle: "Melyik AI Művészeti Stílus Illik Hozzád?", quizIntro: "Töltsd ki ezt a 10 kérdéses kvízt, és fedezd fel a benned rejlő AI művészt! Válaszolj őszintén, hogy megtudd, melyik stílus fejezi ki leginkább a kreatív személyiségedet.", quizStartButton: "Kvíz Indítása!",
         quizResultTitle: "A te stílusod:", quizResultArtists: "Ajánlott művészek/stílusok a kipróbáláshoz:", quizResultCTA: "Próbáld ki ezeket a stílusokat a Generátorban!",
@@ -296,6 +299,9 @@ negativePromptPreset: "ugly, tiling, poorly drawn hands, poorly drawn feet, poor
 anatomyIntro: "Hover over the highlighted prompt fragments to see how they change the image in real-time!",
 kofiButtonText: "Support Me",
 kofiOverlayTitle: "Support the Prompt Lab",
+newsletterLabel: "Subscribe to the Newsletter!",
+newsletterPlaceholder: "Your e-mail...",
+newsletterButtonTooltip: "Subscribe",
 
         quizTitle: "Which AI Art Style Are You?", quizIntro: "Take this 10-question quiz and discover the AI artist within you! Answer honestly to find out which style best expresses your creative personality.", quizStartButton: "Start Quiz!",
         quizResultTitle: "Your style is:", quizResultArtists: "Recommended artists/styles to try:", quizResultCTA: "Try these styles in the Generator!",
