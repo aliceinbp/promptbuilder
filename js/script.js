@@ -1278,4 +1278,38 @@ if (negativePromptHelperBtn) {
 		}
 	}
 	loadSubmissions();
+	// A loadSubmissions(); SOR UTÁN ILLESZD BE:
+
+    function initializePromptAnatomy() {
+        const modules = document.querySelectorAll('.anatomy-module');
+        if (!modules.length) return;
+
+        modules.forEach(module => {
+            const imageElement = module.querySelector('.anatomy-image');
+            const baseImage = module.dataset.baseImage;
+            const interactiveSpans = module.querySelectorAll('.interactive-prompt');
+
+            interactiveSpans.forEach(span => {
+                const hoverImage = span.dataset.image;
+
+                span.addEventListener('mouseenter', () => {
+                    imageElement.style.opacity = '0.5';
+                    setTimeout(() => {
+                        imageElement.src = hoverImage;
+                        imageElement.style.opacity = '1';
+                    }, 200);
+                });
+
+                span.addEventListener('mouseleave', () => {
+                    imageElement.style.opacity = '0.5';
+                    setTimeout(() => {
+                        imageElement.src = baseImage;
+                        imageElement.style.opacity = '1';
+                    }, 200);
+                });
+            });
+        });
+    }
+
+    initializePromptAnatomy(); // Meghívjuk az új funkciót
 });

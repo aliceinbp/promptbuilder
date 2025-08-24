@@ -1980,3 +1980,86 @@ body.light-theme .pagefind-ui__modal {
 .utility-btn .fa-solid {
     font-size: 1.1em; /* Az ikon legyen picit nagyobb */
 }
+/* ======================================== */
+/* ===== PROMPT ANATÓMIA MODUL STÍLUS ===== */
+/* ======================================== */
+
+#prompt-anatomy .anatomy-intro {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#prompt-anatomy .anatomy-intro h2 {
+    font-family: 'Pacifico', cursive;
+    color: var(--color-primary-light);
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+#prompt-anatomy .anatomy-intro p {
+    font-size: 1.1em;
+    color: var(--color-text-secondary);
+}
+
+.anatomy-module {
+    display: flex;
+    gap: 30px;
+    background-color: var(--color-surface-alt);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    margin-bottom: 40px;
+}
+
+.anatomy-image-container {
+    flex: 1 1 50%; /* A rendelkezésre álló hely felét foglalja el */
+    min-width: 250px;
+}
+
+.anatomy-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--color-border);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.anatomy-prompt-container {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+}
+
+.interactive-prompt {
+    color: var(--color-primary-light);
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 2px dotted var(--color-primary-light);
+    transition: all 0.2s ease;
+}
+
+.interactive-prompt:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverted);
+    border-bottom-style: solid;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Mobilos nézet */
+@media (max-width: 800px) {
+    .anatomy-module {
+        flex-direction: column;
+    }
+    .prompt-text {
+        font-size: 1em;
+    }
+}

@@ -70,75 +70,23 @@
 </header>
 
         <main data-pagefind-body>
-    <section id="comparison-intro" style="text-align: center;">
-        <h2><i class="fa-solid fa-layer-group"></i> <span data-key="comparisonTitle">Összehasonlító Sarok</span></h2>
-        <p class="artist-subtitle" data-key="comparisonSubtitle">Egy kép többet ér ezer szónál. Nézd meg, hogyan változtatja meg ugyanazt az ötletet egyetlen kulcsszó!</p>
-    </section>
+    <section id="prompt-anatomy">
+        <div class="anatomy-intro">
+            <h2 data-key="comparisonTitle">Összehasonlító Sarok</h2>
+            <p>Vidd az egeret a kiemelt prompt-részek fölé, és nézd meg, hogyan változtatják meg a képet valós időben!</p>
+        </div>
 
-    <section class="comparison-set">
-        <h3 data-key="compSetArtists">1. Szett: Művész Stílusok</h3>
-        <div class="comparison-grid">
-            <div class="comparison-item">
-                <img src="src/comp-elf-original.jpg" alt="Elf királynő alap prompt">
-                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"portrait of a beautiful elven queen..."</p>
+        <article class="anatomy-module" data-base-image="src/lighthouse-original.jpg">
+            <div class="anatomy-image-container">
+                <img src="src/lighthouse-original.jpg" alt="Prompt Anatomy Image" class="anatomy-image">
             </div>
-            <div class="comparison-item">
-                <img src="src/comp-elf-mucha.jpg" alt="Elf királynő Mucha stílusában">
-                <p class="comparison-prompt">"... in the style of <strong>Alphonse Mucha</strong>"</p>
+            <div class="anatomy-prompt-container">
+                <p class="prompt-text">
+                    a lonely lighthouse on a rocky shore, <span class="interactive-prompt" data-image="src/lighthouse-watercolor.jpg">beautiful watercolor painting</span>, <span class="interactive-prompt" data-image="src/lighthouse-photorealistic.jpg">photorealistic, 8k, detailed</span>, <span class="interactive-prompt" data-image="src/lighthouse-ukiyo-e.jpg">ukiyo-e style illustration</span>
+                </p>
             </div>
-            <div class="comparison-item">
-                <img src="src/comp-elf-giger.jpg" alt="Elf királynő Giger stílusában">
-                <p class="comparison-prompt">"... in the style of <strong>H.R. Giger</strong>"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/comp-elf-miyazaki.jpg" alt="Elf királynő Miyazaki stílusában">
-                <p class="comparison-prompt">"... in the style of <strong>Hayao Miyazaki</strong>"</p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="comparison-set">
-        <h3 data-key="compSetTech">2. Szett: Technikai Stílusok</h3>
-        <div class="comparison-grid">
-            <div class="comparison-item">
-                <img src="src/lighthouse-original.jpg" alt="Világítótorony alap prompt">
-                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"a lonely lighthouse on a rocky shore..."</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/lighthouse-watercolor.jpg" alt="Világítótorony akvarell">
-                <p class="comparison-prompt">"... beautiful <strong>watercolor painting</strong>"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/lighthouse-photorealistic.jpg" alt="Világítótorony fotó">
-                <p class="comparison-prompt">"... <strong>photorealistic</strong>, 8k, detailed"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/lighthouse-ukiyo-e.jpg" alt="Világítótorony ukiyo-e">
-                <p class="comparison-prompt">"... <strong>ukiyo-e style</strong> illustration"</p>
-            </div>
-        </div>
-    </section>
+        </article>
 
-    <section class="comparison-set">
-        <h3 data-key="compSetWorlds">Tematikus Világok</h3>
-        <div class="comparison-grid">
-            <div class="comparison-item">
-                <img src="src/couple-original.jpg" alt="Szerelmespár alap prompt">
-                <p class="comparison-prompt"><strong data-key="compSetBasePrompt">Alap Prompt:</strong><br>"A couple in love is sitting on a cafe terrace"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/couple-cyberpunk.jpg" alt="Szerelmespár cyberpunk">
-                <p class="comparison-prompt">"... <strong>cyberpunk</strong>, neon lighting"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/couple-steampunk.jpg" alt="Szerelmespár steampunk">
-                <p class="comparison-prompt">"... <strong>steampunk</strong>, brass and gears, victorian"</p>
-            </div>
-            <div class="comparison-item">
-                <img src="src/couple-solarpunk.jpg" alt="Szerelmespár solarpunk">
-                <p class="comparison-prompt">"... <strong>solarpunk</strong>, lush greenery, clean energy"</p>
-            </div>
-        </div>
     </section>
 </main>
 
