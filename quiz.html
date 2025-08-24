@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WC7RDXV8C1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WC7RDXV8C1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-WC7RDXV8C1');
-</script>
+      gtag('config', 'G-WC7RDXV8C1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Művészeti Stílus Kvíz - Prompt Lab by Aliceinbp</title>
@@ -34,43 +33,60 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        
+    
     <style>
-        /* A CSS STÍLUSOK VÁLTOZATLANOK MARADNAK */
-        #quiz-container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: var(--background-color-light); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); } .quiz-question { display: none; animation: fadeIn 0.5s ease-in-out; } .quiz-question.active { display: block; } #quiz-container h2, #quiz-container h3 { text-align: center; color: var(--accent-color-1); } .quiz-answers { list-style-type: none; padding: 0; margin: 2rem 0; display: grid; grid-template-columns: 1fr; gap: 1rem; } @media (min-width: 600px) { .quiz-answers { grid-template-columns: 1fr 1fr; } } .quiz-answers li { padding: 1rem; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; background: var(--background-color); } .quiz-answers li:hover { background: var(--accent-color-1-light); border-color: var(--accent-color-1); transform: translateY(-2px); } #progress-bar-container { width: 100%; background-color: var(--border-color); border-radius: 5px; margin-top: 1.5rem; } #progress-bar { width: 0%; height: 10px; background-color: var(--accent-color-1); border-radius: 5px; transition: width 0.3s ease; } #quiz-result { display: none; text-align: center; animation: fadeIn 0.8s ease-in-out; } #quiz-result img { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; border: 3px solid var(--border-color); } .result-artists { font-style: italic; color: var(--text-color-light); } .share-buttons { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; } .share-buttons a { text-decoration: none; color: white; padding: 0.8rem 1.2rem; border-radius: 5px; font-size: 1.2rem; transition: opacity 0.2s ease; } .share-buttons a:hover { opacity: 0.8; } .share-twitter { background: #1DA1F2; } .share-facebook { background: #1877F2; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #quiz-container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: var(--color-surface-alt); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid var(--color-border); }
+        .quiz-question { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .quiz-question.active { display: block; }
+        #quiz-container h2, #quiz-container h3 { text-align: center; color: var(--color-primary-light); }
+        .quiz-answers { list-style-type: none; padding: 0; margin: 2rem 0; display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 600px) { .quiz-answers { grid-template-columns: 1fr 1fr; } }
+        .quiz-answers li { padding: 1rem; border: 2px solid var(--color-border); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; background-color: var(--color-surface); }
+        .quiz-answers li:hover { background-color: var(--color-primary); color: var(--color-text-inverted); border-color: var(--color-primary-light); transform: translateY(-2px); }
+        #progress-bar-container { width: 100%; background-color: var(--color-border); border-radius: 5px; margin-top: 1.5rem; }
+        #progress-bar { width: 0%; height: 10px; background-color: var(--color-primary); border-radius: 5px; transition: width 0.3s ease; }
+        #quiz-result { display: none; text-align: center; animation: fadeIn 0.8s ease-in-out; }
+        #quiz-result img { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; border: 3px solid var(--color-border); }
+        .result-artists { font-style: italic; color: var(--color-text-secondary); }
+        .share-buttons { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; }
+        .share-buttons a { text-decoration: none; color: white; padding: 0.8rem 1.2rem; border-radius: 5px; font-size: 1.2rem; transition: opacity 0.2s ease; }
+        .share-buttons a:hover { opacity: 0.8; }
+        .share-twitter { background: #1DA1F2; }
+        .share-facebook { background: #1877F2; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div id="main-container">
         <header>
-    <div id="header-top-row">
-        <div class="header-icons-left">
-            <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
-            <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
-        </div>
-        <div id="lang-switcher">
-            <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
-        </div>
-    </div>
-    <div id="logo-container">
-        <img src="src/myLogo.jpg" alt="My Logo" id="logo">
-    </div>
-    <h1>★ Prompt Lab ★</h1>
-    <p data-key="siteSubtitle">AI Képalkotó Segédlet by Aliceinbp</p>
-    <div id="header-nav-container">
-        <nav id="main-nav">
-            <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
-            <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Generátor</span></a>
-            <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
-            <a href="kisokos.html"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
-            <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
-            <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
-        </nav>
-    </div>
-    <div id="search-container">
-        <div id="search"></div>
-    </div>
-</header>
+            <div id="header-top-row">
+                <div class="header-icons-left">
+                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
+                    <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
+                </div>
+                <div id="lang-switcher">
+                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
+                </div>
+            </div>
+            <div id="logo-container">
+                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            </div>
+            <h1>★ Prompt Lab ★</h1>
+            <p data-key="siteSubtitle">AI Képalkotó Segédlet by Aliceinbp</p>
+            <div id="header-nav-container">
+                <nav id="main-nav">
+                    <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
+                    <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Generátor</span></a>
+                    <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
+                    <a href="kisokos.html" class="active"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
+                    <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
+                    <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
+                </nav>
+            </div>
+            <div id="search-container">
+                <div id="search"></div>
+            </div>
+        </header>
 
         <main data-pagefind-body>
             <section id="quiz-container">
@@ -90,7 +106,6 @@
             <div class="footer-item footer-socials">
                 <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
             </div>
-
             <div class="footer-item">
                 <a href="contact.html" data-key="navContact"><i class="fa-solid fa-paper-plane"></i> Kapcsolat</a>
             </div>
@@ -104,130 +119,129 @@
     </div>
     
     <div id="modal-overlay" class="hidden"></div>
-    <div id="info-modal" class="modal hidden"></div>
+    <div id="info-modal" class="modal hidden">
+        <button id="close-info-modal" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+        <h2 data-key="infoModalTitle">A Prompt Lab-ről</h2>
+        <p data-key="infoModalText1">Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.</p>
+        <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
+        <p>❤️</p>
+    </div>
 
-<script src="/pagefind/pagefind-ui.js"></script>
+    <script src="js/translations-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="/pagefind/pagefind-ui.js"></script>
+
     <script>
+        // PAGEFIND INICIALIZÁLÁSA
         window.addEventListener('DOMContentLoaded', () => {
-            // Ez a függvény a script.js-ben lesz definiálva
             if(typeof initializePagefind === "function") {
                 initializePagefind();
             }
         });
-    </script>
 
-// A KVÍZ LOGIKA MOST MÁR A GLOBÁLIS FORDÍTÁSI FÁJLBÓL DOLGOZIK
-document.addEventListener('DOMContentLoaded', function() {
-    const startBtn = document.getElementById('start-quiz-btn');
-    if (!startBtn) return; // Ne fusson le más oldalakon
+        // A KVÍZ LOGIKA
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('start-quiz-btn');
+            if (!startBtn) return;
 
-    // VÁLTOZÁS: Globális elemek elérése, amiket a script.js már inicializált
-    const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-
-    // VÁLTOZÁS: Az adatokat a translations objektumból vesszük
-    const quizData = translations[currentLanguage]; 
-    if (!quizData || !quizData.quizQuestions) {
-        console.error("Quiz data not found for language:", currentLanguage);
-        return;
-    }
-
-    const quizStartDiv = document.getElementById('quiz-start');
-    const questionsDiv = document.getElementById('quiz-questions');
-    const resultDiv = document.getElementById('quiz-result');
-    const progressBarContainer = document.getElementById('progress-bar-container');
-    const progressBar = document.getElementById('progress-bar');
-    
-    let currentQuestionIndex = 0;
-    let scores = { epicFantasist: 0, artNouveauDreamer: 0, surrealVisionary: 0, modernistRebel: 0, masterOfLight: 0 };
-
-    startBtn.addEventListener('click', startQuiz);
-
-    function startQuiz() {
-        quizStartDiv.classList.add('hidden');
-        questionsDiv.classList.remove('hidden');
-        progressBarContainer.classList.remove('hidden');
-        displayQuestion();
-    }
-
-    function displayQuestion() {
-        const questionData = quizData.quizQuestions[currentQuestionIndex];
-        let answersHTML = questionData.answers.map(answer => 
-            `<li data-style="${answer.style}">${answer.text}</li>`
-        ).join('');
-
-        questionsDiv.innerHTML = `
-            <div class="quiz-question active">
-                <h3>${currentQuestionIndex + 1}. ${questionData.question}</h3>
-                <ul class="quiz-answers">${answersHTML}</ul>
-            </div>
-        `;
-        
-        updateProgressBar();
-        
-        document.querySelectorAll('.quiz-answers li').forEach(item => {
-            item.addEventListener('click', handleAnswerClick);
-        });
-    }
-    
-    function handleAnswerClick(e) {
-        const selectedStyle = e.target.dataset.style;
-        scores[selectedStyle]++;
-        currentQuestionIndex++;
-        
-        if (currentQuestionIndex < quizData.quizQuestions.length) {
-            displayQuestion();
-        } else {
-            showResult();
-        }
-    }
-    
-    function updateProgressBar() {
-        const progress = (currentQuestionIndex / quizData.quizQuestions.length) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
-
-    function showResult() {
-        progressBar.style.width = `100%`;
-        
-        let maxScore = -1;
-        let resultStyle = '';
-        for (const style in scores) {
-            if (scores[style] > maxScore) {
-                maxScore = scores[style];
-                resultStyle = style;
+            const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+            const quizData = translations[currentLanguage]; 
+            if (!quizData || !quizData.quizQuestions) {
+                console.error("Quiz data not found for language:", currentLanguage);
+                return;
             }
-        }
-        
-        const resultData = quizData.quizResults[resultStyle];
-        const siteUrl = 'https://aliceinbp.com/quiz.html';
-        
-        // VÁLTOZÁS: A megosztási szöveget is a fordításból vesszük
-        const shareTextRaw = quizData.quizShareText || "My AI art style is: {style}! Find yours!";
-        const shareText = encodeURIComponent(shareTextRaw.replace('{style}', resultData.title));
 
-        questionsDiv.classList.add('hidden');
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-            <h2><span data-key="quizResultTitle">${quizData.quizResultTitle}</span> ${resultData.title}</h2>
-            <img src="src/quiz-results/${resultStyle.replace(/([A-Z])/g, "-$1").toLowerCase()}.jpg" alt="${resultData.title}">
-            <p>${resultData.description}</p>
-            <p class="result-artists"><strong><span data-key="quizResultArtists">${quizData.quizResultArtists}</span></strong> ${resultData.artists}</p>
-            <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA">${quizData.quizResultCTA}</a>
-            <div class="share-buttons">
-                <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${siteUrl}" target="_blank" class="share-twitter" title="${quizData.quizShareTwitter}"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${siteUrl}&quote=${shareText}" target="_blank" class="share-facebook" title="${quizData.quizShareFacebook}"><i class="fa-brands fa-facebook-f"></i></a>
-            </div>
-        `;
-    }
-});
-</script>
-<script src="/pagefind/pagefind-ui.js"></script>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        if(typeof initializePagefind === "function") {
-            initializePagefind();
-        }
-    });
-</script>
+            const quizStartDiv = document.getElementById('quiz-start');
+            const questionsDiv = document.getElementById('quiz-questions');
+            const resultDiv = document.getElementById('quiz-result');
+            const progressBarContainer = document.getElementById('progress-bar-container');
+            const progressBar = document.getElementById('progress-bar');
+            
+            let currentQuestionIndex = 0;
+            let scores = { epicFantasist: 0, artNouveauDreamer: 0, surrealVisionary: 0, modernistRebel: 0, masterOfLight: 0 };
+
+            startBtn.addEventListener('click', startQuiz);
+
+            function startQuiz() {
+                quizStartDiv.classList.add('hidden');
+                questionsDiv.classList.remove('hidden');
+                progressBarContainer.classList.remove('hidden');
+                displayQuestion();
+            }
+
+            function displayQuestion() {
+                const questionData = quizData.quizQuestions[currentQuestionIndex];
+                let answersHTML = questionData.answers.map(answer => 
+                    `<li data-style="${answer.style}">${answer.text}</li>`
+                ).join('');
+
+                questionsDiv.innerHTML = `
+                    <div class="quiz-question active">
+                        <h3>${currentQuestionIndex + 1}. ${questionData.question}</h3>
+                        <ul class="quiz-answers">${answersHTML}</ul>
+                    </div>
+                `;
+                
+                updateProgressBar();
+                
+                document.querySelectorAll('.quiz-answers li').forEach(item => {
+                    item.addEventListener('click', handleAnswerClick);
+                });
+            }
+            
+            function handleAnswerClick(e) {
+                const selectedStyle = e.target.dataset.style;
+                scores[selectedStyle]++;
+                currentQuestionIndex++;
+                
+                if (currentQuestionIndex < quizData.quizQuestions.length) {
+                    displayQuestion();
+                } else {
+                    showResult();
+                }
+            }
+            
+            function updateProgressBar() {
+                const progress = (currentQuestionIndex / quizData.quizQuestions.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function showResult() {
+                progressBar.style.width = `100%`;
+                
+                let maxScore = -1;
+                let resultStyle = '';
+                for (const style in scores) {
+                    if (scores[style] > maxScore) {
+                        maxScore = scores[style];
+                        resultStyle = style;
+                    }
+                }
+                
+                const resultData = quizData.quizResults[resultStyle];
+                const siteUrl = 'https://aliceinbp.com/quiz.html';
+                
+                const shareTextRaw = quizData.quizShareText || "My AI art style is: {style}! Find yours!";
+                const shareText = encodeURIComponent(shareTextRaw.replace('{style}', resultData.title));
+
+                questionsDiv.classList.add('hidden');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h2><span data-key="quizResultTitle">${quizData.quizResultTitle}</span> ${resultData.title}</h2>
+                    <img src="src/quiz-results/${resultStyle.replace(/([A-Z])/g, "-$1").toLowerCase()}.jpg" alt="${resultData.title}">
+                    <p>${resultData.description}</p>
+                    <p class="result-artists"><strong><span data-key="quizResultArtists">${quizData.quizResultArtists}</span></strong> ${resultData.artists}</p>
+                    <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA">${quizData.quizResultCTA}</a>
+                    <div class="share-buttons">
+                        <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${siteUrl}" target="_blank" class="share-twitter" title="${quizData.quizShareTwitter}"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${siteUrl}&quote=${shareText}" target="_blank" class="share-facebook" title="${quizData.quizShareFacebook}"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                `;
+                // Újra le kell futtatni a fordítást az eredményen is
+                window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
+            }
+        });
+    </script>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>
