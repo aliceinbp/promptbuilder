@@ -130,9 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (typeof initializeGenerator === 'function') {
 			initializeGenerator();
 		}
-        if (typeof initializePagefind === 'function') {
-            initializePagefind();
-        }
+        
 	}
 	const langHu = document.getElementById('lang-hu');
 	const langEn = document.getElementById('lang-en');
