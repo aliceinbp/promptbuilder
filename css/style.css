@@ -1784,7 +1784,22 @@ body.light-theme .pagefind-ui__modal {
     stroke: var(--color-text-subtle) !important;
 }
 
-/* A "Törlés" gomb (az 'x' a mezőben) */
+/* EZ A JAVÍTOTT, VÉGLEGES KÓD */
+/* A "Törlés" gomb */
 #search-container .pagefind-ui__search-clear {
-    color: var(--color-text-subtle) !important;
+    background-color: var(--color-surface-alt) !important; /* A háttér legyen sötét */
+    border: 1px solid var(--color-border) !important;     /* Kapjon egy finom keretet */
+    color: var(--color-text-subtle) !important;          /* A szöveg színe legyen szürke */
+    font-size: 0.8em !important;                         /* Kisebb betűméret */
+    padding: 4px 10px !important;                        /* Kisebb belső tér */
+    border-radius: 15px !important;                      /* Lekerekítés */
+    cursor: pointer !important;                          /* Mutasson egérkurzort */
+    transition: all 0.2s ease !important;                /* Finom átmenet */
+}
+
+/* "Törlés" gomb, ha fölé viszed az egeret */
+#search-container .pagefind-ui__search-clear:hover {
+    background-color: var(--color-primary) !important;      /* Legyen lila a háttér */
+    color: var(--color-text-inverted) !important;       /* A szöveg legyen sötét/kontrasztos */
+    border-color: var(--color-primary) !important;          /* A keret is legyen lila */
 }
