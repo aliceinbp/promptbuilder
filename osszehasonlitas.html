@@ -115,30 +115,42 @@
     </section>
 </main>
 
-        <footer>
-    <div class="footer-item footer-socials">
-        <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
+        <footer class="footer-main">
+    <div class="footer-top">
+        <div class="footer-widget">
+            <h4 data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</h4>
+            <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
+                <input type="hidden" name="form-name" value="newsletter" />
+                <div class="newsletter-input-group">
+                    <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
+                    <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="footer-widget">
+            <h4>Támogasd a Projektet!</h4>
+            <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
+                <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
+                Támogass egy kávéval
+            </a>
+        </div>
     </div>
 
-    <div class="footer-item">
-        <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
-            <input type="hidden" name="form-name" value="newsletter" />
-            <label for="newsletter-email" data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</label>
-            <div class="newsletter-input-group">
-                <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
-                <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-        </form>
+    <div class="footer-middle">
+        <div class="footer-links">
+            <a href="contact.html" data-key="navContact">Kapcsolat</a>
+            <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's Creations</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
+        </div>
     </div>
 
-    <div class="footer-item">
-        <a href="contact.html" data-key="navContact"><i class="fa-solid fa-paper-plane"></i> Kapcsolat</a>
-    </div>
-    <div class="footer-item">
-        <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank"><i class="fa-solid fa-heart"></i> Alicebp's creations</a>
-    </div>
-    <div class="footer-item" id="visitor-counter">
-        <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+    <div class="footer-bottom">
+        <div id="visitor-counter">
+             <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+        </div>
+        <p class="copyright-text">&copy; 2025 Prompt Lab by Aliceinbp. Minden jog fenntartva.</p>
     </div>
 </footer>
     </div>
