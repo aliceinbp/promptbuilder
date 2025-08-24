@@ -1,4 +1,4 @@
-// PROMPT LAB SCRIPT - PAGEFIND INTEGRÁCIÓVAL
+// PROMPT LAB SCRIPT - PAGEFIND INTEGRÁCIÓVAL ÉS JAVÍTOTT ACCORDIONNAL
 document.addEventListener('DOMContentLoaded', function() {
 	// EXPLAINER MODAL LOGIC
 	const explainerModal = document.getElementById('explainer-modal');
@@ -98,9 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	// ====================================================================
 	let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
     
-    // Globális függvény a Pagefind inicializálásához
     window.initializePagefind = () => {
-        if (typeof PagefindUI !== 'undefined') {
+        if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
             new PagefindUI({
                 element: "#search",
                 showSubResults: true,
@@ -149,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (typeof initializeGenerator === 'function') {
 			initializeGenerator();
 		}
-        // Minden nyelvváltáskor újra inicializáljuk a keresőt a megfelelő nyelvvel
         if (typeof initializePagefind === 'function') {
             initializePagefind();
         }
@@ -1102,7 +1100,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				${likeBtnHtml} 
 			`;
 
-			// ITT A VÉGLEGES MEGOLDÁS: A parancsot a várólistára tesszük.
 			if (window.likebtn_queue) {
 				window.likebtn_queue.push({
 					init: true
@@ -1151,7 +1148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 
-	// ===== JAVÍTOTT ACCORDION LOGIKA =====
+	// ===== JAVÍTOTT ACCORDION LOGIKA (MINDEN OLDALRA) =====
 	const accordionItems = document.querySelectorAll('.accordion-item');
 	accordionItems.forEach(item => {
 		const header = item.querySelector('.accordion-header');
@@ -1160,9 +1157,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				const content = item.querySelector('.accordion-content');
 				const wasActive = item.classList.contains('active');
 				
-				// Ez a rész bezárja az ÖSSZES accordion-t az oldalon, mielőtt kinyitná a megfelelőt
+                // Először minden mást bezárunk
 				document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                    if (otherItem !== item) { // Csak a többi elemet zárjuk be
+                    if (otherItem !== item) {
 					    otherItem.classList.remove('active');
 					    const otherContent = otherItem.querySelector('.accordion-content');
 					    if (otherContent) {
@@ -1171,10 +1168,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 				});
 
+				// Majd a kattintott elemet kezeljük
 				if (!wasActive && content) {
 					item.classList.add('active');
 					content.style.maxHeight = content.scrollHeight + "px";
-				} else {
+				} else if (content) {
                     item.classList.remove('active');
 					content.style.maxHeight = null;
                 }

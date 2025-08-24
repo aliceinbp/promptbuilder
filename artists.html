@@ -117,8 +117,11 @@
 </nav>
     
             </div>
+            <div id="search-container">
+    <div id="search"></div>
+</div>
         </header>
-        <div id="search"></div>
+        
 
         <main data-pagefind-body>
     <section id="artists-section">
@@ -169,14 +172,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
 <script src="/pagefind/pagefind-ui.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            // Ez a függvény a script.js-ben lesz definiálva
-            if(typeof initializePagefind === "function") {
-                initializePagefind();
-            }
-        });
-    </script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        if(typeof initializePagefind === "function") {
+            initializePagefind();
+        }
+    });
+</script>
 
    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>

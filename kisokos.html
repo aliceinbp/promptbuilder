@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js/id=G-WC7RDXV8C1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WC7RDXV8C1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -32,6 +32,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+
 </head>
 <body>
     <div id="main-container">
@@ -60,9 +63,10 @@
                     <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
                 </nav>
             </div>
+             <div id="search-container">
+                <div id="search"></div>
+            </div>
         </header>
-
-        <div id="search"></div>
 
         <main data-pagefind-body>
             <section id="handbook-intro" style="text-align: center;">
@@ -73,36 +77,36 @@
             <div class="handbook-grid">
                 <div class="daily-feature-box">
                     <h3><i class="fa-solid fa-spell-check"></i> <span data-key="glossaryTitle">Stílus- és Fogalomtár</span></h3>
-                    <p data-key="handbookCardGlossaryDesc"></p>
-                    <a href="fogalomtar.html" class="cta-button-small" data-key="handbookCardGlossaryBtn"></a>
+                    <p data-key="handbookCardGlossaryDesc">Nem tudod, mit jelent a 'noir', a 'steampunk' vagy a 'cinematic lighting'? Itt mindent megtalálsz egy helyen, egyszerűen elmagyarázva.</p>
+                    <a href="fogalomtar.html" class="cta-button-small" data-key="handbookCardGlossaryBtn">Irány a Fogalomtár!</a>
                 </div>
                 
                 <div class="daily-feature-box">
                     <h3><i class="fa-solid fa-layer-group"></i> <span data-key="comparisonTitle">Összehasonlító Sarok</span></h3>
-                    <p data-key="handbookCardCompDesc"></p>
-                    <a href="osszehasonlitas.html" class="cta-button-small" data-key="handbookCardCompBtn"></a>
+                    <p data-key="handbookCardCompDesc">Lásd a különbséget! Vizuális útmutató, ami megmutatja, hogyan változtatja meg ugyanazt a képet egy-egy kulcsszó vagy művész.</p>
+                    <a href="osszehasonlitas.html" class="cta-button-small" data-key="handbookCardCompBtn">Irány az Összehasonlító!</a>
                 </div>
 
                 <div class="daily-feature-box">
                     <h3><i class="fa-solid fa-palette"></i> <span data-key="artistsTitle">Művész Adatbázis</span></h3>
-                    <p data-key="handbookCardArtistsDesc"></p>
-                    <a href="artists.html" class="cta-button-small" data-key="handbookCardArtistsBtn"></a>
+                    <p data-key="handbookCardArtistsDesc">Ismerd meg a legismertebb művészek stílusát, akiket az AI is ismer! Böngészhető adatbázis a tökéletes inspirációért.</p>
+                    <a href="artists.html" class="cta-button-small" data-key="handbookCardArtistsBtn">Művészek Böngészése</a>
                 </div>
 
                 <div class="daily-feature-box">
                     <h3><i class="fa-solid fa-compass"></i> <span data-key="linksTitle">Ajánlott AI Képalkotók</span></h3>
-                    <p data-key="handbookCardLinksDesc"></p>
-                    <a href="links.html" class="cta-button-small" data-key="handbookCardLinksBtn"></a>
+                    <p data-key="handbookCardLinksDesc">Nem tudod, hol kezdd az alkotást? Összegyűjtöttem a legjobb ingyenes és fizetős AI képalkotó oldalakat egy helyre.</p>
+                    <a href="links.html" class="cta-button-small" data-key="handbookCardLinksBtn">Irány az Ajánlások!</a>
                 </div>
 
                 <div class="daily-feature-box">
                     <h3><i class="fa-solid fa-graduation-cap"></i> <span data-key="basicsTitle">A Promptolás Alapjai</span></h3>
-                    <p data-key="handbookCardBasicsDesc"></p>
-                    <a href="blog.html" class="cta-button-small" data-key="handbookCardBasicsBtn"></a>
+                    <p data-key="handbookCardBasicsDesc">Hogyan épül fel egy jó prompt? Mi az a negatív prompt? Ismerd meg az alapokat, hogy a legtöbbet hozhasd ki az AI-ból!</p>
+                    <a href="blog.html" class="cta-button-small" data-key="handbookCardBasicsBtn">Irány a Blog!</a>
                 </div>
 
                 <div class="daily-feature-box" style="grid-column: 1 / -1;">
-                    <h3 style="font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 1.8em;"><i class="fa-solid fa-circle-question"></i> <span data-key="handbookMoreTipsTitle"></span></h3>
+                    <h3 style="font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 1.8em;"><i class="fa-solid fa-circle-question"></i> <span data-key="handbookMoreTipsTitle">További Tippek és Gyakori Kérdések</span></h3>
                     <div class="accordion" style="margin-top: 20px;">
                         <div class="accordion-item">
                             <button class="accordion-header" data-key="faqWhyEnglishTitle"></button>
@@ -122,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                 </div>
+            </div>
         </main>
 
         <footer>
@@ -151,15 +155,16 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="js/translations-data.js"></script>
+    <script src="js/script.js"></script>
     <script src="/pagefind/pagefind-ui.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            // Ez a függvény a script.js-ben lesz definiálva
-            if(typeof initializePagefind === "function") {
-                initializePagefind();
-            }
-        });
-    </script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        if(typeof initializePagefind === "function") {
+            initializePagefind();
+        }
+    });
+</script>
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
 </html>

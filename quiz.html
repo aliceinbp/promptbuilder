@@ -32,6 +32,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    
     <style>
         /* A CSS STÍLUSOK VÁLTOZATLANOK MARADNAK */
         #quiz-container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: var(--background-color-light); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); } .quiz-question { display: none; animation: fadeIn 0.5s ease-in-out; } .quiz-question.active { display: block; } #quiz-container h2, #quiz-container h3 { text-align: center; color: var(--accent-color-1); } .quiz-answers { list-style-type: none; padding: 0; margin: 2rem 0; display: grid; grid-template-columns: 1fr; gap: 1rem; } @media (min-width: 600px) { .quiz-answers { grid-template-columns: 1fr 1fr; } } .quiz-answers li { padding: 1rem; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; background: var(--background-color); } .quiz-answers li:hover { background: var(--accent-color-1-light); border-color: var(--accent-color-1); transform: translateY(-2px); } #progress-bar-container { width: 100%; background-color: var(--border-color); border-radius: 5px; margin-top: 1.5rem; } #progress-bar { width: 0%; height: 10px; background-color: var(--accent-color-1); border-radius: 5px; transition: width 0.3s ease; } #quiz-result { display: none; text-align: center; animation: fadeIn 0.8s ease-in-out; } #quiz-result img { max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; border: 3px solid var(--border-color); } .result-artists { font-style: italic; color: var(--text-color-light); } .share-buttons { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; } .share-buttons a { text-decoration: none; color: white; padding: 0.8rem 1.2rem; border-radius: 5px; font-size: 1.2rem; transition: opacity 0.2s ease; } .share-buttons a:hover { opacity: 0.8; } .share-twitter { background: #1DA1F2; } .share-facebook { background: #1877F2; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -64,9 +66,12 @@
     <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
 </nav>
             </div>
-        </header>
 
-        <div id="search"></div>
+<div id="search-container">
+    <div id="search"></div>
+</div>
+
+        </header>
 
         <main data-pagefind-body>
             <section id="quiz-container">
@@ -111,7 +116,7 @@
             }
         });
     </script>
-    
+
 // A KVÍZ LOGIKA MOST MÁR A GLOBÁLIS FORDÍTÁSI FÁJLBÓL DOLGOZIK
 document.addEventListener('DOMContentLoaded', function() {
     const startBtn = document.getElementById('start-quiz-btn');
@@ -217,6 +222,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        if(typeof initializePagefind === "function") {
+            initializePagefind();
+        }
+    });
+</script>
 </body>
 </html>
