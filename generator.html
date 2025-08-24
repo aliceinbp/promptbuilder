@@ -189,7 +189,21 @@
             </div>
             
             <div class="negative-prompt-section">
-                <label for="negative-prompt"><i class="fa-solid fa-ban"></i> <span data-key="negativePromptLabel">Negatív Prompt</span><i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i><button id="copy-negative-button" class="copy-small-btn" data-key-title="copyNegativeTooltip"><i class="fa-solid fa-copy"></i></button></label>
+                <label for="negative-prompt">
+    <i class="fa-solid fa-ban"></i> 
+    <span data-key="negativePromptLabel">Negatív Prompt</span>
+    <i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i>
+    
+    <div class="label-buttons">
+        <button id="negative-prompt-helper-btn" class="utility-btn" data-key-title="negativeHelperTooltip">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span data-key="negativeHelperBtn">Segítség</span>
+        </button>
+        <button id="copy-negative-button" class="utility-btn" data-key-title="copyNegativeTooltip">
+            <i class="fa-solid fa-copy"></i>
+        </button>
+    </div>
+</label>
                 <textarea id="negative-prompt" rows="3" data-key="negativePromptPlaceholder" placeholder="..."></textarea>
             </div>
             

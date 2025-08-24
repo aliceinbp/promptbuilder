@@ -1942,3 +1942,41 @@ body.light-theme .pagefind-ui__modal {
 .share-btn.facebook {
     background-color: #1877F2;
 }
+/* ======================================== */
+/* ===== CÍMKE GOMBOK STÍLUSA (NEGATÍV) ===== */
+/* ======================================== */
+
+.negative-prompt-section label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.label-buttons {
+    margin-left: auto; /* Jobbra tolja a gombokat */
+    display: flex;
+    gap: 10px;
+}
+
+.utility-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-subtle);
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+}
+
+.utility-btn:hover {
+    color: var(--color-primary-light);
+    border-color: var(--color-primary-light);
+}
+
+.utility-btn .fa-solid {
+    font-size: 1.1em; /* Az ikon legyen picit nagyobb */
+}

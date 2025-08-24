@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		const translateButton = document.getElementById('translate-button');
 		const shareTwitterBtn = document.getElementById('share-twitter-btn');
 		const shareFacebookBtn = document.getElementById('share-facebook-btn');
+		const negativePromptHelperBtn = document.getElementById('negative-prompt-helper-btn');
+
 		let promptHistory = [];
 		let historyTimeout;
 		let choiceInstances = {};
@@ -771,7 +773,31 @@ if (shareTwitterBtn && shareFacebookBtn) {
         sharePrompt('facebook');
     });
 }
+// A share gombok eseményfigyelői után illeszd be:
 
+if (negativePromptHelperBtn) {
+    negativePromptHelperBtn.addEventListener('click', () => {
+        const preset = translations[currentLanguage].negativePromptPreset;
+        const textarea = document.getElementById('negative-prompt');
+        
+        // Ha a szövegmező üres, vagy már tartalmazza a preset egy részét,
+        // akkor egyszerűen beállítjuk a teljes, tiszta preset-re.
+        // Ha valami teljesen más van benne, akkor hozzáfűzzük.
+        if (textarea.value === '' || textarea.value.includes('bad anatomy')) {
+             textarea.value = preset;
+        } else {
+             textarea.value += ', ' + preset;
+        }
+
+        // Vizuális visszajelzés
+        textarea.style.borderColor = 'var(--color-primary-light)';
+        textarea.style.boxShadow = '0 0 10px var(--color-shadow)';
+        setTimeout(() => {
+            textarea.style.borderColor = '';
+            textarea.style.boxShadow = '';
+        }, 1500);
+    });
+}
 		if (translateButton) {
 			translateButton.addEventListener('click', async () => {
 				const originalIcon = translateButton.innerHTML;
