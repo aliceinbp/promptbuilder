@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					overlay.classList.remove('hidden');
 					explainerModal.classList.remove('hidden');
 				}
+				
 			});
 		});
 		closeExplainerModalBtn.addEventListener('click', () => {
@@ -1312,4 +1313,125 @@ if (negativePromptHelperBtn) {
     }
 
     initializePromptAnatomy(); // Meghívjuk az új funkciót
+
+// ==========================================================
+// ===== EZT A TELJES BLOKKOT ILLESZD BE =====
+// ==========================================================
+
+    function initializeStyleFinder() {
+        const container = document.getElementById('style-finder-container');
+        if (!container) return;
+
+        const steps = container.querySelectorAll('.sf-step');
+        const choiceBtns = container.querySelectorAll('.sf-choice-btn');
+        const resultKeywordsDiv = document.getElementById('sf-result-keywords');
+        const copyBtn = document.getElementById('sf-copy-btn');
+        const restartBtn = document.getElementById('sf-restart-btn');
+        
+        let userChoices = {};
+
+        const keywordMap = {
+            step1: {
+                epic: "epic, majestic, grand scale, fantasy art,",
+                mystical: "mystical, dreamlike, ethereal, spiritual,",
+                calm: "calm, melancholic, serene, peaceful,",
+                dynamic: "dynamic, modern, vibrant, action-packed,"
+            },
+            step3: {
+                cinematic: "cinematic film still, dramatic lighting, movie still,",
+                vintage: "vintage film photo, 1970s, faded colors, analog, grainy,",
+                "3d": "hyperrealistic 3D render, octane render, unreal engine, CGI,",
+                digital: "smooth digital painting, by artgerm and loish, sharp details,",
+                oil: "classic oil painting, textured, thick impasto brushstrokes,",
+                watercolor: "watercolor painting, loose brushstrokes, paper texture, splashes of color,",
+                anime: "anime screenshot, style of Studio Ghibli, Makoto Shinkai,",
+                comic: "american comic book style, bold outlines, ink shadows, Frank Miller style,",
+                deco: "elegant art deco poster, geometric shapes, clean lines,"
+            },
+            step4: {
+                nature: "organic, overgrown with nature, floral patterns,",
+                tech: "sci-fi, futuristic, high-tech, mechanical details,",
+                gothic: "gothic, dark, moody, style of Zdzisław Beksiński,",
+                none: ""
+            }
+        };
+
+        function showStep(stepId) {
+            steps.forEach(step => step.classList.remove('active'));
+            const nextStep = document.getElementById(stepId);
+            if (nextStep) {
+                nextStep.classList.add('active');
+            }
+        }
+
+        function generateResult() {
+            let result = "";
+            result += keywordMap.step1[userChoices['1']] || "";
+            result += " " + keywordMap.step3[userChoices['3']] || "";
+            result += " " + keywordMap.step4[userChoices['4']] || "";
+            
+            resultKeywordsDiv.innerHTML = '';
+            const keywords = result.split(',').map(k => k.trim()).filter(k => k);
+            keywords.forEach(keyword => {
+                const tag = document.createElement('span');
+                tag.className = 'prompt-tag';
+                tag.textContent = keyword;
+                resultKeywordsDiv.appendChild(tag);
+            });
+
+            showStep('sf-result');
+        }
+
+        choiceBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const step = btn.dataset.step;
+                const choice = btn.dataset.choice;
+                userChoices[step] = choice;
+
+                if (step === '1') {
+                    showStep('sf-step-2');
+                } else if (step === '2') {
+                    showStep(`sf-step-3-${choice}`);
+                } else if (step === '3') {
+                    showStep('sf-step-4');
+                } else if (step === '4') {
+                    generateResult();
+                }
+            });
+        });
+
+        if (restartBtn) {
+            restartBtn.addEventListener('click', () => {
+                userChoices = {};
+                showStep('sf-step-1');
+            });
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const textToCopy = Array.from(resultKeywordsDiv.querySelectorAll('.prompt-tag')).map(tag => tag.textContent).join(', ');
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalContent = copyBtn.innerHTML;
+                    const successKey = 'copyButtonSuccess';
+                    const successText = (translations[currentLanguage] && translations[currentLanguage][successKey]) || "Copied!";
+                    copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> <span>${successText}</span>`;
+                    
+                    const spanElement = copyBtn.querySelector('span');
+                    if(spanElement) spanElement.dataset.key = 'copyButtonSuccess'; 
+                    
+                    setTimeout(() => { 
+                        copyBtn.innerHTML = originalContent; 
+                        const newSpan = copyBtn.querySelector('span');
+                        if(newSpan) newSpan.dataset.key = 'copyButton';
+                    }, 1500);
+                });
+            });
+        }
+    }
+
+    initializeStyleFinder(); // Itt hívjuk meg az új funkciót!
+
+// ==========================================================
+// ===== BLOKK VÉGE =====
+// ==========================================================	
 });

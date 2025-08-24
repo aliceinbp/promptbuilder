@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizuális Stíluskereső - Prompt Lab by Aliceinbp</title>
+    <meta name="description" content="Találd meg a tökéletes stílust a következő AI alkotásodhoz egy interaktív, vizuális segédlettel!">
+    
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css?v=1.0.1">
+    <link rel="stylesheet" href="css/style.css?v=1.0.1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="main-container">
+        <header>
+            <div id="header-top-row">
+                <div class="header-icons-left">
+                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
+                    <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
+                </div>
+                <div id="lang-switcher">
+                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
+                </div>
+            </div>
+            <div id="logo-container">
+                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            </div>
+            <h1>★ Prompt Lab ★</h1>
+            <p data-key="siteSubtitle">AI Képalkotó Segédlet by Aliceinbp</p>
+            <div id="header-nav-container">
+                <nav id="main-nav">
+                     <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
+                    <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Generátor</span></a>
+                    <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
+                    <a href="kisokos.html" class="active"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
+                    <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
+                    <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
+                </nav>
+            </div>
+            <div id="search-container">
+                <div id="search"></div>
+            </div>
+        </header>
+
+        <main data-pagefind-body>
+            <section id="style-finder-container">
+                <div class="sf-intro">
+                    <h2 data-key="finderTitle">Vizuális Stíluskereső</h2>
+                    <p data-key="finderIntro">Válaszolj a kérdésekre, hogy megtaláld a tökéletes stílust a következő alkotásodhoz!</p>
+                </div>
+
+                <div id="sf-step-1" class="sf-step active">
+                    <h3 data-key="sfStep1Title">1. Milyen hangulatot szeretnél?</h3>
+                    <div class="sf-choice-grid text-based">
+                        <button class="sf-choice-btn" data-step="1" data-choice="epic"><span data-key="sfChoiceEpic">Fenséges & Epikus</span></button>
+                        <button class="sf-choice-btn" data-step="1" data-choice="mystical"><span data-key="sfChoiceMystical">Misztikus & Álomszerű</span></button>
+                        <button class="sf-choice-btn" data-step="1" data-choice="calm"><span data-key="sfChoiceCalm">Nyugodt & Melankolikus</span></button>
+                        <button class="sf-choice-btn" data-step="1" data-choice="dynamic"><span data-key="sfChoiceDynamic">Dinamikus & Modern</span></button>
+                    </div>
+                </div>
+
+                <div id="sf-step-2" class="sf-step">
+                    <h3 data-key="sfStep2Title">2. Milyen médiumot képzelsz el?</h3>
+                    <div class="sf-choice-grid image-based">
+                        <button class="sf-choice-btn" data-step="2" data-choice="realistic">
+                            <img src="src/stiluskereso-images/medium-realistic.jpg" alt="Realisztikus">
+                            <span data-key="sfChoiceRealistic">Realisztikus</span>
+                        </button>
+                        <button class="sf-choice-btn" data-step="2" data-choice="painterly">
+                            <img src="src/stiluskereso-images/medium-painterly.jpg" alt="Festői">
+                            <span data-key="sfChoicePainterly">Festői</span>
+                        </button>
+                        <button class="sf-choice-btn" data-step="2" data-choice="graphic">
+                            <img src="src/stiluskereso-images/medium-graphic.jpg" alt="Grafikus">
+                            <span data-key="sfChoiceGraphic">Grafikus</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="sf-step-3-realistic" class="sf-step sf-step-3">
+                    <h3 data-key="sfStep3RealisticTitle">3. Melyik realisztikus technika tetszik?</h3>
+                    <div class="sf-choice-grid image-based">
+                        <button class="sf-choice-btn" data-step="3" data-choice="cinematic"><img src="src/stiluskereso-images/tech-photo-cinematic.jpg" alt="Filmszerű"><span data-key="sfChoiceCinematic">Filmszerű Fotó</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="vintage"><img src="src/stiluskereso-images/tech-photo-vintage.jpg" alt="Vintage"><span data-key="sfChoiceVintage">Vintage Fotó</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="3d"><img src="src/stiluskereso-images/tech-photo-3d.jpg" alt="3D Render"><span data-key="sfChoice3d">3D Render</span></button>
+                    </div>
+                </div>
+
+                <div id="sf-step-3-painterly" class="sf-step sf-step-3">
+                    <h3 data-key="sfStep3PainterlyTitle">3. Melyik festői technika tetszik?</h3>
+                    <div class="sf-choice-grid image-based">
+                         <button class="sf-choice-btn" data-step="3" data-choice="digital"><img src="src/stiluskereso-images/tech-paint-digital.jpg" alt="Digitális Festmény"><span data-key="sfChoiceDigital">Digitális Festmény</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="oil"><img src="src/stiluskereso-images/tech-paint-oil.jpg" alt="Olajfestmény"><span data-key="sfChoiceOil">Olajfestmény</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="watercolor"><img src="src/stiluskereso-images/tech-paint-watercolor.jpg" alt="Akvarell"><span data-key="sfChoiceWatercolor">Akvarell</span></button>
+                    </div>
+                </div>
+
+                <div id="sf-step-3-graphic" class="sf-step sf-step-3">
+                    <h3 data-key="sfStep3GraphicTitle">3. Melyik grafikus technika tetszik?</h3>
+                    <div class="sf-choice-grid image-based">
+                        <button class="sf-choice-btn" data-step="3" data-choice="anime"><img src="src/stiluskereso-images/tech-graphic-anime.jpg" alt="Anime"><span data-key="sfChoiceAnime">Anime / Manga</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="comic"><img src="src/stiluskereso-images/tech-graphic-comic.jpg" alt="Képregény"><span data-key="sfChoiceComic">Amerikai Képregény</span></button>
+                        <button class="sf-choice-btn" data-step="3" data-choice="deco"><img src="src/stiluskereso-images/tech-graphic-deco.jpg" alt="Art Deco"><span data-key="sfChoiceDeco">Art Deco / Plakát</span></button>
+                    </div>
+                </div>
+
+                <div id="sf-step-4" class="sf-step">
+                    <h3 data-key="sfStep4Title">4. Adjunk hozzá egy utolsó "fűszert"?</h3>
+                    <div class="sf-choice-grid text-based">
+                        <button class="sf-choice-btn" data-step="4" data-choice="nature"><i class="fa-solid fa-leaf"></i><span data-key="sfChoiceNature">Természet & Organika</span></button>
+                        <button class="sf-choice-btn" data-step="4" data-choice="tech"><i class="fa-solid fa-microchip"></i><span data-key="sfChoiceTech">Technológia & Sci-fi</span></button>
+                        <button class="sf-choice-btn" data-step="4" data-choice="gothic"><i class="fa-solid fa-church"></i><span data-key="sfChoiceGothic">Gótika & Sötétség</span></button>
+                        <button class="sf-choice-btn" data-step="4" data-choice="none"><i class="fa-solid fa-ban"></i><span data-key="sfChoiceNone">Nem, köszönöm!</span></button>
+                    </div>
+                </div>
+
+                <div id="sf-result" class="sf-step">
+                     <h3 data-key="sfResultTitle">Javasolt Kulcsszavaid</h3>
+                     <div id="sf-result-keywords" class="final-prompt-container gradient-border-box"></div>
+                     <div class="sf-result-actions">
+                         <button id="sf-copy-btn" class="cta-button-small"><i class="fa-solid fa-copy"></i> <span data-key="copyButton">Prompt másolása</span></button>
+                         <button id="sf-restart-btn" class="cta-button-small"><i class="fa-solid fa-arrow-rotate-left"></i> <span data-key="sfRestartBtn">Újrakezdés</span></button>
+                     </div>
+                     <p data-key="sfResultCta">Most pedig irány a <a href="generator.html">Generátor</a>, add hozzá a saját témádat, és alkoss!</p>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="footer-main">
+            </footer>
+    </div>
+    
+    <script src="js/translations-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="/pagefind/pagefind-ui.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if(typeof initializePagefind === "function") {
+                initializePagefind();
+            }
+        });
+    </script>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+    </body>
+</html>
