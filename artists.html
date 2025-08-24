@@ -205,20 +205,6 @@
 </script>
 
    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
-<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-<script>
-    // Dinamikusan beállítjuk a nyelvet és a szövegeket a fordítási fájlodból
-    const kofiLang = localStorage.getItem('preferredLanguage') || 'en';
-    const kofiButtonText = (translations[kofiLang] && translations[kofiLang].kofiButtonText) ? translations[kofiLang].kofiButtonText : 'Support Me';
-    const kofiTitleText = (translations[kofiLang] && translations[kofiLang].kofiOverlayTitle) ? translations[kofiLang].kofiOverlayTitle : 'Support the Prompt Lab';
 
-    kofiWidgetOverlay.draw('aliceinbp', {
-        'type': 'floating-chat',
-        'floating-chat.donateButton.text': kofiButtonText,
-        'floating-chat.title': kofiTitleText,
-        'floating-chat.donateButton.background-color': '#a46de5', // Ezt beállítottam az oldalad lila színére
-        'floating-chat.donateButton.text-color': '#fff'
-    });
-</script>
 </body>
 </html>
