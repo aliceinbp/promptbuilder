@@ -1,4 +1,4 @@
-// PROMPT LAB SCRIPT - VÉGLEGES JAVÍTÁSOKKAL
+// PROMPT LAB SCRIPT - DRAG & DROP FUNKCIÓVAL
 document.addEventListener('DOMContentLoaded', function() {
     // EXPLAINER MODAL LOGIC
     const explainerModal = document.getElementById('explainer-modal');
@@ -215,21 +215,14 @@ document.addEventListener('DOMContentLoaded', function() {
         let selectedParameter = '';
         let activeWeightedTag = null;
 
-        // ÚJ FUNKCIÓ: Prompt betöltése a localStorage-ból
         function loadPromptFromStorage() {
             const promptToLoad = localStorage.getItem('promptToLoad');
             if (promptToLoad) {
-                clearAll(); // Tiszta lappal indulunk
-                
-                // Egyszerűsített feldolgozás: minden elemet a "Fő téma" kategóriába teszünk
-                // Eltávolítjuk a paramétereket (pl. --ar 16:9)
+                clearAll();
                 const mainPromptPart = promptToLoad.split(' --')[0];
                 const parts = mainPromptPart.split(',').map(p => p.trim()).filter(p => p);
-
                 parts.forEach(part => {
-                    // Súlyozás figyelmen kívül hagyása a betöltéskor az egyszerűség kedvéért
                     const cleanPart = part.replace(/^\((.*):\d+\.\d+\)$/, '$1').trim();
-                    
                     const tag = document.createElement('span');
                     tag.className = 'prompt-input-tag';
                     tag.textContent = cleanPart;
@@ -241,9 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     tag.appendChild(deleteBtn);
                     tagContainers.mainSubject.appendChild(tag);
                 });
-
                 updateFinalPrompt();
-                localStorage.removeItem('promptToLoad'); // Töröljük, hogy ne töltődjön be újra
+                localStorage.removeItem('promptToLoad');
             }
         }
 
@@ -270,26 +262,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return finalString;
         }
 
-        if (finalPromptContainer && typeof Sortable !== 'undefined') {
-            new Sortable(finalPromptContainer, { 
-                animation: 150, 
-                ghostClass: 'sortable-ghost',
-                onEnd: () => {
-                    const finalTags = Array.from(finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)'));
-                    const finalTagOrder = finalTags.map(tag => tag.dataset.originalText);
-                    
-                    Object.values(tagContainers).forEach(container => {
-                        if (container) {
-                            const sourceTags = Array.from(container.querySelectorAll('.prompt-input-tag'));
-                            sourceTags.sort((a, b) => {
-                                const textA = a.firstChild.textContent.trim();
-                                const textB = b.firstChild.textContent.trim();
-                                return finalTagOrder.indexOf(textA) - finalTagOrder.indexOf(textB);
-                            });
-                            sourceTags.forEach(tag => container.appendChild(tag));
+        // ===== ÚJ DRAG & DROP LOGIKA A KATEGÓRIÁK KÖZÖTT =====
+        if (typeof Sortable !== 'undefined') {
+            Object.values(tagContainers).forEach(container => {
+                if (container) {
+                    new Sortable(container, {
+                        group: 'shared', // Ez a kulcs! Lehetővé teszi a húzást a konténerek között.
+                        animation: 150,
+                        ghostClass: 'sortable-ghost',
+                        onEnd: function () {
+                            // Bármilyen mozgatás (akár kategóriák között is) után frissítjük a végleges promptot
+                            updateFinalPrompt(true); 
                         }
                     });
-                    updateFinalPrompt(true);
                 }
             });
         }
@@ -655,7 +640,7 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeStyleMixer();
             renderSavedPrompts();
             updateFinalPrompt();
-            loadPromptFromStorage(); // Futtatjuk a betöltő funkciót az oldal inicializálásakor
+            loadPromptFromStorage();
         };
 
         randomButton.addEventListener('click', generateRandomPrompt);
@@ -844,12 +829,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== EGYÉB OLDALAK LOGIKÁJA =====
     // ====================================================================
 
-    // ÚJ: Eseményfigyelő a "Prompt Felhasználása" gombokhoz
     document.body.addEventListener('click', function(e) {
         const target = e.target.closest('.use-prompt-btn');
         if (target) {
             e.preventDefault();
-            e.stopPropagation(); // Megállítja, hogy a linkre is kattintson
+            e.stopPropagation();
             const promptString = target.dataset.prompt;
             if (promptString) {
                 localStorage.setItem('promptToLoad', promptString);
@@ -1274,7 +1258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </a>`;
                 container.appendChild(item);
             });
-             window.setLanguage(currentLanguage); // Fordítások frissítése
+             window.setLanguage(currentLanguage);
         } catch (error) {
             console.error('Hiba a beküldött képek betöltésekor:', error);
             container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
