@@ -898,51 +898,88 @@ if (negativePromptHelperBtn) {
 	}
 	
 	async function loadArtists() {
-		const container = document.querySelector('.artist-grid');
-		if (!container) return;
-		try {
-			const response = await fetch('/_data/artists.json');
-			const artists = await response.json();
-			container.innerHTML = '';
-			artists.forEach(artist => {
-				const card = document.createElement('div');
-				card.className = `artist-card`;
-				if(artist.category) card.dataset.category = artist.category; 
-				const copyName = artist.copyName || artist.name;
-				card.innerHTML = `
-					<div class="artist-card-header">
-						<h3>${artist.name}</h3>
-						<button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip">
-							<i class="fa-solid fa-copy"></i>
-						</button>
-					</div>
-					<p data-key="${artist.dataKey}"></p>
-				`;
-				container.appendChild(card);
-			});
-			const filterButtons = document.querySelectorAll('.filter-btn');
-			const artistCards = document.querySelectorAll('.artist-card');
-			filterButtons.forEach(button => {
-				button.addEventListener('click', () => {
-					filterButtons.forEach(btn => btn.classList.remove('active'));
-					button.classList.add('active');
-					const selectedCategory = button.dataset.category;
-					artistCards.forEach(card => {
-						if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
-							card.style.display = 'block';
-						} else {
-							card.style.display = 'none';
-						}
-					});
-				});
-			});
-			initializeArtistCopyButtons();
-			window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
-		} catch (error) {
-			console.error('Hiba a művészek betöltésekor:', error);
-			container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
-		}
-	}
+    const container = document.querySelector('.artist-grid');
+    if (!container) return;
+
+    // A biztonság kedvéért eltávolítjuk a régi, statikus schema-t, ha még ott lenne
+    const staticSchema = document.querySelector('script[type="application/ld+json"]');
+    if (staticSchema) {
+        staticSchema.remove();
+    }
+
+    try {
+        const response = await fetch('/_data/artists.json');
+        const artists = await response.json();
+
+        // --- ÚJ DINAMIKUS SCHEMA LÉTREHOZÁSA ---
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Művész Adatbázis a Tökéletes Stílusért - Prompt Lab",
+            "description": "Böngészhető adatbázis híres művészekről, akiknek stílusa inspirációt nyújt az AI képalkotáshoz. Fedezz fel új stílusokat a prompjaidhoz!",
+            "mainEntity": {
+                "@type": "ItemList",
+                "itemListElement": []
+            }
+        };
+
+        artists.forEach((artist, index) => {
+            schema.mainEntity.itemListElement.push({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": "Person",
+                    "name": artist.name
+                }
+            });
+        });
+
+        const schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.textContent = JSON.stringify(schema);
+        document.head.appendChild(schemaScript);
+        // --- SCHEMA LÉTREHOZÁS VÉGE ---
+
+        container.innerHTML = '';
+        artists.forEach(artist => {
+            const card = document.createElement('div');
+            card.className = `artist-card`;
+            if(artist.category) card.dataset.category = artist.category; 
+            const copyName = artist.copyName || artist.name;
+            card.innerHTML = `
+                <div class="artist-card-header">
+                    <h3>${artist.name}</h3>
+                    <button class="copy-artist-btn" data-artist="${copyName}" data-key-title="copyTooltip">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+                <p data-key="${artist.dataKey}"></p>
+            `;
+            container.appendChild(card);
+        });
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const artistCards = document.querySelectorAll('.artist-card');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const selectedCategory = button.dataset.category;
+                artistCards.forEach(card => {
+                    if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        initializeArtistCopyButtons();
+        window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
+    } catch (error) {
+        console.error('Hiba a művészek betöltésekor:', error);
+        container.innerHTML = '<p>A művészek listája jelenleg nem érhető el.</p>';
+    }
+}
 	
 	async function loadGallery() {
 		const container = document.getElementById('gallery-section');
