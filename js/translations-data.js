@@ -316,7 +316,9 @@ const translations = {
         artistDescArtgerm: "Stilizált, festői digitális portrék, a képregények és a realizmus határán.",
         artistDescGhailan: "Hangulatos, impresszionista digitális festmények, a fény és a történetmesélés mestere.",
         artistDescCushart: "Dinamikus, anime-ihletésű karakterdizájn és illusztrációk, a mozgás és a formák szakértője.",
-        artistDescGonzalez: "Részletgazdag, neonfényes cyberpunk illusztrációk, a Moebius és a '80-as évek sci-fi-jének hatásaival."
+        artistDescGonzalez: "Részletgazdag, neonfényes cyberpunk illusztrációk, a Moebius és a '80-as évek sci-fi-jének hatásaival.",
+        quizCtaCardTitle: "Töltsd ki a Stílus Kvízt!",
+        styleFinderCtaCardTitle: "Találd meg a Stílusod!",
     },
     en: {
         handbookMoreTipsTitle: "More Tips & Common Questions",
@@ -637,6 +639,8 @@ const translations = {
         artistDescArtgerm: "Stylized, painterly digital portraits on the border of comics and realism.",
         artistDescGhailan: "Atmospheric, impressionistic digital paintings, a master of light and storytelling.",
         artistDescCushart: "Dynamic, anime-inspired character design and illustrations, an expert in movement and form.",
-        artistDescGonzalez: "Detailed, neon-drenched cyberpunk illustrations with influences from Moebius and 80s sci-fi."
+        artistDescGonzalez: "Detailed, neon-drenched cyberpunk illustrations with influences from Moebius and 80s sci-fi.",
+        quizCtaCardTitle: "Take the Style Quiz!",
+        styleFinderCtaCardTitle: "Find Your Style!",
     }
 };
