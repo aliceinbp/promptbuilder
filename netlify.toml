@@ -6,10 +6,8 @@
   directory = "netlify/functions/"
 
 [build.processing]
+  skip_processing = false
   [build.processing.html]
     pretty_urls = false
-    
-[build.processing]
-  skip_processing = false
-[build.processing.images]
-  compress = true
+  [build.processing.images]
+    compress = true
