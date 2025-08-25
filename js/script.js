@@ -1,4 +1,4 @@
-// PROMPT LAB SCRIPT - DRAG & DROP FUNKCIÓVAL
+// PROMPT LAB SCRIPT - RECEPT MENTÉSSEL ÉS NEGATÍV SEGÉDLETTEL
 document.addEventListener('DOMContentLoaded', function() {
     // EXPLAINER MODAL LOGIC
     const explainerModal = document.getElementById('explainer-modal');
@@ -117,6 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 elem.setAttribute('title', translations[lang][key]);
             }
         });
+         document.querySelectorAll('[data-key-placeholder]').forEach(elem => {
+            const key = elem.dataset.keyPlaceholder;
+            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
+                elem.setAttribute('placeholder', translations[lang][key]);
+            }
+        });
         const langHu = document.getElementById('lang-hu');
         const langEn = document.getElementById('lang-en');
         if (langHu && langEn) {
@@ -207,6 +213,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const shareTwitterBtn = document.getElementById('share-twitter-btn');
         const shareFacebookBtn = document.getElementById('share-facebook-btn');
         const negativePromptHelperBtn = document.getElementById('negative-prompt-helper-btn');
+        const saveRecipeBtn = document.getElementById('save-recipe-btn');
+        const loadRecipeBtn = document.getElementById('load-recipe-btn');
+        const saveRecipeModal = document.getElementById('save-recipe-modal');
+        const loadRecipeModal = document.getElementById('load-recipe-modal');
+        const negativeHelperModal = document.getElementById('negative-helper-modal');
 
         let promptHistory = [];
         let historyTimeout;
@@ -214,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let selectedParameter = '';
         let activeWeightedTag = null;
-
+        
         function loadPromptFromStorage() {
             const promptToLoad = localStorage.getItem('promptToLoad');
             if (promptToLoad) {
@@ -262,16 +273,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return finalString;
         }
 
-        // ===== ÚJ DRAG & DROP LOGIKA A KATEGÓRIÁK KÖZÖTT =====
         if (typeof Sortable !== 'undefined') {
-            Object.values(tagContainers).forEach(container => {
+            [...Object.values(tagContainers), finalPromptContainer].forEach(container => {
                 if (container) {
                     new Sortable(container, {
-                        group: 'shared', // Ez a kulcs! Lehetővé teszi a húzást a konténerek között.
+                        group: 'shared',
                         animation: 150,
                         ghostClass: 'sortable-ghost',
-                        onEnd: function () {
-                            // Bármilyen mozgatás (akár kategóriák között is) után frissítjük a végleges promptot
+                        onEnd: function (evt) {
+                             if (evt.from === finalPromptContainer && evt.to === finalPromptContainer) {
+                                // Csak a "Végleges prompt" dobozon belüli rendezéshez kell a régi logika
+                                const finalTags = Array.from(finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)'));
+                                const finalTagOrder = finalTags.map(tag => tag.dataset.originalText);
+                                
+                                Object.values(tagContainers).forEach(cont => {
+                                    if (cont) {
+                                        const sourceTags = Array.from(cont.querySelectorAll('.prompt-input-tag'));
+                                        sourceTags.sort((a, b) => {
+                                            const textA = a.firstChild.textContent.trim();
+                                            const textB = b.firstChild.textContent.trim();
+                                            return finalTagOrder.indexOf(textA) - finalTagOrder.indexOf(textB);
+                                        });
+                                        sourceTags.forEach(tag => cont.appendChild(tag));
+                                    }
+                                });
+                            }
                             updateFinalPrompt(true); 
                         }
                     });
@@ -512,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
                  clearAll();
                  const promptString = saved[index];
                  const mainPromptPart = promptString.split(' --')[0];
-                 const parts = mainPromptPart.split(',').map(p => p.trim().replace(/^\(?(.*?)(?::\d\.\d)?\)?$/, '$1'));
+                 const parts = mainPromptPart.split(',').map(p => p.trim().replace(/^\(?(.*?)(?::\d+\.\d)?\)?$/, '$1'));
 
                  parts.forEach(part => {
                      const tag = document.createElement('span');
@@ -635,6 +661,10 @@ document.addEventListener('DOMContentLoaded', function() {
             Object.keys(resultDivs).forEach(key => reroll(key));
         }
 
+        // ===== ÚJ FUNKCIÓK INICIALIZÁLÁSA =====
+        initializeNegativeHelper();
+        initializeRecipeSystem();
+
         window.initializeGenerator = function() {
             initializeChoices();
             initializeStyleMixer();
@@ -645,7 +675,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         randomButton.addEventListener('click', generateRandomPrompt);
         clearAllButton.addEventListener('click', clearAll);
-        savePromptButton.addEventListener('click', saveCurrentPrompt);
         if(savedPromptsList) savedPromptsList.addEventListener('click', handleSavedListClick);
         if (managePromptsModal) {
              managePromptsModal.querySelector('.close-modal-btn').addEventListener('click', () => { overlay.classList.add('hidden'); managePromptsModal.classList.add('hidden'); });
@@ -685,6 +714,11 @@ document.addEventListener('DOMContentLoaded', function() {
             resetWeightsBtn.addEventListener('click', () => {
                 document.querySelectorAll('.prompt-input-tag').forEach(tag => {
                     tag.dataset.weight = '1.0';
+                });
+                document.querySelectorAll('.prompt-tag').forEach(tag => {
+                    if(tag.dataset.weight !== '1.0') {
+                       applyWeight(tag, '1.0');
+                    }
                 });
                 activeWeightedTag = null;
                 weightSlider.value = 1.0;
@@ -757,24 +791,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        if (negativePromptHelperBtn) {
-            negativePromptHelperBtn.addEventListener('click', () => {
-                const preset = translations[currentLanguage].negativePromptPreset;
-                const textarea = document.getElementById('negative-prompt');
-                if (textarea.value === '' || textarea.value.includes('bad anatomy')) {
-                    textarea.value = preset;
-                } else {
-                    textarea.value += ', ' + preset;
-                }
-                textarea.style.borderColor = 'var(--color-primary-light)';
-                textarea.style.boxShadow = '0 0 10px var(--color-shadow)';
-                setTimeout(() => {
-                    textarea.style.borderColor = '';
-                    textarea.style.boxShadow = '';
-                }, 1500);
-            });
-        }
-
         if (translateButton) {
             translateButton.addEventListener('click', async () => {
                 const originalIcon = translateButton.innerHTML;
@@ -823,6 +839,222 @@ document.addEventListener('DOMContentLoaded', function() {
             historyModal.querySelector('.close-modal-btn').addEventListener('click', () => { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); });
             historyList.addEventListener('click', (e) => { if (e.target.classList.contains('history-item')) { overlay.classList.add('hidden'); historyModal.classList.add('hidden'); } });
         }
+
+        // ====================================================================
+        // ===== NEGATÍV PROMPT SEGÉDLET LOGIKA =====
+        // ====================================================================
+        function initializeNegativeHelper() {
+            if (!negativePromptHelperBtn || !negativeHelperModal) return;
+
+            const negativePresets = {
+                quality: ["low quality", "blurry", "noisy", "jpeg artifacts", "bad art", "amateur"],
+                anatomy: ["extra fingers", "deformed hands", "bad anatomy", "disfigured", "extra limbs", "mutated hands"],
+                text: ["text", "watermark", "signature", "username", "logo"],
+                disturbing: ["ugly", "distorted face", "weird colors", "out of frame", "cut off"]
+            };
+
+            const contentDiv = document.getElementById('negative-helper-content');
+            
+            negativePromptHelperBtn.addEventListener('click', () => {
+                contentDiv.innerHTML = '';
+                const lang = currentLanguage;
+
+                const categoryMap = {
+                    quality: 'negativeCategoryQuality',
+                    anatomy: 'negativeCategoryAnatomy',
+                    text: 'negativeCategoryText',
+                    disturbing: 'negativeCategoryDisturbing'
+                };
+
+                for (const category in negativePresets) {
+                    const categoryTitleKey = categoryMap[category];
+                    const categoryTitle = translations[lang][categoryTitleKey] || category;
+                    
+                    const categoryWrapper = document.createElement('div');
+                    categoryWrapper.className = 'negative-category';
+                    categoryWrapper.innerHTML = `<h4>${categoryTitle}</h4>`;
+                    const tagsWrapper = document.createElement('div');
+                    tagsWrapper.className = 'negative-tags';
+                    
+                    negativePresets[category].forEach(tag => {
+                        const tagEl = document.createElement('span');
+                        tagEl.className = 'negative-tag';
+                        tagEl.textContent = tag;
+                        tagEl.dataset.tag = tag;
+                        tagEl.addEventListener('click', () => {
+                            tagEl.classList.toggle('selected');
+                        });
+                        tagsWrapper.appendChild(tagEl);
+                    });
+                    
+                    categoryWrapper.appendChild(tagsWrapper);
+                    contentDiv.appendChild(categoryWrapper);
+                }
+                openModal(negativeHelperModal);
+            });
+            
+            negativeHelperModal.querySelector('.close-modal-btn').addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                negativeHelperModal.classList.add('hidden');
+            });
+            
+            document.getElementById('add-negative-tags-btn').addEventListener('click', () => {
+                const selectedTags = Array.from(contentDiv.querySelectorAll('.negative-tag.selected')).map(t => t.dataset.tag);
+                if (selectedTags.length > 0) {
+                    const currentNegative = negativePromptTextarea.value.trim();
+                    const newTags = selectedTags.join(', ');
+                    negativePromptTextarea.value = currentNegative ? `${currentNegative}, ${newTags}` : newTags;
+                }
+                overlay.classList.add('hidden');
+                negativeHelperModal.classList.add('hidden');
+            });
+        }
+        
+        // ====================================================================
+        // ===== PROMPT RECEPT RENDSZER LOGIKA =====
+        // ====================================================================
+        function initializeRecipeSystem() {
+            if (!saveRecipeBtn || !loadRecipeBtn) return;
+
+            saveRecipeBtn.addEventListener('click', () => {
+                openModal(saveRecipeModal);
+                document.getElementById('recipe-name-input').focus();
+            });
+
+            loadRecipeBtn.addEventListener('click', () => {
+                renderSavedRecipes();
+                openModal(loadRecipeModal);
+            });
+
+            saveRecipeModal.querySelector('.close-modal-btn').addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                saveRecipeModal.classList.add('hidden');
+            });
+
+            loadRecipeModal.querySelector('.close-modal-btn').addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                loadRecipeModal.classList.add('hidden');
+            });
+
+            document.getElementById('confirm-save-recipe-btn').addEventListener('click', saveCurrentRecipe);
+            document.getElementById('recipe-name-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') saveCurrentRecipe();
+            });
+        }
+
+        function getSavedRecipes() {
+            return JSON.parse(localStorage.getItem('promptRecipes')) || [];
+        }
+
+        function saveRecipes(recipes) {
+            localStorage.setItem('promptRecipes', JSON.stringify(recipes));
+        }
+
+        function saveCurrentRecipe() {
+            const nameInput = document.getElementById('recipe-name-input');
+            const name = nameInput.value.trim();
+            if (!name) {
+                alert('Kérlek, adj nevet a receptnek!');
+                return;
+            }
+
+            const recipe = {
+                name: name,
+                date: new Date().toISOString(),
+                tags: {}
+            };
+
+            for (const category in tagContainers) {
+                const container = tagContainers[category];
+                if (container) {
+                    recipe.tags[category] = Array.from(container.querySelectorAll('.prompt-input-tag')).map(tag => tag.firstChild.textContent.trim());
+                }
+            }
+            
+            let recipes = getSavedRecipes();
+            recipes.unshift(recipe);
+            saveRecipes(recipes);
+
+            nameInput.value = '';
+            overlay.classList.add('hidden');
+            saveRecipeModal.classList.add('hidden');
+        }
+
+        function renderSavedRecipes() {
+            const listContainer = document.getElementById('saved-recipes-list');
+            listContainer.innerHTML = '';
+            const recipes = getSavedRecipes();
+
+            if (recipes.length === 0) {
+                listContainer.innerHTML = `<p style="text-align: center; color: #888;" data-key="noRecipesSaved">${translations[currentLanguage].noRecipesSaved}</p>`;
+                return;
+            }
+
+            recipes.forEach((recipe, index) => {
+                const item = document.createElement('div');
+                item.className = 'saved-recipe-item';
+                item.innerHTML = `
+                    <span class="recipe-name">${recipe.name}</span>
+                    <div class="recipe-actions">
+                        <button class="load-recipe" data-index="${index}" data-key="recipeLoadBtn">${translations[currentLanguage].recipeLoadBtn}</button>
+                        <button class="delete-recipe" data-index="${index}" data-key="recipeDeleteBtn">${translations[currentLanguage].recipeDeleteBtn}</button>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            listContainer.querySelectorAll('.load-recipe').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.dataset.index;
+                    loadRecipe(index);
+                });
+            });
+
+            listContainer.querySelectorAll('.delete-recipe').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.dataset.index;
+                    deleteRecipe(index);
+                });
+            });
+        }
+        
+        function loadRecipe(index) {
+            const recipes = getSavedRecipes();
+            const recipe = recipes[index];
+            if (!recipe) return;
+            
+            clearAll();
+
+            for (const category in recipe.tags) {
+                const container = tagContainers[category];
+                if (container && recipe.tags[category]) {
+                    recipe.tags[category].forEach(text => {
+                         const tag = document.createElement('span');
+                        tag.className = 'prompt-input-tag';
+                        tag.textContent = text;
+                        tag.dataset.weight = '1.0';
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-tag';
+                        deleteBtn.innerHTML = '&times;';
+                        deleteBtn.title = 'Törlés';
+                        tag.appendChild(deleteBtn);
+                        container.appendChild(tag);
+                    });
+                }
+            }
+
+            updateFinalPrompt();
+            overlay.classList.add('hidden');
+            loadRecipeModal.classList.add('hidden');
+        }
+
+        function deleteRecipe(index) {
+            let recipes = getSavedRecipes();
+            recipes.splice(index, 1);
+            saveRecipes(recipes);
+            renderSavedRecipes();
+        }
+
     }
 
     // ====================================================================

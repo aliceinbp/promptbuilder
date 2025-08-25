@@ -319,6 +319,24 @@ const translations = {
         artistDescGonzalez: "Részletgazdag, neonfényes cyberpunk illusztrációk, a Moebius és a '80-as évek sci-fi-jének hatásaival.",
         quizCtaCardTitle: "Töltsd ki a Stílus Kvízt!",
         styleFinderCtaCardTitle: "Találd meg a Stílusod!",
+        // Negatív Prompt Segédlet
+negativeHelperTitle: "Negatív Prompt Segédlet",
+negativeCategoryQuality: "Gyenge Minőség",
+negativeCategoryAnatomy: "Anatómiai Hibák",
+negativeCategoryText: "Szöveg és Aláírások",
+negativeCategoryDisturbing: "Zavaró Elemek",
+addSelectedBtn: "Kiválasztottak Hozzáadása",
+// Prompt Recept
+saveRecipeBtn: "Recept Mentése",
+loadRecipeBtn: "Recept Betöltése",
+saveRecipeModalTitle: "Recept Mentése",
+loadRecipeModalTitle: "Recept Betöltése",
+recipeNamePlaceholder: "Recept neve...",
+saveBtn: "Mentés",
+recipeLoadBtn: "Betöltés",
+recipeDeleteBtn: "Törlés",
+noRecipesSaved: "Nincsenek mentett receptjeid.",
+
     },
     en: {
         handbookMoreTipsTitle: "More Tips & Common Questions",
@@ -642,5 +660,22 @@ const translations = {
         artistDescGonzalez: "Detailed, neon-drenched cyberpunk illustrations with influences from Moebius and 80s sci-fi.",
         quizCtaCardTitle: "Take the Style Quiz!",
         styleFinderCtaCardTitle: "Find Your Style!",
+        // Negative Prompt Helper
+        negativeHelperTitle: "Negative Prompt Helper",
+        negativeCategoryQuality: "Poor Quality",
+        negativeCategoryAnatomy: "Anatomy Errors",
+        negativeCategoryText: "Text & Signatures",
+        negativeCategoryDisturbing: "Disturbing Elements",
+        addSelectedBtn: "Add Selected",
+        // Prompt Recipe
+        saveRecipeBtn: "Save Recipe",
+        loadRecipeBtn: "Load Recipe",
+        saveRecipeModalTitle: "Save Recipe",
+        loadRecipeModalTitle: "Load Recipe",
+        recipeNamePlaceholder: "Recipe name...",
+        saveBtn: "Save",
+        recipeLoadBtn: "Load",
+        recipeDeleteBtn: "Delete",
+        noRecipesSaved: "You have no saved recipes.",
     }
 };
