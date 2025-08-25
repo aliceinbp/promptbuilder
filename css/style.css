@@ -2319,3 +2319,14 @@ body.light-theme .pagefind-ui__modal {
     font-style: italic;
     color: var(--color-text-secondary);
 }
+/* Mozgatható tagek vizuális kiemelése */
+.prompt-input-tag:hover {
+    cursor: grab; /* Az egérkurzor egy "megfogó" kézzé változik */
+    transform: scale(1.05); /* Kicsit megnagyobbodik a tag */
+    box-shadow: 0 4px 10px var(--color-shadow); /* Finom árnyékot kap, mintha "felemelkedne" */
+}
+
+/* Amikor rákattintva húzod a taget */
+.prompt-input-tag:active {
+    cursor: grabbing; /* Az egérkurzor "markoló" kézzé változik */
+}
