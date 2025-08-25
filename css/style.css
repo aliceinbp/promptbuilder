@@ -2404,3 +2404,139 @@ body.light-theme .pagefind-ui__modal {
         box-shadow: 0 0 12px #ff00ff, 0 0 18px #ff00ff, 0 0 25px #ff6bde;
     }
 }
+/* ======================================== */
+/* ===== GENERÁTOR ÚJ FUNKCIÓK STÍLUS ===== */
+/* ======================================== */
+
+/* --- Recept Gombok a Fő Gombcsoportban --- */
+#save-recipe-btn,
+#load-recipe-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    flex-grow: 1; /* Hogy kitöltsék a helyet */
+}
+
+#save-recipe-btn:hover,
+#load-recipe-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    color: var(--color-text-inverted);
+    background-color: var(--color-primary);
+}
+
+
+/* --- Recept Mentése/Betöltése Felugró Ablak --- */
+#save-recipe-modal input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+#confirm-save-recipe-btn {
+    width: 100%;
+}
+
+#saved-recipes-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.saved-recipe-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.saved-recipe-item:last-child {
+    border-bottom: none;
+}
+
+.recipe-name {
+    font-weight: bold;
+}
+
+.recipe-actions button {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.recipe-actions .load-recipe:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-inverted);
+}
+
+.recipe-actions .delete-recipe:hover {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+    color: white;
+}
+
+
+/* --- Negatív Prompt Segédlet Felugró Ablak --- */
+#negative-helper-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 10px; /* Hely a görgetősávnak */
+}
+
+.negative-category h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--color-border-accent);
+    color: var(--color-primary-light);
+}
+
+.negative-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.negative-tag {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 6px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.negative-tag:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text-main);
+}
+
+/* EZ A LÉNYEG: A kiválasztott tag kinézete */
+.negative-tag.selected {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary-light);
+    color: var(--color-text-inverted);
+    font-weight: bold;
+}
+
+#add-negative-tags-btn {
+    width: 100%;
+}
