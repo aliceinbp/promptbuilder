@@ -47,7 +47,7 @@ body_hu: >-
      * `egy elvarázsolt erdő éjjel, izzó gombákkal és tündérfényekkel`
      * **Adj hozzá stílust:** `egy elvarázsolt erdő éjjel..., akvarell festmény stílusában`
      * **Adj hozzá hangulatot:** `egy sötét és misztikus elvarázsolt erdő éjjel...`
-  4. **Használj segédletet!** Amikor már belejöttél, de új ötletekre vagy stílusokra vágysz, akkor jön a képbe a **[Prompt Lab](https://aliceinbp.com/)**. Az oldalam segítséget nyújt a promptépítéshez, ahol **témákat, részleteket, hangulatokat és stílusokat** is kiválaszthatsz. Így nem kell mindent a semmiből kitalálnod.
+  4. **Használj segédletet!** Amikor már belejöttél, de új ötletekre vagy stílusokra vágysz, akkor jön a képbe az **[Alkimista Műhely]**.  Az oldalam segítséget nyújt a promptépítéshez, ahol **témákat, részleteket, hangulatokat és stílusokat** is kiválaszthatsz. Így nem kell mindent a semmiből kitalálnod.
 
 
   Ez a világ egy végtelen kreatív kaland, ahol a szavakból képi valóság lesz. Remélem, ez a kis bevezető segített eloszlatni a ködöt, és te is kedvet kaptál az alkotáshoz.
@@ -101,7 +101,7 @@ body_en: >-
      * `an enchanted forest at night, with glowing mushrooms and fairy lights`
      * **Add a style:** `an enchanted forest at night..., in an watercolor painting style`
      * **Add a mood:** `a dark and mystical enchanted forest at night...`
-  4. **Use a guide!** Once you get the hang of it and want new ideas or styles, that’s where the [**Prompt Lab** ](https://aliceinbp.com)comes in. My website helps you build prompts, where you can choose from **subjects, details, moods, and styles**. This way, you don't have to come up with everything from scratch.
+  4. **Use a guide!** Once you get the hang of it and want new ideas or styles, that’s where the [**Alchemist's Workshop** ](https://aliceinbp.com)comes in. My website helps you build prompts, where you can choose from **subjects, details, moods, and styles**. This way, you don't have to come up with everything from scratch.
 
 
   This world is a endless creative adventure where words become visual reality. I hope this little introduction helped clear the fog and got you excited to create.
