@@ -2557,3 +2557,18 @@ body.light-theme .pagefind-ui__modal {
 .tag-container .prompt-input-tag {
     cursor: default;
 }
+/* ======================================== */
+/* ===== GALÉRIA OVERLAY GOMBOK STÍLUS ===== */
+/* ======================================== */
+
+.gallery-prompt-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.gallery-overlay-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}

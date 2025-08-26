@@ -1,5 +1,4 @@
-// ===== Alkimista Műhely - Fő Szkript (main.js) =====
-// Ez a fájl tartalmazza az összes oldalon használt közös funkciókat.
+// ===== Alkimista Műhely - Fő Szkript (main.js) - JAVÍTOTT =====
 
 document.addEventListener('DOMContentLoaded', function() {
     // --- INICIALIZÁLÁS ---
@@ -15,13 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeInfoModal();
     initializeBackToTopButton();
     initializeUsePromptButtons();
-    observeCusdis(); // A Cusdis komment motorhoz
+    initializeGalleryCopyButtons(); // ÚJ FUNKCIÓ HOZZÁADVA
+    observeCusdis();
 
-    // --- Oldal-specifikus funkciók meghívása a központi helyről ---
-    // A data-loaders.js és interactive-pages.js fájlokban lévő funkciókat hívjuk meg itt.
-    // Maguk a funkciók már "védekezőek", így nem okoznak hibát, ha nincs meg a szükséges elem.
-    
-    // data-loaders.js funkciói
+    // --- Oldal-specifikus funkciók meghívása ---
     if (typeof loadArtists === 'function') loadArtists();
     if (typeof loadGallery === 'function') loadGallery();
     if (typeof loadDailyPrompt === 'function') loadDailyPrompt();
@@ -30,8 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof loadSinglePost === 'function') loadSinglePost();
     if (typeof displayDailyQuote === 'function') displayDailyQuote();
     if (typeof loadSubmissions === 'function') loadSubmissions();
-
-    // interactive-pages.js funkciói
     if (typeof initializeAccordions === 'function') initializeAccordions();
     if (typeof initializeExplainers === 'function') initializeExplainers();
     if (typeof initializePromptAnatomy === 'function') initializePromptAnatomy();
@@ -39,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initializeQuiz === 'function') initializeQuiz();
     if (typeof initializeChallengePage === 'function') initializeChallengePage();
 
-
     // Pagefind kereső inicializálása
-    // A Pagefind szkriptje maga kezeli a saját logikáját, itt csak meghívjuk.
     if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         new PagefindUI({
@@ -58,10 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-// ====================================================================
-// ===== TÉMAVÁLTÁS LOGIKA =====
-// ====================================================================
 function applyTheme(theme) {
     const logo = document.getElementById('logo');
     if (theme === 'light') {
@@ -112,9 +100,6 @@ function observeCusdis() {
     observer.observe(cusdisContainer, { childList: true, subtree: true });
 }
 
-// ====================================================================
-// ===== NYELVKEZELÉS LOGIKA =====
-// ====================================================================
 window.setLanguage = function(lang) {
     localStorage.setItem('preferredLanguage', lang);
     
@@ -156,9 +141,6 @@ function initializeLanguageSwitcher() {
     }
 }
 
-// ====================================================================
-// ===== ÁLTALÁNOS MODÁLIS ABLAK LOGIKA =====
-// ====================================================================
 function initializeInfoModal() {
     const overlay = document.getElementById('modal-overlay');
     const allModals = document.querySelectorAll('.modal');
@@ -184,9 +166,6 @@ function initializeInfoModal() {
     }
 }
 
-// ====================================================================
-// ===== "VISSZA A TETEJÉRE" GOMB LOGIKA =====
-// ====================================================================
 function initializeBackToTopButton() {
     const backToTopButton = document.getElementById('back-to-top');
     if (backToTopButton) {
@@ -200,9 +179,6 @@ function initializeBackToTopButton() {
     }
 }
 
-// ====================================================================
-// ===== "PROMPT HASZNÁLATA" GOMB LOGIKA (GALÉRIA) =====
-// ====================================================================
 function initializeUsePromptButtons() {
     document.body.addEventListener('click', function(e) {
         const target = e.target.closest('.use-prompt-btn');
@@ -213,6 +189,27 @@ function initializeUsePromptButtons() {
             if (promptString) {
                 localStorage.setItem('promptToLoad', promptString);
                 window.location.href = 'generator.html';
+            }
+        }
+    });
+}
+
+function initializeGalleryCopyButtons() {
+    document.body.addEventListener('click', function(e) {
+        const target = e.target.closest('.copy-prompt-btn');
+        if (target) {
+            e.preventDefault();
+            e.stopPropagation();
+            const promptToCopy = target.dataset.prompt;
+            if (promptToCopy) {
+                navigator.clipboard.writeText(promptToCopy).then(() => {
+                    const originalKey = target.dataset.key;
+                    const lang = localStorage.getItem('preferredLanguage') || 'en';
+                    target.textContent = translations[lang].copyButtonSuccess;
+                    setTimeout(() => {
+                        target.textContent = translations[lang][originalKey];
+                    }, 1500);
+                });
             }
         }
     });
