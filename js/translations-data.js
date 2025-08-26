@@ -327,6 +327,7 @@ const translations = {
         negativeCategoryText: "Szöveg és Aláírások",
         negativeCategoryDisturbing: "Zavaró Elemek",
         addSelectedBtn: "Kiválasztottak Hozzáadása",
+        
         // Prompt Recept
         saveRecipeBtn: "Recept Mentése",
         loadRecipeBtn: "Recept Betöltése",
@@ -338,7 +339,13 @@ const translations = {
         recipeDeleteBtn: "Törlés",
         noRecipesSaved: "Nincsenek mentett receptjeid.",
         newBadgeText: "ÚJ",
-
+        addSelectedBtn: "Kiválasztottak Hozzáadása",
+        negativeHelperCategories: {
+            "Gyenge Minőség": ["elmosódott", "zajos", "rossz minőségű", "jpeg artifacts", "alul exponált", "túl exponált", "rossz művészet", "kezdő"],
+            "Anatómiai Hibák": ["rossz anatómia", "extra végtag", "extra ujj", "hiányzó végtag", "rosszul rajzolt kezek", "rosszul rajzolt arc", "torz", "deformált"],
+            "Szöveg és Aláírások": ["szöveg", "vízjel", "aláírás", "felhasználói felület", "logó"],
+            "Zavaró Elemek": ["képkockán kívül", "levágott", "keret", "csempézett", "csúnya"]
+        },
     },
     en: {
         handbookMoreTipsTitle: "More Tips & Common Questions",
@@ -670,6 +677,13 @@ const translations = {
         negativeCategoryText: "Text & Signatures",
         negativeCategoryDisturbing: "Disturbing Elements",
         addSelectedBtn: "Add Selected",
+        addSelectedBtn: "Add Selected",
+        negativeHelperCategories: {
+            "Poor Quality": ["blurry", "noisy", "low quality", "jpeg artifacts", "underexposed", "overexposed", "bad art", "beginner"],
+            "Anatomy Errors": ["bad anatomy", "extra limb", "extra finger", "missing limb", "poorly drawn hands", "poorly drawn face", "disfigured", "deformed"],
+            "Text & Signatures": ["text", "watermark", "signature", "ui", "logo"],
+            "Disturbing Elements": ["out of frame", "cut off", "frame", "tiling", "ugly"]
+        },
         // Prompt Recipe
         saveRecipeBtn: "Save Recipe",
         loadRecipeBtn: "Load Recipe",

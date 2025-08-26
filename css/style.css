@@ -2540,3 +2540,20 @@ body.light-theme .pagefind-ui__modal {
 #add-negative-tags-btn {
     width: 100%;
 }
+/* ======================================== */
+/* ===== DRAG & DROP VIZUÁLIS JAVÍTÁS ===== */
+/* ======================================== */
+
+/* A Végleges Prompt dobozban lévő tagek kapnak "fogd meg" kurzort */
+#final-prompt-container .prompt-tag {
+    cursor: grab;
+}
+
+#final-prompt-container .prompt-tag:active {
+    cursor: grabbing;
+}
+
+/* A kategória dobozokban lévő tageknek NINCS ilyen kurzoruk */
+.tag-container .prompt-input-tag {
+    cursor: default;
+}

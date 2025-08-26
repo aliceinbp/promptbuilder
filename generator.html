@@ -1,386 +1,324 @@
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WC7RDXV8C1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-WC7RDXV8C1');
-    </script>
-    <script type="application/ld+json">
-{
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Alkimista Műhely - AI Prompt Generátor",
-        "applicationCategory": "DesignApplication",
-        "operatingSystem": "Web",
-        "abstract": "Egy ingyenes, web-alapú segédeszköz AI képalkotó promptok egyszerű és kreatív összeállításához, stílusok, témák és művészek kombinálásával.",
-        "author": {
-            "@type": "Person",
-            "name": "Aliceinbp"
+// ===== Alkimista Műhely - Generátor Szkript (generator.js) =====
+// Ez a fájl tartalmazza a generator.html oldal teljes logikáját.
+
+if (document.querySelector('.final-prompt-section')) {
+    initializeGeneratorLogic();
+}
+
+function initializeGeneratorLogic() {
+    // === VÁLTOZÓK ÉS ELEMEK ===
+    const tagContainers = {
+        mainSubject: document.getElementById('mainSubject-container'),
+        details: document.getElementById('details-container'),
+        style: document.getElementById('style-container'),
+        extra: document.getElementById('extra-container')
+    };
+    const finalPromptContainer = document.getElementById('final-prompt-container');
+    const finalPromptHiddenTextarea = document.getElementById('final-prompt-hidden');
+    const negativePromptTextarea = document.getElementById('negative-prompt');
+    const randomButton = document.getElementById('random-button');
+    const clearAllButton = document.getElementById('clear-all-button');
+    const negativePromptHelperBtn = document.getElementById('negative-prompt-helper-btn');
+    const negativeHelperModal = document.getElementById('negative-helper-modal');
+    const overlay = document.getElementById('modal-overlay');
+    
+    let choiceInstances = {};
+    let selectedParameter = '';
+    let historyTimeout;
+
+    // === ALAP FUNKCIÓK ===
+    function openModal(modal) { if (overlay) overlay.classList.remove('hidden'); if (modal) modal.classList.remove('hidden'); }
+    function closeModal(modal) {
+        if (modal) modal.classList.add('hidden');
+        const anyModalOpen = document.querySelector('.modal:not(.hidden)');
+        if (!anyModalOpen && overlay) overlay.classList.add('hidden');
+    }
+
+    // === CÍMKE KEZELŐ FUNKCIÓK ===
+    function createTag(text, isDraggable = false) {
+        const tag = document.createElement('span');
+        tag.textContent = text;
+        tag.dataset.originalText = text; // Eredeti szöveg mentése
+    
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&times;';
+        deleteBtn.title = 'Törlés';
+    
+        if (isDraggable) {
+            tag.className = 'prompt-tag'; // Mozgatható stílus
+            deleteBtn.className = 'delete-tag final-delete'; // Megkülönböztetjük a törlő gombot
+        } else {
+            tag.className = 'prompt-input-tag'; // Fix stílus
+            deleteBtn.className = 'delete-tag category-delete';
+        }
+    
+        tag.appendChild(deleteBtn);
+        return tag;
+    }
+
+    // === VÉGLEGES PROMPT FRISSÍTÉSE ===
+    function updateFinalPrompt() {
+        const finalPromptText = buildFinalPromptString();
+        finalPromptHiddenTextarea.value = finalPromptText;
+
+        const allTags = Array.from(finalPromptContainer.querySelectorAll('.prompt-tag'));
+        if (allTags.length === 0 && !selectedParameter) {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            finalPromptContainer.innerHTML = `<span class="placeholder-text" data-key="finalPromptPlaceholder">${translations[lang].finalPromptPlaceholder}</span>`;
+        } else if (selectedParameter && finalPromptContainer.querySelector('.param-display-tag') === null) {
+             const paramTag = document.createElement('span');
+             paramTag.className = 'prompt-tag param-display-tag';
+             paramTag.textContent = selectedParameter;
+             finalPromptContainer.appendChild(paramTag);
+        }
+
+        // Előzmények mentése késleltetve
+        clearTimeout(historyTimeout);
+        historyTimeout = setTimeout(() => {
+            const currentPrompt = buildFinalPromptString();
+            if (currentPrompt) saveToHistory(currentPrompt);
+        }, 1500);
+    }
+    
+    function buildFinalPromptString() {
+        let promptParts = [];
+        finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)').forEach(tag => {
+            promptParts.push(tag.dataset.originalText); // Mindig az eredeti szöveget használjuk
+        });
+        let finalString = promptParts.join(', ');
+        if (selectedParameter) finalString += ` ${selectedParameter}`;
+        return finalString;
+    }
+    
+    // === CHOICES.JS INICIALIZÁLÁS ===
+    function initializeChoices() {
+        // Ez a funkció változatlan maradt, nem másolom be újra a helytakarékosság miatt.
+        // Ha mégis kell, szólj!
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const custom = JSON.parse(localStorage.getItem('customPrompts')) || {};
+        const defaults = defaultPrompts[lang];
+        const categories = {
+            mainSubject: 'mainSubjectLabel', detail_physical: 'detailPhysicalLabel',
+            detail_environment: 'detailEnvironmentLabel', detail_mood: 'detailMoodLabel',
+            style: 'styleLabel', extra: 'extraLabel'
+        };
+        for (const category in categories) {
+            const selectId = category.replace(/_/g, '-') + '-select';
+            const selectElement = document.getElementById(selectId);
+            if (!selectElement) continue;
+            if (choiceInstances[category]) choiceInstances[category].destroy();
+            const combinedSet = new Set([...(defaults[category] || []), ...(custom[category] || [])]);
+            const options = [...combinedSet].map(item => ({ value: item, label: item }));
+            const placeholderText = translations[lang].selectDefault.replace('{category}', translations[lang][categories[category]].replace(':', ''));
+            choiceInstances[category] = new Choices(selectElement, { choices: options, searchPlaceholderValue: "Keress...", itemSelectText: "Kiválaszt", allowHTML: false, shouldSort: false, placeholder: true, placeholderValue: placeholderText });
         }
     }
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Generátor - Alkimista Műhely by Aliceinbp</title>
+
+    // === FŐGOMBOK ÉS VEZÉRLŐK ===
+    function generateRandomPrompt() {
+        clearAll();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const prompts = defaultPrompts[lang];
+        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+        addTagToContainer(getRandomItem(prompts.mainSubject), tagContainers.mainSubject);
+        addTagToContainer(getRandomItem(prompts.detail_physical), tagContainers.details);
+        addTagToContainer(getRandomItem(prompts.detail_environment), tagContainers.details);
+        addTagToContainer(getRandomItem(prompts.detail_mood), tagContainers.details);
+        addTagToContainer(getRandomItem(prompts.style), tagContainers.style);
+        addTagToContainer(getRandomItem(prompts.extra), tagContainers.extra);
+        
+        // A végső promptot is feltöltjük
+        Object.values(tagContainers).forEach(container => {
+            container.querySelectorAll('.prompt-input-tag').forEach(tag => {
+                const finalTag = createTag(tag.dataset.originalText, true);
+                finalPromptContainer.appendChild(finalTag);
+            });
+        });
+        updateFinalPrompt();
+    }
     
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aliceinbp.com/">
-    <meta property="og:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
-    <meta property="og:description" content="Alkoss lenyűgöző képeket az AI segítségével! A Prompt Lab egy ingyenes eszköz, ami segít a tökéletes promptok összeállításában.">
-    <meta property="og:image" content="https://aliceinbp.com/src/og-image.png">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://aliceinbp.com/">
-    <meta property="twitter:title" content="Prompt Lab by Aliceinbp - AI Képalkotó Segédlet">
-    <meta property="twitter:description" content="Alkoss lenyűgöző képeket az AI segítségével! A Prompt Lab egy ingyenes eszköz, ami segít a tökéletes promptok összeállításában.">
-    <meta property="twitter:image" content="https://aliceinbp.com/src/og-image.png">
-    <meta name="description" content="Hozd létre a tökéletes AI promptot másodpercek alatt! Válogass stílusok, témák és extrák közül, mentsd el a kedvenceidet és alkoss az Alkimista Műhely generátorával.">
+    function clearAll() {
+        Object.values(tagContainers).forEach(c => c.innerHTML = '');
+        finalPromptContainer.innerHTML = '';
+        if (negativePromptTextarea) negativePromptTextarea.value = '';
+        document.querySelectorAll('.param-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.param-btn[data-param=""]').classList.add('active');
+        selectedParameter = '';
+        updateFinalPrompt();
+    }
+
+    // === STÍLUSKEVERŐ ===
+    function initializeStyleMixer() {
+        const mixerSection = document.getElementById('style-mixer-section');
+        if (!mixerSection) return;
+        // ... A stíluskeverő kódja változatlan, itt most nem ismétlem meg.
+        const rerollBtns = mixerSection.querySelectorAll('.reroll-btn');
+        const applyBtn = mixerSection.querySelector('#apply-mixer-btn');
+        const resultDivs = { mainSubject: document.getElementById('mixer-result-subject'), style: document.getElementById('mixer-result-style'), detail_mood: document.getElementById('mixer-result-mood') };
+        function generateRandomMixerItem(category) {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            const prompts = defaultPrompts[lang][category];
+            if (prompts && prompts.length > 0 && resultDivs[category]) {
+                const randomItem = prompts[Math.floor(Math.random() * prompts.length)];
+                resultDivs[category].textContent = randomItem;
+            }
+        }
+        rerollBtns.forEach(btn => btn.addEventListener('click', () => generateRandomMixerItem(btn.dataset.category)));
+        applyBtn.addEventListener('click', () => {
+             const subject = resultDivs.mainSubject.textContent;
+             const style = resultDivs.style.textContent;
+             const mood = resultDivs.detail_mood.textContent;
+             // Hozzáadás mindkét helyre
+             addTagToContainer(subject, tagContainers.mainSubject);
+             addTagToContainer(subject, finalPromptContainer, true);
+             addTagToContainer(style, tagContainers.style);
+             addTagToContainer(style, finalPromptContainer, true);
+             addTagToContainer(mood, tagContainers.details);
+             addTagToContainer(mood, finalPromptContainer, true);
+             updateFinalPrompt();
+        });
+        generateRandomMixerItem('mainSubject');
+        generateRandomMixerItem('style');
+        generateRandomMixerItem('detail_mood');
+    }
+
+    // === NEGATÍV PROMPT SEGÉDLET (JAVÍTOTT) ===
+    function initializeNegativeHelper() {
+        if (!negativeHelperModal || !negativePromptHelperBtn) return;
+
+        const contentDiv = document.getElementById('negative-helper-content');
+        const addBtn = document.getElementById('add-negative-tags-btn');
+        const closeBtn = negativeHelperModal.querySelector('.close-modal-btn');
+
+        negativePromptHelperBtn.addEventListener('click', () => {
+            populateNegativeHelperModal();
+            openModal(negativeHelperModal);
+        });
+
+        function populateNegativeHelperModal() {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            const categories = translations[lang].negativeHelperCategories;
+            contentDiv.innerHTML = '';
+
+            for (const categoryKey in categories) {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'negative-category';
+                const title = document.createElement('h4');
+                // A kulcsot használjuk a fordításhoz
+                const titleKey = `negativeCategory${categoryKey.replace(/\s+/g, '')}`;
+                title.textContent = translations[lang][titleKey] || categoryKey;
+                categoryDiv.appendChild(title);
+
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'negative-tags';
+                categories[categoryKey].forEach(tagText => {
+                    const tag = document.createElement('span');
+                    tag.className = 'negative-tag';
+                    tag.textContent = tagText;
+                    tagsDiv.appendChild(tag);
+                });
+                categoryDiv.appendChild(categoryDiv);
+                contentDiv.appendChild(categoryDiv);
+            }
+        }
+        
+        contentDiv.addEventListener('click', (e) => {
+            if (e.target.classList.contains('negative-tag')) {
+                e.target.classList.toggle('selected');
+            }
+        });
+
+        addBtn.addEventListener('click', () => {
+            const selectedTags = Array.from(contentDiv.querySelectorAll('.negative-tag.selected')).map(tag => tag.textContent);
+            if (selectedTags.length > 0) {
+                const currentText = negativePromptTextarea.value.trim();
+                const newText = (currentText ? currentText + ', ' : '') + selectedTags.join(', ');
+                negativePromptTextarea.value = newText;
+            }
+            closeModal(negativeHelperModal);
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', () => closeModal(negativeHelperModal));
+    }
     
-    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/theme.css?v=1.0.3">
-    <link rel="stylesheet" href="css/style.css?v=1.0.3">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.css"/>
-</head>
-<body>
-    <div id="main-container">
-        <header>
-            <div id="header-top-row">
-                <div class="header-icons-left">
-                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
-                    <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
-                </div>
-                <div id="lang-switcher">
-                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
-                </div>
-            </div>
-            <div id="logo-container">
-                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
-            </div>
-            <h1>★ <span data-key="siteTitle">Alkimista Műhely</span> ★</h1>
-            <p data-key="siteSubtitle">AI Képalkotó Segédlet by Aliceinbp</p>
-            <div id="header-nav-container">
-                <nav id="main-nav">
-                    <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
-                    <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Generátor</span></a>
-                    <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
-                    <a href="kisokos.html"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
-                    <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
-                    <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
-                </nav>
-            </div>
-            <div id="search-container">
-                <div id="search"></div>
-            </div>
-        </header>
-
-        <main data-pagefind-body>
-            <div class="main-actions">
-                <button id="random-button"><i class="fa-solid fa-dice"></i> <span data-key="randomButton">Véletlen Prompt</span></button>
-                <button id="clear-all-button"><i class="fa-solid fa-trash-can"></i> <span data-key="clearAllButton">Mindent Töröl</span></button>
-            </div>
-            
-            <div class="accordion-item" style="margin-bottom: 25px;">
-                <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
-                    <h2 style="margin: 0; font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-shuffle"></i> <span data-key="mixerTitle">Stílus Keverő - Gyors Inspiráció</span>
-                    </h2>
-                </button>
-                <div class="accordion-content">
-                    <div id="style-mixer-section" style="padding-top: 25px;">
-                        <div class="mixer-columns">
-                            <div class="mixer-column">
-                                <h3 data-key="mixerSubject">Téma</h3>
-                                <div class="mixer-result" id="mixer-result-subject">...</div>
-                                <button class="reroll-btn" data-category="mainSubject" data-target="mixer-result-subject">
-                                    <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
-                                </button>
-                            </div>
-                            <div class="mixer-column">
-                                <h3 data-key="mixerStyle">Stílus</h3>
-                                <div class="mixer-result" id="mixer-result-style">...</div>
-                                <button class="reroll-btn" data-category="style" data-target="mixer-result-style">
-                                    <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
-                                </button>
-                            </div>
-                            <div class="mixer-column">
-                                <h3 data-key="mixerMood">Hangulat</h3>
-                                <div class="mixer-result" id="mixer-result-mood">...</div>
-                                <button class="reroll-btn" data-category="detail_mood" data-target="mixer-result-mood">
-                                    <i class="fa-solid fa-dice-d6"></i> <span data-key="mixerReroll">Újrapörget</span>
-                                </button>
-                            </div>
-                        </div>
-                        <button id="apply-mixer-btn" class="cta-button">
-                            <i class="fa-solid fa-check"></i> <span data-key="mixerApply">Kombináció Alkalmazása</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item" id="image-analyzer-accordion" style="margin-bottom: 25px;">
-                <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
-                    <h2 style="margin: 0; font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px; position: relative;">
-                        <i class="fa-solid fa-camera-retro"></i> <span data-key="imageAnalyzerTitle">Képfeltöltés Prompt Javaslatokért</span>
-                        <span class="new-badge" data-key="newBadgeText" style="font-size: 0.6em; top: -15px; right: -25px;">ÚJ</span>
-                    </h2>
-                </button>
-                <div class="accordion-content">
-                    <div id="image-analyzer-section">
-                        <p data-key="imageAnalyzerDesc">Tölts fel egy képet, és az AI megpróbálja kitalálni, milyen kulcsszavakkal hozhatnál létre hasonlót!</p>
-                        <div id="image-upload-area">
-                            <input type="file" id="image-upload-input" accept="image/*" class="hidden">
-                            <label for="image-upload-input" class="cta-button-small" data-key="uploadImageBtn">
-                                <i class="fa-solid fa-upload"></i> Kép Kiválasztása
-                            </label>
-                            <div id="image-preview-container" class="hidden">
-                                <img id="image-preview" src="#" alt="Feltöltött kép előnézete" />
-                                <button id="remove-image-btn" title="Kép eltávolítása">&times;</button>
-                            </div>
-                        </div>
-                        <button id="analyze-image-btn" class="cta-button" disabled>
-                            <span class="btn-text" data-key="analyzeImageBtn">Kép Elemzése</span>
-                            <span class="spinner hidden"></span>
-                        </button>
-                        <div id="image-analysis-result" class="hidden">
-                            <h4 data-key="analysisResultTitle">Javasolt Kulcsszavak:</h4>
-                            <div id="analysis-result-tags" class="tag-container"></div>
-                            <button id="add-analysis-tags-btn" class="cta-button-small" data-key="addTagsToGeneratorBtn">Kulcsszavak Hozzáadása a Generátorhoz</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="prompt-section">
-                <label for="mainSubject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="mainSubjectLabel">Fő téma:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i></label>
-                <div class="input-group">
-                    <select id="mainSubject-select"></select>
-                    <input type="text" id="mainSubject-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="mainSubject">Hozzáad</button>
-                </div>
-                <div id="mainSubject-container" class="tag-container"></div>
-            </div>
-            <div class="details-section">
-                <h3 class="details-title" data-key="detailsLabel"><i class="fa-solid fa-pen-to-square"></i> Részletek / Leírás:</h3>
-                <div class="prompt-section detail-subsection">
-                    <label for="detail-physical-select"><i class="fa-solid fa-person-rays"></i> <span data-key="detailPhysicalLabel">Tulajdonságok:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_physical" title="Tippek a tulajdonságokhoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_physical" title="Saját promptok kezelése"></i></label>
-                    <div class="input-group">
-                        <select id="detail-physical-select"></select>
-                        <input type="text" id="detail-physical-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
-                    </div>
-                </div>
-                <div class="prompt-section detail-subsection">
-                    <label for="detail-environment-select"><i class="fa-solid fa-mountain-sun"></i> <span data-key="detailEnvironmentLabel">Környezet:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_environment" title="Tippek a környezethez"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_environment" title="Saját promptok kezelése"></i></label>
-                    <div class="input-group">
-                        <select id="detail-environment-select"></select>
-                        <input type="text" id="detail-environment-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
-                    </div>
-                </div>
-                <div class="prompt-section detail-subsection">
-                    <label for="detail-mood-select"><i class="fa-solid fa-masks-theater"></i> <span data-key="detailMoodLabel">Hangulat:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="detail_mood" title="Tippek a hangulathoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="detail_mood" title="Saját promptok kezelése"></i></label>
-                    <div class="input-group">
-                        <select id="detail-mood-select"></select>
-                        <input type="text" id="detail-mood-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
-                    </div>
-                </div>
-                <div id="details-container" class="tag-container"></div>
-            </div>
-            <div class="prompt-section">
-                <label for="style-select">
-                    <i class="fa-solid fa-palette"></i> 
-                    <span data-key="styleLabel">Stílus:</span>
-                    <a href="artists.html" class="header-icon-link" data-key-title="styleArtistLinkTooltip" target="_blank"><i class="fa-solid fa-book-open-reader"></i></a>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="style" title="Tippek a stílushoz"></i>
-                    <i class="fa-solid fa-gear manage-prompts-btn" data-category="style" title="Saját promptok kezelése"></i>
-                </label>
-                <div class="input-group">
-                    <select id="style-select"></select>
-                    <input type="text" id="style-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="style">Hozzáad</button>
-                </div>
-                <div id="style-container" class="tag-container"></div>
-            </div>
-            <div class="prompt-section">
-                <label for="extra-select"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="extraLabel">Extrák:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="extra" title="Tippek az extrákhoz"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="extra" title="Saját promptok kezelése"></i></label>
-                <div class="input-group">
-                    <select id="extra-select"></select>
-                    <input type="text" id="extra-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="extra">Hozzáad</button>
-                </div>
-                <div id="extra-container" class="tag-container"></div>
-            </div>
-            
-            <div class="negative-prompt-section">
-                <label for="negative-prompt">
-                    <i class="fa-solid fa-ban"></i> 
-                    <span data-key="negativePromptLabel">Negatív Prompt</span>
-                    <i class="fa-solid fa-circle-info explainer-icon" data-category="negative" title="Tippek a negatív prompthoz"></i>
-                    <div class="label-buttons">
-                        <button id="negative-prompt-helper-btn" class="utility-btn" data-key-title="negativeHelperTooltip">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            <span data-key="negativeHelperBtn">Segítség</span>
-                        </button>
-                        <button id="copy-negative-button" class="utility-btn" data-key-title="copyNegativeTooltip">
-                            <i class="fa-solid fa-copy"></i>
-                        </button>
-                    </div>
-                </label>
-                <textarea id="negative-prompt" rows="3" data-key-placeholder="negativePromptPlaceholder"></textarea>
-            </div>
-            
-            <div class="parameters-section">
-                <label><i class="fa-solid fa-ruler-combined"></i> <span data-key="paramTitle">Paraméterek (opcionális)</span></label>
-                <div class="param-group">
-                    <span class="param-label" data-key="paramAR">Képarány:</span>
-                    <div class="param-buttons">
-                        <button class="param-btn active" data-param=""><span data-key="paramARDefault">Alapértelmezett</span></button>
-                        <button class="param-btn" data-param="--ar 1:1"><span data-key="paramARSquare">1:1 (Négyzet)</span></button>
-                        <button class="param-btn" data-param="--ar 16:9"><span data-key="paramARLandscape">16:9 (Fekvő)</span></button>
-                        <button class="param-btn" data-param="--ar 9:16"><span data-key="paramARPortrait">9:16 (Álló)</span></button>
-                    </div>
-                </div>
-                <div class="param-group" style="margin-top: 15px;">
-                    <span class="param-label" data-key="paramWeight">Súlyozás:</span>
-                    <div class="weight-control">
-                        <input type="range" id="weight-slider" min="0.5" max="2" value="1" step="0.1" title="Válassz egy taget a súlyozáshoz!">
-                        <span id="weight-value">1.0</span>
-                        <button id="reset-weights-btn" class="cta-button-small" data-key="paramWeightReset">Visszaállítás</button>
-                    </div>
-                </div>
-                <p class="weight-instruction" data-key="paramWeightInstruction">Kattints egy elemre a "Végleges prompt" dobozban a súlyozáshoz!</p>
-            </div>
-            
-            <div class="final-prompt-section">
-                <label for="final-prompt"><span data-key="finalPromptLabel">Végleges prompt (angolul)</span><button id="history-button" title="Előzmények"><i class="fa-solid fa-clock-rotate-left"></i></button></label>
-                <div id="final-prompt-container" class="final-prompt-container gradient-border-box"><span class="placeholder-text" data-key="finalPromptPlaceholder">Az alkotóelemekből összeállított varázsigéd itt fog megjelenni...</span></div>
-                <textarea id="final-prompt-hidden" style="display: none;"></textarea>
-            </div>
-            <div class="translation-section">
-                <button id="translate-button" data-key-title="translateButtonTooltip">
-                    <i class="bi bi-translate"></i>
-                </button>
-            </div>
-            <div class="button-group">
-                <button id="save-recipe-btn"><i class="fa-solid fa-book-bookmark"></i> <span data-key="saveRecipeBtn">Recept Mentése</span></button>
-                <button id="load-recipe-btn"><i class="fa-solid fa-folder-open"></i> <span data-key="loadRecipeBtn">Recept Betöltése</span></button>
-                <button id="copy-button"><i class="fa-solid fa-copy"></i> <span data-key="copyButton">Prompt másolása</span></button>
-                <div class="share-buttons-container">
-                    <a href="#" id="share-twitter-btn" class="share-btn twitter" data-key-title="shareTwitterTooltip">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
-                    <a href="#" id="share-facebook-btn" class="share-btn facebook" data-key-title="shareFacebookTooltip">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                </div>
-            </div>
-            <section id="saved-prompts-section">
-                <h2><i class="fa-solid fa-star"></i> <span data-key="savedPromptsTitle">Mentett Promptok</span></h2>
-                <div id="saved-prompts-list"></div>
-            </section>
-        </main>
-        <footer class="footer-main">
-            <div class="footer-top">
-                <div class="footer-widget">
-                    <h4 data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</h4>
-                    <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
-                        <input type="hidden" name="form-name" value="newsletter" />
-                        <div class="newsletter-input-group">
-                            <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
-                            <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </form>
-                </div>
-                <div class="footer-widget">
-                    <h4>Támogasd a Projektet!</h4>
-                    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
-                        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
-                        Támogass egy kávéval
-                    </a>
-                </div>
-            </div>
-            <div class="footer-middle">
-                <div class="footer-links">
-                    <a href="contact.html" data-key="navContact">Kapcsolat</a>
-                    <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's Creations</a>
-                </div>
-                <div class="footer-socials">
-                    <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div id="visitor-counter">
-                     <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
-                </div>
-                <p class="copyright-text">&copy; 2025 Alkimista Műhely by Aliceinbp. Minden jog fenntartva.</p>
-            </div>
-        </footer>
-    </div>
-    <div id="modal-overlay" class="hidden"></div>
-    <div id="info-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="infoModalTitle">A Prompt Lab-ről</h2>
-        <p data-key="infoModalText1">Szia! Ez az oldal azért készült, hogy segítsen neked lenyűgöző promptokat (utasításokat) generálni AI képalkotó programokhoz.</p>
-        <p data-key="infoModalText2">Használd a legördülő menüket, vagy írd be a saját ötleteidet. Kombináld a stílusokat, témákat és helyszíneket, mentsd el a kedvenceidet, és alkoss valami csodálatosat!</p>
-        <p>❤️</p>
-    </div>
-    <div id="manage-prompts-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 id="manage-modal-title">Saját Promptok Kezelése</h2>
-        <div id="manage-prompts-list"></div>
-        <div class="add-new-prompt-form">
-            <input type="text" id="new-prompt-input" placeholder="Új prompt hozzáadása...">
-            <button id="add-new-prompt-btn">Hozzáad</button>
-        </div>
-    </div>
-    <div id="history-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="historyModalTitle">Prompt Előzmények</h2>
-        <div id="history-list"></div>
-    </div>
-    <div id="explainer-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 id="explainer-modal-title"></h2>
-        <div id="explainer-modal-text"></div>
-    </div>
-    <div id="negative-helper-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="negativeHelperTitle">Negatív Prompt Segédlet</h2>
-        <div id="negative-helper-content"></div>
-        <button id="add-negative-tags-btn" class="cta-button" data-key="addSelectedBtn">Kiválasztottak Hozzáadása</button>
-    </div>
-    <div id="save-recipe-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="saveRecipeModalTitle">Recept Mentése</h2>
-        <input type="text" id="recipe-name-input" data-key-placeholder="recipeNamePlaceholder">
-        <button id="confirm-save-recipe-btn" class="cta-button" data-key="saveBtn">Mentés</button>
-    </div>
-    <div id="load-recipe-modal" class="modal hidden">
-        <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
-        <h2 data-key="loadRecipeModalTitle">Recept Betöltése</h2>
-        <div id="saved-recipes-list"></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <script src="/pagefind/pagefind-ui.js"></script>
+    // === ESEMÉNYKEZELŐK ===
     
-    <script src="js/prompts-data.js"></script>
-    <script src="js/translations-data.js"></script>
-    <script src="js/quotes-data.js"></script> <script src="js/data-loaders.js"></script>
-    <script src="js/interactive-pages.js"></script>
-    <script src="js/generator.js"></script> <script src="js/main.js"></script>
+    document.querySelectorAll('.add-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const parentGroup = this.closest('.input-group');
+            const selectElement = parentGroup.querySelector('select');
+            const inputElement = parentGroup.querySelector('.new-prompt-input');
+            const categoryKey = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
+            const choiceInstance = choiceInstances[categoryKey];
+            let valueToAdd = inputElement.value.trim();
 
-    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+            if (!valueToAdd && choiceInstance) valueToAdd = choiceInstance.getValue(true);
 
-</body>
-</html>
+            if (valueToAdd) {
+                const outputCategoryKey = this.dataset.category === 'details' ? 'details' : this.dataset.category;
+                const categoryContainer = tagContainers[outputCategoryKey];
+                
+                // Hozzáadás a kategória konténerhez (nem mozgatható)
+                addTagToContainer(valueToAdd, categoryContainer, false);
+                // Hozzáadás a végső prompt konténerhez (mozgatható)
+                const finalTag = createTag(valueToAdd, true);
+                finalPromptContainer.appendChild(finalTag);
+
+                updateFinalPrompt();
+
+                inputElement.value = '';
+                if (choiceInstance) {
+                    choiceInstance.clearInput();
+                    choiceInstance.setChoiceByValue('');
+                }
+            }
+        });
+    });
+
+    // Törlés gombok eseménykezelője
+    document.querySelector('main').addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-tag')) {
+            const tagToRemove = e.target.parentElement;
+            const textToRemove = tagToRemove.dataset.originalText;
+            
+            // Ha a VÉGSŐ promptból törlünk
+            if (e.target.classList.contains('final-delete')) {
+                tagToRemove.remove(); // Töröljük a végsőből
+                // Megkeressük és töröljük a párját a kategóriákból is
+                Object.values(tagContainers).forEach(container => {
+                    const tagInCategory = container.querySelector(`.prompt-input-tag[data-original-text="${textToRemove}"]`);
+                    if (tagInCategory) tagInCategory.remove();
+                });
+            } 
+            // Ha egy KATEGÓRIÁBÓL törlünk
+            else if (e.target.classList.contains('category-delete')) {
+                tagToRemove.remove(); // Töröljük a kategóriából
+                // Megkeressük és töröljük a párját a végső promptból is
+                const tagInFinal = finalPromptContainer.querySelector(`.prompt-tag[data-original-text="${textToRemove}"]`);
+                if (tagInFinal) tagInFinal.remove();
+            }
+
+            updateFinalPrompt();
+        }
+    });
+
+    if (randomButton) randomButton.addEventListener('click', generateRandomPrompt);
+    if (clearAllButton) clearAllButton.addEventListener('click', clearAll);
+
+    // === DRAG & DROP INICIALIZÁLÁS ===
+    if (typeof Sortable !== 'undefined') {
+        new Sortable(finalPromptContainer, {
+            group: 'shared-prompts',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: updateFinalPrompt
+        });
+    }
+
+    // === INICIALIZÁLÁS HÍVÁSOK ===
+    initializeChoices();
+    initializeStyleMixer();
+    initializeNegativeHelper();
+    updateFinalPrompt(); // Hogy a placeholder megjelenjen betöltéskor
+}
