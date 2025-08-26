@@ -2617,66 +2617,71 @@ body.light-theme .pagefind-ui__modal {
     text-decoration: underline !important;
 }
 /* =================================================== */
-/* ===== GALÉRIA KÁRTYA VÉGLEGES JAVÍTÁSA (CSS) ===== */
+/* ===== GALÉRIA VÉGLEGES VIZUÁLIS JAVÍTÁSA (CSS) ===== */
 /* =================================================== */
 
 .gallery-item {
-    display: flex; 
+    display: flex;
     flex-direction: column;
 }
 
 .gallery-item a {
     position: relative; /* Ez kell, hogy az overlay pozíciója ehhez igazodjon */
-    display: block;
-    line-height: 0; /* Eltávolítja a kép alatti extra fehér teret */
-    height: 100%; /* Fontos, hogy a link eleme kitöltse a rendelkezésre álló magasságot */
+    display: block; /* Biztosítja, hogy a link kitöltse a helyet */
+    line-height: 0; /* Eltávolítja a kép alatti pici, felesleges rést */
+    height: 100%;
 }
 
 /* Az overlay, ami a kép fölött jelenik meg */
 .gallery-prompt-overlay {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* Biztosítja, hogy az overlay kitöltse az egész kártyát */
-    background: rgba(0, 0, 0, 0.85); /* Kicsit sötétebb, jobb olvashatóságért */
-    color: #fff;
-    padding: 10px; /* Csökkentett padding */
-    box-sizing: border-box; /* A padding ne növelje a méretet */
-    
-    /* Tartalom középre igazítása és térközök szabályozása */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* Tartalom középre igazítása */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Függőlegesen középre igazítja a tartalmat */
-    align-items: center; /* Vízszintesen középre igazítja a tartalmat */
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    
+
     /* Alapból elrejtve, finom átmenettel */
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Ne zavarjon be, ha nem látszik */
 }
 
 /* Megjelenik, ha a kép fölé viszed az egeret */
 .gallery-item a:hover .gallery-prompt-overlay {
     opacity: 1;
+    pointer-events: auto; /* Kattinthatóvá válik, ha látszik */
 }
 
+/* A prompt szöveg konténere */
 .gallery-prompt-overlay p {
-    font-size: 0.85em; /* Kicsit kisebb betűméret */
-    line-height: 1.3; /* Sorok közti távolság */
-    margin: 0 0 10px 0; /* Kisebb térköz a gombok előtt */
-    max-height: 70%; /* Korlátozza a prompt szöveg magasságát */
-    overflow-y: auto; /* Ha túl hosszú, görgethetővé teszi */
-    padding: 0 5px; /* Kisebb padding oldalt a szövegnek */
+    flex-shrink: 1; /* Engedi, hogy a szöveg zsugorodjon, ha kell, és ne lógjon ki */
+    overflow-y: auto; /* Ha a szöveg mégis túl hosszú, görgethető lesz */
+    margin: 0 0 15px 0; /* Térköz a szöveg és a gombok között */
+    padding: 0 5px;
+    line-height: 1.4;
+    font-size: 0.9em;
 }
 
+/* A gombok konténere */
 .gallery-overlay-buttons {
+    flex-shrink: 0; /* A gombok ne zsugorodjanak */
     display: flex;
-    gap: 8px; /* Kisebb gomb térköz */
-    margin-top: auto; /* A gombokat a doboz aljára nyomja */
+    gap: 10px;
 }
 
-/* Művészek Oldal Elrendezésének Javítása (ezek maradtak, de itt is lehetnek apró módosítások, ha nem tökéletes) */
+
+/* --- Művészek Oldal Elrendezésének Javítása (ez a rész már jó volt, de itt marad) --- */
 .artist-card {
     display: flex;
     flex-direction: column;
