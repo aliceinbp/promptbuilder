@@ -1,8 +1,6 @@
-// ===== Alkimista Műhely - Generátor Szkript (generator.js) - VÉGLEGES, TELJES JAVÍTÁS =====
+// ===== Alkimista Műhely - Generátor Szkript (generator.js) - VÉGLEGES, FORDÍTÓVAL KIEGÉSZÍTETT =====
 
 document.addEventListener('DOMContentLoaded', () => {
-    // A szkript csak akkor fusson le, ha a generátor oldalon vagyunk.
-    // Ehhez a generator.html <main> tag-jében kell lennie egy id="generator-page-identifier"-nek.
     if (document.getElementById('generator-page-identifier')) {
         initializeGeneratorLogic();
     }
@@ -33,6 +31,7 @@ function initializeGeneratorLogic() {
     const weightSlider = document.getElementById('weight-slider');
     const weightValue = document.getElementById('weight-value');
     const resetWeightsBtn = document.getElementById('reset-weights-btn');
+    const translateButton = document.getElementById('translate-button');
 
     // === ALAP FUNKCIÓK ===
     function openModal(modal) { if (overlay) overlay.classList.remove('hidden'); if (modal) modal.classList.remove('hidden'); }
@@ -48,13 +47,11 @@ function initializeGeneratorLogic() {
         const originalText = text.replace(/:[\d.]+$/, '').trim();
         tag.textContent = text;
         tag.dataset.originalText = originalText;
-
         const deleteBtn = document.createElement('button');
         deleteBtn.innerHTML = '&times;';
         deleteBtn.className = 'delete-tag';
         deleteBtn.title = 'Törlés';
         tag.appendChild(deleteBtn);
-        
         tag.className = isFinalPromptTag ? 'prompt-tag' : 'prompt-input-tag';
         return tag;
     }
@@ -71,7 +68,6 @@ function initializeGeneratorLogic() {
     function updateFinalPrompt() {
         const finalPromptText = buildFinalPromptString();
         finalPromptHiddenTextarea.value = finalPromptText;
-
         const existingParamTag = finalPromptContainer.querySelector('.param-display-tag');
         if (existingParamTag) existingParamTag.remove();
         if (selectedParameter) {
@@ -80,7 +76,6 @@ function initializeGeneratorLogic() {
             paramTag.textContent = selectedParameter;
             finalPromptContainer.appendChild(paramTag);
         }
-        
         const placeholder = finalPromptContainer.querySelector('.placeholder-text');
         if (finalPromptContainer.querySelectorAll('.prompt-tag').length > 0) {
             if(placeholder) placeholder.style.display = 'none';
@@ -88,7 +83,6 @@ function initializeGeneratorLogic() {
              const lang = localStorage.getItem('preferredLanguage') || 'en';
              finalPromptContainer.innerHTML = `<span class="placeholder-text" data-key="finalPromptPlaceholder">${translations[lang].finalPromptPlaceholder}</span>`;
         }
-
         clearTimeout(historyTimeout);
         historyTimeout = setTimeout(() => {
             if (buildFinalPromptString()) saveToHistory(buildFinalPromptString());
@@ -100,6 +94,45 @@ function initializeGeneratorLogic() {
         promptHistory.unshift(promptText);
         if (promptHistory.length > 20) promptHistory.pop();
         localStorage.setItem('promptHistory', JSON.stringify(promptHistory));
+    }
+
+    // === FORDÍTÁS FUNKCIÓ ===
+    async function handleTranslation() {
+        const textToTranslate = buildFinalPromptString(); // A teljes promptot fordítjuk
+        if (!textToTranslate) return;
+    
+        const icon = translateButton.querySelector('i');
+        const originalIconClass = icon.className;
+    
+        try {
+            icon.className = 'fa-solid fa-spinner fa-spin';
+            translateButton.disabled = true;
+    
+            const response = await fetch('/.netlify/functions/translate', {
+                method: 'POST',
+                body: JSON.stringify({
+                    text: textToTranslate,
+                    target_lang: 'EN-US'
+                })
+            });
+    
+            if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+            const data = await response.json();
+            if (data.error) throw new Error(data.details || data.error);
+    
+            const translatedText = data.translatedText;
+    
+            clearAll(); 
+            finalPromptContainer.appendChild(createTag(translatedText, true));
+            updateFinalPrompt();
+    
+        } catch (error) {
+            console.error("Fordítási hiba:", error);
+            alert(`Hiba történt a fordítás során: ${error.message}`);
+        } finally {
+            icon.className = originalIconClass;
+            translateButton.disabled = false;
+        }
     }
 
     // === CHOICES.JS INICIALIZÁLÁS ===
@@ -148,27 +181,20 @@ function initializeGeneratorLogic() {
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         const prompts = defaultPrompts[lang];
         const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-        
         const items = [
-            { text: getRandomItem(prompts.mainSubject), container: tagContainers.mainSubject },
-            { text: getRandomItem(prompts.detail_physical), container: tagContainers.details },
-            { text: getRandomItem(prompts.detail_environment), container: tagContainers.details },
-            { text: getRandomItem(prompts.detail_mood), container: tagContainers.details },
-            { text: getRandomItem(prompts.style), container: tagContainers.style },
-            { text: getRandomItem(prompts.extra), container: tagContainers.extra }
+            { text: getRandomItem(prompts.mainSubject), container: tagContainers.mainSubject }, { text: getRandomItem(prompts.detail_physical), container: tagContainers.details },
+            { text: getRandomItem(prompts.detail_environment), container: tagContainers.details }, { text: getRandomItem(prompts.detail_mood), container: tagContainers.details },
+            { text: getRandomItem(prompts.style), container: tagContainers.style }, { text: getRandomItem(prompts.extra), container: tagContainers.extra }
         ];
-
         items.forEach(item => {
             const categoryTag = createTag(item.text, false);
             const finalTag = createTag(item.text, true);
             item.container.appendChild(categoryTag);
             finalPromptContainer.appendChild(finalTag);
         });
-
         updateFinalPrompt();
     }
 
-    // === PROMPT BETÖLTÉSE A GALÉRIÁBÓL ===
     function loadPromptFromStorage() {
         const promptToLoad = localStorage.getItem('promptToLoad');
         if (promptToLoad) {
@@ -183,14 +209,12 @@ function initializeGeneratorLogic() {
     }
 
     // === INTERAKTÍV MODULOK LOGIKÁJA ===
-    
     function initializeStyleMixer() {
         const mixerSection = document.getElementById('style-mixer-section');
         if (!mixerSection) return;
         const rerollBtns = mixerSection.querySelectorAll('.reroll-btn');
         const applyBtn = mixerSection.querySelector('#apply-mixer-btn');
         const resultDivs = { mainSubject: document.getElementById('mixer-result-subject'), style: document.getElementById('mixer-result-style'), detail_mood: document.getElementById('mixer-result-mood') };
-        
         function generateRandomMixerItem(category) {
             const lang = localStorage.getItem('preferredLanguage') || 'en';
             const prompts = defaultPrompts[lang][category];
@@ -198,9 +222,7 @@ function initializeGeneratorLogic() {
                 resultDivs[category].textContent = prompts[Math.floor(Math.random() * prompts.length)];
             }
         }
-
         rerollBtns.forEach(btn => btn.addEventListener('click', () => generateRandomMixerItem(btn.dataset.category)));
-        
         applyBtn.addEventListener('click', () => {
             const itemsToAdd = [
                 { text: resultDivs.mainSubject.textContent, container: tagContainers.mainSubject },
@@ -215,7 +237,6 @@ function initializeGeneratorLogic() {
             });
             updateFinalPrompt();
         });
-        
         generateRandomMixerItem('mainSubject');
         generateRandomMixerItem('style');
         generateRandomMixerItem('detail_mood');
@@ -225,11 +246,9 @@ function initializeGeneratorLogic() {
         const negativePromptHelperBtn = document.getElementById('negative-prompt-helper-btn');
         const negativeHelperModal = document.getElementById('negative-helper-modal');
         if (!negativeHelperModal || !negativePromptHelperBtn) return;
-        
         const contentDiv = document.getElementById('negative-helper-content');
         const addBtn = document.getElementById('add-negative-tags-btn');
         const closeBtn = negativeHelperModal.querySelector('.close-modal-btn');
-
         negativePromptHelperBtn.addEventListener('click', () => {
             const lang = localStorage.getItem('preferredLanguage') || 'en';
             const categoriesData = translations[lang].negativeHelperCategories;
@@ -251,11 +270,9 @@ function initializeGeneratorLogic() {
             }
             openModal(negativeHelperModal);
         });
-
         contentDiv.addEventListener('click', (e) => {
             if (e.target.classList.contains('negative-tag')) e.target.classList.toggle('selected');
         });
-
         addBtn.addEventListener('click', () => {
             const selectedTags = Array.from(contentDiv.querySelectorAll('.negative-tag.selected')).map(tag => tag.textContent);
             if (selectedTags.length > 0) {
@@ -264,7 +281,6 @@ function initializeGeneratorLogic() {
             }
             closeModal(negativeHelperModal);
         });
-
         if (closeBtn) closeBtn.addEventListener('click', () => closeModal(negativeHelperModal));
     }
 
@@ -276,11 +292,8 @@ function initializeGeneratorLogic() {
         if (!saveBtn || !loadBtn || !saveModal || !loadModal) return;
 
         saveBtn.addEventListener('click', () => {
-            if (finalPromptContainer.querySelectorAll('.prompt-tag').length > 0) {
-                 openModal(saveModal);
-            }
+            if (finalPromptContainer.querySelectorAll('.prompt-tag').length > 0) openModal(saveModal);
         });
-        
         saveModal.querySelector('#confirm-save-recipe-btn').addEventListener('click', () => {
             const name = saveModal.querySelector('#recipe-name-input').value.trim();
             if (name) {
@@ -297,7 +310,6 @@ function initializeGeneratorLogic() {
                 closeModal(saveModal);
             }
         });
-
         function populateLoadModal() {
             const listDiv = loadModal.querySelector('#saved-recipes-list');
             const recipes = JSON.parse(localStorage.getItem('savedRecipes')) || {};
@@ -320,29 +332,26 @@ function initializeGeneratorLogic() {
             }
             window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
         }
-
         loadBtn.addEventListener('click', () => {
             populateLoadModal();
             openModal(loadModal);
         });
-
         loadModal.addEventListener('click', (e) => {
             const target = e.target;
             const recipeName = target.dataset.name;
             if (!recipeName) return;
-
             if (target.classList.contains('load-recipe')) {
                 const recipes = JSON.parse(localStorage.getItem('savedRecipes'));
                 const recipe = recipes[recipeName];
                 if (recipe) {
                     clearAll();
                     for (const category in recipe) {
-                        recipe[category].forEach(text => {
-                            if (tagContainers[category]) {
+                        if (tagContainers[category]) {
+                            recipe[category].forEach(text => {
                                 tagContainers[category].appendChild(createTag(text, false));
                                 finalPromptContainer.appendChild(createTag(text, true));
-                            }
-                        });
+                            });
+                        }
                     }
                     updateFinalPrompt();
                     closeModal(loadModal);
@@ -354,13 +363,13 @@ function initializeGeneratorLogic() {
                 populateLoadModal();
             }
         });
-        
         saveModal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(saveModal));
         loadModal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(loadModal));
     }
 
     // === ESEMÉNYKEZELŐK ===
     function initializeEventListeners() {
+        if (translateButton) translateButton.addEventListener('click', handleTranslation);
 
         document.querySelectorAll('.add-button').forEach(button => {
             button.addEventListener('click', function() {
@@ -370,9 +379,7 @@ function initializeGeneratorLogic() {
                 const categoryKey = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
                 const choiceInstance = choiceInstances[categoryKey];
                 let valueToAdd = inputElement.value.trim();
-
                 if (!valueToAdd && choiceInstance) valueToAdd = choiceInstance.getValue(true);
-
                 if (valueToAdd) {
                     const outputCategoryKey = this.dataset.category === 'details' ? 'details' : this.dataset.category;
                     const categoryContainer = tagContainers[outputCategoryKey];
@@ -393,7 +400,6 @@ function initializeGeneratorLogic() {
                 const tagToRemove = e.target.parentElement;
                 const textToRemove = tagToRemove.dataset.originalText;
                 tagToRemove.remove();
-
                 if (tagToRemove.classList.contains('prompt-tag')) {
                      Object.values(tagContainers).forEach(container => {
                         const tagInCategory = [...container.querySelectorAll('.prompt-input-tag')].find(t => t.dataset.originalText === textToRemove);

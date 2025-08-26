@@ -2616,3 +2616,77 @@ body.light-theme .pagefind-ui__modal {
 .blog-card-content h3 a:hover {
     text-decoration: underline !important;
 }
+/* =================================================== */
+/* ===== GALÉRIA ÉS MŰVÉSZEK OLDAL VÉGLEGES JAVÍTÁSA ===== */
+/* =================================================== */
+
+/* --- Galéria Kártyák Javítása --- */
+.gallery-item {
+    display: flex; 
+    flex-direction: column;
+}
+.gallery-item a {
+    position: relative; /* Ez kell, hogy az overlay pozíciója ehhez igazodjon */
+    display: block;
+    line-height: 0; /* Eltávolítja a kép alatti extra fehér teret */
+}
+
+/* Az overlay, ami a kép fölött jelenik meg */
+.gallery-prompt-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 15px;
+    
+    /* Középre igazítja a tartalmat (szöveg és gombok) */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Alapból elrejtve, finom átmenettel */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Megjelenik, ha a kép fölé viszed az egeret */
+.gallery-item a:hover .gallery-prompt-overlay {
+    opacity: 1;
+}
+
+.gallery-prompt-overlay p {
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 0 0 15px 0; /* Térköz a gombok előtt */
+}
+
+.gallery-overlay-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- Művészek Oldal Elrendezésének Javítása --- */
+.artist-card {
+    display: flex;
+    flex-direction: column;
+}
+.artist-card-header {
+    background-color: var(--color-surface); /* Visszaállítjuk a "sáv" hátterét */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.artist-card-header h3 {
+    margin: 0;
+}
+.artist-card p {
+    flex-grow: 1; 
+}
