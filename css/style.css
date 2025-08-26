@@ -2617,19 +2617,13 @@ body.light-theme .pagefind-ui__modal {
     text-decoration: underline !important;
 }
 /* =================================================== */
-/* ===== GALÉRIA VÉGLEGES VIZUÁLIS JAVÍTÁSA (CSS) ===== */
+/* ===== GALÉRIA VÉGSŐ ÉS EGYSZERŰSÍTETT CSS JAVÍTÁSA ===== */
 /* =================================================== */
 
-.gallery-item {
-    display: flex;
-    flex-direction: column;
-}
-
+/* A konténer, amihez az overlay igazodik */
 .gallery-item a {
-    position: relative; /* Ez kell, hogy az overlay pozíciója ehhez igazodjon */
-    display: block; /* Biztosítja, hogy a link kitöltse a helyet */
-    line-height: 0; /* Eltávolítja a kép alatti pici, felesleges rést */
-    height: 100%;
+    position: relative;
+    display: block; /* Fontos, hogy a link kitöltse a kép helyét */
 }
 
 /* Az overlay, ami a kép fölött jelenik meg */
@@ -2640,69 +2634,37 @@ body.light-theme .pagefind-ui__modal {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
+    color: #FFFFFF; /* A szöveg színe legyen fehér */
 
-    /* Tartalom középre igazítása */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    /* Alapból elrejtve, finom átmenettel */
+    
     opacity: 0;
     transition: opacity 0.3s ease;
-    pointer-events: none; /* Ne zavarjon be, ha nem látszik */
+    pointer-events: none;
 }
 
-/* Megjelenik, ha a kép fölé viszed az egeret */
 .gallery-item a:hover .gallery-prompt-overlay {
     opacity: 1;
-    pointer-events: auto; /* Kattinthatóvá válik, ha látszik */
+    pointer-events: auto;
 }
 
-/* A prompt szöveg konténere */
+/* A prompt szöveg (P tag) stílusa */
 .gallery-prompt-overlay p {
-    flex-shrink: 1; /* Engedi, hogy a szöveg zsugorodjon, ha kell, és ne lógjon ki */
-    overflow-y: auto; /* Ha a szöveg mégis túl hosszú, görgethető lesz */
-    margin: 0 0 15px 0; /* Térköz a szöveg és a gombok között */
-    padding: 0 5px;
-    line-height: 1.4;
     font-size: 0.9em;
+    line-height: 1.4; /* Normális sormagasságot adunk neki */
+    margin: 0 0 15px 0;
+    max-height: 65%; /* Korlátozzuk a magasságát, hogy elférjenek a gombok */
+    overflow-y: auto; /* Ha a szöveg túl hosszú, görgethető lesz */
 }
 
 /* A gombok konténere */
 .gallery-overlay-buttons {
-    flex-shrink: 0; /* A gombok ne zsugorodjanak */
     display: flex;
     gap: 10px;
-}
-
-
-/* --- Művészek Oldal Elrendezésének Javítása (ez a rész már jó volt, de itt marad) --- */
-.artist-card {
-    display: flex;
-    flex-direction: column;
-}
-.artist-card-header {
-    background-color: var(--color-surface);
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.artist-card-header h3 {
-    margin: 0;
-}
-.artist-card p {
-    flex-grow: 1; 
-}
-/* Letiltja a hover effektet, ha a képhez nincs prompt rendelve */
-.gallery-item a.no-prompt:hover .gallery-prompt-overlay {
-    opacity: 0;
-    pointer-events: none;
 }
