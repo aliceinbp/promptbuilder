@@ -53,6 +53,9 @@ body_hu: >-
   Ez a világ egy végtelen kreatív kaland, ahol a szavakból képi valóság lesz. Remélem, ez a kis bevezető segített eloszlatni a ködöt, és te is kedvet kaptál az alkotáshoz.
 
 
+  ![](/src/blog-images/beforeafter01.jpg)
+
+
   <!--EndFragment-->
 body_en: >-
   <!--StartFragment-->
@@ -102,6 +105,9 @@ body_en: >-
 
 
   This world is a endless creative adventure where words become visual reality. I hope this little introduction helped clear the fog and got you excited to create.
+
+
+  ![](/src/blog-images/beforeafter01.jpg)
 
 
   <!--EndFragment-->
