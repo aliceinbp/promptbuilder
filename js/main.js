@@ -3,64 +3,58 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // --- INICIALIZÁLÁS ---
-    // Az oldal betöltődésekor azonnal beállítjuk a mentett témát és nyelvet.
     const initialTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(initialTheme);
 
     const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
     window.setLanguage(currentLanguage);
 
-    // Oldal-specifikus funkciók meghívása
-    // Ellenőrzi, hogy az adott oldalon létezik-e a szükséges elem, és csak akkor hívja meg a funkciót.
-    if (document.querySelector('.final-prompt-section')) {
-        initializeGeneratorLogic();
-    }
-    if (document.querySelector('.artist-grid')) {
-        loadArtists();
-    }
-    if (document.getElementById('gallery-section')) {
-        loadGallery();
-    }
-    if (document.getElementById('daily-prompt-section')) {
-        loadDailyPrompt();
-    }
-    if (document.getElementById('daily-artist-section')) {
-        loadDailyArtist();
-    }
-    if (document.getElementById('blog-posts-container')) {
-        loadBlogPosts();
-    }
-    if (document.getElementById('post-content-container')) {
-        loadSinglePost();
-    }
-    if (document.getElementById('daily-quote-container')) {
-        displayDailyQuote();
-    }
-    if (document.getElementById('cusdis_thread')) {
-        observeCusdis();
-    }
-    if (document.getElementById('submission-gallery-grid')) {
-        loadSubmissions();
-    }
-    if (document.getElementById('prompt-anatomy')) {
-        initializePromptAnatomy();
-    }
-    if (document.getElementById('style-finder-container')) {
-        initializeStyleFinder();
-    }
-    if (document.getElementById('quiz-container')) {
-        initializeQuiz();
-    }
-    if (document.querySelector('.accordion')) {
-        initializeAccordions();
-    }
-    if (document.querySelector('.explainer-icon')) {
-        initializeExplainers();
-    }
+    // --- ÁLTALÁNOS ESEMÉNYKEZELŐK ---
+    initializeThemeToggle();
+    initializeLanguageSwitcher();
+    initializeInfoModal();
+    initializeBackToTopButton();
+    initializeUsePromptButtons();
+    observeCusdis(); // A Cusdis komment motorhoz
+
+    // --- Oldal-specifikus funkciók meghívása a központi helyről ---
+    // A data-loaders.js és interactive-pages.js fájlokban lévő funkciókat hívjuk meg itt.
+    // Maguk a funkciók már "védekezőek", így nem okoznak hibát, ha nincs meg a szükséges elem.
+    
+    // data-loaders.js funkciói
+    if (typeof loadArtists === 'function') loadArtists();
+    if (typeof loadGallery === 'function') loadGallery();
+    if (typeof loadDailyPrompt === 'function') loadDailyPrompt();
+    if (typeof loadDailyArtist === 'function') loadDailyArtist();
+    if (typeof loadBlogPosts === 'function') loadBlogPosts();
+    if (typeof loadSinglePost === 'function') loadSinglePost();
+    if (typeof displayDailyQuote === 'function') displayDailyQuote();
+    if (typeof loadSubmissions === 'function') loadSubmissions();
+
+    // interactive-pages.js funkciói
+    if (typeof initializeAccordions === 'function') initializeAccordions();
+    if (typeof initializeExplainers === 'function') initializeExplainers();
+    if (typeof initializePromptAnatomy === 'function') initializePromptAnatomy();
+    if (typeof initializeStyleFinder === 'function') initializeStyleFinder();
+    if (typeof initializeQuiz === 'function') initializeQuiz();
+    if (typeof initializeChallengePage === 'function') initializeChallengePage();
+
 
     // Pagefind kereső inicializálása
-    if (typeof window.initializePagefind === 'function') {
-        window.initializePagefind();
+    // A Pagefind szkriptje maga kezeli a saját logikáját, itt csak meghívjuk.
+    if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        new PagefindUI({
+            element: "#search",
+            showSubResults: true,
+            translations: {
+                placeholder: translations[lang].searchPlaceholder,
+                clear_search: translations[lang].searchClear,
+                load_more: translations[lang].searchLoadMore,
+                search_label: translations[lang].searchLabel,
+                results_count: (data) => translations[lang].searchResults.replace('{count}', data.count),
+            }
+        });
     }
 });
 
@@ -68,20 +62,29 @@ document.addEventListener('DOMContentLoaded', function() {
 // ====================================================================
 // ===== TÉMAVÁLTÁS LOGIKA =====
 // ====================================================================
-const themeToggleButton = document.getElementById('theme-toggle');
-
 function applyTheme(theme) {
     const logo = document.getElementById('logo');
     if (theme === 'light') {
         document.body.classList.add('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-moon"></i>';
         if (logo) logo.src = 'src/myLogolight.jpg';
     } else {
         document.body.classList.remove('light-theme');
-        if (themeToggleButton) themeToggleButton.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
         if (logo) logo.src = 'src/myLogo.jpg';
     }
     updateCusdisTheme(theme);
+}
+
+function initializeThemeToggle() {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', () => {
+            let newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+    }
 }
 
 function updateCusdisTheme(theme) {
@@ -108,15 +111,6 @@ function observeCusdis() {
     });
     observer.observe(cusdisContainer, { childList: true, subtree: true });
 }
-
-if (themeToggleButton) {
-    themeToggleButton.addEventListener('click', () => {
-        let newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-    });
-}
-
 
 // ====================================================================
 // ===== NYELVKEZELÉS LOGIKA =====
@@ -153,82 +147,73 @@ window.setLanguage = function(lang) {
     }
 };
 
-const langHu = document.getElementById('lang-hu');
-const langEn = document.getElementById('lang-en');
-if (langHu && langEn) {
-    langHu.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'hu') { window.setLanguage('hu'); window.location.reload(); } });
-    langEn.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'en') { window.setLanguage('en'); window.location.reload(); } });
-}
-
-window.initializePagefind = () => {
-    let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-    if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
-        new PagefindUI({
-            element: "#search",
-            showSubResults: true,
-            translations: {
-                placeholder: translations[currentLanguage].searchPlaceholder,
-                clear_search: translations[currentLanguage].searchClear,
-                load_more: translations[currentLanguage].searchLoadMore,
-                search_label: translations[currentLanguage].searchLabel,
-                results_count: (data) => translations[currentLanguage].searchResults.replace('{count}', data.count),
-            }
-        });
+function initializeLanguageSwitcher() {
+    const langHu = document.getElementById('lang-hu');
+    const langEn = document.getElementById('lang-en');
+    if (langHu && langEn) {
+        langHu.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'hu') { window.setLanguage('hu'); window.location.reload(); } });
+        langEn.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'en') { window.setLanguage('en'); window.location.reload(); } });
     }
-};
+}
 
 // ====================================================================
 // ===== ÁLTALÁNOS MODÁLIS ABLAK LOGIKA =====
 // ====================================================================
-const overlay = document.getElementById('modal-overlay');
-const allModals = document.querySelectorAll('.modal');
+function initializeInfoModal() {
+    const overlay = document.getElementById('modal-overlay');
+    const allModals = document.querySelectorAll('.modal');
+    const infoModal = document.getElementById('info-modal');
+    const infoButton = document.getElementById('info-button');
 
-function closeModalWindows() {
-    allModals.forEach(modal => modal.classList.add('hidden'));
-    if (overlay) overlay.classList.add('hidden');
-}
+    function closeModalWindows() {
+        allModals.forEach(modal => modal.classList.add('hidden'));
+        if (overlay) overlay.classList.add('hidden');
+    }
 
-const infoModal = document.getElementById('info-modal');
-const infoButton = document.getElementById('info-button');
-if (infoButton && infoModal && overlay) {
-    const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
-    infoButton.addEventListener('click', () => {
-        overlay.classList.remove('hidden');
-        infoModal.classList.remove('hidden');
-    });
-    if(closeInfoModalBtn) closeInfoModalBtn.addEventListener('click', closeModalWindows);
-}
-
-if (overlay) {
-    overlay.addEventListener('click', closeModalWindows);
+    if (infoButton && infoModal && overlay) {
+        const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
+        infoButton.addEventListener('click', () => {
+            overlay.classList.remove('hidden');
+            infoModal.classList.remove('hidden');
+        });
+        if(closeInfoModalBtn) closeInfoModalBtn.addEventListener('click', closeModalWindows);
+    }
+    
+    if (overlay) {
+        overlay.addEventListener('click', closeModalWindows);
+    }
 }
 
 // ====================================================================
 // ===== "VISSZA A TETEJÉRE" GOMB LOGIKA =====
 // ====================================================================
-const backToTopButton = document.getElementById('back-to-top');
-if (backToTopButton) {
-    window.addEventListener('scroll', () => {
-        backToTopButton.classList.toggle('hidden', window.scrollY <= 300);
-    });
-    backToTopButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+function initializeBackToTopButton() {
+    const backToTopButton = document.getElementById('back-to-top');
+    if (backToTopButton) {
+        window.addEventListener('scroll', () => {
+            backToTopButton.classList.toggle('hidden', window.scrollY <= 300);
+        });
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 }
 
 // ====================================================================
-// ===== "PROMPT HASZNÁLATA" GOMB LOGIKA =====
+// ===== "PROMPT HASZNÁLATA" GOMB LOGIKA (GALÉRIA) =====
 // ====================================================================
-document.body.addEventListener('click', function(e) {
-    const target = e.target.closest('.use-prompt-btn');
-    if (target) {
-        e.preventDefault();
-        e.stopPropagation();
-        const promptString = target.dataset.prompt;
-        if (promptString) {
-            localStorage.setItem('promptToLoad', promptString);
-            window.location.href = 'generator.html';
+function initializeUsePromptButtons() {
+    document.body.addEventListener('click', function(e) {
+        const target = e.target.closest('.use-prompt-btn');
+        if (target) {
+            e.preventDefault();
+            e.stopPropagation();
+            const promptString = target.dataset.prompt;
+            if (promptString) {
+                localStorage.setItem('promptToLoad', promptString);
+                window.location.href = 'generator.html';
+            }
         }
-    }
-});
+    });
+}

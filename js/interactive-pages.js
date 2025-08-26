@@ -1,14 +1,31 @@
 // ===== Alkimista Műhely - Interaktív Oldalak Szkriptje (interactive-pages.js) =====
-document.addEventListener('DOMContentLoaded', function() {
+// Ez a fájl olyan oldalak logikáját tartalmazza, amik nem a fő generátorhoz tartoznak,
+// de interaktív elemeket tartalmaznak (pl. kvíz, kihívás, összehasonlító).
 
 function initializeAccordions() {
     const accordionItems = document.querySelectorAll('.accordion-item');
+    if (accordionItems.length === 0) return;
+
     accordionItems.forEach(item => {
         const header = item.querySelector('.accordion-header');
         if (header) {
+            // Megakadályozzuk a dupla eseménykezelést
+            if (header.dataset.listenerAttached) return;
+            header.dataset.listenerAttached = 'true';
+
             header.addEventListener('click', () => {
                 const content = item.querySelector('.accordion-content');
                 if (!content) return;
+
+                // Ha nem része a "minden-kinyitható" harmonikának, a többit becsukjuk
+                if (!item.parentElement.classList.contains('allow-multiple')) {
+                    accordionItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                        }
+                    });
+                }
 
                 item.classList.toggle('active');
 
@@ -32,6 +49,11 @@ function initializeExplainers() {
     const closeExplainerModalBtn = explainerModal.querySelector('.close-modal-btn');
     const overlay = document.getElementById('modal-overlay');
 
+    function openModal(modal) {
+        if (overlay) overlay.classList.remove('hidden');
+        if (modal) modal.classList.remove('hidden');
+    }
+
     explainerIcons.forEach(icon => {
         icon.addEventListener('click', (e) => {
             const category = e.currentTarget.dataset.category;
@@ -45,21 +67,23 @@ function initializeExplainers() {
                 explainerTitle.textContent = translations[lang][titleKey];
                 const rawText = translations[lang][textKey];
                 explainerText.innerHTML = rawText.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('');
-                overlay.classList.remove('hidden');
-                explainerModal.classList.remove('hidden');
+                openModal(explainerModal);
             }
         });
     });
 
-    closeExplainerModalBtn.addEventListener('click', () => {
-        overlay.classList.add('hidden');
-        explainerModal.classList.add('hidden');
-    });
+    if (closeExplainerModalBtn) {
+       closeExplainerModalBtn.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+            explainerModal.classList.add('hidden');
+       });
+    }
 }
+
 
 function initializePromptAnatomy() {
     const modules = document.querySelectorAll('.anatomy-module');
-    if (!modules.length) return;
+    if (modules.length === 0) return;
 
     modules.forEach(module => {
         const imageElement = module.querySelector('.anatomy-image');
@@ -114,13 +138,15 @@ function initializeStyleFinder() {
     function generateResult() {
         let result = "";
         result += keywordMap.step1[userChoices['1']] || "";
-        result += " " + keywordMap.step3[userChoices['3']] || "";
-        result += " " + keywordMap.step4[userChoices['4']] || "";
+        result += " " + (keywordMap.step3[userChoices['3']] || "");
+        result += " " + (keywordMap.step4[userChoices['4']] || "");
+        
         resultKeywordsDiv.innerHTML = '';
         const keywords = result.split(',').map(k => k.trim()).filter(k => k);
+        
         keywords.forEach(keyword => {
             const tag = document.createElement('span');
-            tag.className = 'prompt-tag';
+            tag.className = 'prompt-input-tag'; // Osztály cseréje
             tag.textContent = keyword;
             resultKeywordsDiv.appendChild(tag);
         });
@@ -153,7 +179,7 @@ function initializeStyleFinder() {
     }
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
-            const textToCopy = Array.from(resultKeywordsDiv.querySelectorAll('.prompt-tag')).map(tag => tag.textContent).join(', ');
+            const textToCopy = Array.from(resultKeywordsDiv.querySelectorAll('.prompt-input-tag')).map(tag => tag.textContent).join(', ');
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const originalContent = copyBtn.innerHTML;
                 const lang = localStorage.getItem('preferredLanguage') || 'en';
@@ -172,25 +198,24 @@ function initializeQuiz() {
     const startBtn = document.getElementById('start-quiz-btn');
     if (!startBtn) return;
 
-    const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-    const quizData = translations[currentLanguage];
-    if (!quizData || !quizData.quizQuestions) {
-        console.error("Quiz data not found for language:", currentLanguage);
-        return;
-    }
-
     const quizStartDiv = document.getElementById('quiz-start');
     const questionsDiv = document.getElementById('quiz-questions');
     const resultDiv = document.getElementById('quiz-result');
     const progressBarContainer = document.getElementById('progress-bar-container');
     const progressBar = document.getElementById('progress-bar');
-
+    
     let currentQuestionIndex = 0;
     let scores = { epicFantasist: 0, artNouveauDreamer: 0, surrealVisionary: 0, modernistRebel: 0, masterOfLight: 0 };
 
     startBtn.addEventListener('click', startQuiz);
 
     function startQuiz() {
+        const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+        if (!translations[currentLanguage] || !translations[currentLanguage].quizQuestions) {
+             console.error("Quiz data not found for language:", currentLanguage);
+             questionsDiv.innerHTML = "<p>Quiz data is currently unavailable. Please try again later.</p>";
+             return;
+        }
         quizStartDiv.classList.add('hidden');
         questionsDiv.classList.remove('hidden');
         progressBarContainer.classList.remove('hidden');
@@ -198,7 +223,8 @@ function initializeQuiz() {
     }
 
     function displayQuestion() {
-        const questionData = quizData.quizQuestions[currentQuestionIndex];
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const questionData = translations[lang].quizQuestions[currentQuestionIndex];
         let answersHTML = questionData.answers.map(answer =>
             `<li data-style="${answer.style}">${answer.text}</li>`
         ).join('');
@@ -221,7 +247,8 @@ function initializeQuiz() {
         scores[selectedStyle]++;
         currentQuestionIndex++;
         
-        if (currentQuestionIndex < quizData.quizQuestions.length) {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        if (currentQuestionIndex < translations[lang].quizQuestions.length) {
             displayQuestion();
         } else {
             showResult();
@@ -229,7 +256,8 @@ function initializeQuiz() {
     }
 
     function updateProgressBar() {
-        const progress = (currentQuestionIndex / quizData.quizQuestions.length) * 100;
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const progress = (currentQuestionIndex / translations[lang].quizQuestions.length) * 100;
         progressBar.style.width = `${progress}%`;
     }
 
@@ -245,30 +273,50 @@ function initializeQuiz() {
             }
         }
         
-        const resultData = quizData.quizResults[resultStyle];
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const resultData = translations[lang].quizResults[resultStyle];
         const siteUrl = 'https://aliceinbp.com/quiz.html';
-        const shareTextRaw = quizData.quizShareText || "My AI art style is: {style}! Find yours!";
+        const shareTextRaw = translations[lang].quizShareText || "My AI art style is: {style}! Find yours!";
         const shareText = encodeURIComponent(shareTextRaw.replace('{style}', resultData.title));
 
         questionsDiv.classList.add('hidden');
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
-            <h2><span data-key="quizResultTitle">${quizData.quizResultTitle}</span> ${resultData.title}</h2>
+            <h2><span data-key="quizResultTitle"></span> ${resultData.title}</h2>
             <img src="src/quiz-results/${resultStyle.replace(/([A-Z])/g, "-$1").toLowerCase()}.jpg" alt="${resultData.title}">
             <p>${resultData.description}</p>
-            <p class="result-artists"><strong><span data-key="quizResultArtists">${quizData.quizResultArtists}</span></strong> ${resultData.artists}</p>
-            <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA">${quizData.quizResultCTA}</a>
+            <p class="result-artists"><strong><span data-key="quizResultArtists"></span></strong> ${resultData.artists}</p>
+            <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA"></a>
             <div class="share-buttons">
-                <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${siteUrl}" target="_blank" class="share-twitter" title="${quizData.quizShareTwitter}"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${siteUrl}&quote=${shareText}" target="_blank" class="share-facebook" title="${quizData.quizShareFacebook}"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${siteUrl}" target="_blank" class="share-btn twitter" data-key-title="quizShareTwitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${siteUrl}&quote=${shareText}" target="_blank" class="share-btn facebook" data-key-title="quizShareFacebook"><i class="fa-brands fa-facebook-f"></i></a>
             </div>`;
         
-        window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
+        if (window.setLanguage) window.setLanguage(lang);
     }
 }
-if (document.querySelector('.accordion')) initializeAccordions();
-    if (document.querySelector('.explainer-icon')) initializeExplainers();
-    if (document.getElementById('prompt-anatomy')) initializePromptAnatomy();
-    if (document.getElementById('style-finder-container')) initializeStyleFinder();
-    if (document.getElementById('quiz-container')) initializeQuiz();
-});
+
+function initializeChallengePage() {
+    const generateBtn = document.getElementById('generate-challenge-btn');
+    if (!generateBtn) return;
+
+    const challengeDisplay = document.getElementById('challenge-display');
+    const subjectEl = document.getElementById('challenge-subject');
+    const styleEl = document.getElementById('challenge-style');
+    const moodEl = document.getElementById('challenge-mood');
+
+    generateBtn.addEventListener('click', () => {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const { mainSubject, style, detail_mood } = defaultPrompts[lang];
+
+        const randomSubject = mainSubject[Math.floor(Math.random() * mainSubject.length)];
+        const randomStyle = style[Math.floor(Math.random() * style.length)];
+        const randomMood = detail_mood[Math.floor(Math.random() * detail_mood.length)];
+
+        subjectEl.textContent = randomSubject;
+        styleEl.textContent = randomStyle;
+        moodEl.textContent = randomMood;
+
+        challengeDisplay.classList.remove('hidden');
+    });
+}
