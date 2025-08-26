@@ -151,126 +151,18 @@
         <p>❤️</p>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <script src="js/prompts-data.js"></script>
+   <script src="js/prompts-data.js"></script>
     <script src="js/translations-data.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <script src="/pagefind/pagefind-ui.js"></script>
 
     <script src="js/data-loaders.js"></script>
     <script src="js/interactive-pages.js"></script>
-
+    
     <script src="js/main.js"></script>
-    <script>
-        // PAGEFIND INICIALIZÁLÁSA
-        window.addEventListener('DOMContentLoaded', () => {
-            if(typeof initializePagefind === "function") {
-                initializePagefind();
-            }
-        });
 
-        // A KVÍZ LOGIKA
-        document.addEventListener('DOMContentLoaded', function() {
-            const startBtn = document.getElementById('start-quiz-btn');
-            if (!startBtn) return;
-
-            const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-            const quizData = translations[currentLanguage]; 
-            if (!quizData || !quizData.quizQuestions) {
-                console.error("Quiz data not found for language:", currentLanguage);
-                return;
-            }
-
-            const quizStartDiv = document.getElementById('quiz-start');
-            const questionsDiv = document.getElementById('quiz-questions');
-            const resultDiv = document.getElementById('quiz-result');
-            const progressBarContainer = document.getElementById('progress-bar-container');
-            const progressBar = document.getElementById('progress-bar');
-            
-            let currentQuestionIndex = 0;
-            let scores = { epicFantasist: 0, artNouveauDreamer: 0, surrealVisionary: 0, modernistRebel: 0, masterOfLight: 0 };
-
-            startBtn.addEventListener('click', startQuiz);
-
-            function startQuiz() {
-                quizStartDiv.classList.add('hidden');
-                questionsDiv.classList.remove('hidden');
-                progressBarContainer.classList.remove('hidden');
-                displayQuestion();
-            }
-
-            function displayQuestion() {
-                const questionData = quizData.quizQuestions[currentQuestionIndex];
-                let answersHTML = questionData.answers.map(answer => 
-                    `<li data-style="${answer.style}">${answer.text}</li>`
-                ).join('');
-
-                questionsDiv.innerHTML = `
-                    <div class="quiz-question active">
-                        <h3>${currentQuestionIndex + 1}. ${questionData.question}</h3>
-                        <ul class="quiz-answers">${answersHTML}</ul>
-                    </div>
-                `;
-                
-                updateProgressBar();
-                
-                document.querySelectorAll('.quiz-answers li').forEach(item => {
-                    item.addEventListener('click', handleAnswerClick);
-                });
-            }
-            
-            function handleAnswerClick(e) {
-                const selectedStyle = e.target.dataset.style;
-                scores[selectedStyle]++;
-                currentQuestionIndex++;
-                
-                if (currentQuestionIndex < quizData.quizQuestions.length) {
-                    displayQuestion();
-                } else {
-                    showResult();
-                }
-            }
-            
-            function updateProgressBar() {
-                const progress = (currentQuestionIndex / quizData.quizQuestions.length) * 100;
-                progressBar.style.width = `${progress}%`;
-            }
-
-            function showResult() {
-                progressBar.style.width = `100%`;
-                
-                let maxScore = -1;
-                let resultStyle = '';
-                for (const style in scores) {
-                    if (scores[style] > maxScore) {
-                        maxScore = scores[style];
-                        resultStyle = style;
-                    }
-                }
-                
-                const resultData = quizData.quizResults[resultStyle];
-                const siteUrl = 'https://aliceinbp.com/quiz.html';
-                
-                const shareTextRaw = quizData.quizShareText || "My AI art style is: {style}! Find yours!";
-                const shareText = encodeURIComponent(shareTextRaw.replace('{style}', resultData.title));
-
-                questionsDiv.classList.add('hidden');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <h2><span data-key="quizResultTitle">${quizData.quizResultTitle}</span> ${resultData.title}</h2>
-                    <img src="src/quiz-results/${resultStyle.replace(/([A-Z])/g, "-$1").toLowerCase()}.jpg" alt="${resultData.title}">
-                    <p>${resultData.description}</p>
-                    <p class="result-artists"><strong><span data-key="quizResultArtists">${quizData.quizResultArtists}</span></strong> ${resultData.artists}</p>
-                    <a href="generator.html" class="cta-button" style="margin-top: 1rem;" data-key="quizResultCTA">${quizData.quizResultCTA}</a>
-                    <div class="share-buttons">
-                        <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${siteUrl}" target="_blank" class="share-twitter" title="${quizData.quizShareTwitter}"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=${siteUrl}&quote=${shareText}" target="_blank" class="share-facebook" title="${quizData.quizShareFacebook}"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
-                `;
-                // Újra le kell futtatni a fordítást az eredményen is
-                window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
-            }
-        });
-    </script>
+    <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+</body>
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
 
 </body>
