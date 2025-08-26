@@ -2617,7 +2617,7 @@ body.light-theme .pagefind-ui__modal {
     text-decoration: underline !important;
 }
 /* =================================================== */
-/* ===== GALÉRIA VÉGSŐ, EGYSZERŰSÍTETT CSS JAVÍTÁSA ===== */
+/* ===== GALÉRIA VÉGSŐ, TÖKÉLETESÍTETT KINÉZETE ===== */
 /* =================================================== */
 
 /* 1. Alap kártya és link viselkedésének biztosítása */
@@ -2627,14 +2627,14 @@ body.light-theme .pagefind-ui__modal {
     border-radius: 8px;
     box-shadow: 0 0 15px var(--color-shadow);
     transition: transform 0.3s ease;
-    overflow: hidden; /* Ez levágja a túllógó részeket, pl. a nagyított képet */
+    overflow: hidden;
 }
 
 .gallery-item a, 
 .gallery-item a:hover {
     position: relative;
     display: block;
-    text-decoration: none !important; /* Eltávolít minden aláhúzást (a kék csíkot is) */
+    text-decoration: none !important;
     border: none !important;
     outline: none !important;
     color: inherit;
@@ -2647,7 +2647,7 @@ body.light-theme .pagefind-ui__modal {
 }
 
 .gallery-item a:hover img {
-    transform: scale(1.1); /* Finom zoom effektus a képre */
+    transform: scale(1.1);
 }
 
 /* 2. Az overlay (a fekete réteg) */
@@ -2658,10 +2658,18 @@ body.light-theme .pagefind-ui__modal {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
+    box-sizing: border-box;
+    padding: 15px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertikálisan középre igazít mindent */
+    align-items: center;
+    text-align: center;
+    
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-    display: block; /* Visszaállítjuk alap állapotba */
 }
 
 .gallery-item a:hover .gallery-prompt-overlay {
@@ -2669,35 +2677,21 @@ body.light-theme .pagefind-ui__modal {
     pointer-events: auto;
 }
 
-/* 3. A PROMPT SZÖVEG (A LÉNYEG) */
+/* 3. A PROMPT SZÖVEG (P tag) */
 .gallery-prompt-overlay p {
-    /* Pozíció és méretek */
-    position: absolute;
-    top: 15px; /* Távolság fentről */
-    left: 15px; /* Távolság balról */
-    right: 15px; /* Távolság jobbról */
-    bottom: 70px; /* Helyet hagy a gomboknak alul (60px gomb + 10px tér) */
-    
-    /* Láthatóság (a legerősebb szabályok) */
-    color: #FFFFFF !important; /* KIKÉNYSZERÍTETT FEHÉR SZÍN */
-    
-    /* Tartalom és görgetés */
-    overflow-y: auto !important; /* Legyen görgethető, ha kell */
-    text-align: center;
-    margin: 0;
-    padding: 0;
+    color: #FFFFFF !important;
+    width: 100%;
+    max-height: 80%; /* Korlátozzuk a maximális magasságát */
+    overflow-y: auto; /* Ha a tartalom magasabb, görgethetővé tesszük */
+    margin: 0 0 15px 0; /* <<< EZ A SOR ADJA A "PÁR ENTERT" A GOMBOK FÖLÉ */
+    padding-right: 5px; /* Kis hely a görgetősávnak, ha megjelenik */
     font-size: 0.9em;
     line-height: 1.4;
 }
 
 /* 4. A GOMBOK */
 .gallery-overlay-buttons {
-    position: absolute;
-    bottom: 20px; /* Távolság alulról */
-    left: 50%;
-    transform: translateX(-50%); /* Tökéletesen középre igazítja */
+    flex-shrink: 0; /* Biztosítja, hogy a gombok ne zsugorodjanak össze */
     display: flex;
     gap: 10px;
-    width: 100%;
-    justify-content: center;
 }
