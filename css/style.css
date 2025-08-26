@@ -2572,3 +2572,47 @@ body.light-theme .pagefind-ui__modal {
     display: flex;
     gap: 10px;
 }
+/* ======================================== */
+/* ===== DIZÁJN JAVÍTÁSOK (VÉGLEGES) ===== */
+/* ======================================== */
+
+/* --- Galéria Kártyák Javítása --- */
+.gallery-item {
+    display: flex; /* Ez megakadályozza a kártya függőleges nyúlását */
+    flex-direction: column;
+}
+.gallery-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Művészek Oldal Elrendezésének Javítása --- */
+.artist-card {
+    display: flex;
+    flex-direction: column;
+}
+.artist-card-header {
+    background-color: var(--color-surface); /* Visszaállítjuk a "sáv" hátterét */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.artist-card-header h3 {
+    margin: 0;
+}
+.artist-card p {
+    flex-grow: 1; /* Ez biztosítja, hogy a leírás kitöltse a maradék helyet */
+}
+
+/* --- Blog Oldal Kinézetének Javítása (biztonsági) --- */
+.blog-card-content h3 a {
+    color: var(--color-primary-light) !important;
+    text-decoration: none !important;
+}
+.blog-card-content h3 a:hover {
+    text-decoration: underline !important;
+}
