@@ -98,8 +98,11 @@ async function loadGallery() {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 const promptText = image.prompt || '';
+                // EZ AZ ÚJ SOR: Hozzáad egy osztályt, ha nincs prompt
+                const hasPromptClass = promptText ? '' : 'no-prompt'; 
+                
                 item.innerHTML = `
-                    <a href="src/gallery-images/${image.src}" target="_blank">
+                    <a href="src/gallery-images/${image.src}" target="_blank" class="${hasPromptClass}">
                         <img src="src/gallery-images/${image.src}" alt="${image.alt}" loading="lazy">
                         <div class="gallery-prompt-overlay">
                             <p>${promptText}</p>

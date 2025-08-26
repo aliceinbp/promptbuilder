@@ -2701,3 +2701,8 @@ body.light-theme .pagefind-ui__modal {
 .artist-card p {
     flex-grow: 1; 
 }
+/* Letiltja a hover effektet, ha a képhez nincs prompt rendelve */
+.gallery-item a.no-prompt:hover .gallery-prompt-overlay {
+    opacity: 0;
+    pointer-events: none;
+}
