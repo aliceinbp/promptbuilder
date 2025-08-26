@@ -2617,16 +2617,40 @@ body.light-theme .pagefind-ui__modal {
     text-decoration: underline !important;
 }
 /* =================================================== */
-/* ===== GALÉRIA VÉGSŐ ÉS EGYSZERŰSÍTETT CSS JAVÍTÁSA ===== */
+/* ===== GALÉRIA VÉGSŐ, EGYSZERŰSÍTETT CSS JAVÍTÁSA ===== */
 /* =================================================== */
 
-/* A konténer, amihez az overlay igazodik */
-.gallery-item a {
-    position: relative;
-    display: block; /* Fontos, hogy a link kitöltse a kép helyét */
+/* 1. Alap kártya és link viselkedésének biztosítása */
+.gallery-item {
+    border: 2px solid var(--color-primary);
+    background-color: var(--color-bg);
+    border-radius: 8px;
+    box-shadow: 0 0 15px var(--color-shadow);
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Ez levágja a túllógó részeket, pl. a nagyított képet */
 }
 
-/* Az overlay, ami a kép fölött jelenik meg */
+.gallery-item a, 
+.gallery-item a:hover {
+    position: relative;
+    display: block;
+    text-decoration: none !important; /* Eltávolít minden aláhúzást (a kék csíkot is) */
+    border: none !important;
+    outline: none !important;
+    color: inherit;
+}
+
+.gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item a:hover img {
+    transform: scale(1.1); /* Finom zoom effektus a képre */
+}
+
+/* 2. Az overlay (a fekete réteg) */
 .gallery-prompt-overlay {
     position: absolute;
     top: 0;
@@ -2634,19 +2658,10 @@ body.light-theme .pagefind-ui__modal {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    padding: 15px;
-    box-sizing: border-box;
-    color: #FFFFFF; /* A szöveg színe legyen fehér */
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    display: block; /* Visszaállítjuk alap állapotba */
 }
 
 .gallery-item a:hover .gallery-prompt-overlay {
@@ -2654,17 +2669,35 @@ body.light-theme .pagefind-ui__modal {
     pointer-events: auto;
 }
 
-/* A prompt szöveg (P tag) stílusa */
+/* 3. A PROMPT SZÖVEG (A LÉNYEG) */
 .gallery-prompt-overlay p {
+    /* Pozíció és méretek */
+    position: absolute;
+    top: 15px; /* Távolság fentről */
+    left: 15px; /* Távolság balról */
+    right: 15px; /* Távolság jobbról */
+    bottom: 70px; /* Helyet hagy a gomboknak alul (60px gomb + 10px tér) */
+    
+    /* Láthatóság (a legerősebb szabályok) */
+    color: #FFFFFF !important; /* KIKÉNYSZERÍTETT FEHÉR SZÍN */
+    
+    /* Tartalom és görgetés */
+    overflow-y: auto !important; /* Legyen görgethető, ha kell */
+    text-align: center;
+    margin: 0;
+    padding: 0;
     font-size: 0.9em;
-    line-height: 1.4; /* Normális sormagasságot adunk neki */
-    margin: 0 0 15px 0;
-    max-height: 65%; /* Korlátozzuk a magasságát, hogy elférjenek a gombok */
-    overflow-y: auto; /* Ha a szöveg túl hosszú, görgethető lesz */
+    line-height: 1.4;
 }
 
-/* A gombok konténere */
+/* 4. A GOMBOK */
 .gallery-overlay-buttons {
+    position: absolute;
+    bottom: 20px; /* Távolság alulról */
+    left: 50%;
+    transform: translateX(-50%); /* Tökéletesen középre igazítja */
     display: flex;
     gap: 10px;
+    width: 100%;
+    justify-content: center;
 }
