@@ -3,13 +3,15 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // --- INICIALIZÁLÁS ---
+    // Az oldal betöltődésekor azonnal beállítjuk a mentett témát és nyelvet.
     const initialTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(initialTheme);
 
     const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
     window.setLanguage(currentLanguage);
 
-    // Oldal-specifikus funkciók meghívása (ezek a többi .js fájlból jönnek)
+    // Oldal-specifikus funkciók meghívása
+    // Ellenőrzi, hogy az adott oldalon létezik-e a szükséges elem, és csak akkor hívja meg a funkciót.
     if (document.querySelector('.final-prompt-section')) {
         initializeGeneratorLogic();
     }
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('daily-quote-container')) {
         displayDailyQuote();
     }
-     if (document.getElementById('cusdis_thread')) {
+    if (document.getElementById('cusdis_thread')) {
         observeCusdis();
     }
     if (document.getElementById('submission-gallery-grid')) {
@@ -52,12 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.accordion')) {
         initializeAccordions();
     }
-     if (document.querySelector('.explainer-icon')) {
+    if (document.querySelector('.explainer-icon')) {
         initializeExplainers();
     }
 
-    // Pagefind inicializálása a nyelvváltás után
-    window.initializePagefind(); 
+    // Pagefind kereső inicializálása
+    if (typeof window.initializePagefind === 'function') {
+        window.initializePagefind();
+    }
 });
 
 
@@ -84,18 +88,19 @@ function updateCusdisTheme(theme) {
     const cusdisFrame = document.querySelector('#cusdis_thread iframe');
     if (cusdisFrame) {
         setTimeout(() => {
-            cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme }, 'https://cusdis.com');
-        }, 100);
+            cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme === 'light' ? 'light' : 'dark' }, 'https://cusdis.com');
+        }, 200);
     }
 }
+
 function observeCusdis() {
     const cusdisContainer = document.getElementById('cusdis_thread');
     if (!cusdisContainer) return;
-    const observer = new MutationObserver((mutationsList, observer) => {
+    const observer = new MutationObserver((mutationsList) => {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList' && cusdisContainer.querySelector('iframe')) {
                 const storedTheme = localStorage.getItem('theme') || 'dark';
-                applyTheme(storedTheme);
+                updateCusdisTheme(storedTheme);
                 observer.disconnect();
                 return;
             }
@@ -116,12 +121,9 @@ if (themeToggleButton) {
 // ====================================================================
 // ===== NYELVKEZELÉS LOGIKA =====
 // ====================================================================
-let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-
 window.setLanguage = function(lang) {
-    currentLanguage = lang;
     localStorage.setItem('preferredLanguage', lang);
-
+    
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.dataset.key;
         if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
@@ -149,20 +151,17 @@ window.setLanguage = function(lang) {
         langHu.classList.toggle('active', lang === 'hu');
         langEn.classList.toggle('active', lang === 'en');
     }
-
-    if (typeof initializeGeneratorLogic === 'function') { // Ha a generátor oldalon vagyunk, frissítjük a lenyílókat
-        initializeChoices();
-    }
 };
 
 const langHu = document.getElementById('lang-hu');
 const langEn = document.getElementById('lang-en');
 if (langHu && langEn) {
-    langHu.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('hu'); window.location.reload(); });
-    langEn.addEventListener('click', (e) => { e.preventDefault(); window.setLanguage('en'); window.location.reload(); });
+    langHu.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'hu') { window.setLanguage('hu'); window.location.reload(); } });
+    langEn.addEventListener('click', (e) => { e.preventDefault(); if (localStorage.getItem('preferredLanguage') !== 'en') { window.setLanguage('en'); window.location.reload(); } });
 }
 
 window.initializePagefind = () => {
+    let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
     if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
         new PagefindUI({
             element: "#search",
@@ -203,7 +202,6 @@ if (infoButton && infoModal && overlay) {
 if (overlay) {
     overlay.addEventListener('click', closeModalWindows);
 }
-
 
 // ====================================================================
 // ===== "VISSZA A TETEJÉRE" GOMB LOGIKA =====

@@ -1,4 +1,5 @@
 // ===== Alkimista Műhely - Interaktív Oldalak Szkriptje (interactive-pages.js) =====
+document.addEventListener('DOMContentLoaded', function() {
 
 function initializeAccordions() {
     const accordionItems = document.querySelectorAll('.accordion-item');
@@ -265,3 +266,9 @@ function initializeQuiz() {
         window.setLanguage(localStorage.getItem('preferredLanguage') || 'en');
     }
 }
+if (document.querySelector('.accordion')) initializeAccordions();
+    if (document.querySelector('.explainer-icon')) initializeExplainers();
+    if (document.getElementById('prompt-anatomy')) initializePromptAnatomy();
+    if (document.getElementById('style-finder-container')) initializeStyleFinder();
+    if (document.getElementById('quiz-container')) initializeQuiz();
+});

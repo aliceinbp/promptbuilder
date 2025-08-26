@@ -1,5 +1,11 @@
 // ===== Alkimista Műhely - Generátor Szkript (generator.js) =====
 // Ez a fájl tartalmazza a generator.html oldal teljes logikáját.
+document.addEventListener('DOMContentLoaded', function() {
+    // Csak akkor fusson le, ha tényleg a generátor oldalon vagyunk
+    if (document.querySelector('.final-prompt-section')) {
+        initializeGeneratorLogic();
+    }
+});
 
 function initializeGeneratorLogic() {
     let currentManagedCategory = '';

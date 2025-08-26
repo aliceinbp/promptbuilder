@@ -1,4 +1,7 @@
-// ===== Alkimista Műhely - Adatbetöltő Szkript (data-loaders.js) =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Itt kezdődik az összes load...() funkció
+  
+    // ===== Alkimista Műhely - Adatbetöltő Szkript (data-loaders.js) =====
 // Ez a fájl felelős minden külső adat (művészek, galéria, blog, stb.) betöltéséért és megjelenítéséért.
 
 function initializeArtistCopyButtons() {
@@ -379,3 +382,12 @@ async function loadSubmissions() {
         container.innerHTML = '<p>A galéria jelenleg nem érhető el.</p>';
     }
 }
+if (document.querySelector('.artist-grid')) loadArtists();
+    if (document.getElementById('gallery-section')) loadGallery();
+    if (document.getElementById('daily-prompt-section')) loadDailyPrompt();
+    if (document.getElementById('daily-artist-section')) loadDailyArtist();
+    if (document.getElementById('blog-posts-container')) loadBlogPosts();
+    if (document.getElementById('post-content-container')) loadSinglePost();
+    if (document.getElementById('daily-quote-container')) displayDailyQuote();
+    if (document.getElementById('submission-gallery-grid')) loadSubmissions();
+});
