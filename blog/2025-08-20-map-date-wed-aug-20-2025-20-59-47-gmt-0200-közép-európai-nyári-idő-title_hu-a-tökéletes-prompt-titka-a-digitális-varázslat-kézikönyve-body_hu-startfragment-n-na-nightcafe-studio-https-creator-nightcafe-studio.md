@@ -2,7 +2,7 @@
 title_hu: "A tökéletes prompt titka: A digitális varázslat kézikönyve"
 title_en: "The Secret to the Perfect Prompt: The Guide to Digital Magic"
 date: 2025-08-20T18:59:47.640Z
-image: /src/blog-images/logofejlec.png
+image: src/blog-images/logofejlec.png
 body_hu: >-
   <!--StartFragment-->
 

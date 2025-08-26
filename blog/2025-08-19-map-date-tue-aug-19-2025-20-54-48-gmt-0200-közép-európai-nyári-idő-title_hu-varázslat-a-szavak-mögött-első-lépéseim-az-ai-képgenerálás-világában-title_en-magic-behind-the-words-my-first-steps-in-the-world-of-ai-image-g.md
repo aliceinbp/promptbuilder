@@ -101,7 +101,7 @@ body_en: >-
      * `an enchanted forest at night, with glowing mushrooms and fairy lights`
      * **Add a style:** `an enchanted forest at night..., in an watercolor painting style`
      * **Add a mood:** `a dark and mystical enchanted forest at night...`
-  4. **Use a guide!** Once you get the hang of it and want new ideas or styles, that’s where the [**Alchemist's Workshop** ](https://aliceinbp.com)comes in. My website helps you build prompts, where you can choose from **subjects, details, moods, and styles**. This way, you don't have to come up with everything from scratch.
+  4. **Use a guide!** Once you get the hang of it and want new ideas or styles, that’s where the [**Alchemy Workshop** ](https://aliceinbp.com)comes in. My website helps you build prompts, where you can choose from **subjects, details, moods, and styles**. This way, you don't have to come up with everything from scratch.
 
 
   This world is a endless creative adventure where words become visual reality. I hope this little introduction helped clear the fog and got you excited to create.

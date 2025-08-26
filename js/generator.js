@@ -1,8 +1,6 @@
 // ===== Alkimista Műhely - Generátor Szkript (generator.js) =====
 // Ez a fájl tartalmazza a generator.html oldal teljes logikáját.
 
-// A szkript csak akkor fut le, ha az oldalon megtalálható a .final-prompt-section elem,
-// ezzel biztosítva, hogy csak a generátor oldalon aktiválódjon.
 if (document.querySelector('.final-prompt-section')) {
     initializeGeneratorLogic();
 }
@@ -45,50 +43,48 @@ function initializeGeneratorLogic() {
     let activeWeightedTag = null;
 
     // === ALAP FUNKCIÓK ===
+    function getCustomPrompts() { return JSON.parse(localStorage.getItem('customPrompts')) || { mainSubject: [], detail_physical: [], detail_environment: [], detail_mood: [], style: [], extra: [] }; }
+    function saveCustomPrompts(customPrompts) { localStorage.setItem('customPrompts', JSON.stringify(customPrompts)); }
+    function openModal(modal) { if (overlay) overlay.classList.remove('hidden'); if (modal) modal.classList.remove('hidden'); }
+    function closeModal(modal) { if (overlay) overlay.classList.add('hidden'); if (modal) modal.classList.add('hidden'); }
 
-    function getCustomPrompts() {
-        return JSON.parse(localStorage.getItem('customPrompts')) || { mainSubject: [], detail_physical: [], detail_environment: [], detail_mood: [], style: [], extra: [] };
-    }
-
-    function saveCustomPrompts(customPrompts) {
-        localStorage.setItem('customPrompts', JSON.stringify(customPrompts));
-    }
-
-    function openModal(modal) {
-        if (overlay) overlay.classList.remove('hidden');
-        if (modal) modal.classList.remove('hidden');
-    }
-    
-    function closeModal(modal) {
-        if (overlay) overlay.classList.add('hidden');
-        if (modal) modal.classList.add('hidden');
-    }
-
-    // === PROMPT KEZELŐ FUNKCIÓK ===
-
+    // === CÍMKE KEZELŐ FUNKCIÓK ===
     function addTagToContainer(text, container, weight = '1.0') {
         if (!text || !container) return;
-
         const tag = document.createElement('span');
         tag.className = 'prompt-input-tag';
         tag.dataset.originalText = text;
-
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'delete-tag';
         deleteBtn.innerHTML = '&times;';
         deleteBtn.title = 'Törlés';
-        
         tag.appendChild(deleteBtn);
         container.appendChild(tag);
         applyWeight(tag, weight);
     }
-    
+
+    function applyWeight(tagElement, weight) {
+        const originalText = tagElement.dataset.originalText || tagElement.textContent.replace(/:\d\.\d\)$/, '').replace(/^\(/, '');
+        tagElement.dataset.originalText = originalText;
+        tagElement.dataset.weight = weight;
+        let deleteBtn = tagElement.querySelector('.delete-tag');
+        if (parseFloat(weight) === 1.0) {
+            tagElement.textContent = originalText;
+            tagElement.classList.remove('is-weighted');
+        } else {
+            tagElement.textContent = `(${originalText}:${weight})`;
+            tagElement.classList.add('is-weighted');
+        }
+        if (deleteBtn) {
+            tagElement.appendChild(deleteBtn);
+        }
+    }
+
+    // === VÉGLEGES PROMPT FRISSÍTÉSE ===
     function updateFinalPrompt() {
         if (!finalPromptContainer) return;
-    
         finalPromptContainer.innerHTML = '';
         const allParts = [];
-    
         ['mainSubject', 'details', 'style', 'extra'].forEach(category => {
             const container = tagContainers[category];
             if (container) {
@@ -100,53 +96,31 @@ function initializeGeneratorLogic() {
                 });
             }
         });
-    
+
         allParts.forEach(part => {
             const tag = document.createElement('span');
             tag.className = 'prompt-tag';
             finalPromptContainer.appendChild(tag);
             applyWeight(tag, part.weight);
         });
-    
+
         const finalPromptText = buildFinalPromptString();
         finalPromptHiddenTextarea.value = finalPromptText;
-    
+
         if (selectedParameter) {
             const paramTag = document.createElement('span');
             paramTag.className = 'prompt-tag param-display-tag';
             paramTag.textContent = selectedParameter;
             finalPromptContainer.appendChild(paramTag);
         }
-    
+
         if (allParts.length === 0 && !selectedParameter) {
             const lang = localStorage.getItem('preferredLanguage') || 'en';
             finalPromptContainer.innerHTML = `<span class="placeholder-text" data-key="finalPromptPlaceholder">${translations[lang].finalPromptPlaceholder}</span>`;
         }
-    
+
         clearTimeout(historyTimeout);
-        historyTimeout = setTimeout(() => {
-            saveToHistory(finalPromptText);
-        }, 1500);
-    }
-
-    function applyWeight(tagElement, weight) {
-        const originalText = tagElement.dataset.originalText || tagElement.textContent.replace(/:\d\.\d\)$/, '').replace(/^\(/, '');
-        tagElement.dataset.originalText = originalText;
-        tagElement.dataset.weight = weight;
-
-        let deleteBtn = tagElement.querySelector('.delete-tag');
-
-        if (parseFloat(weight) === 1.0) {
-            tagElement.textContent = originalText;
-            tagElement.classList.remove('is-weighted');
-        } else {
-            tagElement.textContent = `(${originalText}:${weight})`;
-            tagElement.classList.add('is-weighted');
-        }
-
-        if (deleteBtn) {
-            tagElement.appendChild(deleteBtn);
-        }
+        historyTimeout = setTimeout(() => { saveToHistory(finalPromptText); }, 1500);
     }
 
     function buildFinalPromptString() {
@@ -158,65 +132,48 @@ function initializeGeneratorLogic() {
         if (selectedParameter) finalString += ` ${selectedParameter}`;
         return finalString;
     }
-
+    
     // === CHOICES.JS INICIALIZÁLÁS ===
-
     function initializeChoices() {
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         const custom = getCustomPrompts();
         const defaults = defaultPrompts[lang];
 
         const categories = {
-            mainSubject: 'mainSubjectLabel',
-            detail_physical: 'detailPhysicalLabel',
-            detail_environment: 'detailEnvironmentLabel',
-            detail_mood: 'detailMoodLabel',
-            style: 'styleLabel',
-            extra: 'extraLabel'
+            mainSubject: 'mainSubjectLabel', detail_physical: 'detailPhysicalLabel',
+            detail_environment: 'detailEnvironmentLabel', detail_mood: 'detailMoodLabel',
+            style: 'styleLabel', extra: 'extraLabel'
         };
 
         for (const category in categories) {
             const selectId = category.replace(/_/g, '-') + '-select';
             const selectElement = document.getElementById(selectId);
             if (!selectElement) continue;
-
-            if (choiceInstances[category]) {
-                choiceInstances[category].destroy();
-            }
+            if (choiceInstances[category]) choiceInstances[category].destroy();
 
             const combinedSet = new Set([...(defaults[category] || []), ...(custom[category] || [])]);
             const options = [...combinedSet].map(item => ({ value: item, label: item }));
-
             const placeholderText = translations[lang].selectDefault.replace('{category}', translations[lang][categories[category]].replace(':', ''));
 
             choiceInstances[category] = new Choices(selectElement, {
-                choices: options,
-                searchPlaceholderValue: "Keress...",
-                itemSelectText: "Kiválaszt",
-                allowHTML: false,
-                shouldSort: false,
-                placeholder: true,
-                placeholderValue: placeholderText,
+                choices: options, searchPlaceholderValue: "Keress...", itemSelectText: "Kiválaszt",
+                allowHTML: false, shouldSort: false, placeholder: true, placeholderValue: placeholderText,
             });
         }
     }
 
     // === FŐGOMBOK FUNKCIÓI ===
-
     function generateRandomPrompt() {
         clearAll();
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         const prompts = defaultPrompts[lang];
-
         const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
         addTagToContainer(getRandomItem(prompts.mainSubject), tagContainers.mainSubject);
         addTagToContainer(getRandomItem(prompts.detail_physical), tagContainers.details);
         addTagToContainer(getRandomItem(prompts.detail_environment), tagContainers.details);
         addTagToContainer(getRandomItem(prompts.detail_mood), tagContainers.details);
         addTagToContainer(getRandomItem(prompts.style), tagContainers.style);
         addTagToContainer(getRandomItem(prompts.extra), tagContainers.extra);
-
         updateFinalPrompt();
     }
 
@@ -234,9 +191,51 @@ function initializeGeneratorLogic() {
         updateFinalPrompt();
     }
 
+    // === STÍLUSKEVERŐ FUNKCIÓ (ÚJ!) ===
+    function initializeStyleMixer() {
+        const mixerSection = document.getElementById('style-mixer-section');
+        if (!mixerSection) return;
+
+        const rerollBtns = mixerSection.querySelectorAll('.reroll-btn');
+        const applyBtn = mixerSection.querySelector('#apply-mixer-btn');
+        const resultDivs = {
+            mainSubject: document.getElementById('mixer-result-subject'),
+            style: document.getElementById('mixer-result-style'),
+            detail_mood: document.getElementById('mixer-result-mood')
+        };
+
+        function generateRandomMixerItem(category) {
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+            const prompts = defaultPrompts[lang][category];
+            if (prompts && prompts.length > 0 && resultDivs[category]) {
+                const randomItem = prompts[Math.floor(Math.random() * prompts.length)];
+                resultDivs[category].textContent = randomItem;
+            }
+        }
+
+        rerollBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                generateRandomMixerItem(btn.dataset.category);
+            });
+        });
+
+        applyBtn.addEventListener('click', () => {
+            addTagToContainer(resultDivs.mainSubject.textContent, tagContainers.mainSubject);
+            addTagToContainer(resultDivs.style.textContent, tagContainers.style);
+            addTagToContainer(resultDivs.detail_mood.textContent, tagContainers.details);
+            updateFinalPrompt();
+        });
+
+        // Kezdeti pörgetés az oldal betöltésekor
+        generateRandomMixerItem('mainSubject');
+        generateRandomMixerItem('style');
+        generateRandomMixerItem('detail_mood');
+    }
+
+
     // === ESEMÉNYKEZELŐK ===
     
-    // Címke hozzáadása gomb
+    // Címke hozzáadása
     document.querySelectorAll('.add-button').forEach(button => {
         button.addEventListener('click', function() {
             const parentGroup = this.closest('.input-group');
@@ -252,10 +251,8 @@ function initializeGeneratorLogic() {
 
             if (valueToAdd) {
                 const outputCategoryKey = this.dataset.category === 'details' ? 'details' : this.dataset.category;
-                const container = tagContainers[outputCategoryKey];
-                addTagToContainer(valueToAdd, container);
+                addTagToContainer(valueToAdd, tagContainers[outputCategoryKey]);
                 updateFinalPrompt();
-
                 inputElement.value = '';
                 if (choiceInstance) {
                     choiceInstance.clearInput();
@@ -269,40 +266,82 @@ function initializeGeneratorLogic() {
     document.querySelector('main').addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-tag')) {
             const tagToRemove = e.target.parentElement;
-            if (activeWeightedTag && activeWeightedTag === tagToRemove) {
-                activeWeightedTag = null;
-            }
+            if (activeWeightedTag && activeWeightedTag === tagToRemove) activeWeightedTag = null;
             tagToRemove.remove();
             updateFinalPrompt();
         }
     });
-
-    // ... További eseménykezelők, mint a random, clear, copy, stb.
+    
+    // Fő gombok
     if (randomButton) randomButton.addEventListener('click', generateRandomPrompt);
     if (clearAllButton) clearAllButton.addEventListener('click', clearAll);
 
     // Másolás gombok
     if (copyButton) {
         copyButton.addEventListener('click', () => {
-            const textToCopy = finalPromptHiddenTextarea.value;
-            navigator.clipboard.writeText(textToCopy).then(() => {
+            navigator.clipboard.writeText(finalPromptHiddenTextarea.value).then(() => {
                 const originalContent = copyButton.innerHTML;
                 const lang = localStorage.getItem('preferredLanguage') || 'en';
-                copyButton.innerHTML = `<i class="fa-solid fa-check"></i> <span data-key="copyButtonSuccess">${translations[lang].copyButtonSuccess}</span>`;
+                copyButton.innerHTML = `<i class="fa-solid fa-check"></i> <span>${translations[lang].copyButtonSuccess}</span>`;
                 setTimeout(() => { copyButton.innerHTML = originalContent; }, 1500);
             });
         });
     }
+    if (copyNegativeButton) {
+        copyNegativeButton.addEventListener('click', () => {
+             navigator.clipboard.writeText(negativePromptTextarea.value);
+        });
+    }
 
-    // A generátor specifikus logikájának többi része...
-    // (a teljes, hosszú kód a régi script.js-ből ide másolva,
-    // de a globális funkciókat (theme, language, modals) kihagyva)
+    // Paraméter gombok
+    document.querySelectorAll('.param-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.param-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedParameter = btn.dataset.param;
+            updateFinalPrompt();
+        });
+    });
 
-    // ... Stb. ...
+    // Súlyozás
+    const weightSlider = document.getElementById('weight-slider');
+    const weightValue = document.getElementById('weight-value');
+    if (finalPromptContainer && weightSlider && weightValue) {
+        finalPromptContainer.addEventListener('click', (e) => {
+            const clickedTag = e.target.closest('.prompt-tag:not(.param-display-tag)');
+            if (!clickedTag) return;
 
-    // FONTOS: Az inicializálások a végén, hogy minden elem betöltődjön
+            if (activeWeightedTag) activeWeightedTag.classList.remove('active-weight');
+            
+            activeWeightedTag = clickedTag;
+            activeWeightedTag.classList.add('active-weight');
+
+            weightSlider.value = activeWeightedTag.dataset.weight || 1.0;
+            weightValue.textContent = parseFloat(weightSlider.value).toFixed(1);
+        });
+
+        weightSlider.addEventListener('input', () => {
+            if (activeWeightedTag) {
+                const newWeight = parseFloat(weightSlider.value).toFixed(1);
+                weightValue.textContent = newWeight;
+                applyWeight(activeWeightedTag, newWeight);
+                updateFinalPrompt(); 
+            }
+        });
+        
+        document.getElementById('reset-weights-btn').addEventListener('click', () => {
+             if (activeWeightedTag) {
+                 weightSlider.value = 1.0;
+                 weightValue.textContent = '1.0';
+                 applyWeight(activeWeightedTag, '1.0');
+                 activeWeightedTag.classList.remove('active-weight');
+                 activeWeightedTag = null;
+                 updateFinalPrompt();
+             }
+        });
+    }
+
+    // === INICIALIZÁLÁS HÍVÁSOK ===
     initializeChoices();
-    // Itt kellene betölteni a localStorage-ból a mentett állapotot, ha van ilyen funkció
-    // ...
-    // A Stíluskeverő (Style Mixer) és egyéb generátor-specifikus UI elemek eseménykezelői is ide kerülnek.
+    initializeStyleMixer(); // ÚJ FUNKCIÓ HÍVÁSA
 }
