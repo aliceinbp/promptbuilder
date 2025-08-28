@@ -36,8 +36,17 @@ header { text-align: center; }
 
 #logo-container { width: 170px; height: 170px; margin: 0 auto 15px auto; border-radius: 50%; box-shadow: 0 0 15px var(--color-shadow); display: flex; justify-content: center; align-items: center; }
 #logo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }
-header h1 { font-family: 'Pacifico', cursive; font-size: 2.5em; margin: 10px 0 5px 0; background-image: linear-gradient(45deg, var(--color-primary-light), var(--color-primary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-header p { color: var(--color-text-secondary); font-size: 1.1em; margin: 0; }
+header h1 { 
+    font-family: 'Rajdhani', sans-serif; /* <-- EZ VÁLTOZOTT */
+    font-weight: 600; /* <-- EZT HOZZÁADTUK */
+    font-size: 3em; /* <-- Kicsit növeltem a méretet az új betűtípushoz */
+    letter-spacing: 1.5px; /* <-- Egy kis betűköz a tech-hatásért */
+    margin: 10px 0 5px 0; 
+    background-image: linear-gradient(45deg, var(--color-primary-light), var(--color-primary-accent)); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    color: transparent; 
+}header p { color: var(--color-text-secondary); font-size: 1.1em; margin: 0; }
 
 #header-nav-container { width: 100%; margin-top: 25px; padding-bottom: 25px; border-bottom: 1px solid var(--color-border-accent); }
 #main-nav { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
@@ -2694,4 +2703,10 @@ body.light-theme .pagefind-ui__modal {
     flex-shrink: 0; /* A gombok ne zsugorodjanak */
     display: flex;
     gap: 10px;
+}
+.signature {
+    color: var(--color-text-secondary);
+    margin: 5px 0 0 0;
+    font-size: 1em;
+    font-style: italic;
 }

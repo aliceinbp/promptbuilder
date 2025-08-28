@@ -47,7 +47,7 @@ body_hu: >-
      * `egy elvarázsolt erdő éjjel, izzó gombákkal és tündérfényekkel`
      * **Adj hozzá stílust:** `egy elvarázsolt erdő éjjel..., akvarell festmény stílusában`
      * **Adj hozzá hangulatot:** `egy sötét és misztikus elvarázsolt erdő éjjel...`
-  4. **Használj segédletet!** Amikor már belejöttél, de új ötletekre vagy stílusokra vágysz, akkor jön a képbe az **[Alkimista Műhely]**.  Az oldalam segítséget nyújt a promptépítéshez, ahol **témákat, részleteket, hangulatokat és stílusokat** is kiválaszthatsz. Így nem kell mindent a semmiből kitalálnod.
+  4. **Használj segédletet!** Amikor már belejöttél, de új ötletekre vagy stílusokra vágysz, akkor jön a képbe az **[Script Acid by aliceinbp]**.  Az oldalam segítséget nyújt a promptépítéshez, ahol **témákat, részleteket, hangulatokat és stílusokat** is kiválaszthatsz. Így nem kell mindent a semmiből kitalálnod.
 
 
   Ez a világ egy végtelen kreatív kaland, ahol a szavakból képi valóság lesz. Remélem, ez a kis bevezető segített eloszlatni a ködöt, és te is kedvet kaptál az alkotáshoz.
