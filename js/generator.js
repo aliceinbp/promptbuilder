@@ -611,7 +611,7 @@ btn.addEventListener('click', async () => {
         });
     }
     // === TEMATIKUS PROMPT CSOMAGOK ===
-    // CSERÉLD LE A TELJES FUNKCIÓT ERRE A VISSZAÁLLÍTOTT VERZIÓRA:
+    // CSERÉLD LE A TELJES FUNKCIÓT ERRE A VÉGLEGES VERZIÓRA:
 async function initializePromptPacks() {
     const selectElement = document.getElementById('prompt-pack-select');
     const loadBtn = document.getElementById('load-pack-btn');
@@ -639,8 +639,47 @@ async function initializePromptPacks() {
             allowHTML: false,
             shouldSort: false,
             placeholder: true,
-            placeholderValue: placeholderText
+            placeholderValue: placeholderText,
+            // FONTOS: Megmondjuk a Choices.js-nek, hogy a listát a fő konténeren belülre tegye
+            // Ez segít nekünk megtalálni és áthelyezni.
+            appendLocation: document.getElementById('main-container')
         });
+
+        // === EZ AZ ÚJ "TELEPORT" LOGIKA ===
+        const choicesContainer = selectElement.closest('.choices');
+        let originalParent = null;
+
+        selectElement.addEventListener('showDropdown', function() {
+            const dropdown = choicesContainer.querySelector('.choices__list--dropdown');
+            if (dropdown) {
+                // Elmentjük, hol volt eredetileg
+                originalParent = dropdown.parentNode;
+                
+                // Kiszámoljuk a helyes pozíciót
+                const inputRect = choicesContainer.getBoundingClientRect();
+                
+                // Áthelyezzük a dokumentum testébe (body)
+                document.body.appendChild(dropdown);
+                
+                // Beállítjuk a pozícióját és stílusát, hogy a helyén maradjon
+                dropdown.style.position = 'absolute';
+                dropdown.style.top = `${inputRect.bottom + window.scrollY}px`;
+                dropdown.style.left = `${inputRect.left + window.scrollX}px`;
+                dropdown.style.width = `${inputRect.width}px`;
+                dropdown.style.zIndex = '1050'; // Legyen minden felett
+            }
+        });
+
+        selectElement.addEventListener('hideDropdown', function() {
+            const dropdown = document.body.querySelector('.choices__list--dropdown');
+            if (dropdown && originalParent) {
+                // Visszahelyezzük az eredeti helyére
+                originalParent.appendChild(dropdown);
+                // Töröljük a pozícionáló stílusokat
+                dropdown.style.cssText = '';
+            }
+        });
+        // === A "TELEPORT" LOGIKA VÉGE ===
 
         loadBtn.addEventListener('click', () => {
             const selectedPackId = choiceInstances.promptPacks.getValue(true);
@@ -656,7 +695,6 @@ async function initializePromptPacks() {
 
             for (const category in selectedPack.prompts) {
                 const keywords = selectedPack.prompts[category];
-                // Kicsit javítottam a logikán, hogy biztosan jó helyre kerüljenek a tagek
                 const containerKey = Object.keys(tagContainers).find(key => category.includes(key)) || 'details';
                 const container = tagContainers[containerKey];
                 

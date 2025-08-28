@@ -2840,16 +2840,6 @@ body.light-theme .pagefind-ui__modal {
     border: none !important; /* Eltávolítjuk a külső keretet, hogy ne legyen dupla szegély */
 }
 
-/* Csak a ZÁRT harmonikák vágják le a tartalmat */
-.accordion-item:not(.active) {
-    overflow: hidden;
-}
-
-/* A NYITOTT harmonikák engedik a túlnyúlást */
-.accordion-item.active {
-    overflow: visible;
-}
-
 /* A lenyíló tartalom dobozának belső térköze */
 .accordion-content > div {
     padding: 20px 15px !important;
