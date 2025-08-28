@@ -30,7 +30,7 @@ exports.handler = async function(event) {
 
     // API hívás a Hugging Face-re egy javasolt, instrukciókövető modellel
     const response = await hf.textGeneration({
-      model: 'google/gemma-2b-it',
+      model: 'TinyLlama/TinyLlama-1.1B-Chat-v1.0',
       inputs: masterPrompt,
       parameters: {
         max_new_tokens: 250,
