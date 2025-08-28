@@ -57,13 +57,19 @@ function initializeGeneratorLogic() {
     }
     
     // === VÉGLEGES PROMPT KEZELÉSE ===
-    function buildFinalPromptString() {
-        let promptParts = Array.from(finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)'))
-                               .map(tag => tag.textContent);
-        let finalString = promptParts.join(', ');
-        if (selectedParameter) finalString += ` ${selectedParameter}`;
-        return finalString;
-    }
+    // EZ AZ ÚJ, JAVÍTOTT VERZIÓ
+function buildFinalPromptString() {
+    let promptParts = Array.from(finalPromptContainer.querySelectorAll('.prompt-tag:not(.param-display-tag)'))
+        .map(tag => {
+            // A tag szövegét a ":súly" rész nélkül vesszük
+            const cleanText = tag.textContent.replace(/:\d\.\d$/, '').trim();
+            // A törlés gomb szövegét ('×') levágjuk a végéről
+            return cleanText.endsWith('×') ? cleanText.slice(0, -1).trim() : cleanText;
+        });
+    let finalString = promptParts.join(', ');
+    if (selectedParameter) finalString += ` ${selectedParameter}`;
+    return finalString;
+}
     
     function updateFinalPrompt() {
         const finalPromptText = buildFinalPromptString();
