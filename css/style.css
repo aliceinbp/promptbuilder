@@ -2779,41 +2779,39 @@ body.light-theme .pagefind-ui__modal {
 #prompt-doctor-result h3, #prompt-doctor-result h4, #prompt-doctor-result strong {
     color: var(--color-primary-light);
 }
-/* =============================================== */
-/* ===== PROMPT DOKTOR FORMÁZÁS (VÉGLEGES JAVÍTÁS) ===== */
-/* =============================================== */
+/* ======================================================= */
+/* ===== PROMPT DOKTOR FORMÁZÁS (ERŐSÍTETT VERZIÓ) ===== */
+/* ======================================================= */
 
-/* A kategória címek (pl. "Details & Storytelling:") közötti térköz */
+/* Minden elemtől elveszünk minden extra térközt a dobozon belül */
+#prompt-doctor-result * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Utána visszaadjuk a szükséges, kontrollált térközöket */
 #prompt-doctor-result h1,
 #prompt-doctor-result h2,
 #prompt-doctor-result h3,
 #prompt-doctor-result h4,
+#prompt-doctor-result h5,
 #prompt-doctor-result strong {
-    margin-top: 1.5em;
-    margin-bottom: 0.8em;
+    display: block; /* Biztosítja, hogy a margó működjön */
+    margin-bottom: 12px !important;
+    margin-top: 20px !important;
 }
 
-/* Az első elemnek ne legyen felső margója */
 #prompt-doctor-result > *:first-child {
-    margin-top: 0 !important;
+    margin-top: 0 !important; /* Az elsőnek ne legyen felső margója */
 }
 
-/* A lista (ul) alapértelmezett, nagy térközének csökkentése */
 #prompt-doctor-result ul {
-    margin-block-start: 0.5em;
-    margin-block-end: 1em;
-    padding-inline-start: 25px; /* Kisebb behúzás balról */
+    padding-left: 25px !important; /* Csak a bal oldali behúzás marad */
+    margin-bottom: 15px !important;
 }
 
-/* EZ A LEGFONTOSABB ÚJ RÉSZ: */
-/* Eltávolítjuk a lista elemein BELÜL lévő bekezdések felesleges térközét. */
-#prompt-doctor-result li p {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* A lista elemei közötti térköz beállítása */
 #prompt-doctor-result li {
-    margin-bottom: 0.8em; /* Egy kellemes, olvasható térköz */
-    padding-left: 5px;
+    margin-bottom: 8px !important; /* Kisebb térköz a listaelemek között */
 }

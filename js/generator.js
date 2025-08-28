@@ -515,74 +515,81 @@ function buildFinalPromptString() {
         }
     };
 
-    btn.addEventListener('click', async () => {
-        const userPrompt = input.value.trim();
-        if (!userPrompt) {
-            const lang = localStorage.getItem('preferredLanguage') || 'en';
-            alert(lang === 'hu' ? 'Kérlek, írj be egy promptot az elemzéshez!' : 'Please enter a prompt to analyze!');
-            return;
+    // ILLESZD BE EZT AZ ÚJ, TELJES RÉSZT A TÖRÖLT HELYÉRE:
+// ----------------------------------------------------
+btn.addEventListener('click', async () => {
+    const userPrompt = input.value.trim();
+    if (!userPrompt) {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        alert(lang === 'hu' ? 'Kérlek, írj be egy promptot az elemzéshez!' : 'Please enter a prompt to analyze!');
+        return;
+    }
+
+    btnText.classList.add('hidden');
+    spinner.classList.remove('hidden');
+    btn.disabled = true;
+    resultDiv.classList.add('hidden');
+    updateAccordionHeight();
+
+    try {
+        const response = await fetch('/.netlify/functions/prompt-doctor', {
+            method: 'POST',
+            body: JSON.stringify({ userPrompt: userPrompt })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.details || `Network error: ${response.statusText}`);
         }
 
-        btnText.classList.add('hidden');
-        spinner.classList.remove('hidden');
-        btn.disabled = true;
-        resultDiv.classList.add('hidden');
-        updateAccordionHeight();
+        const data = await response.json();
+        let analysisText = data.analysis;
 
-        try {
-            const response = await fetch('/.netlify/functions/prompt-doctor', {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+        if (lang === 'hu' && analysisText) {
+            const translateResponse = await fetch('/.netlify/functions/translate', {
                 method: 'POST',
-                body: JSON.stringify({ userPrompt: userPrompt })
+                body: JSON.stringify({
+                    text: analysisText,
+                    target_lang: 'HU'
+                })
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.details || `Network error: ${response.statusText}`);
+            if (translateResponse.ok) {
+                const translatedData = await translateResponse.json();
+                analysisText = translatedData.translatedText;
             }
-
-            const data = await response.json();
-            let analysisText = data.analysis;
-
-            const lang = localStorage.getItem('preferredLanguage') || 'en';
-
-            // === EZ AZ ÚJ FORDÍTÁSI RÉSZ ===
-            if (lang === 'hu' && analysisText) {
-                const translateResponse = await fetch('/.netlify/functions/translate', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        text: analysisText,
-                        target_lang: 'HU'
-                    })
-                });
-                if (!translateResponse.ok) {
-                    console.error("Translation failed, showing original text.");
-                } else {
-                    const translatedData = await translateResponse.json();
-                    analysisText = translatedData.translatedText;
-                }
-            }
-            // === FORDÍTÁSI RÉSZ VÉGE ===
-
-            if (typeof showdown !== 'undefined') {
-                const converter = new showdown.Converter({ openLinksInNewWindow: true });
-                resultDiv.innerHTML = converter.makeHtml(analysisText);
-            } else {
-                resultDiv.textContent = analysisText;
-            }
-
-            resultDiv.classList.remove('hidden');
-
-        } catch (error) {
-            console.error("Prompt Doktor error:", error);
-            resultDiv.innerHTML = `<p style="color: #ff6b6b;">Hiba történt: ${error.message}</p>`;
-            resultDiv.classList.remove('hidden');
-        } finally {
-            btnText.classList.remove('hidden');
-            spinner.classList.add('hidden');
-            btn.disabled = false;
-            setTimeout(updateAccordionHeight, 50);
         }
-    });
+        
+        // Először láthatatlanná tesszük a dobozt, hogy ne "ugráljon"
+        resultDiv.style.visibility = 'hidden';
+        resultDiv.classList.remove('hidden');
+
+        if (typeof showdown !== 'undefined') {
+            // Itt a fontos változás: simpleLineBreaks: true
+            const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
+            resultDiv.innerHTML = converter.makeHtml(analysisText);
+        } else {
+            resultDiv.textContent = analysisText;
+        }
+
+    } catch (error) {
+        console.error("Prompt Doktor error:", error);
+        resultDiv.innerHTML = `<p style="color: #ff6b6b;">Hiba történt: ${error.message}</p>`;
+        resultDiv.classList.remove('hidden');
+    } finally {
+        btnText.classList.remove('hidden');
+        spinner.classList.add('hidden');
+        btn.disabled = false;
+        // A magasság frissítése után tesszük újra láthatóvá
+        setTimeout(() => {
+            updateAccordionHeight();
+            resultDiv.style.visibility = 'visible';
+        }, 50); 
+    }
+});
+// ----------------------------------------------------
+// EDDIG TART AZ ÚJ BLOKK
 }
     // === INDÍTÁS ===
     loadPromptFromStorage();
