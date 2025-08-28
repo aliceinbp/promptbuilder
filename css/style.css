@@ -2779,3 +2779,16 @@ body.light-theme .pagefind-ui__modal {
 #prompt-doctor-result h3, #prompt-doctor-result h4, #prompt-doctor-result strong {
     color: var(--color-primary-light);
 }
+/* ======================================== */
+/* ===== PROMPT DOKTOR EREDMÉNY FORMÁZÁS ===== */
+/* ======================================== */
+
+#prompt-doctor-result p,
+#prompt-doctor-result ul {
+    margin-top: 0.5em;    /* Kisebb térköz a blokkok felett */
+    margin-bottom: 0.5em; /* Kisebb térköz a blokkok alatt */
+}
+
+#prompt-doctor-result li {
+    margin-bottom: 0.5em; /* Kisebb térköz a lista elemei között */
+}
