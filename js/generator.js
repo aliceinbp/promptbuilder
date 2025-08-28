@@ -629,7 +629,6 @@ async function initializePromptPacks() {
         
         const placeholderText = translations[lang].promptPackDefault || "Choose a pack...";
 
-        // Choices.js inicializálása
         if (choiceInstances.promptPacks) {
             choiceInstances.promptPacks.destroy();
         }
@@ -643,20 +642,20 @@ async function initializePromptPacks() {
             placeholderValue: placeholderText
         });
 
-        // === EZ AZ ÚJ, FONTOS RÉSZ ===
-        const accordionContent = selectElement.closest('.accordion-content');
-        if (accordionContent) {
-            // Amikor a legördülő kinyílik, engedélyezzük a túlnyúlást
+        // === EZ A JAVÍTOTT, FONTOS RÉSZ ===
+        const accordionItem = selectElement.closest('.accordion-item'); // A KÜLSŐ KERETET CÉLOZZUK MEG
+        if (accordionItem) {
+            // Amikor a legördülő kinyílik, a KÜLSŐ KERET kapja meg az osztályt
             selectElement.addEventListener('showDropdown', function() {
-                accordionContent.classList.add('overflow-visible');
+                accordionItem.classList.add('overflow-visible');
             });
 
-            // Amikor bezáródik, újra letiltjuk
+            // Amikor bezáródik, a KÜLSŐ KERETRŐL vesszük le
             selectElement.addEventListener('hideDropdown', function() {
-                accordionContent.classList.remove('overflow-visible');
+                accordionItem.classList.remove('overflow-visible');
             });
         }
-        // === AZ ÚJ RÉSZ VÉGE ===
+        // === A JAVÍTOTT RÉSZ VÉGE ===
 
         loadBtn.addEventListener('click', () => {
             const selectedPackId = choiceInstances.promptPacks.getValue(true);
@@ -672,12 +671,8 @@ async function initializePromptPacks() {
 
             for (const category in selectedPack.prompts) {
                 const keywords = selectedPack.prompts[category];
-                const containerKey = category === 'details' ? 'details' : category;
-                const container = tagContainers[containerKey];
-                
-                if (container) {
-                     // Biztosítjuk, hogy a 'details' kulcs a megfelelő helyre kerüljön
-                    const targetContainer = (category === 'mainSubject' || category === 'style' || category === 'extra') ? tagContainers[category] : tagContainers.details;
+                const targetContainer = (category === 'mainSubject' || category === 'style' || category === 'extra') ? tagContainers[category] : tagContainers.details;
+                if (targetContainer) {
                     keywords.forEach(keyword => {
                         targetContainer.appendChild(createTag(keyword, false));
                         finalPromptContainer.appendChild(createTag(keyword, true));
