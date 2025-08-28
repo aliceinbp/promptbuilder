@@ -136,6 +136,25 @@
         </button>
     </div>
 </div>
+<div id="prompt-doctor-accordion" class="accordion-item" style="margin-bottom: 25px;">
+    <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
+        <h2 style="margin: 0; font-family: 'Rajdhani', sans-serif; color: var(--color-primary-light); font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px; position: relative;">
+            <i class="fa-solid fa-stethoscope"></i> <span data-key="promptDoctorTitle">Prompt Doktor</span>
+            <span class="new-badge" data-key="newBadgeText" style="font-size: 0.6em; top: -15px; right: -25px;">ÚJ</span>
+        </h2>
+    </button>
+    <div class="accordion-content">
+        <div id="prompt-doctor-section">
+            <p data-key="promptDoctorDesc">Nem vagy elégedett az eredményeiddel? Illeszd be a promptodat, és kérj AI-alapú javaslatokat a tökéletesítésére!</p>
+            <textarea id="prompt-doctor-input" rows="4" data-key-placeholder="promptDoctorPlaceholder"></textarea>
+            <button id="prompt-doctor-btn" class="cta-button">
+                <span class="btn-text" data-key="promptDoctorBtn">Prompt Elemzése</span>
+                <span class="spinner hidden"></span>
+            </button>
+            <div id="prompt-doctor-result" class="hidden"></div>
+        </div>
+    </div>
+</div>
             
             <div class="prompt-section">
                 <label for="mainSubject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="mainSubjectLabel">Fő téma:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i></label>

@@ -2,6 +2,7 @@
   "name": "prompt-lab-functions",
   "version": "1.0.0",
   "dependencies": {
+    "@huggingface/inference": "^4.7.1",
     "deepl-node": "^1.11.0"
   }
 }

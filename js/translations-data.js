@@ -332,6 +332,10 @@ const translations = {
         promptPackDesc: "Válassz egy csomagot az azonnali inspirációért, majd add hozzá a saját ötleteidet!",
         loadPackBtn: "Csomag Betöltése",
         promptPackDefault: "Válassz egy csomagot...",
+        promptDoctorTitle: "Prompt Doktor",
+        promptDoctorDesc: "Nem vagy elégedett az eredményeiddel? Illeszd be a promptodat, és kérj AI-alapú javaslatokat a tökéletesítésére!",
+        promptDoctorPlaceholder: "Illeszd be a promptot, amit javítani szeretnél...",
+        promptDoctorBtn: "Prompt Elemzése",
         // Prompt Recept
         saveRecipeBtn: "Recept Mentése",
         loadRecipeBtn: "Recept Betöltése",
@@ -703,5 +707,9 @@ const translations = {
         promptPackDesc: "Choose a pack for instant inspiration, then add your own ideas!",
         loadPackBtn: "Load Pack",
         promptPackDefault: "Choose a pack...",
+        promptDoctorTitle: "Prompt Doctor",
+        promptDoctorDesc: "Not happy with your results? Paste your prompt below and get AI-powered suggestions to improve it!",
+        promptDoctorPlaceholder: "Paste the prompt you want to improve...",
+        promptDoctorBtn: "Analyze Prompt",
     }
 };

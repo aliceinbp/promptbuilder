@@ -2726,3 +2726,56 @@ body.light-theme .pagefind-ui__modal {
     position: relative;
     z-index: 2; /* Bármilyen 1-nél nagyobb érték jó */
 }
+/* ======================================== */
+/* ===== PROMPT DOKTOR STÍLUSOK ===== */
+/* ======================================== */
+#prompt-doctor-section {
+    padding: 25px 5px; /* Kisebb oldalsó padding a harmonikán belül */
+}
+#prompt-doctor-section p {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+}
+#prompt-doctor-input {
+    width: 100%;
+    background-color: var(--color-surface-alt);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+#prompt-doctor-btn {
+    width: 100%;
+    position: relative;
+}
+/* A gombban lévő betöltésjelző (spinner) */
+#prompt-doctor-btn .spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #fff;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#prompt-doctor-result {
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-surface-alt);
+    text-align: left;
+    white-space: pre-wrap; /* Megtartja a sortöréseket */
+}
+#prompt-doctor-result h3, #prompt-doctor-result h4, #prompt-doctor-result strong {
+    color: var(--color-primary-light);
+}
