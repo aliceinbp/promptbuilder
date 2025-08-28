@@ -2849,3 +2849,10 @@ body.light-theme .pagefind-ui__modal {
 .accordion-content {
     overflow: visible !important;
 }
+/* ======================================== */
+/* ===== HARMONIKA ELVÁLASZTÓVONAL JAVÍTÁSA ===== */
+/* ======================================== */
+
+.accordion-header {
+    border-bottom: none !important;
+}
