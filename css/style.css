@@ -1497,7 +1497,6 @@ body.light-theme .gradient-border-box {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     margin-bottom: 10px;
-    overflow: hidden;
 }
 
 .accordion-header {
@@ -2833,11 +2832,20 @@ body.light-theme .pagefind-ui__modal {
     padding: 20px 15px !important; /* Kisebb belső tér (kb. 2/3-a a réginek) */
 }
 /* ======================================================= */
-/* ===== DROPDOWN TÚLNYÚLÁS JAVÍTÁSA (VÉGLEGES) ===== */
+/* ===== DROPDOWN TÚLNYÚLÁS JAVÍTÁSA (VÉGSŐ CSS MEGOLDÁS) ===== */
 /* ======================================================= */
 
-/* Ez az osztály ideiglenesen engedélyezi a tartalom túlnyúlását
-   a teljes harmonika elemen, nem csak a belső tartalmán. */
-.accordion-item.overflow-visible {
+/* Csak a ZÁRT harmonikák vágják le a tartalmat */
+.accordion-item:not(.active) {
+    overflow: hidden;
+}
+
+/* A NYITOTT harmonikák engedik a túlnyúlást, így a menü kilátszódhat */
+.accordion-item.active {
+    overflow: visible;
+}
+
+/* Biztonság kedvéért a belső tartalomnak is megengedjük a túlnyúlást */
+.accordion-content {
     overflow: visible !important;
 }

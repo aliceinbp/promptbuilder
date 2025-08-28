@@ -611,7 +611,7 @@ btn.addEventListener('click', async () => {
         });
     }
     // === TEMATIKUS PROMPT CSOMAGOK ===
-    // CSERÉLD LE A TELJES FUNKCIÓT ERRE:
+    // CSERÉLD LE A TELJES FUNKCIÓT ERRE A VISSZAÁLLÍTOTT VERZIÓRA:
 async function initializePromptPacks() {
     const selectElement = document.getElementById('prompt-pack-select');
     const loadBtn = document.getElementById('load-pack-btn');
@@ -642,21 +642,6 @@ async function initializePromptPacks() {
             placeholderValue: placeholderText
         });
 
-        // === EZ A JAVÍTOTT, FONTOS RÉSZ ===
-        const accordionItem = selectElement.closest('.accordion-item'); // A KÜLSŐ KERETET CÉLOZZUK MEG
-        if (accordionItem) {
-            // Amikor a legördülő kinyílik, a KÜLSŐ KERET kapja meg az osztályt
-            selectElement.addEventListener('showDropdown', function() {
-                accordionItem.classList.add('overflow-visible');
-            });
-
-            // Amikor bezáródik, a KÜLSŐ KERETRŐL vesszük le
-            selectElement.addEventListener('hideDropdown', function() {
-                accordionItem.classList.remove('overflow-visible');
-            });
-        }
-        // === A JAVÍTOTT RÉSZ VÉGE ===
-
         loadBtn.addEventListener('click', () => {
             const selectedPackId = choiceInstances.promptPacks.getValue(true);
             if (!selectedPackId) return;
@@ -671,10 +656,13 @@ async function initializePromptPacks() {
 
             for (const category in selectedPack.prompts) {
                 const keywords = selectedPack.prompts[category];
-                const targetContainer = (category === 'mainSubject' || category === 'style' || category === 'extra') ? tagContainers[category] : tagContainers.details;
-                if (targetContainer) {
+                // Kicsit javítottam a logikán, hogy biztosan jó helyre kerüljenek a tagek
+                const containerKey = Object.keys(tagContainers).find(key => category.includes(key)) || 'details';
+                const container = tagContainers[containerKey];
+                
+                if (container) {
                     keywords.forEach(keyword => {
-                        targetContainer.appendChild(createTag(keyword, false));
+                        container.appendChild(createTag(keyword, false));
                         finalPromptContainer.appendChild(createTag(keyword, true));
                     });
                 }
