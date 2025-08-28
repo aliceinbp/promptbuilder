@@ -2815,3 +2815,20 @@ body.light-theme .pagefind-ui__modal {
 #prompt-doctor-result li {
     margin-bottom: 8px !important; /* Kisebb térköz a listaelemek között */
 }
+/* ======================================== */
+/* ===== HARMONIKA FEJLÉCEK EGYSÉGESÍTÉSE ===== */
+/* ======================================== */
+
+/* Ez a szabály minden harmonika címsorára érvényes lesz */
+.accordion-header h2 {
+    font-family: 'Rajdhani', sans-serif !important; /* A Script Acid főcím betűtípusa */
+    font-weight: 600 !important;
+    font-size: 1.5em !important; /* Kisebb betűméret */
+    color: var(--color-primary-light) !important;
+    letter-spacing: 1px; /* Finom betűköz */
+}
+
+/* A lenyíló dobozok belső tartalmának méretcsökkentése */
+.accordion-content > div {
+    padding: 20px 15px !important; /* Kisebb belső tér (kb. 2/3-a a réginek) */
+}

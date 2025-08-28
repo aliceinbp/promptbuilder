@@ -126,16 +126,25 @@
                 </div>
             </div>
 
-            <div id="prompt-pack-section" class="daily-feature-box">
-    <h2><i class="fa-solid fa-box-open"></i> <span data-key="promptPackTitle">Tematikus Prompt Csomagok</span></h2>
-    <p data-key="promptPackDesc">Válassz egy csomagot az azonnali inspirációért, majd add hozzá a saját ötleteidet!</p>
-    <div class="input-group" style="max-width: 500px; margin: 20px auto 0 auto;">
-        <select id="prompt-pack-select"></select>
-        <button id="load-pack-btn" class="cta-button-small" style="white-space: nowrap;">
-            <i class="fa-solid fa-download"></i> <span data-key="loadPackBtn">Csomag Betöltése</span>
-        </button>
+            <div class="accordion-item" style="margin-bottom: 25px;">
+    <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
+        <h2 style="margin: 0; font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px; position: relative;">
+            <i class="fa-solid fa-box-open"></i> <span data-key="promptPackTitle">Tematikus Prompt Csomagok</span>
+        </h2>
+    </button>
+    <div class="accordion-content">
+        <div id="prompt-pack-section">
+            <p data-key="promptPackDesc">Válassz egy csomagot az azonnali inspirációért, majd add hozzá a saját ötleteidet!</p>
+            <div class="input-group" style="max-width: 500px; margin: 20px auto 0 auto;">
+                <select id="prompt-pack-select"></select>
+                <button id="load-pack-btn" class="cta-button-small">
+                    <i class="fa-solid fa-download"></i> <span data-key="loadPackBtn">Csomag Betöltése</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
 <div id="prompt-doctor-accordion" class="accordion-item" style="margin-bottom: 25px;">
     <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
         <h2 style="margin: 0; font-family: 'Rajdhani', sans-serif; color: var(--color-primary-light); font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px; position: relative;">
