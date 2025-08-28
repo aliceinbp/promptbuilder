@@ -2832,3 +2832,11 @@ body.light-theme .pagefind-ui__modal {
 .accordion-content > div {
     padding: 20px 15px !important; /* Kisebb belső tér (kb. 2/3-a a réginek) */
 }
+/* ======================================== */
+/* ===== DROPDOWN TÚLNYÚLÁS JAVÍTÁSA ===== */
+/* ======================================== */
+
+/* Ez az osztály ideiglenesen engedélyezi a tartalom túlnyúlását */
+.accordion-content.overflow-visible {
+    overflow: visible !important;
+}

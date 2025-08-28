@@ -611,63 +611,85 @@ btn.addEventListener('click', async () => {
         });
     }
     // === TEMATIKUS PROMPT CSOMAGOK ===
-    async function initializePromptPacks() {
-        const selectElement = document.getElementById('prompt-pack-select');
-        const loadBtn = document.getElementById('load-pack-btn');
-        if (!selectElement || !loadBtn) return;
+    // CSERÉLD LE A TELJES FUNKCIÓT ERRE:
+async function initializePromptPacks() {
+    const selectElement = document.getElementById('prompt-pack-select');
+    const loadBtn = document.getElementById('load-pack-btn');
+    if (!selectElement || !loadBtn) return;
 
-        try {
-            const response = await fetch('/_data/prompt-packs.json');
-            promptPacks = await response.json();
-            const lang = localStorage.getItem('preferredLanguage') || 'en';
+    try {
+        const response = await fetch('/_data/prompt-packs.json');
+        promptPacks = await response.json();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
 
-            const options = promptPacks.map(pack => ({
-                value: pack.id,
-                label: (lang === 'hu' ? pack.name_hu : pack.name_en)
-            }));
-            
-            const placeholderText = translations[lang].promptPackDefault || "Choose a pack...";
+        const options = promptPacks.map(pack => ({
+            value: pack.id,
+            label: (lang === 'hu' ? pack.name_hu : pack.name_en)
+        }));
+        
+        const placeholderText = translations[lang].promptPackDefault || "Choose a pack...";
 
-            choiceInstances.promptPacks = new Choices(selectElement, {
-                choices: options,
-                searchEnabled: false,
-                itemSelectText: '',
-                allowHTML: false,
-                shouldSort: false,
-                placeholder: true,
-                placeholderValue: placeholderText
-            });
-
-            loadBtn.addEventListener('click', () => {
-                const selectedPackId = choiceInstances.promptPacks.getValue(true);
-                if (!selectedPackId) return;
-
-                const selectedPack = promptPacks.find(p => p.id === selectedPackId);
-                if (!selectedPack) return;
-
-                // Töröljük a jelenlegi tageket, de a negatív promptot és a paramétereket meghagyjuk
-                Object.values(tagContainers).forEach(c => c.innerHTML = '');
-                finalPromptContainer.innerHTML = '';
-                activeWeightedTag = null;
-                if(weightSlider) weightSlider.disabled = true;
-
-                // Betöltjük az új tageket
-                for (const category in selectedPack.prompts) {
-                    const keywords = selectedPack.prompts[category];
-                    const container = tagContainers[category];
-                    if (container) {
-                        keywords.forEach(keyword => {
-                            container.appendChild(createTag(keyword, false));
-                            finalPromptContainer.appendChild(createTag(keyword, true));
-                        });
-                    }
-                }
-                updateFinalPrompt();
-            });
-
-        } catch (error) {
-            console.error("Hiba a prompt csomagok betöltésekor:", error);
-            document.getElementById('prompt-pack-section').innerHTML = "<p>A csomagok nem érhetőek el.</p>";
+        // Choices.js inicializálása
+        if (choiceInstances.promptPacks) {
+            choiceInstances.promptPacks.destroy();
         }
+        choiceInstances.promptPacks = new Choices(selectElement, {
+            choices: options,
+            searchEnabled: false,
+            itemSelectText: '',
+            allowHTML: false,
+            shouldSort: false,
+            placeholder: true,
+            placeholderValue: placeholderText
+        });
+
+        // === EZ AZ ÚJ, FONTOS RÉSZ ===
+        const accordionContent = selectElement.closest('.accordion-content');
+        if (accordionContent) {
+            // Amikor a legördülő kinyílik, engedélyezzük a túlnyúlást
+            selectElement.addEventListener('showDropdown', function() {
+                accordionContent.classList.add('overflow-visible');
+            });
+
+            // Amikor bezáródik, újra letiltjuk
+            selectElement.addEventListener('hideDropdown', function() {
+                accordionContent.classList.remove('overflow-visible');
+            });
+        }
+        // === AZ ÚJ RÉSZ VÉGE ===
+
+        loadBtn.addEventListener('click', () => {
+            const selectedPackId = choiceInstances.promptPacks.getValue(true);
+            if (!selectedPackId) return;
+
+            const selectedPack = promptPacks.find(p => p.id === selectedPackId);
+            if (!selectedPack) return;
+
+            Object.values(tagContainers).forEach(c => c.innerHTML = '');
+            finalPromptContainer.innerHTML = '';
+            activeWeightedTag = null;
+            if(weightSlider) weightSlider.disabled = true;
+
+            for (const category in selectedPack.prompts) {
+                const keywords = selectedPack.prompts[category];
+                const containerKey = category === 'details' ? 'details' : category;
+                const container = tagContainers[containerKey];
+                
+                if (container) {
+                     // Biztosítjuk, hogy a 'details' kulcs a megfelelő helyre kerüljön
+                    const targetContainer = (category === 'mainSubject' || category === 'style' || category === 'extra') ? tagContainers[category] : tagContainers.details;
+                    keywords.forEach(keyword => {
+                        targetContainer.appendChild(createTag(keyword, false));
+                        finalPromptContainer.appendChild(createTag(keyword, true));
+                    });
+                }
+            }
+            updateFinalPrompt();
+        });
+
+    } catch (error) {
+        console.error("Hiba a prompt csomagok betöltésekor:", error);
+        document.getElementById('prompt-pack-section').innerHTML = "<p>A csomagok nem érhetőek el.</p>";
     }
+}
 }
