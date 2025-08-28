@@ -23,7 +23,7 @@ exports.handler = async function(event) {
 
     // API hívás a chatCompletion funkcióval és a megfelelő modellel
     const response = await hf.chatCompletion({
-      model: 'HuggingFaceH4/zephyr-7b-beta',
+      model: 'mistralai/Mistral-7B-Instruct-v0.2',
       messages: [{ role: "user", content: masterPrompt }], // Ezt a formátumot kéri a chat modell
       parameters: {
         max_new_tokens: 250,
