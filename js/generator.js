@@ -499,122 +499,71 @@ function buildFinalPromptString() {
     }
 
     function initializePromptDoctor() {
-        const doctorAccordion = document.getElementById('prompt-doctor-accordion');
-        if (!doctorAccordion) return;
+    const doctorAccordion = document.getElementById('prompt-doctor-accordion');
+    if (!doctorAccordion) return;
 
-        const input = document.getElementById('prompt-doctor-input');
-        const btn = document.getElementById('prompt-doctor-btn');
-        const resultDiv = document.getElementById('prompt-doctor-result');
-        const btnText = btn.querySelector('.btn-text');
-        const spinner = btn.querySelector('.spinner');
+    const input = document.getElementById('prompt-doctor-input');
+    const btn = document.getElementById('prompt-doctor-btn');
+    const resultDiv = document.getElementById('prompt-doctor-result');
+    const btnText = btn.querySelector('.btn-text');
+    const spinner = btn.querySelector('.spinner');
 
-        btn.addEventListener('click', async () => {
-            const userPrompt = input.value.trim();
-            if (!userPrompt) {
-                alert('Kérlek, írj be egy promptot az elemzéshez!');
-                return;
+    // Ez a segédfüggvény frissíti a harmonika magasságát
+    const updateAccordionHeight = () => {
+        const accordionContent = resultDiv.closest('.accordion-content');
+        if (accordionContent && doctorAccordion.classList.contains('active')) {
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+        }
+    };
+
+    btn.addEventListener('click', async () => {
+        const userPrompt = input.value.trim();
+        if (!userPrompt) {
+            alert('Kérlek, írj be egy promptot az elemzéshez!');
+            return;
+        }
+
+        btnText.classList.add('hidden');
+        spinner.classList.remove('hidden');
+        btn.disabled = true;
+        resultDiv.classList.add('hidden');
+        updateAccordionHeight(); // Összecsukjuk a dobozt a betöltés idejére
+
+        try {
+            const response = await fetch('/.netlify/functions/prompt-doctor', {
+                method: 'POST',
+                body: JSON.stringify({ userPrompt: userPrompt })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.details || `Hálózati hiba: ${response.statusText}`);
             }
 
-            // Betöltési állapot mutatása
-            btnText.classList.add('hidden');
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
-            resultDiv.classList.add('hidden');
-
-            try {
-                const response = await fetch('/.netlify/functions/prompt-doctor', {
-                    method: 'POST',
-                    body: JSON.stringify({ userPrompt: userPrompt })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.details || `Hálózati hiba: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                
-                // Markdown konvertáló használata, ha létezik
-                if (typeof showdown !== 'undefined') {
-                    const converter = new showdown.Converter();
-                    resultDiv.innerHTML = converter.makeHtml(data.analysis);
-                } else {
-                    resultDiv.textContent = data.analysis;
-                }
-
-                resultDiv.classList.remove('hidden');
-
-            } catch (error) {
-                console.error("Prompt Doktor hiba:", error);
-                resultDiv.innerHTML = `<p style="color: #ff6b6b;">Hiba történt: ${error.message}</p>`;
-                resultDiv.classList.remove('hidden');
-            } finally {
-                // Betöltési állapot elrejtése
-                btnText.classList.remove('hidden');
-                spinner.classList.add('hidden');
-                btn.disabled = false;
-            }
-        });
-    }
-    
-    function initializePromptDoctor() {
-        const doctorAccordion = document.getElementById('prompt-doctor-accordion');
-        if (!doctorAccordion) return;
-
-        const input = document.getElementById('prompt-doctor-input');
-        const btn = document.getElementById('prompt-doctor-btn');
-        const resultDiv = document.getElementById('prompt-doctor-result');
-        const btnText = btn.querySelector('.btn-text');
-        const spinner = btn.querySelector('.spinner');
-
-        btn.addEventListener('click', async () => {
-            const userPrompt = input.value.trim();
-            if (!userPrompt) {
-                alert('Kérlek, írj be egy promptot az elemzéshez!');
-                return;
+            const data = await response.json();
+            
+            if (typeof showdown !== 'undefined') {
+                const converter = new showdown.Converter({ openLinksInNewWindow: true });
+                resultDiv.innerHTML = converter.makeHtml(data.analysis);
+            } else {
+                resultDiv.textContent = data.analysis;
             }
 
-            // Betöltési állapot mutatása
-            btnText.classList.add('hidden');
-            spinner.classList.remove('hidden');
-            btn.disabled = true;
-            resultDiv.classList.add('hidden');
+            resultDiv.classList.remove('hidden');
 
-            try {
-                const response = await fetch('/.netlify/functions/prompt-doctor', {
-                    method: 'POST',
-                    body: JSON.stringify({ userPrompt: userPrompt })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.details || `Hálózati hiba: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                
-                // Markdown konvertáló használata, ha létezik
-                if (typeof showdown !== 'undefined') {
-                    const converter = new showdown.Converter();
-                    resultDiv.innerHTML = converter.makeHtml(data.analysis);
-                } else {
-                    resultDiv.textContent = data.analysis;
-                }
-
-                resultDiv.classList.remove('hidden');
-
-            } catch (error) {
-                console.error("Prompt Doktor hiba:", error);
-                resultDiv.innerHTML = `<p style="color: #ff6b6b;">Hiba történt: ${error.message}</p>`;
-                resultDiv.classList.remove('hidden');
-            } finally {
-                // Betöltési állapot elrejtése
-                btnText.classList.remove('hidden');
-                spinner.classList.add('hidden');
-                btn.disabled = false;
-            }
-        });
-    }
+        } catch (error) {
+            console.error("Prompt Doktor hiba:", error);
+            resultDiv.innerHTML = `<p style="color: #ff6b6b;">Hiba történt: ${error.message}</p>`;
+            resultDiv.classList.remove('hidden');
+        } finally {
+            btnText.classList.remove('hidden');
+            spinner.classList.add('hidden');
+            btn.disabled = false;
+            // ITT A LÉNYEG: Várunk egy picit, hogy a tartalom megjelenjen, UTÁNA frissítjük a magasságot
+            setTimeout(updateAccordionHeight, 50); 
+        }
+    });
+}
     // === INDÍTÁS ===
     loadPromptFromStorage();
     initializeChoices();
