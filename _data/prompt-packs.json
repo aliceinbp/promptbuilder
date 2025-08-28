@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cyberpunk",
+    "name_hu": "Cyberpunk Csomag",
+    "name_en": "Cyberpunk Pack",
+    "prompts": {
+      "details": ["neonfényes", "esős utca", "disztópikus jövő", "kiberverekkel", "holografikus reklámok"],
+      "style": ["cyberpunk", "neon noir", "Syd Mead stílusában"],
+      "extra": ["cinematic lighting", "highly detailed", "moody atmosphere"]
+    }
+  },
+  {
+    "id": "enchanted_forest",
+    "name_hu": "Elvarázsolt Erdő Csomag",
+    "name_en": "Enchanted Forest Pack",
+    "prompts": {
+      "details": ["ködös erdő mélyén", "izzó gombákkal", "tündérfényekkel", "mohával benőtt fák", "misztikus"],
+      "style": ["fantasy concept art", "digitális festmény", "Hayao Miyazaki stílusában"],
+      "extra": ["volumetric lighting", "ethereal feel", "magical atmosphere"]
+    }
+  },
+  {
+    "id": "cosmic_horror",
+    "name_hu": "Kozmikus Horror Csomag",
+    "name_en": "Cosmic Horror Pack",
+    "prompts": {
+      "details": ["leírhatatlan lény", "nem euklideszi geometria", "csápokkal", "baljós", "őrület"],
+      "style": ["kozmikus horror", "Zdzisław Beksiński stílusában", "H.P. Lovecraft ihlette"],
+      "extra": ["dark and gritty", "ominous", "oppressive atmosphere"]
+    }
+  },
+  {
+    "id": "gothic",
+    "name_hu": "Gótikus Csomag",
+    "name_en": "Gothic Pack",
+    "prompts": {
+      "details": ["gótikus katedrális", "holdfényes éjszaka", "fakó bőr", "sötét és komor", "romantikus melankólia"],
+      "style": ["gótikus művészet", "barokk festmény", "Tim Burton stílusában"],
+      "extra": ["dramatic shadows", "chiaroscuro lighting", "moody"]
+    }
+  },
+  {
+    "id": "solarpunk",
+    "name_hu": "Solarpunk Csomag",
+    "name_en": "Solarpunk Pack",
+    "prompts": {
+      "details": ["utópisztikus város", "természettel egybeolvadó építészet", "tiszta energia", "buján növő növényzet", "reményteli"],
+      "style": ["solarpunk", "Art Nouveau", "öko-futurizmus"],
+      "extra": ["vibrant colors", "lush greenery", "optimistic"]
+    }
+  },
+  {
+    "id": "steampunk",
+    "name_hu": "Steampunk Csomag",
+    "name_en": "Steampunk Pack",
+    "prompts": {
+      "details": ["viktoriánus korszak", "fogaskerekekkel és csövekkel", "gőzzel hajtott", "réz és bőr", "bonyolult gépezet"],
+      "style": ["steampunk aesthetic", "J.C. Leyendecker stílusában", "koncepciórajz"],
+      "extra": ["intricate details", "sepia tones", "industrial"]
+    }
+  },
+  {
+    "id": "rpg",
+    "name_hu": "RPG Karakter Csomag",
+    "name_en": "RPG Character Pack",
+    "prompts": {
+      "details": ["tünde íjász", "drow orgyilkos", "díszes páncélban", "mágikus rúnákkal", "csatára készen"],
+      "style": ["fantasy art by Greg Rutkowski", "digitális festmény", "karakter koncepciórajz"],
+      "extra": ["dynamic pose", "highly detailed armor", "epic fantasy"]
+    }
+  },
+  {
+    "id": "film_noir",
+    "name_hu": "Film Noir Csomag",
+    "name_en": "Film Noir Pack",
+    "prompts": {
+      "details": ["magánnyomozó", "füstös bár", "redőnyön átszűrődő fény", "esős nagyvárosi utca", "rejtélyes"],
+      "style": ["noir film still", "fekete-fehér", "magas kontraszt"],
+      "extra": ["dramatic shadows", "chiaroscuro", "moody"]
+    }
+  },
+  {
+    "id": "underwater",
+    "name_hu": "Vízalatti Világ Csomag",
+    "name_en": "Underwater World Pack",
+    "prompts": {
+      "details": ["elsüllyedt város romjai", "biolumineszcens lények", "korallzátony", "mélytengeri árok", "békés"],
+      "style": ["fantasy art", "fotorealisztikus", "természetfotó"],
+      "extra": ["underwater lighting", "god rays", "serene atmosphere"]
+    }
+  },
+  {
+    "id": "post_apocalyptic",
+    "name_hu": "Poszt-apokaliptikus Csomag",
+    "name_en": "Post-Apocalyptic Pack",
+    "prompts": {
+      "details": ["elhagyatott pusztaság", "romos város", "gázmaszkot visel", "túlélő", "rozsdás fém"],
+      "style": ["poszt-apokaliptikus", "koncepciórajz", "realisztikus"],
+      "extra": ["dark and gritty", "oppressive atmosphere", "weathered textures"]
+    }
+  },
+  {
+    "id": "ethereal_abstract",
+    "name_hu": "Éteri Absztrakt Csomag",
+    "name_en": "Ethereal Abstract Pack",
+    "prompts": {
+      "details": ["folyékony fém", "szivárványszínű füst", "fraktál mintázatok", "kristályos formák", "lebegő"],
+      "style": ["absztrakt expresszionizmus", "szürreális", "spirituális művészet"],
+      "extra": ["iridescent", "ethereal feel", "glowing energy"]
+    }
+  },
+  {
+    "id": "retro_future",
+    "name_hu": "Retrofuturizmus Csomag",
+    "name_en": "Retrofuturism Pack",
+    "prompts": {
+      "details": ["repülő autó", "1950-es évek esztétikája", "króm díszítés", "analóg technológia", "optimista jövőkép"],
+      "style": ["retrofuturism", "atompunk", "vintage poszter"],
+      "extra": ["vibrant colors", "clean lines", "nostalgic"]
+    }
+  }
+]

@@ -328,6 +328,10 @@ const translations = {
         negativeCategoryDisturbing: "Zavaró Elemek",
         addSelectedBtn: "Kiválasztottak Hozzáadása",
         
+        promptPackTitle: "Tematikus Prompt Csomagok",
+        promptPackDesc: "Válassz egy csomagot az azonnali inspirációért, majd add hozzá a saját ötleteidet!",
+        loadPackBtn: "Csomag Betöltése",
+        promptPackDefault: "Válassz egy csomagot...",
         // Prompt Recept
         saveRecipeBtn: "Recept Mentése",
         loadRecipeBtn: "Recept Betöltése",
@@ -695,5 +699,9 @@ const translations = {
         recipeDeleteBtn: "Delete",
         noRecipesSaved: "You have no saved recipes.",
         newBadgeText: "NEW",
+        promptPackTitle: "Thematic Prompt Packs",
+        promptPackDesc: "Choose a pack for instant inspiration, then add your own ideas!",
+        loadPackBtn: "Load Pack",
+        promptPackDefault: "Choose a pack...",
     }
 };

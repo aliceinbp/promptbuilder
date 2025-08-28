@@ -493,8 +493,10 @@ function initializeGeneratorLogic() {
     }
 
     // === INDÍTÁS ===
+
     loadPromptFromStorage();
     initializeChoices();
+    initializePromptPacks();
     initializeEventListeners();
     initializeStyleMixer();
     initializeNegativeHelper();
@@ -508,5 +510,65 @@ function initializeGeneratorLogic() {
             filter: '.param-display-tag',
             onEnd: updateFinalPrompt
         });
+    }
+    // === TEMATIKUS PROMPT CSOMAGOK ===
+    async function initializePromptPacks() {
+        const selectElement = document.getElementById('prompt-pack-select');
+        const loadBtn = document.getElementById('load-pack-btn');
+        if (!selectElement || !loadBtn) return;
+
+        try {
+            const response = await fetch('/_data/prompt-packs.json');
+            promptPacks = await response.json();
+            const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+            const options = promptPacks.map(pack => ({
+                value: pack.id,
+                label: (lang === 'hu' ? pack.name_hu : pack.name_en)
+            }));
+            
+            const placeholderText = translations[lang].promptPackDefault || "Choose a pack...";
+
+            choiceInstances.promptPacks = new Choices(selectElement, {
+                choices: options,
+                searchEnabled: false,
+                itemSelectText: '',
+                allowHTML: false,
+                shouldSort: false,
+                placeholder: true,
+                placeholderValue: placeholderText
+            });
+
+            loadBtn.addEventListener('click', () => {
+                const selectedPackId = choiceInstances.promptPacks.getValue(true);
+                if (!selectedPackId) return;
+
+                const selectedPack = promptPacks.find(p => p.id === selectedPackId);
+                if (!selectedPack) return;
+
+                // Töröljük a jelenlegi tageket, de a negatív promptot és a paramétereket meghagyjuk
+                Object.values(tagContainers).forEach(c => c.innerHTML = '');
+                finalPromptContainer.innerHTML = '';
+                activeWeightedTag = null;
+                if(weightSlider) weightSlider.disabled = true;
+
+                // Betöltjük az új tageket
+                for (const category in selectedPack.prompts) {
+                    const keywords = selectedPack.prompts[category];
+                    const container = tagContainers[category];
+                    if (container) {
+                        keywords.forEach(keyword => {
+                            container.appendChild(createTag(keyword, false));
+                            finalPromptContainer.appendChild(createTag(keyword, true));
+                        });
+                    }
+                }
+                updateFinalPrompt();
+            });
+
+        } catch (error) {
+            console.error("Hiba a prompt csomagok betöltésekor:", error);
+            document.getElementById('prompt-pack-section').innerHTML = "<p>A csomagok nem érhetőek el.</p>";
+        }
     }
 }

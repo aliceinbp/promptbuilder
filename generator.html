@@ -126,38 +126,16 @@
                 </div>
             </div>
 
-            <div class="accordion-item" id="image-analyzer-accordion" style="margin-bottom: 25px;">
-                <button class="accordion-header" style="background-color: transparent; border: 1px dashed var(--color-border-accent); border-radius: 8px; padding: 20px;">
-                    <h2 style="margin: 0; font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px; position: relative;">
-                        <i class="fa-solid fa-camera-retro"></i> <span data-key="imageAnalyzerTitle">Képfeltöltés Prompt Javaslatokért</span>
-                        <span class="new-badge" data-key="newBadgeText" style="font-size: 0.6em; top: -15px; right: -25px;">ÚJ</span>
-                    </h2>
-                </button>
-                <div class="accordion-content">
-                    <div id="image-analyzer-section">
-                        <p data-key="imageAnalyzerDesc">Tölts fel egy képet, és az AI megpróbálja kitalálni, milyen kulcsszavakkal hozhatnál létre hasonlót!</p>
-                        <div id="image-upload-area">
-                            <input type="file" id="image-upload-input" accept="image/*" class="hidden">
-                            <label for="image-upload-input" class="cta-button-small" data-key="uploadImageBtn">
-                                <i class="fa-solid fa-upload"></i> Kép Kiválasztása
-                            </label>
-                            <div id="image-preview-container" class="hidden">
-                                <img id="image-preview" src="#" alt="Feltöltött kép előnézete" />
-                                <button id="remove-image-btn" title="Kép eltávolítása">&times;</button>
-                            </div>
-                        </div>
-                        <button id="analyze-image-btn" class="cta-button" disabled>
-                            <span class="btn-text" data-key="analyzeImageBtn">Kép Elemzése</span>
-                            <span class="spinner hidden"></span>
-                        </button>
-                        <div id="image-analysis-result" class="hidden">
-                            <h4 data-key="analysisResultTitle">Javasolt Kulcsszavak:</h4>
-                            <div id="analysis-result-tags" class="tag-container"></div>
-                            <button id="add-analysis-tags-btn" class="cta-button-small" data-key="addTagsToGeneratorBtn">Kulcsszavak Hozzáadása a Generátorhoz</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="prompt-pack-section" class="daily-feature-box">
+    <h2><i class="fa-solid fa-box-open"></i> <span data-key="promptPackTitle">Tematikus Prompt Csomagok</span></h2>
+    <p data-key="promptPackDesc">Válassz egy csomagot az azonnali inspirációért, majd add hozzá a saját ötleteidet!</p>
+    <div class="input-group" style="max-width: 500px; margin: 20px auto 0 auto;">
+        <select id="prompt-pack-select"></select>
+        <button id="load-pack-btn" class="cta-button-small" style="white-space: nowrap;">
+            <i class="fa-solid fa-download"></i> <span data-key="loadPackBtn">Csomag Betöltése</span>
+        </button>
+    </div>
+</div>
             
             <div class="prompt-section">
                 <label for="mainSubject-select"><i class="fa-solid fa-image-portrait"></i> <span data-key="mainSubjectLabel">Fő téma:</span><i class="fa-solid fa-circle-info explainer-icon" data-category="mainSubject" title="Tippek a fő témához"></i><i class="fa-solid fa-gear manage-prompts-btn" data-category="mainSubject" title="Saját promptok kezelése"></i></label>
