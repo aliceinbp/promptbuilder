@@ -2710,3 +2710,19 @@ body.light-theme .pagefind-ui__modal {
     font-size: 1em;
     font-style: italic;
 }
+/* ======================================== */
+/* ===== GÖRGETŐSÁV ÉS Z-INDEX JAVÍTÁSOK ===== */
+/* ======================================== */
+
+/* 1. Egységes, egyedi görgetősáv az egész oldalon */
+/* Ez biztosítja, hogy a böngésző oldalsó görgetősávja is lila legyen */
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary) !important;
+}
+
+/* 2. A legördülő menü rétegének előre hozása */
+/* Ez akadályozza meg, hogy a menü a többi tartalom mögé kerüljön */
+#prompt-pack-section {
+    position: relative;
+    z-index: 2; /* Bármilyen 1-nél nagyobb érték jó */
+}
