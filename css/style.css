@@ -2814,45 +2814,43 @@ body.light-theme .pagefind-ui__modal {
 #prompt-doctor-result li {
     margin-bottom: 8px !important; /* Kisebb térköz a listaelemek között */
 }
-/* ======================================== */
-/* ===== HARMONIKA FEJLÉCEK EGYSÉGESÍTÉSE ===== */
-/* ======================================== */
+/* ======================================================= */
+/* ===== HARMONIKA VÉGLEGES STÍLUSA (EGYSÉGESÍTETT) ===== */
+/* ======================================================= */
 
-/* Ez a szabály minden harmonika címsorára érvényes lesz */
+/* A harmonika gombjának egységes stílusa */
+.accordion-header {
+    border: 1px dashed var(--color-border-accent) !important;
+    border-radius: 8px !important;
+    background-color: transparent !important;
+    padding: 15px 20px !important; /* Kisebb belső térköz a kompaktabb kinézethez */
+}
+
+/* A címsor (h2) egységes stílusa a gombon belül */
 .accordion-header h2 {
-    font-family: 'Rajdhani', sans-serif !important; /* A Script Acid főcím betűtípusa */
+    font-family: 'Rajdhani', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 1.5em !important; /* Kisebb betűméret */
+    font-size: 1.5em !important;
     color: var(--color-primary-light) !important;
-    letter-spacing: 1px; /* Finom betűköz */
+    letter-spacing: 1px;
 }
 
-/* A lenyíló dobozok belső tartalmának méretcsökkentése */
-.accordion-content > div {
-    padding: 20px 15px !important; /* Kisebb belső tér (kb. 2/3-a a réginek) */
+/* A harmonikát tartalmazó fő doboz */
+.accordion-item {
+    border: none !important; /* Eltávolítjuk a külső keretet, hogy ne legyen dupla szegély */
 }
-/* ======================================================= */
-/* ===== DROPDOWN TÚLNYÚLÁS JAVÍTÁSA (VÉGSŐ CSS MEGOLDÁS) ===== */
-/* ======================================================= */
 
 /* Csak a ZÁRT harmonikák vágják le a tartalmat */
 .accordion-item:not(.active) {
     overflow: hidden;
 }
 
-/* A NYITOTT harmonikák engedik a túlnyúlást, így a menü kilátszódhat */
+/* A NYITOTT harmonikák engedik a túlnyúlást */
 .accordion-item.active {
     overflow: visible;
 }
 
-/* Biztonság kedvéért a belső tartalomnak is megengedjük a túlnyúlást */
-.accordion-content {
-    overflow: visible !important;
-}
-/* ======================================== */
-/* ===== HARMONIKA ELVÁLASZTÓVONAL JAVÍTÁSA ===== */
-/* ======================================== */
-
-.accordion-header {
-    border-bottom: none !important;
+/* A lenyíló tartalom dobozának belső térköze */
+.accordion-content > div {
+    padding: 20px 15px !important;
 }
