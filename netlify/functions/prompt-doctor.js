@@ -24,7 +24,7 @@ exports.handler = async function(event) {
 
     const response = await hf.chatCompletion({
       // VISSZAÁLLUNK A FELOLDOTT MODELLRE!
-      model: 'mistralai/Mistral-7B-Instruct-v0.2',
+      model: 'mistralai/Mistral-7B-Instruct-v0.3',
       messages: [{ role: "user", content: masterPrompt }],
       parameters: {
         max_new_tokens: 250,
