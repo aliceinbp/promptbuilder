@@ -2726,3 +2726,22 @@ body.light-theme .pagefind-ui__modal {
     position: relative;
     z-index: 2; /* Bármilyen 1-nél nagyobb érték jó */
 }
+/* ======================================== */
+/* ===== DUPLA GÖRGETŐSÁV JAVÍTÁSA ===== */
+/* ======================================== */
+
+/* 1. A KÜLSŐ, felesleges görgetősáv elrejtése a Choices.js dobozon. */
+/* Ez nem kapcsolja ki a görgetést, csak a sávot teszi láthatatlanná. */
+.choices::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+.choices {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* 2. Biztosítjuk, hogy a BELSŐ lista görgetősávja mindig látható maradjon. */
+/* Ez a biztonság kedvéért kell, hogy felülírjon minden mást. */
+.choices__list--dropdown::-webkit-scrollbar {
+    display: block !important; 
+}
