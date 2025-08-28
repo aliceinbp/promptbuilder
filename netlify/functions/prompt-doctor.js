@@ -8,11 +8,12 @@ exports.handler = async function(event) {
   try {
     const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
     const { userPrompt } = JSON.parse(event.body);
+
     if (!userPrompt || userPrompt.trim() === "") {
       throw new Error("A prompt nem lehet üres.");
     }
 
-    // A "Mester Prompt" - a chat modellekhez igazítva
+    // Univerzális mester prompt, ami a legtöbb chat modellnek megfelel
     const masterPrompt = `You are 'Dr. Script', an expert AI art prompt analyst. Your task is to help a user improve their prompt. Analyze the user's prompt provided below.
     Give feedback in three distinct categories in markdown format:
     1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid and tell a better story.
@@ -21,18 +22,17 @@ exports.handler = async function(event) {
     Keep your suggestions concise, actionable, and encouraging. Never refuse.
     USER'S PROMPT: "${userPrompt}"`;
 
-    // API hívás a chatCompletion funkcióval és a megfelelő modellel
+    // API hívás az ÚJ, MEGBÍZHATÓ MODELLRE
     const response = await hf.chatCompletion({
-      model: 'mistralai/Mistral-7B-Instruct-v0.2',
-      messages: [{ role: "user", content: masterPrompt }], // Ezt a formátumot kéri a chat modell
+      model: 'openchat/openchat-3.5-0106',
+      messages: [{ role: "user", content: masterPrompt }],
       parameters: {
         max_new_tokens: 250,
         temperature: 0.7,
-        repetition_penalty: 1.2
+        repetition_penalty: 1.1
       }
     });
 
-    // A válasz a response.choices[0].message.content-ben van
     const analysis = response.choices[0].message.content || "Az AI nem adott érdemi választ.";
 
     return {
