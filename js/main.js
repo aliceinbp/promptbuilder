@@ -272,23 +272,32 @@ function initializeModalSystem() {
         });
     }
 }
-// ===== GoatCounter Vizuális Számláló Végleges Javítása =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Egy számláló, ami megnézi, hogy a GoatCounter script betöltődött-e már
-    let checkCounter = 0;
+// ===== GoatCounter Vizuális Számláló Bombabiztos Javítása =====
+function displayGoatCounterHits() {
+    // Várakozó ciklus, ami megkeresi az adatot
+    let attempts = 0;
     const interval = setInterval(function() {
-        checkCounter++;
-        // Ha a goatcounter adata elérhető, vagy 5 másodpercig próbálkoztunk
-        if (window.goatcounter && window.goatcounter.data || checkCounter > 50) {
-            clearInterval(interval); // Leállítjuk a további ellenőrzést
+        attempts++;
+        // Ha az adat megérkezett...
+        if (window.goatcounter && window.goatcounter.data) {
+            clearInterval(interval); // Leállítjuk a ciklust
             const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
-            if (counterSpan && window.goatcounter && window.goatcounter.data) {
-                // Beírjuk a helyes számot a "..." helyére
-                counterSpan.textContent = window.goatcounter.data.hits;
-            } else if (counterSpan) {
-                // Ha hiba van, a "..." helyett egy '-' jelet mutatunk
-                counterSpan.textContent = '-';
+            if (counterSpan) {
+                // Beírjuk a helyes számot a "..." vagy "-" helyére
+                counterSpan.textContent = window.goatcounter.data.hits; 
             }
         }
-    }, 100); // 100 ezredmásodpercenként ellenőriz
-});
+        // Ha 5 másodperc után sincs adat, feladjuk
+        if (attempts > 50) {
+            clearInterval(interval);
+            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
+            if (counterSpan && counterSpan.textContent === '...') {
+                counterSpan.textContent = '-'; // Hibajelzés, ha még mindig "..." van ott
+            }
+        }
+    }, 100);
+}
+
+// A scriptet csak akkor futtatjuk, ha az egész oldal, minden külső erőforrással együtt betöltődött.
+// Ez a legbiztosabb módszer.
+window.addEventListener('load', displayGoatCounterHits);
