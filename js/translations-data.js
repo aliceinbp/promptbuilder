@@ -22,7 +22,7 @@ const translations = {
         philosophyModalTitle: "A Filozófia: Egy Eszköz a Kreatív Blokk Ellen",
         philosophyModalText: "[Ide írd le magyarul a személyes történetedet, hogy miért hoztad létre az oldalt, kinek szeretnél segíteni vele.]",
         techModalTitle: "A Technológia: Nyílt Forráskód és Közösségi Erő",
-        techModalText: "[Ide írd le magyarul, hogy az oldal ingyenesen elérhető AI modelleket használ (pl. a Hugging Face-ről), és hogy a célod egy mindenki számára elérhető, ingyenes eszköz biztosítása volt.]",
+        techModalText: "A háttérben a 'motor' egy ingyenes, nyílt forráskódú AI modell, amit a Hugging Face nevű platformon keresztül érek el. A célom az volt, hogy egy bárki számára elérhető, ingyenes eszközt hozzak létre, ami a te ötleteidet kelti életre anélkül, hogy a drága technológiával kellene bajlódnod. A nagy álmom, hogy a jövőben, ha a projekt kinövi magát, olyan profi modellekre is át tudjunk térni, mint a Google Gemini. Ez tenné lehetővé az igazán összetett és kreatív feladatok hibátlan működését.",
         futureModalTitle: "A Jövő: Közös Fejlődés",
         futureModalText: "[Ide írd le magyarul a terveidet, például a Jutalom Generátort, és hogy hogyan tudnak a felhasználók segíteni (pl. ötletekkel, visszajelzéssel, Ko-fi támogatással).]",
         
@@ -482,7 +482,7 @@ const translations = {
         philosophyModalTitle: "The Philosophy: A Tool Against Creative Block",
         philosophyModalText: "[Write your personal story here in English, why you created the site, and who you want to help with it.]",
         techModalTitle: "The Technology: Open Source and Community Power",
-        techModalText: "[Write here in English that the site uses freely available AI models (e.g., from Hugging Face) and that your goal was to provide a free tool accessible to everyone.]",
+        techModalText: "Behind the scenes, the 'engine' is a free, open-source AI model that I access through a platform called Hugging Face. My goal was to create a free tool, accessible to everyone, that brings your ideas to life without you having to worry about expensive technology. My big dream is that in the future, as the project grows, we can upgrade to professional models like Google Gemini. This would enable the flawless execution of truly complex and creative tasks.",
         futureModalTitle: "The Future: Growing Together",
         futureModalText: "[Write your plans here in English, for example, the Reward Generator, and how users can help (e.g., with ideas, feedback, Ko-fi support).]",
         
