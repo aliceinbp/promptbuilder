@@ -3004,3 +3004,32 @@ body.light-theme .spinner {
     transform: rotate(360deg);
   }
 }
+/* ===== RPG ÖTLETADÓ DOBOZ STÍLUS ===== */
+.suggestions-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.suggestion-btn {
+    background-color: var(--color-surface-alt);
+    border: 1px dashed var(--color-border-accent);
+    color: var(--color-text-secondary);
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95em;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.suggestion-btn:hover {
+    border-color: var(--color-primary-light);
+    color: var(--color-text-main);
+    background-color: var(--color-surface);
+    transform: translateY(-3px);
+}
