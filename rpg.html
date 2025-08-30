@@ -71,16 +71,15 @@
                     </h2>
                 </button>
                 <div class="accordion-content">
-                    <div id="dm-master-form">
-                        <div id="dm-master-form" class="rpg-form">
+                    <div id="dm-master-form" class="rpg-form">
     <div class="rpg-form-grid">
         <div class="rpg-form-group">
             <label for="dm-system" data-key="formSystemLabel">Játékrendszer / Világ</label>
-            <input type="text" id="dm-system" placeholder="pl. M.A.G.U.S., D&D 5e, Urban Fantasy...">
+            <input type="text" id="dm-system" data-key-placeholder="dmSystemPlaceholder">
         </div>
         <div class="rpg-form-group">
             <label for="dm-mood" data-key="formMoodLabel">Hangulat & Stílus</label>
-            <input type="text" id="dm-mood" placeholder="pl. komor, heroikus, politikai intrika...">
+            <input type="text" id="dm-mood" data-key-placeholder="dmMoodPlaceholder">
         </div>
     </div>
     <div class="rpg-form-group">
@@ -90,7 +89,7 @@
     <div class="rpg-form-grid">
         <div class="rpg-form-group">
             <label for="dm-party" data-key="formPartyLabel">Játékosok</label>
-            <input type="text" id="dm-party" placeholder="pl. 4 fő, tapasztalt">
+            <input type="text" id="dm-party" data-key-placeholder="dmPartyPlaceholder">
         </div>
         <div class="rpg-form-group">
             <label for="dm-length" data-key="formLengthLabel">Kaland hossza</label>
@@ -101,6 +100,33 @@
             </select>
         </div>
     </div>
+    <fieldset class="rpg-form-group slider-fieldset">
+        <legend data-key="formFocusLabel">Fókusz arányok</legend>
+        <div class="sliders-container">
+            <div class="slider-group"><label for="dm-focus-combat" data-key="formFocusCombat">Harc</label><input type="range" id="dm-focus-combat" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-investigation" data-key="formFocusInvestigation">Nyomozás</label><input type="range" id="dm-focus-investigation" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-social" data-key="formFocusSocial">Társalgás</label><input type="range" id="dm-focus-social" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-exploration" data-key="formFocusExploration">Felfedezés</label><input type="range" id="dm-focus-exploration" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+        </div>
+    </fieldset>
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="dm-boundaries" data-key="formBoundariesLabel">Tartalmi határok</label>
+            <input type="text" id="dm-boundaries" data-key-placeholder="dmBoundariesPlaceholder">
+        </div>
+        <div class="rpg-form-group">
+            <label for="dm-constraints" data-key="formConstraintsLabel">Kötöttségek</label>
+            <input type="text" id="dm-constraints" data-key-placeholder="dmConstraintsPlaceholder">
+        </div>
+    </div>
+     <div class="rpg-form-group">
+        <label for="dm-names" data-key="formNameConventionLabel">Névkonvenció</label>
+        <select id="dm-names">
+            <option value="világ-hű, angolos">Világ-hű / Angolos</option>
+            <option value="magyarosított">Magyarosított</option>
+        </select>
+    </div>
+</div>
     <fieldset class="rpg-form-group slider-fieldset">
         <legend data-key="formFocusLabel">Fókusz arányok</legend>
         <div class="sliders-container">
@@ -129,7 +155,7 @@
     </div>
 </div>
                     </div>
-                    <button id="generate-adventure-btn" class="cta-button">Kaland Generálása</button>
+                    <button id="generate-adventure-btn" class="cta-button"><span data-key="generateAdventureBtn">Kaland Generálása</span></button>
                     <div id="adventure-output"></div>
                 </div>
             </div>
@@ -141,22 +167,21 @@
                     </h2>
                 </button>
                 <div class="accordion-content">
-                    <div id="character-creator-form">
-                        <div id="character-creator-form" class="rpg-form">
+                    <div id="character-creator-form" class="rpg-form">
     <div class="rpg-form-grid">
         <div class="rpg-form-group">
             <label for="cc-system" data-key="formSystemLabel">Játékrendszer / Világ</label>
-            <input type="text" id="cc-system" placeholder="pl. általános fantasy, sötét fantasy...">
+            <input type="text" id="cc-system" data-key-placeholder="ccSystemPlaceholder">
         </div>
         <div class="rpg-form-group">
             <label for="cc-race" data-key="formRaceLabel">Faj / Származás</label>
-            <input type="text" id="cc-race" placeholder="pl. ember, tünde, vagy hagyd üresen">
+            <input type="text" id="cc-race" data-key-placeholder="ccRacePlaceholder">
         </div>
     </div>
     <div class="rpg-form-grid">
         <div class="rpg-form-group">
             <label for="cc-class" data-key="formClassLabel">Kaszt / Hivatás</label>
-            <input type="text" id="cc-class" placeholder="pl. harcos, tolvaj-bárd keverék...">
+            <input type="text" id="cc-class" data-key-placeholder="ccClassPlaceholder">
         </div>
         <div class="rpg-form-group">
             <label for="cc-morality" data-key="formMoralityLabel">Erkölcsi irány</label>
@@ -192,11 +217,11 @@
     </div>
      <div class="rpg-form-group">
         <label for="cc-boundaries" data-key="formBoundariesLabel">Tartalmi határok</label>
-        <input type="text" id="cc-boundaries" placeholder="pl. ne legyen a múltjában családi tragédia">
+        <input type="text" id="cc-boundaries" data-key-placeholder="ccBoundariesPlaceholder">
     </div>
 </div>
                     </div>
-                     <button id="generate-character-btn" class="cta-button">Karakter Generálása</button>
+                     <button id="generate-character-btn" class="cta-button"><span data-key="generateCharacterBtn">Karakter Generálása</span></button>
                     <div id="character-output"></div>
                 </div>
             </div>

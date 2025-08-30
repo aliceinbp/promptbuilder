@@ -74,30 +74,30 @@ function getCharacterCreatorFormData() {
 async function generateContent(endpoint, formData, outputElement) {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
 
-    // Stílusos betöltés jelzése
     outputElement.innerHTML = `
         <div style="text-align: center; padding: 20px;">
             <div class="spinner" style="margin: 0 auto 15px auto;"></div>
             <p>${translations[lang].outputGenerating}</p>
         </div>`;
+    updateAccordionHeight(outputElement); // Magasság frissítése a spinnerhez
 
     const button = outputElement.previousElementSibling;
     button.disabled = true;
 
     try {
+        // A nyelvi beállítást is elküldjük a függvénynek
         const response = await fetch(endpoint, {
             method: 'POST',
-            body: JSON.stringify(formData)
+            body: JSON.stringify({ ...formData, lang: lang })
         });
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.details || `Network error: ${response.statusText}`);
+            throw new Error(errorData.details || `Hálózati hiba: ${response.statusText}`);
         }
 
         const data = await response.json();
 
-        // Létrehozzuk az eszköztárat a másolás gombbal
         const toolbarHTML = `
             <div class="output-toolbar">
                 <button class="cta-button-small copy-output-btn">
@@ -108,7 +108,6 @@ async function generateContent(endpoint, formData, outputElement) {
 
         if (typeof showdown !== 'undefined') {
             const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
-            // Először a toolbar, utána a konvertált tartalom
             outputElement.innerHTML = toolbarHTML + converter.makeHtml(data.result);
         } else {
             outputElement.innerHTML = toolbarHTML;
@@ -120,6 +119,8 @@ async function generateContent(endpoint, formData, outputElement) {
         outputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}<br><small>${error.message}</small></p>`;
     } finally {
         button.disabled = false;
+        // A VÉGLEGES TARTALOM UTÁN ÚJRA FRISSÍTJÜK A MAGASSÁGOT
+        setTimeout(() => updateAccordionHeight(outputElement), 100);
     }
 }
 // Eseménykezelő a dinamikusan létrehozott "Másolás" gombokhoz
@@ -145,3 +146,12 @@ document.addEventListener('click', function(e) {
         }
     }
 });
+function updateAccordionHeight(contentElement) {
+    const accordionContent = contentElement.closest('.accordion-content');
+    const accordionItem = contentElement.closest('.accordion-item');
+    if (accordionContent && accordionItem.classList.contains('active')) {
+        // Egy kis trükk: először nullázzuk, hogy a böngésző újra tudja számolni a valós magasságot
+        accordionContent.style.maxHeight = null;
+        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+    }
+}
