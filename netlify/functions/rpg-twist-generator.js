@@ -7,9 +7,16 @@ exports.handler = async function(event) {
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
+    // EZ AZ ÚJ, FONTOS RÉSZ: Megtisztítjuk a felhasználói szöveget
+    const defaultContextHu = 'A hősök egy sötét erdőben táboroznak.';
+    const defaultContextEn = 'The heroes are camping in a dark forest.';
+    const sanitizedContext = (userInput.context || (lang === 'hu' ? defaultContextHu : defaultContextEn))
+        .replace(/`/g, "'")
+        .replace(/"/g, "'");
+
     const promptText = lang === 'hu'
-      ? `Viselkedj úgy, mint egy tapasztalt mesélő és forgatókönyvíró. A felhasználó elakadt a történetében. Olvasd el a helyzetleírást, és generálj 3 logikus, de meglepő és kreatív fordulatot, ami továbbviheti a cselekményt. A válaszod CSAK egy JSON tömb legyen 3 stringgel. A felhasználó helyzete: '${userInput.context || 'A hősök egy sötét erdőben táboroznak.'}'`
-      : `Act as an expert storyteller and screenwriter. The user is stuck in their story. Read the provided situation, and generate 3 logical but surprising and creative plot twists to advance the plot. Your response MUST be ONLY a JSON array of 3 strings. The user's situation is: '${userInput.context || 'The heroes are camping in a dark forest.'}'`;
+      ? `Viselkedj úgy, mint egy tapasztalt mesélő és forgatókönyvíró. A felhasználó elakadt a történetében. Olvasd el a helyzetleírást, és generálj 3 logikus, de meglepő és kreatív fordulatot, ami továbbviheti a cselekményt. A válaszod CSAK egy JSON tömb legyen 3 stringgel. A felhasználó helyzete: '${sanitizedContext}'`
+      : `Act as an expert storyteller and screenwriter. The user is stuck in their story. Read the provided situation, and generate 3 logical but surprising and creative plot twists to advance the plot. Your response MUST be ONLY a JSON array of 3 strings. The user's situation is: '${sanitizedContext}'`;
       
     const masterPrompt = `[INST]${promptText}[/INST]`;
 
