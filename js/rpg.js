@@ -16,10 +16,14 @@ function initializeRpgHelper() {
     const ccSuggestionsOutput = document.getElementById('cc-suggestions-output');
     const dmKeywordsInput = document.getElementById('dm-keywords');
     const ccKeywordsInput = document.getElementById('cc-keywords');
-    // ÚJ NÉVGENERÁTOR ELEMEK
+    // Névgenerátor Elemek
     const generateNamesBtn = document.getElementById('generate-names-btn');
     const nameStyleInput = document.getElementById('name-gen-style');
     const namesOutput = document.getElementById('names-output');
+    // Fordulat Generátor Elemek
+    const generateTwistBtn = document.getElementById('generate-twist-btn');
+    const twistContextInput = document.getElementById('twist-gen-context');
+    const twistOutput = document.getElementById('twist-output');
 
     // === Eseménykezelők ===
     generateAdventureBtn.addEventListener('click', () => {
@@ -38,12 +42,10 @@ function initializeRpgHelper() {
         }
     });
 
-    // IDE KERÜL AZ ÚJ NÉVGENERÁTOR ESEMÉNYKEZELŐJE
     generateNamesBtn.addEventListener('click', async () => {
         const style = nameStyleInput.value.trim();
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         namesOutput.innerHTML = `<div class="spinner" style="margin: 0 auto;"></div>`;
-
         try {
             const response = await fetch('/.netlify/functions/rpg-name-generator', {
                 method: 'POST',
@@ -51,7 +53,6 @@ function initializeRpgHelper() {
             });
             if (!response.ok) throw new Error('Network error');
             const data = await response.json();
-
             if (data.names && data.names.length > 0) {
                 namesOutput.innerHTML = `<ul>${data.names.map(name => `<li>${name}</li>`).join('')}</ul>`;
             } else {
@@ -62,65 +63,42 @@ function initializeRpgHelper() {
             namesOutput.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
         }
     });
+
+    generateTwistBtn.addEventListener('click', async () => {
+        const context = twistContextInput.value.trim();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        twistOutput.innerHTML = `<div class="spinner" style="margin: 0 auto;"></div>`;
+        try {
+            const response = await fetch('/.netlify/functions/rpg-twist-generator', {
+                method: 'POST',
+                body: JSON.stringify({ context: context, lang: lang })
+            });
+            if (!response.ok) throw new Error('Network error');
+            const data = await response.json();
+            if (data.twists && data.twists.length > 0) {
+                twistOutput.innerHTML = `<ul>${data.twists.map(twist => `<li>${twist}</li>`).join('')}</ul>`;
+            } else {
+                throw new Error('No twists received.');
+            }
+        } catch (error) {
+            console.error("Twist generation error:", error);
+            twistOutput.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
+        }
+    });
     
     // Csúszkák értékének frissítése
     document.querySelectorAll('.slider-group input[type="range"]').forEach(slider => {
         const valueSpan = slider.nextElementSibling;
         valueSpan.textContent = slider.value;
         slider.addEventListener('input', () => {
-            valueSpan.textContent = slider.value; // Itt javítottam egy elírást (Value -> value)
+            valueSpan.textContent = slider.value;
         });
     });
     
     populateSelectOptions(localStorage.getItem('preferredLanguage') || 'en');
 }
 
-// ... (A getDmMasterFormData és getCharacterCreatorFormData függvények változatlanok maradnak itt)
-function getDmMasterFormData() {
-    // ... (ez a függvény nem változik)
-}
-function getCharacterCreatorFormData() {
-    // ... (ez a függvény sem változik)
-}
-
-async function generateSuggestions(endpoint, formData, suggestionsOutputElement, keywordsInputElement, mainOutputElement) {
-    const lang = localStorage.getItem('preferredLanguage') || 'en';
-    mainOutputElement.innerHTML = '';
-    suggestionsOutputElement.innerHTML = `<div style="text-align: center; padding: 20px;"><div class="spinner" style="margin: 0 auto 15px auto;"></div><p>${translations[lang].outputGenerating}</p></div>`;
-    updateAccordionHeight(suggestionsOutputElement); // Magasság frissítése a spinnerhez
-
-    try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            body: JSON.stringify({ ...formData, lang: lang })
-        });
-        if (!response.ok) throw new Error('Network error');
-        const data = await response.json();
-
-        suggestionsOutputElement.innerHTML = '';
-        if (data.suggestions && data.suggestions.length > 0) {
-            data.suggestions.forEach(suggestion => {
-                const button = document.createElement('button');
-                button.className = 'suggestion-btn';
-                button.textContent = suggestion;
-                suggestionsOutputElement.appendChild(button);
-            });
-            // EZ A JAVÍTÁS: Frissítjük a magasságot, miután a gombok megjelentek
-            setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50); 
-        } else {
-            throw new Error('No suggestions received.');
-        }
-    } catch (error) {
-        console.error("Suggestion error:", error);
-        suggestionsOutputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
-        // Hiba esetén is frissítjük a magasságot
-        setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50);
-    }
-}
-
-// Az előzőleg módosított generateContent és a többi függvény...
-// (Itt beillesztheted azokat a függvényeket, amiket az előző lépésben adtam,
-// de az egyszerűség kedvéért most csak bemásolom őket újra, hogy teljes legyen a fájl)
+// === Segédfüggvények ===
 
 function getDmMasterFormData() {
     const focusCombat = document.getElementById('dm-focus-combat').value;
@@ -151,6 +129,39 @@ function getCharacterCreatorFormData() {
         boundaries: document.getElementById('cc-boundaries').value,
         names: document.getElementById('cc-names').value
     };
+}
+
+async function generateSuggestions(endpoint, formData, suggestionsOutputElement, keywordsInputElement, mainOutputElement) {
+    const lang = localStorage.getItem('preferredLanguage') || 'en';
+    mainOutputElement.innerHTML = '';
+    suggestionsOutputElement.innerHTML = `<div style="text-align: center; padding: 20px;"><div class="spinner" style="margin: 0 auto 15px auto;"></div><p>${translations[lang].outputGenerating}</p></div>`;
+    updateAccordionHeight(suggestionsOutputElement);
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body: JSON.stringify({ ...formData, lang: lang })
+        });
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
+        
+        suggestionsOutputElement.innerHTML = '';
+        if (data.suggestions && data.suggestions.length > 0) {
+            data.suggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.className = 'suggestion-btn';
+                button.textContent = suggestion;
+                suggestionsOutputElement.appendChild(button);
+            });
+            setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50); 
+        } else {
+            throw new Error('No suggestions received.');
+        }
+    } catch (error) {
+        console.error("Suggestion error:", error);
+        suggestionsOutputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
+        setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50);
+    }
 }
 
 async function generateContent(endpoint, formData, outputElement) {
@@ -189,7 +200,7 @@ async function generateContent(endpoint, formData, outputElement) {
 document.addEventListener('click', function(e) {
     if (e.target.closest('.copy-output-btn')) {
         const button = e.target.closest('.copy-output-btn');
-        const outputContainer = button.closest('#adventure-output, #character-output');
+        const outputContainer = button.closest('#adventure-output, #character-output, #names-output, #twist-output'); // Bővítve az újakkal
         if (outputContainer) {
             const contentToCopy = outputContainer.cloneNode(true);
             const toolbar = contentToCopy.querySelector('.output-toolbar');
@@ -209,7 +220,7 @@ document.addEventListener('click', function(e) {
 function updateAccordionHeight(contentElement) {
     const accordionContent = contentElement.closest('.accordion-content');
     const accordionItem = contentElement.closest('.accordion-item');
-    if (accordionContent && accordionItem.classList.contains('active')) {
+    if (accordionContent && accordionItem && accordionItem.classList.contains('active')) {
         accordionContent.style.maxHeight = null;
         accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
     }
@@ -239,6 +250,7 @@ function populateSelectOptions(lang) {
         }
     }
 }
+
 function updateDownloadLink(lang) {
     const link = document.getElementById('download-guide-link');
     if (link) {

@@ -13,6 +13,10 @@ const translations = {
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
         nameGenPlaceholder: "pl. zord törp nevek, dallamos tünde, magyaros fantasy...",
         generateBtn: "Generálás",
+        twistGenTitle: "Fordulat Generátor",
+        twistGenDesc: "Elakadtál a mesében? Írd le a jelenlegi helyzetet, és az AI ad pár ötletet a folytatáshoz!",
+        twistGenPlaceholder: "Írd le a jelenlegi helyzetet, pl: A hősök sarokba szorították a tolvajcéh vezetőjét, aki azt állítja, zsarolják...",
+        generateTwistBtn: "Fordulatot Kérek!",
         // ===== RPG SEGÉDLET =====
         navRpgHelper: "RPG Segédlet",
         rpgHelperTitle: "RPG Segédlet",
@@ -451,6 +455,11 @@ const translations = {
         nameGenDesc: "Describe a style, and the AI will create unique names for your world!",
         nameGenPlaceholder: "e.g., harsh dwarf names, melodic elven, hungarian fantasy...",
         generateBtn: "Generate",
+        // RPG Mini-Modules
+        twistGenTitle: "Twist Generator",
+        twistGenDesc: "Stuck in the story? Describe the current situation, and the AI will provide a few ideas to continue!",
+        twistGenPlaceholder: "Describe the current situation, e.g., The heroes have cornered the thieves' guild leader, who claims he's being blackmailed...",
+        generateTwistBtn: "Get a Twist!",
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",
