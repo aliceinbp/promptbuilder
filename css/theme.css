@@ -18,6 +18,7 @@
     --color-text-inverted: #121212;
     --color-white-pure: #ffffff;
     --cusdis-border-color: #a46de5; /* Sötét mód: Lila keret */
+    --cusdis-bg-color: #2d2d2d; /* Egy kellemes sötétszürke, mint a többi elem */
 }
 
 body.light-theme {
@@ -40,4 +41,5 @@ body.light-theme {
     --color-text-inverted: #ffffff;
     --color-white-pure: #ffffff;
     --cusdis-border-color: #007bff; /* Világos mód: Kék keret */
+    --cusdis-bg-color: #ffffff; /* Fehér, ahogy kérted */
 }
