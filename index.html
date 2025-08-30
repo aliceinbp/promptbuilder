@@ -136,6 +136,27 @@
                 </div>
             </section>
 
+    <section id="project-story-section">
+    <h2 data-key="storyTitle">A projekt története</h2>
+    <div class="story-cards-container">
+        <div class="story-card" data-modal-target="philosophy-modal">
+            <i class="fa-solid fa-lightbulb-on"></i>
+            <h3 data-key="storyCardPhilosophyTitle">A Filozófia</h3>
+            <p data-key="storyCardPhilosophyDesc">Miért született meg a Script Acid?</p>
+        </div>
+        <div class="story-card" data-modal-target="tech-modal">
+            <i class="fa-solid fa-gears"></i>
+            <h3 data-key="storyCardTechTitle">A TechnológIA</h3>
+            <p data-key="storyCardTechDesc">Milyen motor hajtja az oldalt?</p>
+        </div>
+        <div class="story-card" data-modal-target="future-modal">
+            <i class="fa-solid fa-stars"></i>
+            <h3 data-key="storyCardFutureTitle">A Jövő</h3>
+            <p data-key="storyCardFutureDesc">Merre tart a projekt és hogyan lehetsz a része?</p>
+        </div>
+    </div>
+    </section>
+
             <section class="chat-section">
     <h2><i class="fa-solid fa-comments"></i> <span data-key="chatTitle">Vendégkönyv / Chat</span></h2>
 
@@ -236,6 +257,25 @@
     <script src="js/interactive-pages.js"></script>
     
     <script src="js/main.js"></script>
+
+<div id="philosophy-modal" class="modal hidden story-modal">
+    <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+    <h2 data-key="philosophyModalTitle"></h2>
+    <p data-key="philosophyModalText"></p>
+</div>
+
+<div id="tech-modal" class="modal hidden story-modal">
+    <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+    <h2 data-key="techModalTitle"></h2>
+    <p data-key="techModalText"></p>
+</div>
+
+<div id="future-modal" class="modal hidden story-modal">
+    <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+    <h2 data-key="futureModalTitle"></h2>
+    <p data-key="futureModalText"></p>
+</div>
+
 </body>
 
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>

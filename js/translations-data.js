@@ -11,6 +11,21 @@ const translations = {
         rpgInfoTooltip: "Tipp a jobb eredményekért!",
         rpgInfoModalTitle: "Tipp a Jobb Eredményekért",
         rpgInfoModalText: "A mesterséges intelligencia modellek jelenleg angol nyelven a legkreatívabbak. A legjobb, legötletesebb eredmények érdekében javasoljuk az oldal angol nyelvű változatának használatát a 'HUN | ENG' gombbal.",
+        // A Projekt Története Szekció
+        storyTitle: "A projekt története",
+        storyCardPhilosophyTitle: "A Filozófia",
+        storyCardPhilosophyDesc: "Miért született meg a Script Acid?",
+        storyCardTechTitle: "A Technológia",
+        storyCardTechDesc: "Milyen motor hajtja az oldalt?",
+        storyCardFutureTitle: "A Jövő",
+        storyCardFutureDesc: "Merre tart a projekt és hogyan lehetsz a része?",
+        philosophyModalTitle: "A Filozófia: Egy Eszköz a Kreatív Blokk Ellen",
+        philosophyModalText: "[Ide írd le magyarul a személyes történetedet, hogy miért hoztad létre az oldalt, kinek szeretnél segíteni vele.]",
+        techModalTitle: "A Technológia: Nyílt Forráskód és Közösségi Erő",
+        techModalText: "[Ide írd le magyarul, hogy az oldal ingyenesen elérhető AI modelleket használ (pl. a Hugging Face-ről), és hogy a célod egy mindenki számára elérhető, ingyenes eszköz biztosítása volt.]",
+        futureModalTitle: "A Jövő: Közös Fejlődés",
+        futureModalText: "[Ide írd le magyarul a terveidet, például a Jutalom Generátort, és hogy hogyan tudnak a felhasználók segíteni (pl. ötletekkel, visszajelzéssel, Ko-fi támogatással).]",
+        
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -456,6 +471,21 @@ const translations = {
         rpgInfoTooltip: "Tip for better results!",
         rpgInfoModalTitle: "Tip for Better Results",
         rpgInfoModalText: "Artificial intelligence models are currently most creative in English. For the best and most imaginative results, we recommend using the English version of the site by clicking the 'HUN | ENG' button.",
+        // The Project Story Section
+        storyTitle: "The Story of the Project",
+        storyCardPhilosophyTitle: "The Philosophy",
+        storyCardPhilosophyDesc: "Why was Script Acid created?",
+        storyCardTechTitle: "The Technology",
+        storyCardTechDesc: "What engine powers the site?",
+        storyCardFutureTitle: "The Future",
+        storyCardFutureDesc: "Where is the project heading and how can you be a part of it?",
+        philosophyModalTitle: "The Philosophy: A Tool Against Creative Block",
+        philosophyModalText: "[Write your personal story here in English, why you created the site, and who you want to help with it.]",
+        techModalTitle: "The Technology: Open Source and Community Power",
+        techModalText: "[Write here in English that the site uses freely available AI models (e.g., from Hugging Face) and that your goal was to provide a free tool accessible to everyone.]",
+        futureModalTitle: "The Future: Growing Together",
+        futureModalText: "[Write your plans here in English, for example, the Reward Generator, and how users can help (e.g., with ideas, feedback, Ko-fi support).]",
+        
         // RPG Mini-Modules
         nameGenTitle: "Name Generator",
         nameGenDesc: "Describe a style, and the AI will create unique names for your world!",

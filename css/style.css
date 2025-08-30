@@ -3126,3 +3126,58 @@ body.light-theme .spinner {
     resize: vertical;
     min-height: 80px;
 }
+/* ======================================== */
+/* ===== A PROJEKT TÖRTÉNETE SZEKCIÓ ===== */
+/* ======================================== */
+#project-story-section {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#project-story-section h2 {
+    font-family: 'Pacifico', cursive;
+    color: var(--color-primary-light);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.story-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.story-card {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 25px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--color-shadow);
+    border-color: var(--color-border-accent);
+}
+
+.story-card i {
+    font-size: 2.5em;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.story-card h3 {
+    margin: 0 0 10px 0;
+    color: var(--color-text-main);
+}
+
+.story-card p {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin: 0;
+}

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLanguageSwitcher();
     initializeInfoModal();
     initializeBackToTopButton();
+    initializeStoryModals();
     initializeUsePromptButtons();
     initializeGalleryCopyButtons(); // ÚJ FUNKCIÓ HOZZÁADVA
     observeCusdis();
@@ -228,6 +229,36 @@ function initializeGalleryCopyButtons() {
                     }, 1500);
                 });
             }
+        }
+    });
+}
+function initializeStoryModals() {
+    const storyCards = document.querySelectorAll('.story-card');
+    if (storyCards.length === 0) return;
+
+    const overlay = document.getElementById('modal-overlay');
+
+    storyCards.forEach(card => {
+        const modalId = card.dataset.modalTarget;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            card.addEventListener('click', () => {
+                // Szövegek beállítása a jelenlegi nyelv alapján
+                const lang = localStorage.getItem('preferredLanguage') || 'en';
+                const titleKey = modalId.replace('-', 'ModalT'); // philosophy-modal -> philosophyModalTitle
+                const textKey = modalId.replace('-', 'ModalT') + 'ext'; // philosophy-modal -> philosophyModalText
+
+                const titleElem = modal.querySelector('h2');
+                const textElem = modal.querySelector('p');
+
+                if (translations[lang] && titleElem && textElem) {
+                    titleElem.textContent = translations[lang][titleKey];
+                    textElem.textContent = translations[lang][textKey];
+                }
+
+                overlay.classList.remove('hidden');
+                modal.classList.remove('hidden');
+            });
         }
     });
 }
