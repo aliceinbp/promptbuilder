@@ -3203,3 +3203,14 @@ body.light-theme .spinner {
        akkor töröld ki a komment jelet a következő sor elől: */
     /* text-transform: uppercase; */
 }
+/* ===== GoatCounter Vizuális Számláló Stílusa ===== */
+.goatcounter-display {
+    font-size: 0.9em;
+    color: var(--color-text-secondary); /* Illeszkedik a meglévő szövegszínhez */
+    opacity: 0.8;
+}
+
+.goatcounter-display span {
+    font-weight: bold;
+    color: var(--color-primary-light); /* Kiemeli a számot a lila színnel */
+}
