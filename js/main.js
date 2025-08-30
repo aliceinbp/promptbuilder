@@ -103,6 +103,15 @@ function observeCusdis() {
 window.setLanguage = function(lang) {
     localStorage.setItem('preferredLanguage', lang);
     
+    // Oldalcím frissítése
+    const pageTitleElement = document.querySelector('title[data-key]');
+    if (pageTitleElement) {
+        const titleKey = pageTitleElement.dataset.key;
+        if (typeof translations !== 'undefined' && translations[lang] && translations[lang][titleKey]) {
+            document.title = translations[lang][titleKey];
+        }
+    }
+
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.dataset.key;
         if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
@@ -131,12 +140,10 @@ window.setLanguage = function(lang) {
         langEn.classList.toggle('active', lang === 'en');
     }
     
-    // Frissíti a legördülő menüket nyelvváltáskor
     if (typeof populateSelectOptions === 'function') { 
         populateSelectOptions(lang); 
     }
     
-    // EZ AZ ÚJ SOR: Frissíti a letöltő linket nyelvváltáskor
     if (typeof updateDownloadLink === 'function') { 
         updateDownloadLink(lang); 
     }

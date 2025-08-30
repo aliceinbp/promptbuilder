@@ -1,5 +1,13 @@
 const translations = {
     hu: {
+        // Oldalcímek a böngészőfülhöz
+        pageTitleIndex: "Script Acid by aliceinbp - AI Kreatív Eszköztár",
+        pageTitleGenerator: "Prompt Generátor - Script Acid",
+        pageTitleRpg: "RPG Segédlet - Script Acid",
+        pageTitleChallenge: "Prompt Kihívás - Script Acid",
+        pageTitleHandbook: "AI Kreatív Tudástár - Script Acid",
+        pageTitleGallery: "Galéria - Script Acid",
+        pageTitleBlog: "Blog - Script Acid",
         // ===== RPG SEGÉDLET =====
         navRpgHelper: "RPG Segédlet",
         rpgHelperTitle: "RPG Segédlet",
@@ -132,7 +140,7 @@ const translations = {
         siteSubtitle: "better prompts, better creations",
         backToTopTooltip: "Vissza a tetejére",
         welcomeTitle: "Engedd szabadjára a kreativitásod!",
-        welcomeText: "Üdvözöl a Script Acid! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló AI művészet rajongóknak a lehető legjobb képeket alkotni. Itt minden eszközt megtalálsz, amire szükséged lehet a tökéletes prompt összeállításához.",
+        welcomeText: "Üdvözöl a Script Acid! Ezt az oldalt azért hoztam létre, hogy segítsek neked és a hozzám hasonló alkotóknak a legtöbbet kihozni a mesterséges intelligenciából. Legyen szó lenyűgöző képek alkotásáról vagy egyedi szerepjátékos kalandok kidolgozásáról, itt minden eszközt megtalálsz a tökéletes prompt összeállításához.",
         welcomeButton: "Irány a Generátor!",
         featuredTitle: "Ízelítő a Galériából",
         dailyPromptTitle: "A Nap Promptja",
@@ -425,6 +433,14 @@ const translations = {
         },
     },
     en: {
+        // Page titles for the browser tab
+        pageTitleIndex: "Script Acid by aliceinbp - AI Creative Toolkit",
+        pageTitleGenerator: "Prompt Generator - Script Acid",
+        pageTitleRpg: "RPG Helper - Script Acid",
+        pageTitleChallenge: "Prompt Challenge - Script Acid",
+        pageTitleHandbook: "AI Creative Handbook - Script Acid",
+        pageTitleGallery: "Gallery - Script Acid",
+        pageTitleBlog: "Blog - Script Acid",
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",
@@ -558,7 +574,7 @@ const translations = {
         siteSubtitle: "better prompts, better creations",
         backToTopTooltip: "Back to top",
         welcomeTitle: "Unleash Your Creativity!",
-        welcomeText: "Welcome to the Script Acid! I created this site to help AI art fans like myself to create the best possible images. Here you will find all the tools you need to build the perfect prompt.",
+        welcomeText: "Welcome to Script Acid! I created this site to help fellow creators like you get the most out of artificial intelligence. Whether you're crafting stunning images or developing unique role-playing adventures, you'll find all the tools you need here to build the perfect prompt.",
         welcomeButton: "Go to the Generator!",
         featuredTitle: "Featured from the Gallery",
         dailyPromptTitle: "Prompt of the Day",
