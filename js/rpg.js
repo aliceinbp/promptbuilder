@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeRpgHelper() {
+
+    populateSelectOptions(localStorage.getItem('preferredLanguage') || 'en');
+    
     // === Elemek ===
     const generateAdventureBtn = document.getElementById('generate-adventure-btn');
     const generateCharacterBtn = document.getElementById('generate-character-btn');
@@ -153,5 +156,32 @@ function updateAccordionHeight(contentElement) {
         // Egy kis trükk: először nullázzuk, hogy a böngésző újra tudja számolni a valós magasságot
         accordionContent.style.maxHeight = null;
         accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+    }
+}
+function populateSelectOptions(lang) {
+    const optionsData = translations[lang].rpgSelectOptions;
+    if (!optionsData) return;
+
+    const selectMappings = {
+        'dm-length': optionsData.adventureLength,
+        'dm-names': optionsData.namingConvention,
+        'cc-morality': optionsData.moralAlignment,
+        'cc-age': optionsData.ageGroup,
+        'cc-names': optionsData.namingConvention
+    };
+
+    for (const selectId in selectMappings) {
+        const selectElement = document.getElementById(selectId);
+        const options = selectMappings[selectId];
+
+        if (selectElement && options) {
+            selectElement.innerHTML = ''; // Előző opciók törlése
+            options.forEach(optionData => {
+                const option = document.createElement('option');
+                option.value = optionData.value;
+                option.textContent = optionData.label;
+                selectElement.appendChild(option);
+            });
+        }
     }
 }

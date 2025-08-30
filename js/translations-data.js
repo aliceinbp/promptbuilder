@@ -44,6 +44,29 @@ const translations = {
         ccRacePlaceholder: "pl. ember, tünde, vagy hagyd üresen",
         ccClassPlaceholder: "pl. harcos, tolvaj-bárd keverék...",
         ccBoundariesPlaceholder: "pl. ne legyen a múltjában családi tragédia",
+        rpgSelectOptions: {
+    adventureLength: [
+        { value: 'one-shot', label: 'Egyestés kaland' },
+        { value: 'mini-campaign', label: 'Mini-kampány (2-3 alkalom)' },
+        { value: 'long-campaign', label: 'Hosszú kampány' }
+    ],
+    moralAlignment: [
+        { value: 'selfless and noble', label: 'Nagylelkű és önzetlen' },
+        { value: 'pragmatic but good-hearted', label: 'Pragmatikus, de jó szándékú' },
+        { value: 'neutral, self-interested', label: 'Semleges, önérdekű' },
+        { value: 'selfish and unreliable', label: 'Önző és megbízhatatlan' },
+        { value: 'chaotic and unpredictable', label: 'Kaotikus és kiszámíthatatlan' }
+    ],
+    ageGroup: [
+        { value: 'young and inexperienced', label: 'Fiatal, tapasztalatlan' },
+        { value: 'mature and experienced', label: 'Érett, tapasztalt' },
+        { value: 'weathered veteran', label: 'Sokat látott veterán' }
+    ],
+    namingConvention: [
+        { value: 'world-appropriate, english-style', label: 'Világ-hű / Angolos' },
+        { value: 'hungarian-style', label: 'Magyarosított' }
+    ]
+},
 
         handbookMoreTipsTitle: "További Tippek és Gyakori Kérdések",
         faqWhyEnglishTitle: "Miért fontos angolul írni a promptokat?",
@@ -445,6 +468,29 @@ const translations = {
         ccRacePlaceholder: "e.g., human, elf, or leave blank",
         ccClassPlaceholder: "e.g., warrior, rogue-bard mix...",
         ccBoundariesPlaceholder: "e.g., avoid family tragedy in backstory",
+        rpgSelectOptions: {
+    adventureLength: [
+        { value: 'one-shot', label: 'One-Shot Adventure' },
+        { value: 'mini-campaign', label: 'Mini-Campaign (2-3 sessions)' },
+        { value: 'long-campaign', label: 'Long Campaign' }
+    ],
+    moralAlignment: [
+        { value: 'selfless and noble', label: 'Selfless and Noble' },
+        { value: 'pragmatic but good-hearted', label: 'Pragmatic but Good-Hearted' },
+        { value: 'neutral, self-interested', label: 'Neutral, Self-Interested' },
+        { value: 'selfish and unreliable', label: 'Selfish and Unreliable' },
+        { value: 'chaotic and unpredictable', label: 'Chaotic and Unpredictable' }
+    ],
+    ageGroup: [
+        { value: 'young and inexperienced', label: 'Young, Inexperienced' },
+        { value: 'mature and experienced', label: 'Mature, Experienced' },
+        { value: 'weathered veteran', label: 'Weathered Veteran' }
+    ],
+    namingConvention: [
+        { value: 'world-appropriate, english-style', label: 'World-Appropriate / English' },
+        { value: 'hungarian-style', label: 'Hungarian-Style' }
+    ]
+},
 
         handbookMoreTipsTitle: "More Tips & Common Questions",
         faqWhyEnglishTitle: "Why is it important to write prompts in English?",

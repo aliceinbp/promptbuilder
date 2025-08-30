@@ -130,6 +130,7 @@ window.setLanguage = function(lang) {
         langHu.classList.toggle('active', lang === 'hu');
         langEn.classList.toggle('active', lang === 'en');
     }
+    if (typeof populateSelectOptions === 'function') { populateSelectOptions(lang); }
 };
 
 function initializeLanguageSwitcher() {
