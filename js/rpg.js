@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('rpg-helper-intro')) {
         initializeRpgHelper();
     }
+    initializeRpgInfoModal();
 });
 
 function initializeRpgHelper() {
     // === Elemek ===
+
     const generateAdventureBtn = document.getElementById('generate-adventure-btn');
     const generateCharacterBtn = document.getElementById('generate-character-btn');
     const adventureOutput = document.getElementById('adventure-output');
@@ -273,9 +275,17 @@ function initializeRpgInfoModal() {
 
     if (!icon || !modal || !overlay) return;
 
+    // === EZ AZ ÚJ, BIZTOSÍTÓ KÓD ===
+    // Ez a rész garantálja, hogy a felirat beállítódjon, amint az RPG oldal elindul.
+    const lang = localStorage.getItem('preferredLanguage') || 'en';
+    const tooltipKey = icon.dataset.keyTitle;
+    if (typeof translations !== 'undefined' && translations[lang] && translations[lang][tooltipKey]) {
+        icon.setAttribute('title', translations[lang][tooltipKey]);
+    }
+    // === EDDIG TART AZ ÚJ RÉSZ ===
+
     function openModal() {
         // A szövegek frissítése a jelenlegi nyelv alapján
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
         const titleElem = modal.querySelector('[data-key="rpgInfoModalTitle"]');
         const textElem = modal.querySelector('[data-key="rpgInfoModalText"]');
 
@@ -289,11 +299,4 @@ function initializeRpgInfoModal() {
     }
 
     icon.addEventListener('click', openModal);
-
-    // A bezárás gombot a main.js már kezeli, de a biztonság kedvéért itt is lehetne:
-    // const closeBtn = modal.querySelector('.close-modal-btn');
-    // if(closeBtn) closeBtn.addEventListener('click', () => {
-    //     overlay.classList.add('hidden');
-    //     modal.classList.add('hidden');
-    // });
 }
