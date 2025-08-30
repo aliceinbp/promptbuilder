@@ -3033,3 +3033,10 @@ body.light-theme .spinner {
     background-color: var(--color-surface);
     transform: translateY(-3px);
 }
+.form-hint {
+    font-size: 0.8em;
+    font-style: italic;
+    color: var(--color-text-subtle);
+    margin-top: 5px;
+    margin-bottom: 0;
+}

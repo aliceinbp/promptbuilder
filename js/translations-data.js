@@ -44,6 +44,7 @@ const translations = {
         ccRacePlaceholder: "pl. ember, tünde, vagy hagyd üresen",
         ccClassPlaceholder: "pl. harcos, tolvaj-bárd keverék...",
         ccBoundariesPlaceholder: "pl. ne legyen a múltjában családi tragédia",
+        formKeywordsHint: "Ha nincs ötleted, hagyd üresen és mi adunk 3 kiindulási pontot!",
         rpgSelectOptions: {
     adventureLength: [
         { value: 'one-shot', label: 'Egyestés kaland' },
@@ -468,6 +469,7 @@ const translations = {
         ccRacePlaceholder: "e.g., human, elf, or leave blank",
         ccClassPlaceholder: "e.g., warrior, rogue-bard mix...",
         ccBoundariesPlaceholder: "e.g., avoid family tragedy in backstory",
+        formKeywordsHint: "If you're out of ideas, leave this blank and we'll give you 3 starting points!",
         rpgSelectOptions: {
     adventureLength: [
         { value: 'one-shot', label: 'One-Shot Adventure' },
