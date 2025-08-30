@@ -219,11 +219,14 @@ function initializeStoryModals() {
         const modal = document.getElementById(modalId);
         if (modal) {
             card.addEventListener('click', () => {
-                // Szövegek beállítása a jelenlegi nyelv alapján
                 const lang = localStorage.getItem('preferredLanguage') || 'en';
-                const titleKey = modalId.replace('-', 'ModalT'); // philosophy-modal -> philosophyModalTitle
-                const textKey = modalId.replace('-', 'ModalT') + 'ext'; // philosophy-modal -> philosophyModalText
-
+                
+                // === EZ A RÉSZ LETT JAVÍTVA ===
+                const keyBase = modalId.replace('-modal', ''); // pl. "philosophy-modal" -> "philosophy"
+                const titleKey = `${keyBase}ModalTitle`;     // "philosophy" -> "philosophyModalTitle"
+                const textKey = `${keyBase}ModalText`;       // "philosophy" -> "philosophyModalText"
+                // ===============================
+                
                 const titleElem = modal.querySelector('h2');
                 const textElem = modal.querySelector('p');
 
