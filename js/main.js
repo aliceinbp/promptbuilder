@@ -1,4 +1,4 @@
-// ===== Alkimista Műhely - Fő Szkript (main.js) - JAVÍTOTT =====
+// ===== Script Acid - Fő Szkript (Végleges, Tiszta Verzió) =====
 
 document.addEventListener('DOMContentLoaded', function() {
     // --- INICIALIZÁLÁS ---
@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeBackToTopButton();
     initializeStoryModals();
     initializeUsePromptButtons();
-    initializeGalleryCopyButtons(); // ÚJ FUNKCIÓ HOZZÁADVA
-    observeCusdis();
+    initializeGalleryCopyButtons();
+    initializeCusdis(); // A VENDÉGKÖNYV INNEN INDUL
 
     // --- Oldal-specifikus funkciók meghívása ---
     if (typeof loadArtists === 'function') loadArtists();
@@ -49,6 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // GoatCounter vizuális számláló indítása
+    if (typeof displayGoatCounterHits === 'function') {
+        window.addEventListener('load', displayGoatCounterHits);
+    }
 });
 
 function applyTheme(theme) {
@@ -76,47 +81,85 @@ function initializeThemeToggle() {
     }
 }
 
+// =======================================================
+// ===== CUSDIS VENDÉGKÖNYV KEZELÉSE (VÉGLEGES KÓD) =====
+// =======================================================
+
+function initializeCusdis() {
+    const container = document.getElementById('cusdis_thread');
+    if (!container) return;
+
+    const theme = localStorage.getItem('theme') || 'dark';
+    const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+    container.setAttribute('data-host', "https://cusdis.com");
+    container.setAttribute('data-app-id', "aee00228-8446-4e36-ab21-e793fae2519c");
+    container.setAttribute('data-page-id', "homepage-guestbook");
+    container.setAttribute('data-page-url', "https://aliceinbp.com/");
+    container.setAttribute('data-page-title', "Vendégkönyv");
+    container.setAttribute('data-theme', theme);
+
+    const cusdisScript = document.createElement('script');
+    cusdisScript.defer = true;
+    cusdisScript.src = 'https://cusdis.com/js/cusdis.es.js';
+    document.body.appendChild(cusdisScript);
+
+    if (lang === 'hu') {
+        const langScript = document.createElement('script');
+        langScript.defer = true;
+        langScript.src = 'https://cusdis.com/js/widget/lang/hu.js';
+        document.body.appendChild(langScript);
+    }
+}
+
 function updateCusdisTheme(theme) {
+    const cusdisContainer = document.getElementById('cusdis_thread');
+    if (cusdisContainer) {
+        cusdisContainer.setAttribute('data-theme', theme);
+    }
+
     const cusdisFrame = document.querySelector('#cusdis_thread iframe');
     if (cusdisFrame && cusdisFrame.contentWindow) {
         cusdisFrame.contentWindow.postMessage({
             type: 'setTheme',
-            theme: theme === 'light' ? 'light' : 'dark'
+            theme: theme
         }, 'https://cusdis.com');
     }
 }
 
-function observeCusdis() {
-    const cusdisContainer = document.getElementById('cusdis_thread');
-    if (!cusdisContainer) return;
+// =======================================================
+// ===== GOATCOUNTER KEZELÉSE =====
+// =======================================================
 
-    // Ez a funkció figyeli, mikor jelenik meg a vendégkönyv
-    const observer = new MutationObserver((mutationsList, obs) => {
-        for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                const cusdisFrame = cusdisContainer.querySelector('iframe');
-                // Ha megjelent az iframe...
-                if (cusdisFrame) {
-                    // ...akkor megvárjuk, amíg be is töltődik.
-                    cusdisFrame.addEventListener('load', () => {
-                        const storedTheme = localStorage.getItem('theme') || 'dark';
-                        // És CSAK utána küldjük el a téma-váltó üzenetet.
-                        updateCusdisTheme(storedTheme);
-                    });
-                    obs.disconnect(); // Leállítjuk a figyelést, mert elvégeztük a dolgunk.
-                    return;
-                }
+function displayGoatCounterHits() {
+    let attempts = 0;
+    const interval = setInterval(function() {
+        attempts++;
+        if (window.goatcounter && window.goatcounter.data) {
+            clearInterval(interval);
+            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
+            if (counterSpan) {
+                counterSpan.textContent = window.goatcounter.data.hits;
             }
         }
-    });
-
-    observer.observe(cusdisContainer, { childList: true, subtree: true });
+        if (attempts > 50) {
+            clearInterval(interval);
+            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
+            if (counterSpan && counterSpan.textContent === '...') {
+                counterSpan.textContent = '-';
+            }
+        }
+    }, 100);
 }
+
+
+// =======================================================
+// ===== EGYÉB ÁLTALÁNOS FUNKCIÓK =====
+// =======================================================
 
 window.setLanguage = function(lang) {
     localStorage.setItem('preferredLanguage', lang);
     
-    // Oldalcím frissítése
     const pageTitleElement = document.querySelector('title[data-key]');
     if (pageTitleElement) {
         const titleKey = pageTitleElement.dataset.key;
@@ -171,7 +214,6 @@ function initializeLanguageSwitcher() {
     }
 }
 
-
 function initializeBackToTopButton() {
     const backToTopButton = document.getElementById('back-to-top');
     if (backToTopButton) {
@@ -220,63 +262,52 @@ function initializeGalleryCopyButtons() {
         }
     });
 }
+
 function initializeStoryModals() {
     const storyCards = document.querySelectorAll('.story-card');
     if (storyCards.length === 0) return;
-
     const overlay = document.getElementById('modal-overlay');
-
     storyCards.forEach(card => {
         const modalId = card.dataset.modalTarget;
         const modal = document.getElementById(modalId);
         if (modal) {
             card.addEventListener('click', () => {
                 const lang = localStorage.getItem('preferredLanguage') || 'en';
-                
-                // === EZ A RÉSZ LETT JAVÍTVA ===
-                const keyBase = modalId.replace('-modal', ''); // pl. "philosophy-modal" -> "philosophy"
-                const titleKey = `${keyBase}ModalTitle`;     // "philosophy" -> "philosophyModalTitle"
-                const textKey = `${keyBase}ModalText`;       // "philosophy" -> "philosophyModalText"
-                // ===============================
-                
+                const keyBase = modalId.replace('-modal', '');
+                const titleKey = `${keyBase}ModalTitle`;
+                const textKey = `${keyBase}ModalText`;
                 const titleElem = modal.querySelector('h2');
                 const textElem = modal.querySelector('p');
-
                 if (translations[lang] && titleElem && textElem) {
                     titleElem.textContent = translations[lang][titleKey];
                     textElem.textContent = translations[lang][textKey];
                 }
-
                 overlay.classList.remove('hidden');
                 modal.classList.remove('hidden');
             });
         }
     });
 }
-// ===== KÖZPONTI MODÁLIS ABLAK KEZELŐ RENDSZER =====
+
 function initializeModalSystem() {
     const overlay = document.getElementById('modal-overlay');
     const allModals = document.querySelectorAll('.modal');
     const mainInfoButton = document.getElementById('info-button');
     const mainInfoModal = document.getElementById('info-modal');
 
-    // Ez a függvény zár be minden ablakot
     function closeModalWindows() {
         allModals.forEach(modal => modal.classList.add('hidden'));
         if (overlay) overlay.classList.add('hidden');
     }
 
-    // 1. Ráteszi a bezárás funkciót AZ ÖSSZES 'X' gombra
     document.querySelectorAll('.close-modal-btn').forEach(btn => {
         btn.addEventListener('click', closeModalWindows);
     });
 
-    // 2. A háttérre kattintva is bezáródik minden
     if (overlay) {
         overlay.addEventListener('click', closeModalWindows);
     }
 
-    // 3. A fejlécben lévő fő 'Névjegy' (?) gombot kezeli
     if (mainInfoButton && mainInfoModal) {
         mainInfoButton.addEventListener('click', () => {
             if(overlay) overlay.classList.remove('hidden');
@@ -284,32 +315,3 @@ function initializeModalSystem() {
         });
     }
 }
-// ===== GoatCounter Vizuális Számláló Bombabiztos Javítása =====
-function displayGoatCounterHits() {
-    // Várakozó ciklus, ami megkeresi az adatot
-    let attempts = 0;
-    const interval = setInterval(function() {
-        attempts++;
-        // Ha az adat megérkezett...
-        if (window.goatcounter && window.goatcounter.data) {
-            clearInterval(interval); // Leállítjuk a ciklust
-            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
-            if (counterSpan) {
-                // Beírjuk a helyes számot a "..." vagy "-" helyére
-                counterSpan.textContent = window.goatcounter.data.hits; 
-            }
-        }
-        // Ha 5 másodperc után sincs adat, feladjuk
-        if (attempts > 50) {
-            clearInterval(interval);
-            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
-            if (counterSpan && counterSpan.textContent === '...') {
-                counterSpan.textContent = '-'; // Hibajelzés, ha még mindig "..." van ott
-            }
-        }
-    }, 100);
-}
-
-// A scriptet csak akkor futtatjuk, ha az egész oldal, minden külső erőforrással együtt betöltődött.
-// Ez a legbiztosabb módszer.
-window.addEventListener('load', displayGoatCounterHits);
