@@ -17,6 +17,7 @@
     --color-shadow: rgba(164, 109, 229, 0.3);
     --color-text-inverted: #121212;
     --color-white-pure: #ffffff;
+    --cusdis-border-color: #a46de5; /* Sötét mód: Lila keret */
 }
 
 body.light-theme {
@@ -38,4 +39,5 @@ body.light-theme {
     --color-shadow: rgba(0, 123, 255, 0.2);
     --color-text-inverted: #ffffff;
     --color-white-pure: #ffffff;
+    --cusdis-border-color: #007bff; /* Világos mód: Kék keret */
 }

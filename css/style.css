@@ -559,23 +559,22 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     background: var(--color-primary-light);
 }
 
-/* ===== CUSDIS VÉGSŐ DIZÁJN ===== */
 #cusdis_thread {
-    border-radius: 10px;
-    padding: 3px; /* Ez adja a dupla keret vastagságát */
-    background: linear-gradient(45deg, #f060fb, #fc67fc); /* A neonos színátmenet */
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.6); /* A lila ragyogás */
+    border: 3px solid var(--cusdis-border-color); /* ÚJ: Ezt a változót fogjuk használni */
+    border-radius: 12px; /* A külső sarkok lekerekítése */
+    box-shadow: 0 0 15px var(--color-shadow);
     transition: all 0.3s ease;
     margin-top: 2rem;
+    padding: 0; /* NINCS SZÜKSÉG belső padding-re */
+    background: transparent; /* A konténer legyen átlátszó! */
+    overflow: hidden; /* Ez biztosítja, hogy a belső iframe sarkai is le legyenek kerekítve */
 }
 
 #cusdis_thread iframe {
-    min-height: 500px;
-    border-radius: 8px; /* A belső rész sarkainak lekerekítése */
-    border: none; /* Eltüntetjük az iframe saját keretét */
-    display: block; /* Fontos a helyes igazításhoz */
-    width: 100%;
+    border-radius: 8px; /* A belső iframe sarkainak lekerekítése */
+    display: block; /* Eltünteti az apró alsó rést az iframe alatt */
 }
+
 /* ===== NAPI IDÉZET ABLAK STÍLUS ===== */
 #daily-quote-container {
     position: fixed;
@@ -3203,14 +3202,4 @@ body.light-theme .spinner {
        akkor töröld ki a komment jelet a következő sor elől: */
     /* text-transform: uppercase; */
 }
-/* ===== GoatCounter Vizuális Számláló Stílusa ===== */
-.goatcounter-display {
-    font-size: 0.9em;
-    color: var(--color-text-secondary); /* Illeszkedik a meglévő szövegszínhez */
-    opacity: 0.8;
-}
 
-.goatcounter-display span {
-    font-weight: bold;
-    color: var(--color-primary-light); /* Kiemeli a számot a lila színnel */
-}
