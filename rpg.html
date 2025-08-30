@@ -75,9 +75,12 @@
 
         <main data-pagefind-body>
     <section id="rpg-helper-intro" style="text-align: center;">
-        <h2><i class="fa-solid fa-dungeon"></i> <span data-key="rpgHelperTitle">RPG Segédlet</span></h2>
-        <p class="artist-subtitle" data-key="rpgHelperSubtitle" style="margin-bottom: 40px;">AI-alapú inspiráció mesélőknek és játékosoknak.</p>
-    </section>
+    <h2><i class="fa-solid fa-dungeon"></i> <span data-key="rpgHelperTitle">RPG Segédlet</span></h2>
+    <p class="artist-subtitle" data-key="rpgHelperSubtitle" style="margin-bottom: 40px; display: inline-flex; align-items: center; gap: 10px;">
+        AI-alapú inspiráció mesélőknek és játékosoknak.
+        <i id="rpg-info-icon" class="fa-solid fa-circle-info explainer-icon" data-key-title="rpgInfoTooltip"></i>
+    </p>
+</section>
 
     <div class="accordion-item" style="margin-bottom: 25px;">
         <button class="accordion-header">
@@ -277,5 +280,10 @@
     <script src="js/interactive-pages.js"></script>
     <script src="js/rpg.js"></script> <script src="js/main.js"></script>
 
+    <div id="rpg-info-modal" class="modal hidden">
+    <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+    <h2 data-key="rpgInfoModalTitle"></h2>
+    <p data-key="rpgInfoModalText"></p>
+</div>
     </body>
 </html>

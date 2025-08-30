@@ -266,3 +266,34 @@ function updateDownloadLink(lang) {
         link.href = (lang === 'hu') ? '/guides/prompting-for-pros-hu.pdf' : '/guides/prompting-for-pros-en.pdf';
     }
 }
+function initializeRpgInfoModal() {
+    const icon = document.getElementById('rpg-info-icon');
+    const modal = document.getElementById('rpg-info-modal');
+    const overlay = document.getElementById('modal-overlay');
+
+    if (!icon || !modal || !overlay) return;
+
+    function openModal() {
+        // A szövegek frissítése a jelenlegi nyelv alapján
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const titleElem = modal.querySelector('[data-key="rpgInfoModalTitle"]');
+        const textElem = modal.querySelector('[data-key="rpgInfoModalText"]');
+
+        if (translations[lang]) {
+            titleElem.textContent = translations[lang].rpgInfoModalTitle;
+            textElem.textContent = translations[lang].rpgInfoModalText;
+        }
+
+        overlay.classList.remove('hidden');
+        modal.classList.remove('hidden');
+    }
+
+    icon.addEventListener('click', openModal);
+
+    // A bezárás gombot a main.js már kezeli, de a biztonság kedvéért itt is lehetne:
+    // const closeBtn = modal.querySelector('.close-modal-btn');
+    // if(closeBtn) closeBtn.addEventListener('click', () => {
+    //     overlay.classList.add('hidden');
+    //     modal.classList.add('hidden');
+    // });
+}

@@ -8,6 +8,9 @@ const translations = {
         pageTitleHandbook: "AI Kreatív Tudástár - Script Acid",
         pageTitleGallery: "Galéria - Script Acid",
         pageTitleBlog: "Blog - Script Acid",
+        rpgInfoTooltip: "Tipp a jobb eredményekért!",
+        rpgInfoModalTitle: "Tipp a Jobb Eredményekért",
+        rpgInfoModalText: "A mesterséges intelligencia modellek jelenleg angol nyelven a legkreatívabbak. A legjobb, legötletesebb eredmények érdekében javasoljuk az oldal angol nyelvű változatának használatát a 'HUN | ENG' gombbal.",
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -450,6 +453,9 @@ const translations = {
         pageTitleHandbook: "AI Creative Handbook - Script Acid",
         pageTitleGallery: "Gallery - Script Acid",
         pageTitleBlog: "Blog - Script Acid",
+        rpgInfoTooltip: "Tip for better results!",
+        rpgInfoModalTitle: "Tip for Better Results",
+        rpgInfoModalText: "Artificial intelligence models are currently most creative in English. For the best and most imaginative results, we recommend using the English version of the site by clicking the 'HUN | ENG' button.",
         // RPG Mini-Modules
         nameGenTitle: "Name Generator",
         nameGenDesc: "Describe a style, and the AI will create unique names for your world!",
