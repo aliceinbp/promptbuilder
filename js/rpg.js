@@ -16,11 +16,9 @@ function initializeRpgHelper() {
     const ccSuggestionsOutput = document.getElementById('cc-suggestions-output');
     const dmKeywordsInput = document.getElementById('dm-keywords');
     const ccKeywordsInput = document.getElementById('cc-keywords');
-    // Névgenerátor Elemek
     const generateNamesBtn = document.getElementById('generate-names-btn');
     const nameStyleInput = document.getElementById('name-gen-style');
     const namesOutput = document.getElementById('names-output');
-    // Fordulat Generátor Elemek
     const generateTwistBtn = document.getElementById('generate-twist-btn');
     const twistContextInput = document.getElementById('twist-gen-context');
     const twistOutput = document.getElementById('twist-output');
@@ -28,7 +26,7 @@ function initializeRpgHelper() {
     // === Eseménykezelők ===
     generateAdventureBtn.addEventListener('click', () => {
         if (dmKeywordsInput.value.trim() === '') {
-            generateSuggestions('/.netlify/functions/rpg-dm-suggestions', getDmMasterFormData(), dmSuggestionsOutput, dmKeywordsInput, adventureOutput);
+            generateSuggestions('/.netlify/functions/rpg-dm-suggestions', getDmMasterFormData(), dmSuggestionsOutput);
         } else {
             generateContent('/.netlify/functions/rpg-dm-master', getDmMasterFormData(), adventureOutput);
         }
@@ -36,7 +34,7 @@ function initializeRpgHelper() {
 
     generateCharacterBtn.addEventListener('click', () => {
         if (ccKeywordsInput.value.trim() === '') {
-            generateSuggestions('/.netlify/functions/rpg-character-suggestions', getCharacterCreatorFormData(), ccSuggestionsOutput, ccKeywordsInput, characterOutput);
+            generateSuggestions('/.netlify/functions/rpg-character-suggestions', getCharacterCreatorFormData(), ccSuggestionsOutput);
         } else {
             generateContent('/.netlify/functions/rpg-character-creator', getCharacterCreatorFormData(), characterOutput);
         }
@@ -55,9 +53,7 @@ function initializeRpgHelper() {
             const data = await response.json();
             if (data.names && data.names.length > 0) {
                 namesOutput.innerHTML = `<ul>${data.names.map(name => `<li>${name}</li>`).join('')}</ul>`;
-            } else {
-                throw new Error('No names received.');
-            }
+            } else { throw new Error('No names received.'); }
         } catch (error) {
             console.error("Name generation error:", error);
             namesOutput.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
@@ -66,39 +62,67 @@ function initializeRpgHelper() {
 
     generateTwistBtn.addEventListener('click', async () => {
         const context = twistContextInput.value.trim();
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        twistOutput.innerHTML = `<div class="spinner" style="margin: 0 auto;"></div>`;
-        try {
-            const response = await fetch('/.netlify/functions/rpg-twist-generator', {
-                method: 'POST',
-                body: JSON.stringify({ context: context, lang: lang })
-            });
-            if (!response.ok) throw new Error('Network error');
-            const data = await response.json();
-            if (data.twists && data.twists.length > 0) {
-                twistOutput.innerHTML = `<ul>${data.twists.map(twist => `<li>${twist}</li>`).join('')}</ul>`;
-            } else {
-                throw new Error('No twists received.');
-            }
-        } catch (error) {
-            console.error("Twist generation error:", error);
-            twistOutput.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
-        }
+        generateContent('/.netlify/functions/rpg-twist-generator', { context: context }, twistOutput);
     });
     
-    // Csúszkák értékének frissítése
     document.querySelectorAll('.slider-group input[type="range"]').forEach(slider => {
         const valueSpan = slider.nextElementSibling;
         valueSpan.textContent = slider.value;
-        slider.addEventListener('input', () => {
-            valueSpan.textContent = slider.value;
-        });
+        slider.addEventListener('input', () => { valueSpan.textContent = slider.value; });
     });
     
     populateSelectOptions(localStorage.getItem('preferredLanguage') || 'en');
 }
 
+// === Dinamikus gombok eseménykezelői (a teljes dokumentumot figyelik) ===
+
+document.addEventListener('click', function(e) {
+    // Ötlet-gombok kezelése
+    if (e.target.classList.contains('suggestion-btn')) {
+        const parentId = e.target.parentElement.id;
+        const dmKeywordsInput = document.getElementById('dm-keywords');
+        const ccKeywordsInput = document.getElementById('cc-keywords');
+        
+        if (parentId === 'dm-suggestions-output') {
+            dmKeywordsInput.value = e.target.textContent;
+            document.getElementById('dm-suggestions-output').innerHTML = '';
+            document.getElementById('generate-adventure-btn').click(); // Automatikus generálás
+        } else if (parentId === 'cc-suggestions-output') {
+            ccKeywordsInput.value = e.target.textContent;
+            document.getElementById('cc-suggestions-output').innerHTML = '';
+            document.getElementById('generate-character-btn').click(); // Automatikus generálás
+        }
+    }
+
+    // Másolás gombok kezelése
+    if (e.target.closest('.copy-output-btn')) {
+        const button = e.target.closest('.copy-output-btn');
+        const outputContainer = button.closest('.mini-module-output, #adventure-output, #character-output');
+        if (outputContainer) {
+            const contentToCopy = outputContainer.cloneNode(true);
+            const toolbar = contentToCopy.querySelector('.output-toolbar');
+            if (toolbar) toolbar.remove();
+            navigator.clipboard.writeText(contentToCopy.innerText.trim()).then(() => {
+                const lang = localStorage.getItem('preferredLanguage') || 'en';
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `<i class="fa-solid fa-check"></i> <span>${translations[lang].outputCopiedBtn}</span>`;
+                setTimeout(() => { button.innerHTML = originalHTML; }, 2000);
+            });
+        }
+    }
+});
+
 // === Segédfüggvények ===
+
+function getDmMasterFormData() { /* ... kód változatlan ... */ }
+function getCharacterCreatorFormData() { /* ... kód változatlan ... */ }
+async function generateSuggestions(endpoint, formData, suggestionsOutputElement) { /* ... kód változatlan ... */ }
+async function generateContent(endpoint, formData, outputElement) { /* ... kód változatlan ... */ }
+function updateAccordionHeight(contentElement) { /* ... kód változatlan ... */ }
+function populateSelectOptions(lang) { /* ... kód változatlan ... */ }
+function updateDownloadLink(lang) { /* ... kód változatlan ... */ }
+
+// IDE BEMÁSOLJUK A VÁLTOZATLAN FÜGGVÉNYEKET A BIZTONSÁG KEDVÉÉRT
 
 function getDmMasterFormData() {
     const focusCombat = document.getElementById('dm-focus-combat').value;
@@ -131,12 +155,12 @@ function getCharacterCreatorFormData() {
     };
 }
 
-async function generateSuggestions(endpoint, formData, suggestionsOutputElement, keywordsInputElement, mainOutputElement) {
+async function generateSuggestions(endpoint, formData, suggestionsOutputElement) {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
-    mainOutputElement.innerHTML = '';
+    const mainOutputElement = suggestionsOutputElement.id === 'dm-suggestions-output' ? document.getElementById('adventure-output') : document.getElementById('character-output');
+    if(mainOutputElement) mainOutputElement.innerHTML = '';
     suggestionsOutputElement.innerHTML = `<div style="text-align: center; padding: 20px;"><div class="spinner" style="margin: 0 auto 15px auto;"></div><p>${translations[lang].outputGenerating}</p></div>`;
     updateAccordionHeight(suggestionsOutputElement);
-
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -144,7 +168,6 @@ async function generateSuggestions(endpoint, formData, suggestionsOutputElement,
         });
         if (!response.ok) throw new Error('Network error');
         const data = await response.json();
-        
         suggestionsOutputElement.innerHTML = '';
         if (data.suggestions && data.suggestions.length > 0) {
             data.suggestions.forEach(suggestion => {
@@ -154,9 +177,7 @@ async function generateSuggestions(endpoint, formData, suggestionsOutputElement,
                 suggestionsOutputElement.appendChild(button);
             });
             setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50); 
-        } else {
-            throw new Error('No suggestions received.');
-        }
+        } else { throw new Error('No suggestions received.'); }
     } catch (error) {
         console.error("Suggestion error:", error);
         suggestionsOutputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
@@ -168,8 +189,8 @@ async function generateContent(endpoint, formData, outputElement) {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
     outputElement.innerHTML = `<div style="text-align: center; padding: 20px;"><div class="spinner" style="margin: 0 auto 15px auto;"></div><p>${translations[lang].outputGenerating}</p></div>`;
     updateAccordionHeight(outputElement);
-    const button = outputElement.previousElementSibling;
-    button.disabled = true;
+    const button = outputElement.closest('.accordion-content, .rpg-mini-module').querySelector('button[id^="generate-"]');
+    if(button) button.disabled = true;
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -180,49 +201,38 @@ async function generateContent(endpoint, formData, outputElement) {
             throw new Error(errorData.details || `Network error: ${response.statusText}`);
         }
         const data = await response.json();
-        const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span data-key="outputCopyBtn">${translations[lang].outputCopyBtn}</span></button></div>`;
-        if (typeof showdown !== 'undefined') {
-            const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
-            outputElement.innerHTML = toolbarHTML + converter.makeHtml(data.result);
-        } else {
-            outputElement.innerHTML = toolbarHTML;
-            outputElement.insertAdjacentText('beforeend', data.result);
+        const resultKey = Object.keys(data)[0]; // twists, names, result, etc.
+        const resultValue = data[resultKey];
+
+        const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[lang].outputCopyBtn}</span></button></div>`;
+        
+        if (Array.isArray(resultValue)) { // Név- és fordulatgenerátor
+             outputElement.innerHTML = `<ul>${resultValue.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        } else { // Kaland és karakter
+            if (typeof showdown !== 'undefined') {
+                const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
+                outputElement.innerHTML = toolbarHTML + converter.makeHtml(resultValue);
+            } else {
+                outputElement.innerHTML = toolbarHTML + `<p>${resultValue}</p>`;
+            }
         }
     } catch (error) {
         console.error("Generálási hiba:", error);
         outputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}<br><small>${error.message}</small></p>`;
     } finally {
-        button.disabled = false;
+        if(button) button.disabled = false;
         setTimeout(() => updateAccordionHeight(outputElement), 100);
     }
 }
 
-document.addEventListener('click', function(e) {
-    if (e.target.closest('.copy-output-btn')) {
-        const button = e.target.closest('.copy-output-btn');
-        const outputContainer = button.closest('#adventure-output, #character-output, #names-output, #twist-output'); // Bővítve az újakkal
-        if (outputContainer) {
-            const contentToCopy = outputContainer.cloneNode(true);
-            const toolbar = contentToCopy.querySelector('.output-toolbar');
-            if (toolbar) toolbar.remove();
-            navigator.clipboard.writeText(contentToCopy.innerText).then(() => {
-                const lang = localStorage.getItem('preferredLanguage') || 'en';
-                const originalHTML = button.innerHTML;
-                button.innerHTML = `<i class="fa-solid fa-check"></i> <span data-key="outputCopiedBtn">${translations[lang].outputCopiedBtn}</span>`;
-                setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                }, 2000);
-            });
-        }
-    }
-});
-
 function updateAccordionHeight(contentElement) {
     const accordionContent = contentElement.closest('.accordion-content');
-    const accordionItem = contentElement.closest('.accordion-item');
-    if (accordionContent && accordionItem && accordionItem.classList.contains('active')) {
-        accordionContent.style.maxHeight = null;
-        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+    if (accordionContent) {
+        const accordionItem = accordionContent.parentElement;
+        if (accordionItem && accordionItem.classList.contains('active')) {
+            accordionContent.style.maxHeight = null;
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+        }
     }
 }
 
@@ -230,10 +240,8 @@ function populateSelectOptions(lang) {
     const optionsData = translations[lang].rpgSelectOptions;
     if (!optionsData) return;
     const selectMappings = {
-        'dm-length': optionsData.adventureLength,
-        'dm-names': optionsData.namingConvention,
-        'cc-morality': optionsData.moralAlignment,
-        'cc-age': optionsData.ageGroup,
+        'dm-length': optionsData.adventureLength, 'dm-names': optionsData.namingConvention,
+        'cc-morality': optionsData.moralAlignment, 'cc-age': optionsData.ageGroup,
         'cc-names': optionsData.namingConvention
     };
     for (const selectId in selectMappings) {
@@ -254,10 +262,6 @@ function populateSelectOptions(lang) {
 function updateDownloadLink(lang) {
     const link = document.getElementById('download-guide-link');
     if (link) {
-        if (lang === 'hu') {
-            link.href = '/guides/prompting-for-pros-hu.pdf';
-        } else {
-            link.href = '/guides/prompting-for-pros-en.pdf';
-        }
+        link.href = (lang === 'hu') ? '/guides/prompting-for-pros-hu.pdf' : '/guides/prompting-for-pros-en.pdf';
     }
 }

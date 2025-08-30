@@ -11,37 +11,31 @@ exports.handler = async function(event) {
     const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
-    let contextForAI = userInput.context || 'The heroes are camping in a dark forest.';
+    let contextForAI = userInput.context || 'The heroes are in a tight spot.';
 
-    // Ha a nyelv magyar, lefordítjuk a kontextust angolra az AI számára
     if (lang === 'hu' && userInput.context) {
         const translatedContext = await translator.translateText(userInput.context, null, 'EN-US');
         contextForAI = translatedContext.text;
     }
 
-    // Az AI-nak mindig angolul adjuk a parancsot, mert úgy a legkreatívabb
-    const promptText = `Act as an expert storyteller and screenwriter. The user is stuck in their story. Read the provided situation, and generate 3 logical but surprising and creative plot twists to advance the plot. Your response MUST be ONLY a JSON array of 3 strings. The user's situation is: '${contextForAI}'`;
-      
+    // Szuper-direkt, gyors prompt
+    const promptText = `Provide 2 brief, creative plot twists for this RPG situation: "${contextForAI}". Response MUST be a JSON array of 2 strings.`;
     const masterPrompt = `[INST]${promptText}[/INST]`;
 
     const response = await hf.chatCompletion({
       model: 'mistralai/Mistral-7B-Instruct-v0.3',
       messages: [{ role: "user", content: masterPrompt }],
-      parameters: { max_new_tokens: 300, temperature: 0.9, repetition_penalty: 1.2 }
+      parameters: { max_new_tokens: 200, temperature: 0.9 }
     });
     
     const rawResult = response.choices[0].message.content;
     const jsonMatch = rawResult.match(/\[\s*".*?"\s*(,\s*".*?"\s*)*\]/s);
-    if (!jsonMatch) {
-        throw new Error("AI did not return a valid JSON array.");
-    }
+    if (!jsonMatch) { throw new Error("AI did not return a valid JSON array."); }
     
     let twistsResult = JSON.parse(jsonMatch[0]);
 
-    // Ha a nyelv magyar, a kapott angol ötleteket visszafordítjuk magyarra
     if (lang === 'hu') {
         const translatedTwists = await translator.translateText(twistsResult, 'EN', 'HU');
-        // A deepl-node translateText metódusa tömböt vár és objektumok tömbjét adja vissza
         twistsResult = translatedTwists.map(t => t.text);
     }
 
