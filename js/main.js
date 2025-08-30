@@ -79,9 +79,21 @@ function initializeThemeToggle() {
 function updateCusdisTheme(theme) {
     const cusdisFrame = document.querySelector('#cusdis_thread iframe');
     if (cusdisFrame) {
-        setTimeout(() => {
-            cusdisFrame.contentWindow.postMessage({ type: 'setTheme', theme: theme === 'light' ? 'light' : 'dark' }, 'https://cusdis.com');
-        }, 200);
+        const sendMessage = () => {
+            cusdisFrame.contentWindow.postMessage({
+                type: 'setTheme',
+                theme: theme === 'light' ? 'light' : 'dark'
+            }, 'https://cusdis.com');
+        };
+
+        // Ellenőrizzük, hogy az iframe már betöltődött-e.
+        // A 'complete' állapot jelzi, hogy minden, még az iframe is betöltődött.
+        if (document.readyState === 'complete') {
+            sendMessage(); // Ha igen, azonnal küldjük.
+        } else {
+            // Ha nem, akkor megvárjuk, amíg az iframe jelzi, hogy betöltődött.
+            cusdisFrame.addEventListener('load', sendMessage, { once: true });
+        }
     }
 }
 
