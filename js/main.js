@@ -76,7 +76,7 @@ function initializeThemeToggle() {
         themeToggleButton.addEventListener('click', () => {
             let newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
             localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
+            window.location.reload();
         });
     }
 }
