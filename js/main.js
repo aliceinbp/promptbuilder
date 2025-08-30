@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- ÁLTALÁNOS ESEMÉNYKEZELŐK ---
     initializeThemeToggle();
     initializeLanguageSwitcher();
-    initializeInfoModal();
+    initializeModalSystem();
     initializeBackToTopButton();
     initializeStoryModals();
     initializeUsePromptButtons();
@@ -159,30 +159,6 @@ function initializeLanguageSwitcher() {
     }
 }
 
-function initializeInfoModal() {
-    const overlay = document.getElementById('modal-overlay');
-    const allModals = document.querySelectorAll('.modal');
-    const infoModal = document.getElementById('info-modal');
-    const infoButton = document.getElementById('info-button');
-
-    function closeModalWindows() {
-        allModals.forEach(modal => modal.classList.add('hidden'));
-        if (overlay) overlay.classList.add('hidden');
-    }
-
-    if (infoButton && infoModal && overlay) {
-        const closeInfoModalBtn = infoModal.querySelector('.close-modal-btn');
-        infoButton.addEventListener('click', () => {
-            overlay.classList.remove('hidden');
-            infoModal.classList.remove('hidden');
-        });
-        if(closeInfoModalBtn) closeInfoModalBtn.addEventListener('click', closeModalWindows);
-    }
-    
-    if (overlay) {
-        overlay.addEventListener('click', closeModalWindows);
-    }
-}
 
 function initializeBackToTopButton() {
     const backToTopButton = document.getElementById('back-to-top');
@@ -261,4 +237,35 @@ function initializeStoryModals() {
             });
         }
     });
+}
+// ===== KÖZPONTI MODÁLIS ABLAK KEZELŐ RENDSZER =====
+function initializeModalSystem() {
+    const overlay = document.getElementById('modal-overlay');
+    const allModals = document.querySelectorAll('.modal');
+    const mainInfoButton = document.getElementById('info-button');
+    const mainInfoModal = document.getElementById('info-modal');
+
+    // Ez a függvény zár be minden ablakot
+    function closeModalWindows() {
+        allModals.forEach(modal => modal.classList.add('hidden'));
+        if (overlay) overlay.classList.add('hidden');
+    }
+
+    // 1. Ráteszi a bezárás funkciót AZ ÖSSZES 'X' gombra
+    document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', closeModalWindows);
+    });
+
+    // 2. A háttérre kattintva is bezáródik minden
+    if (overlay) {
+        overlay.addEventListener('click', closeModalWindows);
+    }
+
+    // 3. A fejlécben lévő fő 'Névjegy' (?) gombot kezeli
+    if (mainInfoButton && mainInfoModal) {
+        mainInfoButton.addEventListener('click', () => {
+            if(overlay) overlay.classList.remove('hidden');
+            mainInfoModal.classList.remove('hidden');
+        });
+    }
 }
