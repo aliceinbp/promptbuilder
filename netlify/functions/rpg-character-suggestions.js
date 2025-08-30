@@ -7,24 +7,31 @@ exports.handler = async function(event) {
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
+    // Egyértelműsített parancs az AI-nak mindkét nyelven
     const promptText = lang === 'hu'
-      ? `Generálj 3 különböző, egy mondatos szerepjáték karakter koncepciót. A világ: ${userInput.world || 'fantasy'}. A kaszt: ${userInput.class || 'kalandor'}. A válasz CSAK egy JSON tömb legyen 3 stringgel, pl: ["koncepció1", "koncepció2", "koncepció3"]. Semmi más szöveg.`
-      : `Generate 3 distinct, one-sentence RPG character concepts. The world is: ${userInput.world || 'fantasy'}. The class is: ${userInput.class || 'adventurer'}. Your response MUST be ONLY a JSON array of 3 strings, like: ["concept1", "concept2", "concept3"]. No other text.`;
+      ? `Kérlek generálj 3 különböző, egy mondatos MAGYAR NYELVŰ szerepjáték karakter koncepciót. A világ: ${userInput.world || 'fantasy'}. A kaszt: ${userInput.class || 'kalandor'}. A válaszod CSAK egy JSON tömb legyen 3 stringgel, pl: ["koncepció1", "koncepció2", "koncepció3"]. Semmi más szöveget ne írj.`
+      : `Generate 3 distinct, one-sentence RPG character concepts in ENGLISH. The world is: ${userInput.world || 'fantasy'}. The class is: ${userInput.class || 'adventurer'}. Your response MUST be ONLY a JSON array of 3 strings, like: ["concept1", "concept2", "concept3"]. No other text.`;
 
     const masterPrompt = `[INST]${promptText}[/INST]`;
 
     const response = await hf.chatCompletion({
       model: 'mistralai/Mistral-7B-Instruct-v0.3',
       messages: [{ role: "user", content: masterPrompt }],
-      parameters: { max_new_tokens: 150, temperature: 0.9 }
+      parameters: { max_new_tokens: 150, temperature: 0.95 }
     });
 
     const rawResult = response.choices[0].message.content;
-    const jsonResult = JSON.parse(rawResult.match(/\[.*\]/s)[0]);
+
+    // Biztonságosabb JSON kinyerése a válaszból
+    const jsonMatch = rawResult.match(/\[\s*".*"\s*\]/s);
+    if (!jsonMatch) {
+        throw new Error("Az AI nem adott vissza érvényes JSON formátumú választ.");
+    }
+    const jsonResult = JSON.parse(jsonMatch[0]);
 
     return { statusCode: 200, body: JSON.stringify({ suggestions: jsonResult }) };
   } catch (error) {
     console.error("Character Suggestion hiba:", error);
-    return { statusCode: 500, body: JSON.stringify({ error: "Hiba a koncepciók generálása során." }) };
+    return { statusCode: 500, body: JSON.stringify({ error: "Hiba a koncepciók generálása során.", details: error.message }) };
   }
 };
