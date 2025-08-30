@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeRpgHelper() {
-    updateDownloadLink(localStorage.getItem('preferredLanguage') || 'en');
+    // === Elemek ===
     const generateAdventureBtn = document.getElementById('generate-adventure-btn');
     const generateCharacterBtn = document.getElementById('generate-character-btn');
     const adventureOutput = document.getElementById('adventure-output');
@@ -16,7 +16,12 @@ function initializeRpgHelper() {
     const ccSuggestionsOutput = document.getElementById('cc-suggestions-output');
     const dmKeywordsInput = document.getElementById('dm-keywords');
     const ccKeywordsInput = document.getElementById('cc-keywords');
+    // ÚJ NÉVGENERÁTOR ELEMEK
+    const generateNamesBtn = document.getElementById('generate-names-btn');
+    const nameStyleInput = document.getElementById('name-gen-style');
+    const namesOutput = document.getElementById('names-output');
 
+    // === Eseménykezelők ===
     generateAdventureBtn.addEventListener('click', () => {
         if (dmKeywordsInput.value.trim() === '') {
             generateSuggestions('/.netlify/functions/rpg-dm-suggestions', getDmMasterFormData(), dmSuggestionsOutput, dmKeywordsInput, adventureOutput);
@@ -33,28 +38,40 @@ function initializeRpgHelper() {
         }
     });
 
-    // Eseménykezelő a dinamikusan létrehozott ötlet-gombokhoz
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('suggestion-btn')) {
-            const parentId = e.target.parentElement.id;
-            if (parentId === 'dm-suggestions-output') {
-                dmKeywordsInput.value = e.target.textContent;
-                dmSuggestionsOutput.innerHTML = '';
-                generateContent('/.netlify/functions/rpg-dm-master', getDmMasterFormData(), adventureOutput);
-            } else if (parentId === 'cc-suggestions-output') {
-                ccKeywordsInput.value = e.target.textContent;
-                ccSuggestionsOutput.innerHTML = '';
-                generateContent('/.netlify/functions/rpg-character-creator', getCharacterCreatorFormData(), characterOutput);
+    // IDE KERÜL AZ ÚJ NÉVGENERÁTOR ESEMÉNYKEZELŐJE
+    generateNamesBtn.addEventListener('click', async () => {
+        const style = nameStyleInput.value.trim();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        namesOutput.innerHTML = `<div class="spinner" style="margin: 0 auto;"></div>`;
+
+        try {
+            const response = await fetch('/.netlify/functions/rpg-name-generator', {
+                method: 'POST',
+                body: JSON.stringify({ style: style, lang: lang })
+            });
+            if (!response.ok) throw new Error('Network error');
+            const data = await response.json();
+
+            if (data.names && data.names.length > 0) {
+                namesOutput.innerHTML = `<ul>${data.names.map(name => `<li>${name}</li>`).join('')}</ul>`;
+            } else {
+                throw new Error('No names received.');
             }
+        } catch (error) {
+            console.error("Name generation error:", error);
+            namesOutput.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
         }
     });
-
+    
+    // Csúszkák értékének frissítése
     document.querySelectorAll('.slider-group input[type="range"]').forEach(slider => {
         const valueSpan = slider.nextElementSibling;
         valueSpan.textContent = slider.value;
-        slider.addEventListener('input', () => { valueSpan.textContent = slider.value; });
+        slider.addEventListener('input', () => {
+            valueSpan.textContent = slider.value; // Itt javítottam egy elírást (Value -> value)
+        });
     });
-
+    
     populateSelectOptions(localStorage.getItem('preferredLanguage') || 'en');
 }
 

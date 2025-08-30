@@ -8,6 +8,11 @@ const translations = {
         pageTitleHandbook: "AI Kreatív Tudástár - Script Acid",
         pageTitleGallery: "Galéria - Script Acid",
         pageTitleBlog: "Blog - Script Acid",
+        // RPG Mini-Modulok
+        nameGenTitle: "Névgenerátor",
+        nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
+        nameGenPlaceholder: "pl. zord törp nevek, dallamos tünde, magyaros fantasy...",
+        generateBtn: "Generálás",
         // ===== RPG SEGÉDLET =====
         navRpgHelper: "RPG Segédlet",
         rpgHelperTitle: "RPG Segédlet",
@@ -441,6 +446,11 @@ const translations = {
         pageTitleHandbook: "AI Creative Handbook - Script Acid",
         pageTitleGallery: "Gallery - Script Acid",
         pageTitleBlog: "Blog - Script Acid",
+        // RPG Mini-Modules
+        nameGenTitle: "Name Generator",
+        nameGenDesc: "Describe a style, and the AI will create unique names for your world!",
+        nameGenPlaceholder: "e.g., harsh dwarf names, melodic elven, hungarian fantasy...",
+        generateBtn: "Generate",
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",
