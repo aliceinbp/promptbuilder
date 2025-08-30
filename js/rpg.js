@@ -73,10 +73,14 @@ function getCharacterCreatorFormData() {
 
 async function generateContent(endpoint, formData, outputElement) {
     const lang = localStorage.getItem('preferredLanguage') || 'en';
-    
-    // Betöltés jelzése
-    outputElement.innerHTML = `<div class="spinner-container"><div class="spinner"></div><p>${translations[lang].outputGenerating}</p></div>`;
-    // A gombot is letilthatjuk, amíg fut a generálás
+
+    // Stílusos betöltés jelzése
+    outputElement.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <div class="spinner" style="margin: 0 auto 15px auto;"></div>
+            <p>${translations[lang].outputGenerating}</p>
+        </div>`;
+
     const button = outputElement.previousElementSibling;
     button.disabled = true;
 
@@ -88,17 +92,27 @@ async function generateContent(endpoint, formData, outputElement) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.details || `Hálózati hiba: ${response.statusText}`);
+            throw new Error(errorData.details || `Network error: ${response.statusText}`);
         }
 
         const data = await response.json();
-        
-        // Markdown -> HTML konverzió (ha a showdown.js be van töltve)
+
+        // Létrehozzuk az eszköztárat a másolás gombbal
+        const toolbarHTML = `
+            <div class="output-toolbar">
+                <button class="cta-button-small copy-output-btn">
+                    <i class="fa-solid fa-copy"></i> <span data-key="outputCopyBtn">${translations[lang].outputCopyBtn}</span>
+                </button>
+            </div>
+        `;
+
         if (typeof showdown !== 'undefined') {
             const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
-            outputElement.innerHTML = converter.makeHtml(data.result);
+            // Először a toolbar, utána a konvertált tartalom
+            outputElement.innerHTML = toolbarHTML + converter.makeHtml(data.result);
         } else {
-            outputElement.textContent = data.result;
+            outputElement.innerHTML = toolbarHTML;
+            outputElement.insertAdjacentText('beforeend', data.result);
         }
 
     } catch (error) {
@@ -108,3 +122,26 @@ async function generateContent(endpoint, formData, outputElement) {
         button.disabled = false;
     }
 }
+// Eseménykezelő a dinamikusan létrehozott "Másolás" gombokhoz
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.copy-output-btn')) {
+        const button = e.target.closest('.copy-output-btn');
+        const outputContainer = button.closest('#adventure-output, #character-output');
+
+        if (outputContainer) {
+            // A toolbar nélkül másoljuk a szöveget
+            const contentToCopy = outputContainer.cloneNode(true);
+            const toolbar = contentToCopy.querySelector('.output-toolbar');
+            if (toolbar) toolbar.remove();
+
+            navigator.clipboard.writeText(contentToCopy.innerText).then(() => {
+                const lang = localStorage.getItem('preferredLanguage') || 'en';
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `<i class="fa-solid fa-check"></i> <span data-key="outputCopiedBtn">${translations[lang].outputCopiedBtn}</span>`;
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            });
+        }
+    }
+});

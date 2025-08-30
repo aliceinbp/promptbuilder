@@ -2971,3 +2971,36 @@ body.light-theme .pagefind-ui__modal {
         grid-template-columns: 1fr;
     }
 }
+/* ===== RPG KIMENETI DOBOZ FINOMÍTÁSOK ===== */
+
+.output-toolbar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.copy-output-btn {
+    padding: 5px 12px !important;
+    font-size: 0.9em !important;
+}
+
+/* Betöltő animáció (spinner) */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: var(--color-primary);
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+body.light-theme .spinner {
+    border-top-color: var(--color-primary);
+    border-left-color: var(--color-primary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
