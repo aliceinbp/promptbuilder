@@ -60,10 +60,11 @@ function initializeRpgHelper() {
         }
     });
 
-    generateTwistBtn.addEventListener('click', async () => {
-        const context = twistContextInput.value.trim();
-        generateContent('/.netlify/functions/rpg-twist-generator', { context: context }, twistOutput);
-    });
+    generateTwistBtn.addEventListener('click', () => {
+    const context = twistContextInput.value.trim();
+    // Mostantól a fő generateContent függvényt használjuk, ami minden hibakezelést tud
+    generateContent('/.netlify/functions/rpg-twist-generator', { context: context }, twistOutput);
+});
     
     document.querySelectorAll('.slider-group input[type="range"]').forEach(slider => {
         const valueSpan = slider.nextElementSibling;
