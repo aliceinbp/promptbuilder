@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeRpgHelper() {
+    updateDownloadLink(localStorage.getItem('preferredLanguage') || 'en');
     const generateAdventureBtn = document.getElementById('generate-adventure-btn');
     const generateCharacterBtn = document.getElementById('generate-character-btn');
     const adventureOutput = document.getElementById('adventure-output');
@@ -218,6 +219,16 @@ function populateSelectOptions(lang) {
                 option.textContent = optionData.label;
                 selectElement.appendChild(option);
             });
+        }
+    }
+}
+function updateDownloadLink(lang) {
+    const link = document.getElementById('download-guide-link');
+    if (link) {
+        if (lang === 'hu') {
+            link.href = '/guides/prompting-for-pros-hu.pdf';
+        } else {
+            link.href = '/guides/prompting-for-pros-en.pdf';
         }
     }
 }

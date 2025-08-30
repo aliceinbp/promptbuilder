@@ -130,7 +130,16 @@ window.setLanguage = function(lang) {
         langHu.classList.toggle('active', lang === 'hu');
         langEn.classList.toggle('active', lang === 'en');
     }
-    if (typeof populateSelectOptions === 'function') { populateSelectOptions(lang); }
+    
+    // Frissíti a legördülő menüket nyelvváltáskor
+    if (typeof populateSelectOptions === 'function') { 
+        populateSelectOptions(lang); 
+    }
+    
+    // EZ AZ ÚJ SOR: Frissíti a letöltő linket nyelvváltáskor
+    if (typeof updateDownloadLink === 'function') { 
+        updateDownloadLink(lang); 
+    }
 };
 
 function initializeLanguageSwitcher() {
