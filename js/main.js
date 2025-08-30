@@ -272,12 +272,23 @@ function initializeModalSystem() {
         });
     }
 }
-// ===== GoatCounter Vizuális Számláló Frissítésének Biztosítása =====
-window.addEventListener('load', function() {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-        window.goatcounter.visit_count({
-            append: '.goatcounter-display', // Ez a mi div-ünk a HTML-ben
-            type: 'html'
-        });
-    }
+// ===== GoatCounter Vizuális Számláló Végleges Javítása =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Egy számláló, ami megnézi, hogy a GoatCounter script betöltődött-e már
+    let checkCounter = 0;
+    const interval = setInterval(function() {
+        checkCounter++;
+        // Ha a goatcounter adata elérhető, vagy 5 másodpercig próbálkoztunk
+        if (window.goatcounter && window.goatcounter.data || checkCounter > 50) {
+            clearInterval(interval); // Leállítjuk a további ellenőrzést
+            const counterSpan = document.querySelector('span[data-goatcounter-display="hits"]');
+            if (counterSpan && window.goatcounter && window.goatcounter.data) {
+                // Beírjuk a helyes számot a "..." helyére
+                counterSpan.textContent = window.goatcounter.data.hits;
+            } else if (counterSpan) {
+                // Ha hiba van, a "..." helyett egy '-' jelet mutatunk
+                counterSpan.textContent = '-';
+            }
+        }
+    }, 100); // 100 ezredmásodpercenként ellenőriz
 });
