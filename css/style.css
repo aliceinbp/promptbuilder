@@ -2844,3 +2844,130 @@ body.light-theme .pagefind-ui__modal {
 .accordion-content > div {
     padding: 20px 15px !important;
 }
+/* ======================================== */
+/* ===== RPG SEGÉDLET OLDAL STÍLUS ===== */
+/* ======================================== */
+
+.rpg-form {
+    padding: 25px 5px;
+}
+
+.rpg-form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rpg-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.rpg-form-group label, .slider-fieldset legend {
+    margin-bottom: 8px;
+    color: var(--color-primary-light);
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.rpg-form input[type="text"],
+.rpg-form textarea,
+.rpg-form select {
+    width: 100%;
+    background-color: var(--color-surface-alt);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+
+.rpg-form input:focus,
+.rpg-form textarea:focus,
+.rpg-form select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px var(--color-shadow);
+}
+
+.rpg-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Fókusz arányok - Csúszkák */
+.slider-fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.sliders-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px;
+}
+
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.slider-group label {
+    margin-bottom: 0;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+.slider-group input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+.slider-value {
+    font-weight: bold;
+    color: var(--color-primary-light);
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Generálás gomb */
+#generate-adventure-btn,
+#generate-character-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Kimeneti doboz */
+#adventure-output,
+#character-output {
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px dashed var(--color-border-accent);
+    border-radius: 8px;
+    background-color: var(--color-surface-alt);
+    min-height: 100px;
+    white-space: pre-wrap; /* Megtartja a sortöréseket */
+    text-align: left;
+    line-height: 1.7;
+    position: relative;
+}
+
+#adventure-output h1, #adventure-output h2, #adventure-output h3,
+#character-output h1, #character-output h2, #character-output h3 {
+    color: var(--color-primary-light);
+}
+
+.output-toolbar {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+/* Mobilos nézet */
+@media (max-width: 768px) {
+    .rpg-form-grid, .sliders-container {
+        grid-template-columns: 1fr;
+    }
+}

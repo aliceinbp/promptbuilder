@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WC7RDXV8C1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WC7RDXV8C1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Segédlet - Script Acid by aliceinbp</title>
+    <meta name="description" content="AI-alapú segédlet szerepjátékos mesélőknek és játékosoknak. Generálj kalandvázlatokat és karakterkoncepciókat másodpercek alatt!">
+    
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css?v=1.0.1">
+    <link rel="stylesheet" href="css/style.css?v=1.0.1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="main-container">
+        <header>
+            <div id="header-top-row">
+                <div class="header-icons-left">
+                    <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
+                    <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
+                </div>
+                <div id="lang-switcher">
+                    <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
+                </div>
+            </div>
+            <div id="logo-container">
+                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
+            </div>
+            <h1>[ <span data-key="siteTitle">Script Acid</span> ]</h1>
+            <p data-key="siteSubtitle">AI Képalkotó Segédlet</p>
+            <p class="signature">by aliceinbp</p>
+            <div id="header-nav-container">
+                <nav id="main-nav">
+                    <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
+                    <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Generátor</span></a>
+                    <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
+                    <a href="kisokos.html"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
+                    <a href="rpg.html" class="active"><i class="fa-solid fa-dungeon"></i> <span data-key="navRpgHelper">RPG Segédlet</span></a>
+                    <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
+                    <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
+                </nav>
+            </div>
+            <div id="search-container">
+                <div id="search"></div>
+            </div>
+        </header>
+
+        <main data-pagefind-body>
+            <section id="rpg-helper-intro" style="text-align: center;">
+                <h2><i class="fa-solid fa-dungeon"></i> <span data-key="rpgHelperTitle">RPG Segédlet</span></h2>
+                <p class="artist-subtitle" data-key="rpgHelperSubtitle" style="margin-bottom: 40px;">AI-alapú inspiráció mesélőknek és játékosoknak.</p>
+            </section>
+
+            <div class="accordion-item" style="margin-bottom: 25px;">
+                <button class="accordion-header">
+                    <h2 style="margin: 0; font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-book-skull"></i> <span data-key="dmMasterTitle">Mesélősegéd</span>
+                    </h2>
+                </button>
+                <div class="accordion-content">
+                    <div id="dm-master-form">
+                        <div id="dm-master-form" class="rpg-form">
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="dm-system" data-key="formSystemLabel">Játékrendszer / Világ</label>
+            <input type="text" id="dm-system" placeholder="pl. M.A.G.U.S., D&D 5e, Urban Fantasy...">
+        </div>
+        <div class="rpg-form-group">
+            <label for="dm-mood" data-key="formMoodLabel">Hangulat & Stílus</label>
+            <input type="text" id="dm-mood" placeholder="pl. komor, heroikus, politikai intrika...">
+        </div>
+    </div>
+    <div class="rpg-form-group">
+        <label for="dm-keywords" data-key="formKeywordsLabel">Téma / Kulcsszavak (3-10 szó)</label>
+        <textarea id="dm-keywords" rows="3" data-key-placeholder="formKeywordsPlaceholder"></textarea>
+    </div>
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="dm-party" data-key="formPartyLabel">Játékosok</label>
+            <input type="text" id="dm-party" placeholder="pl. 4 fő, tapasztalt">
+        </div>
+        <div class="rpg-form-group">
+            <label for="dm-length" data-key="formLengthLabel">Kaland hossza</label>
+            <select id="dm-length">
+                <option value="egyestés kaland">Egyestés kaland</option>
+                <option value="2-3 alkalmas mini-kampány">Mini-kampány (2-3 alkalom)</option>
+                <option value="hosszú kampány">Hosszú kampány</option>
+            </select>
+        </div>
+    </div>
+    <fieldset class="rpg-form-group slider-fieldset">
+        <legend data-key="formFocusLabel">Fókusz arányok</legend>
+        <div class="sliders-container">
+            <div class="slider-group"><label for="dm-focus-combat" data-key="formFocusCombat">Harc</label><input type="range" id="dm-focus-combat" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-investigation" data-key="formFocusInvestigation">Nyomozás</label><input type="range" id="dm-focus-investigation" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-social" data-key="formFocusSocial">Társalgás</label><input type="range" id="dm-focus-social" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+            <div class="slider-group"><label for="dm-focus-exploration" data-key="formFocusExploration">Felfedezés</label><input type="range" id="dm-focus-exploration" min="0" max="10" value="5"><span class="slider-value">5</span></div>
+        </div>
+    </fieldset>
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="dm-boundaries" data-key="formBoundariesLabel">Tartalmi határok</label>
+            <input type="text" id="dm-boundaries" placeholder="pl. ne legyen testhorror">
+        </div>
+        <div class="rpg-form-group">
+            <label for="dm-constraints" data-key="formConstraintsLabel">Kötöttségek</label>
+            <input type="text" id="dm-constraints" placeholder="pl. legyen benne tengeri utazás">
+        </div>
+    </div>
+     <div class="rpg-form-group">
+        <label for="dm-names" data-key="formNameConventionLabel">Névkonvenció</label>
+        <select id="dm-names">
+            <option value="világ-hű, angolos">Világ-hű / Angolos</option>
+            <option value="magyarosított">Magyarosított</option>
+        </select>
+    </div>
+</div>
+                    </div>
+                    <button id="generate-adventure-btn" class="cta-button">Kaland Generálása</button>
+                    <div id="adventure-output"></div>
+                </div>
+            </div>
+
+            <div class="accordion-item" style="margin-bottom: 25px;">
+                <button class="accordion-header">
+                     <h2 style="margin: 0; font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-user-shield"></i> <span data-key="charCreatorTitle">Karakteralkotó</span>
+                    </h2>
+                </button>
+                <div class="accordion-content">
+                    <div id="character-creator-form">
+                        <div id="character-creator-form" class="rpg-form">
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="cc-system" data-key="formSystemLabel">Játékrendszer / Világ</label>
+            <input type="text" id="cc-system" placeholder="pl. általános fantasy, sötét fantasy...">
+        </div>
+        <div class="rpg-form-group">
+            <label for="cc-race" data-key="formRaceLabel">Faj / Származás</label>
+            <input type="text" id="cc-race" placeholder="pl. ember, tünde, vagy hagyd üresen">
+        </div>
+    </div>
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="cc-class" data-key="formClassLabel">Kaszt / Hivatás</label>
+            <input type="text" id="cc-class" placeholder="pl. harcos, tolvaj-bárd keverék...">
+        </div>
+        <div class="rpg-form-group">
+            <label for="cc-morality" data-key="formMoralityLabel">Erkölcsi irány</label>
+            <select id="cc-morality">
+                <option value="nagylelkű és önzetlen">Nagylelkű és önzetlen</option>
+                <option value="pragmatikus, de alapvetően jó szándékú">Pragmatikus, de jó szándékú</option>
+                <option value="teljesen semleges, csak a saját érdekeit nézi">Semleges, önérdekű</option>
+                <option value="önző és megbízhatatlan">Önző és megbízhatatlan</option>
+                <option value="kaotikus és kiszámíthatatlan">Kaotikus és kiszámíthatatlan</option>
+            </select>
+        </div>
+    </div>
+    <div class="rpg-form-group">
+        <label for="cc-keywords" data-key="formKeywordsLabel">Téma / Kulcsszavak (3-10 szó)</label>
+        <textarea id="cc-keywords" rows="3" data-key-placeholder="formKeywordsPlaceholder"></textarea>
+    </div>
+    <div class="rpg-form-grid">
+        <div class="rpg-form-group">
+            <label for="cc-age" data-key="formAgeLabel">Korcsoport</label>
+            <select id="cc-age">
+                <option value="fiatal és tapasztalatlan">Fiatal, tapasztalatlan</option>
+                <option value="pályája csúcsán lévő, érett">Érett, tapasztalt</option>
+                <option value="sokat látott veterán">Sokat látott veterán</option>
+            </select>
+        </div>
+         <div class="rpg-form-group">
+            <label for="cc-names" data-key="formNameConventionLabel">Névkonvenció</label>
+            <select id="cc-names">
+                <option value="világ-hű, angolos">Világ-hű / Angolos</option>
+                <option value="magyarosított">Magyarosított</option>
+            </select>
+        </div>
+    </div>
+     <div class="rpg-form-group">
+        <label for="cc-boundaries" data-key="formBoundariesLabel">Tartalmi határok</label>
+        <input type="text" id="cc-boundaries" placeholder="pl. ne legyen a múltjában családi tragédia">
+    </div>
+</div>
+                    </div>
+                     <button id="generate-character-btn" class="cta-button">Karakter Generálása</button>
+                    <div id="character-output"></div>
+                </div>
+            </div>
+            
+            <section style="text-align:center; margin-top: 40px;">
+                 <a href="/guides/prompting-for-pros.md" download class="cta-button-small"><i class="fa-solid fa-download"></i> <span data-key="downloadProGuide">Útmutató Profi AI-okhoz</span></a>
+            </section>
+
+        </main>
+
+        <footer class="footer-main">
+    <div class="footer-top">
+        <div class="footer-widget">
+            <h4 data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</h4>
+            <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
+                <input type="hidden" name="form-name" value="newsletter" />
+                <div class="newsletter-input-group">
+                    <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
+                    <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="footer-widget">
+            <h4>Támogasd a Projektet!</h4>
+            <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
+                <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
+                Támogass egy kávéval
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-middle">
+        <div class="footer-links">
+            <a href="contact.html" data-key="navContact">Kapcsolat</a>
+            <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's Creations</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div id="visitor-counter">
+             <script type="text/javascript" src="https://www.free-counters.org/count/ifie"></script>
+        </div>
+        <p class="copyright-text">&copy; 2025 Script Acid by aliceinbp. Minden jog fenntartva.</p>
+    </div>
+</footer>
+    </div>
+    
+    <script src="js/prompts-data.js"></script>
+    <script src="js/translations-data.js"></script>
+    <script src="js/quotes-data.js"></script>
+    <script src="js/data-loaders.js"></script>
+    <script src="js/interactive-pages.js"></script>
+    <script src="js/rpg.js"></script> <script src="js/main.js"></script>
+
+    </body>
+</html>
