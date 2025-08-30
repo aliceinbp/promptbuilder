@@ -272,3 +272,12 @@ function initializeModalSystem() {
         });
     }
 }
+// ===== GoatCounter Vizuális Számláló Frissítésének Biztosítása =====
+window.addEventListener('load', function() {
+    if (window.goatcounter && window.goatcounter.visit_count) {
+        window.goatcounter.visit_count({
+            append: '.goatcounter-display', // Ez a mi div-ünk a HTML-ben
+            type: 'html'
+        });
+    }
+});
