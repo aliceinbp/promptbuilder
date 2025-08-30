@@ -3181,3 +3181,25 @@ body.light-theme .spinner {
     color: var(--color-text-secondary);
     margin: 0;
 }
+/* ======================================== */
+/* ===== CÍMEK EGYSÉGESÍTÉSE (BETŰTÍPUS) ===== */
+/* ======================================== */
+
+/* Kicseréljük a Pacifico betűtípust Rajdhanira a legtöbb szekció-címnél */
+#saved-prompts-section h2,
+#links-section h2,
+.chat-section h2,
+#gallery-section h2,
+#artists-section h2,
+#featured-gallery h2,
+.daily-feature-box h2,
+#project-story-section h2,
+#submission-gallery h2,
+.gallery-category-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    /* Opcionális: Ha szeretnéd, hogy mindenhol nagybetűs legyen, mint a logóban,
+       akkor töröld ki a komment jelet a következő sor elől: */
+    /* text-transform: uppercase; */
+}
