@@ -560,19 +560,24 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 }
 
 #cusdis_thread {
-    border: 3px solid var(--cusdis-border-color); /* ÚJ: Ezt a változót fogjuk használni */
-    border-radius: 12px; /* A külső sarkok lekerekítése */
+    border: 3px solid var(--cusdis-border-color);
+    border-radius: 12px;
     box-shadow: 0 0 15px var(--color-shadow);
     transition: all 0.3s ease;
     margin-top: 2rem;
-    padding: 0; /* NINCS SZÜKSÉG belső padding-re */
-    background: transparent; /* A konténer legyen átlátszó! */
-    overflow: hidden; /* Ez biztosítja, hogy a belső iframe sarkai is le legyenek kerekítve */
+    padding: 0;
+    background: transparent;
+    overflow: hidden;
+    /* ÚJ: Meghatározzuk a magasságot */
+    min-height: 550px;
+    display: flex; /* Ez segít, hogy az iframe kitöltse a teret */
 }
 
 #cusdis_thread iframe {
-    border-radius: 8px; /* A belső iframe sarkainak lekerekítése */
-    display: block; /* Eltünteti az apró alsó rést az iframe alatt */
+    border-radius: 8px;
+    display: block;
+    width: 100%; /* Biztosítjuk, hogy kitöltse a szélességet */
+    border: none; /* Ne legyen saját kerete az iframe-nek */
 }
 
 /* ===== NAPI IDÉZET ABLAK STÍLUS ===== */

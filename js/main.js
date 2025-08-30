@@ -78,38 +78,38 @@ function initializeThemeToggle() {
 
 function updateCusdisTheme(theme) {
     const cusdisFrame = document.querySelector('#cusdis_thread iframe');
-    if (cusdisFrame) {
-        const sendMessage = () => {
-            cusdisFrame.contentWindow.postMessage({
-                type: 'setTheme',
-                theme: theme === 'light' ? 'light' : 'dark'
-            }, 'https://cusdis.com');
-        };
-
-        // Ellenőrizzük, hogy az iframe már betöltődött-e.
-        // A 'complete' állapot jelzi, hogy minden, még az iframe is betöltődött.
-        if (document.readyState === 'complete') {
-            sendMessage(); // Ha igen, azonnal küldjük.
-        } else {
-            // Ha nem, akkor megvárjuk, amíg az iframe jelzi, hogy betöltődött.
-            cusdisFrame.addEventListener('load', sendMessage, { once: true });
-        }
+    if (cusdisFrame && cusdisFrame.contentWindow) {
+        cusdisFrame.contentWindow.postMessage({
+            type: 'setTheme',
+            theme: theme === 'light' ? 'light' : 'dark'
+        }, 'https://cusdis.com');
     }
 }
 
 function observeCusdis() {
     const cusdisContainer = document.getElementById('cusdis_thread');
     if (!cusdisContainer) return;
-    const observer = new MutationObserver((mutationsList) => {
+
+    // Ez a funkció figyeli, mikor jelenik meg a vendégkönyv
+    const observer = new MutationObserver((mutationsList, obs) => {
         for (const mutation of mutationsList) {
-            if (mutation.type === 'childList' && cusdisContainer.querySelector('iframe')) {
-                const storedTheme = localStorage.getItem('theme') || 'dark';
-                updateCusdisTheme(storedTheme);
-                observer.disconnect();
-                return;
+            if (mutation.type === 'childList') {
+                const cusdisFrame = cusdisContainer.querySelector('iframe');
+                // Ha megjelent az iframe...
+                if (cusdisFrame) {
+                    // ...akkor megvárjuk, amíg be is töltődik.
+                    cusdisFrame.addEventListener('load', () => {
+                        const storedTheme = localStorage.getItem('theme') || 'dark';
+                        // És CSAK utána küldjük el a téma-váltó üzenetet.
+                        updateCusdisTheme(storedTheme);
+                    });
+                    obs.disconnect(); // Leállítjuk a figyelést, mert elvégeztük a dolgunk.
+                    return;
+                }
             }
         }
     });
+
     observer.observe(cusdisContainer, { childList: true, subtree: true });
 }
 
