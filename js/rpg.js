@@ -69,6 +69,7 @@ async function generateSuggestions(endpoint, formData, suggestionsOutputElement,
     const lang = localStorage.getItem('preferredLanguage') || 'en';
     mainOutputElement.innerHTML = '';
     suggestionsOutputElement.innerHTML = `<div style="text-align: center; padding: 20px;"><div class="spinner" style="margin: 0 auto 15px auto;"></div><p>${translations[lang].outputGenerating}</p></div>`;
+    updateAccordionHeight(suggestionsOutputElement); // Magasság frissítése a spinnerhez
 
     try {
         const response = await fetch(endpoint, {
@@ -86,12 +87,16 @@ async function generateSuggestions(endpoint, formData, suggestionsOutputElement,
                 button.textContent = suggestion;
                 suggestionsOutputElement.appendChild(button);
             });
+            // EZ A JAVÍTÁS: Frissítjük a magasságot, miután a gombok megjelentek
+            setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50); 
         } else {
             throw new Error('No suggestions received.');
         }
     } catch (error) {
         console.error("Suggestion error:", error);
         suggestionsOutputElement.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
+        // Hiba esetén is frissítjük a magasságot
+        setTimeout(() => updateAccordionHeight(suggestionsOutputElement), 50);
     }
 }
 
