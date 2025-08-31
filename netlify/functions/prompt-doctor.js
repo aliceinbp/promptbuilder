@@ -1,12 +1,9 @@
-// A Hugging Face importot töröltük, már nincs rá szükség
-
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    // 1. API kulcs beolvasása a Netlify biztonságos környezeti változóiból
     const apiKey = process.env.GEMINI_API_KEY;
     const { userPrompt } = JSON.parse(event.body);
 
@@ -14,7 +11,6 @@ exports.handler = async function(event) {
       throw new Error("A prompt nem lehet üres.");
     }
 
-    // 2. Prompt összeállítása a Gemini számára
     const masterPrompt = `You are 'Dr. Script', an expert AI art prompt analyst. Your task is to help a user improve their prompt. Analyze the user's prompt provided below.
     Give feedback in three distinct categories in markdown format:
     1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid.
@@ -23,8 +19,9 @@ exports.handler = async function(event) {
     Keep your suggestions concise, actionable, and encouraging.
     USER'S PROMPT: "${userPrompt}"`;
 
-    // 3. API hívás a Google Gemini felé a 'fetch' paranccsal
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+    // ===== EZ A SOR VÁLTOZOTT! =====
+    // A régi 'v1beta' és 'gemini-pro' helyett az új, stabil 'v1' és a gyorsabb 'gemini-1.5-flash-latest' modellt használjuk.
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,12 +37,17 @@ exports.handler = async function(event) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(JSON.stringify(errorData));
+      // Részletesebb hibaüzenet naplózása a Netlify-on
+      console.error("Gemini API Error:", JSON.stringify(errorData));
+      throw new Error(errorData.error.message);
     }
 
     const data = await response.json();
     
-    // 4. A válasz feldolgozása
+    // Hibakezelés arra az esetre, ha a Gemini nem adna érdemi választ
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error("A Gemini API nem adott vissza érvényes választ.");
+    }
     const analysis = data.candidates[0].content.parts[0].text;
 
     return {
