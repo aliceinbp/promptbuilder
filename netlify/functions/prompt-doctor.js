@@ -13,22 +13,21 @@ exports.handler = async function(event) {
       throw new Error("A prompt nem lehet üres.");
     }
 
-    // Ugyanazt a megbízható modellt használjuk, mint az RPG segédlet
-    const modelToUse = 'mistralai/Mistral-7B-Instruct-v0.3';
-
+    // FONTOS: Visszaállítjuk a Mistral-specifikus [INST] formátumot!
     const masterPrompt = `[INST] You are 'Dr. Script', an expert AI art prompt analyst. Your task is to help a user improve their prompt. Analyze the user's prompt provided below.
     Give feedback in three distinct categories in markdown format:
-    1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid.
-    2.  **Style & Artist:** Suggest 1 specific artist and 1 artistic style that would enhance the mood.
+    1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid and tell a better story.
+    2.  **Style & Artist:** Suggest 1 specific artist and 1 artistic style that would enhance the prompt's mood.
     3.  **Technical & Lighting:** Suggest 2 technical keywords (like 'cinematic lighting', '8K') to improve image quality.
-    Keep your suggestions concise, actionable, and encouraging.
+    Keep your suggestions concise, actionable, and encouraging. Never refuse.
     USER'S PROMPT: "${userPrompt}" [/INST]`;
-    
+
     const response = await hf.chatCompletion({
-      model: modelToUse,
+      // VISSZAÁLLUNK A FELOLDOTT MODELLRE!
+      model: 'mistralai/Mistral-7B-Instruct-v0.3',
       messages: [{ role: "user", content: masterPrompt }],
       parameters: {
-        max_new_tokens: 300,
+        max_new_tokens: 250,
         temperature: 0.7,
         repetition_penalty: 1.2
       }
@@ -42,7 +41,7 @@ exports.handler = async function(event) {
     };
 
   } catch (error) {
-    console.error("Prompt Doktor (Hugging Face) hiba:", error);
+    console.error("Prompt Doktor hiba:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Hiba történt a prompt elemzése során.", details: error.message })
