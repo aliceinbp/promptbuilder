@@ -13,18 +13,18 @@ const translations = {
         rpgInfoModalText: "A mesterséges intelligencia modellek jelenleg angol nyelven a legkreatívabbak. A legjobb, legötletesebb eredmények érdekében javasoljuk az oldal angol nyelvű változatának használatát a 'HUN | ENG' gombbal.",
         // A Projekt Története Szekció
         storyTitle: "A projekt története",
-        storyCardPhilosophyTitle: "A Filozófia",
+        storyCardPhilosophyTitle: "Történet",
         storyCardPhilosophyDesc: "Miért született meg a Script Acid?",
         storyCardTechTitle: "A Technológia",
         storyCardTechDesc: "Milyen motor hajtja az oldalt?",
         storyCardFutureTitle: "A Jövő",
         storyCardFutureDesc: "Merre tart a projekt és hogyan lehetsz a része?",
         philosophyModalTitle: "A Filozófia: Egy Eszköz a Kreatív Blokk Ellen",
-        philosophyModalText: "[Ide írd le magyarul a személyes történetedet, hogy miért hoztad létre az oldalt, kinek szeretnél segíteni vele.]",
+        philosophyModalText: "Az oldal története egészen egyszerű: magamat szerettem volna segíteni egy prompt-generátorral, aztán ráeszméltem, hogy talán mások is élnének a lehetőséggel. Egyre többet kutattam, így elkezdtem tartalommal feltölteni a honlapom, és a folyamat nem állt meg... mára már egy igazi kis segédlet azoknak, akik megfelelő képeket szeretnének gyártani és belevontam a szerelem-projektemet is: az RPG segédletet. Használd bátran Te is!",
         techModalTitle: "A Technológia: Nyílt Forráskód és Közösségi Erő",
         techModalText: "A háttérben a 'motor' egy ingyenes, nyílt forráskódú AI modell, amit a Hugging Face nevű platformon keresztül érek el. A célom az volt, hogy egy bárki számára elérhető, ingyenes eszközt hozzak létre, ami a te ötleteidet kelti életre anélkül, hogy a drága technológiával kellene bajlódnod. A nagy álmom, hogy a jövőben, ha a projekt kinövi magát, olyan profi modellekre is át tudjunk térni, mint a Google Gemini. Ez tenné lehetővé az igazán összetett és kreatív feladatok hibátlan működését.",
         futureModalTitle: "A Jövő: Közös Fejlődés",
-        futureModalText: "[Ide írd le magyarul a terveidet, például a Jutalom Generátort, és hogy hogyan tudnak a felhasználók segíteni (pl. ötletekkel, visszajelzéssel, Ko-fi támogatással).]",
+        futureModalText: "A jövő? Alakítsuk együtt. A tartalombővítés, a tudásom átadása a cél, de ha szeretnél a részese lenni, csak küldd be az ötleteid, gondolataid és segítsünk együtt másoknak!",
         
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
@@ -472,7 +472,7 @@ const translations = {
         rpgInfoModalTitle: "Tip for Better Results",
         rpgInfoModalText: "Artificial intelligence models are currently most creative in English. For the best and most imaginative results, we recommend using the English version of the site by clicking the 'HUN | ENG' button.",
         // The Project Story Section
-        storyTitle: "The Story of the Project",
+        storyTitle: "The Story",
         storyCardPhilosophyTitle: "The Philosophy",
         storyCardPhilosophyDesc: "Why was Script Acid created?",
         storyCardTechTitle: "The Technology",
@@ -480,11 +480,11 @@ const translations = {
         storyCardFutureTitle: "The Future",
         storyCardFutureDesc: "Where is the project heading and how can you be a part of it?",
         philosophyModalTitle: "The Philosophy: A Tool Against Creative Block",
-        philosophyModalText: "[Write your personal story here in English, why you created the site, and who you want to help with it.]",
+        philosophyModalText: "The story behind this site is quite simple: I originally wanted to help myself with a prompt generator, then I realized that maybe others would also benefit from it. As I kept researching more and more, I started filling my website with content, and the process hasn't stopped since… by now it has become a handy little guide for anyone who wants to create the right images, and I've also included my passion project: the RPG guide. Feel free to use it too!",
         techModalTitle: "The Technology: Open Source and Community Power",
         techModalText: "Behind the scenes, the 'engine' is a free, open-source AI model that I access through a platform called Hugging Face. My goal was to create a free tool, accessible to everyone, that brings your ideas to life without you having to worry about expensive technology. My big dream is that in the future, as the project grows, we can upgrade to professional models like Google Gemini. This would enable the flawless execution of truly complex and creative tasks.",
         futureModalTitle: "The Future: Growing Together",
-        futureModalText: "[Write your plans here in English, for example, the Reward Generator, and how users can help (e.g., with ideas, feedback, Ko-fi support).]",
+        futureModalText: "The future? Let's shape it together. My goal is to expand the content and share my knowledge, but if you'd like to be a part of it, just send in your ideas and thoughts, and let's help others together!",
         
         // RPG Mini-Modules
         nameGenTitle: "Name Generator",
