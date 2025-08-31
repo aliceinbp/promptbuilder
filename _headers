@@ -1,6 +1,2 @@
 /*
-  Content-Security-Policy: 
-  script-src 'self' 'unsafe-inline' https://gc.zgo.at https://cdnjs.cloudflare.com https://www.googletagmanager.com https://cusdis.com https://www.free-counters.org;
-  connect-src 'self' https://*.goatcounter.com https://*.google-analytics.com https://cusdis.com wss://cusdis.com;
-  img-src 'self' data: https:;
-  frame-src 'self' https://cusdis.com;
+  Content-Security-Policy: script-src 'self' 'unsafe-inline' https://gc.zgo.at https://cdnjs.cloudflare.com https://www.googletagmanager.com https://cusdis.com https://www.free-counters.org; connect-src 'self' https://*.goatcounter.com https://*.google-analytics.com https://cusdis.com wss://cusdis.com; img-src 'self' data: https:; frame-src 'self' https://cusdis.com;
