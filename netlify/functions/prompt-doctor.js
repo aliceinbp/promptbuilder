@@ -1,4 +1,4 @@
-import { HfInference } from "@huggingface/inference";
+// A Hugging Face importot töröltük, már nincs rá szükség
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -6,34 +6,47 @@ exports.handler = async function(event) {
   }
 
   try {
-    const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
+    // 1. API kulcs beolvasása a Netlify biztonságos környezeti változóiból
+    const apiKey = process.env.GEMINI_API_KEY;
     const { userPrompt } = JSON.parse(event.body);
 
     if (!userPrompt || userPrompt.trim() === "") {
       throw new Error("A prompt nem lehet üres.");
     }
 
-    // FONTOS: Visszaállítjuk a Mistral-specifikus [INST] formátumot!
-    const masterPrompt = `[INST] You are 'Dr. Script', an expert AI art prompt analyst. Your task is to help a user improve their prompt. Analyze the user's prompt provided below.
+    // 2. Prompt összeállítása a Gemini számára
+    const masterPrompt = `You are 'Dr. Script', an expert AI art prompt analyst. Your task is to help a user improve their prompt. Analyze the user's prompt provided below.
     Give feedback in three distinct categories in markdown format:
-    1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid and tell a better story.
-    2.  **Style & Artist:** Suggest 1 specific artist and 1 artistic style that would enhance the prompt's mood.
+    1.  **Details & Storytelling:** Suggest 2 specific details to make the scene more vivid.
+    2.  **Style & Artist:** Suggest 1 specific artist and 1 artistic style that would enhance the mood.
     3.  **Technical & Lighting:** Suggest 2 technical keywords (like 'cinematic lighting', '8K') to improve image quality.
-    Keep your suggestions concise, actionable, and encouraging. Never refuse.
-    USER'S PROMPT: "${userPrompt}" [/INST]`;
+    Keep your suggestions concise, actionable, and encouraging.
+    USER'S PROMPT: "${userPrompt}"`;
 
-    const response = await hf.chatCompletion({
-      // VISSZAÁLLUNK A FELOLDOTT MODELLRE!
-      model: 'mistralai/Mistral-7B-Instruct-v0.3',
-      messages: [{ role: "user", content: masterPrompt }],
-      parameters: {
-        max_new_tokens: 250,
-        temperature: 0.7,
-        repetition_penalty: 1.2
-      }
+    // 3. API hívás a Google Gemini felé a 'fetch' paranccsal
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "contents": [{
+          "parts": [{
+            "text": masterPrompt
+          }]
+        }]
+      })
     });
 
-    const analysis = response.choices[0].message.content || "Az AI nem adott érdemi választ.";
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(JSON.stringify(errorData));
+    }
+
+    const data = await response.json();
+    
+    // 4. A válasz feldolgozása
+    const analysis = data.candidates[0].content.parts[0].text;
 
     return {
       statusCode: 200,
@@ -41,7 +54,7 @@ exports.handler = async function(event) {
     };
 
   } catch (error) {
-    console.error("Prompt Doktor hiba:", error);
+    console.error("Prompt Doktor (Gemini) hiba:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Hiba történt a prompt elemzése során.", details: error.message })
