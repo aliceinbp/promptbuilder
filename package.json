@@ -2,6 +2,7 @@
   "name": "prompt-lab-functions",
   "version": "1.0.0",
   "dependencies": {
+    "@google/generative-ai": "^0.14.1",
     "@huggingface/inference": "^4.7.1",
     "deepl-node": "^1.11.0"
   }
