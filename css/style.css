@@ -3218,3 +3218,17 @@ body.light-theme .spinner {
        akkor töröld ki a komment jelet a következő sor elől: */
     /* text-transform: uppercase; */
 }
+/* ======================================================= */
+/* ===== PROMPT DOKTOR TÉRKÖZ "ATOMBOMBA" JAVÍTÁS ===== */
+/* ======================================================= */
+
+#prompt-doctor-result ul > li {
+    margin: 0 !important; /* Minden alapértelmezett margót eltávolítunk */
+    padding: 0 !important; /* Minden alapértelmezett belső teret eltávolítunk */
+}
+
+/* Ez a szabály CSAK azokra a lista elemekre vonatkozik, amik egy másik után jönnek,
+   tehát csak a KÖZÖTTÜK lévő térközt állítja be. */
+#prompt-doctor-result ul > li + li {
+    margin-top: 1em !important; 
+}
