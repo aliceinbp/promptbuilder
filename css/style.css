@@ -2782,52 +2782,47 @@ body.light-theme .pagefind-ui__modal {
 #prompt-doctor-result h3, #prompt-doctor-result h4, #prompt-doctor-result strong {
     color: var(--color-primary-light);
 }
-/* ======================================================= */
-/* ===== PROMPT DOKTOR VÉGLEGES FORMÁZÁSA (JAVÍTOTT) ===== */
-/* ======================================================= */
+/* ======================================================== */
+/* ===== PROMPT DOKTOR - VÉGSŐ TÉRKÖZ BEÁLLÍTÁSOK ===== */
+/* ======================================================== */
 
-/* 1. Alapvető sortávolság a jobb olvashatóságért */
-#prompt-doctor-result {
-    line-height: 1.6;
+/* 1. Az első elemnek soha ne legyen felső margója */
+#prompt-doctor-result > *:first-child {
+    margin-top: 0 !important;
 }
 
-/* 2. Címsorok (de NEM a félkövér szövegek!) formázása */
+/* 2. A címsorok (pl. "1. Részletek...") térközének csökkentése */
 #prompt-doctor-result h1,
 #prompt-doctor-result h2,
 #prompt-doctor-result h3,
 #prompt-doctor-result h4 {
-    margin-top: 1.5em; /* Nagyobb térköz a szekciók előtt */
-    margin-bottom: 0.8em; /* Kisebb térköz a cím és a szöveg között */
+    margin-top: 1.2em;      /* Csökkentett térköz a címsorok felett */
+    margin-bottom: 0.7em;   /* Kisebb térköz a címsor és az alatta lévő szöveg között */
+    font-size: 1.1em;       /* Kicsit kisebb, hogy ne legyen túl harsány */
     color: var(--color-primary-light);
-}
-
-/* Az első elemnek soha ne legyen felső margója */
-#prompt-doctor-result > *:first-child {
-    margin-top: 0;
 }
 
 /* 3. A listák és elemeik szorosabbra húzása */
 #prompt-doctor-result ul {
-    padding-left: 25px;
-    margin-top: 1em;
-    margin-bottom: 1.5em;
+    padding-left: 20px; /* Kisebb behúzás */
+    margin: 0;
 }
-
 #prompt-doctor-result li {
-    margin-bottom: 1.2em; /* Ez a térköz a két listaelem KÖZÖTT */
-}
-
-/* 4. A listaelemeken belüli félkövér címek és bekezdések nullázása */
-#prompt-doctor-result li p,
-#prompt-doctor-result li strong {
     margin: 0;
     padding: 0;
 }
+#prompt-doctor-result li + li {
+    margin-top: 1em; /* Ez a lényeg: a térköz a KÉT bullet point KÖZÖTT */
+}
 
-/* 5. A félkövér cím és a leírás közötti kis térköz */
+/* 4. A listaelemeken belüli elemek (cím, leírás) térközének nullázása */
+#prompt-doctor-result li * {
+    margin: 0;
+    padding: 0;
+}
 #prompt-doctor-result li strong {
-    display: block; /* Ez kell, hogy a margó működjön */
-    margin-bottom: 0.3em;
+    display: block;
+    margin-bottom: 0.3em; /* Pici térköz a félkövér cím és a leírás között */
 }
 /* ======================================================= */
 /* ===== HARMONIKA VÉGLEGES STÍLUSA (EGYSÉGESÍTETT) ===== */
@@ -3217,18 +3212,4 @@ body.light-theme .spinner {
     /* Opcionális: Ha szeretnéd, hogy mindenhol nagybetűs legyen, mint a logóban,
        akkor töröld ki a komment jelet a következő sor elől: */
     /* text-transform: uppercase; */
-}
-/* ======================================================= */
-/* ===== PROMPT DOKTOR TÉRKÖZ "ATOMBOMBA" JAVÍTÁS ===== */
-/* ======================================================= */
-
-#prompt-doctor-result ul > li {
-    margin: 0 !important; /* Minden alapértelmezett margót eltávolítunk */
-    padding: 0 !important; /* Minden alapértelmezett belső teret eltávolítunk */
-}
-
-/* Ez a szabály CSAK azokra a lista elemekre vonatkozik, amik egy másik után jönnek,
-   tehát csak a KÖZÖTTÜK lévő térközt állítja be. */
-#prompt-doctor-result ul > li + li {
-    margin-top: 1em !important; 
 }
