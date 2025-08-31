@@ -2,7 +2,8 @@
   "name": "prompt-lab-functions",
   "version": "1.0.0",
   "dependencies": {
-    "@huggingface/inference": "^4.7.1",
-    "deepl-node": "^1.11.0"
+    "deepl-node": "^1.11.0",
+    "@google-cloud/aiplatform": "^3.20.0",
+    "google-auth-library": "^9.11.0"
   }
 }
