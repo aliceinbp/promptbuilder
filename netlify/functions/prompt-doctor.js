@@ -1,5 +1,5 @@
-// A Google hivatalos Vertex AI könyvtárának importálása
-const { VertexAI } = require('@google-cloud/aiplatform');
+// A Google hivatalos Vertex AI könyvtárának importálása (JAVÍTOTT MÓDSZER)
+const aiplatform = require('@google-cloud/aiplatform');
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -13,27 +13,23 @@ exports.handler = async function(event) {
       throw new Error("A prompt nem lehet üres.");
     }
     
-    // A Netlify változókból beolvasott JSON tartalmának feldolgozása
     const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
     
-    // A kliens inicializálása a Service Account adatokkal és a hellyel
-    const vertex_ai = new VertexAI({
+    // A kliens inicializálása a Service Account adatokkal és a hellyel (JAVÍTOTT MÓDSZER)
+    const vertex_ai = new aiplatform.VertexAI({
         project: credentials.project_id,
         location: 'us-central1',
         credentials
     });
     
-    // A generatív modell kiválasztása
     const generativeModel = vertex_ai.getGenerativeModel({
         model: 'gemini-1.0-pro',
     });
 
     const masterPrompt = `You are 'Dr. Script', an expert AI art prompt analyst... USER'S PROMPT: "${userPrompt}"`; // A prompt szövege változatlan
 
-    // Kérés küldése a modelnek
     const resp = await generativeModel.generateContentStream(masterPrompt);
     
-    // A streamelt válasz összefűzése
     let fullAnalysis = "";
     for await (const item of resp.stream) {
         if (item.candidates && item.candidates[0].content && item.candidates[0].content.parts[0].text) {
