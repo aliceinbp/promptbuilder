@@ -566,12 +566,18 @@ btn.addEventListener('click', async () => {
         resultDiv.classList.remove('hidden');
 
         if (typeof showdown !== 'undefined') {
-            // Itt a fontos változás: simpleLineBreaks: true
-            const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
-            resultDiv.innerHTML = converter.makeHtml(analysisText);
-        } else {
-            resultDiv.textContent = analysisText;
-        }
+    // Itt a fontos opció: simpleLineBreaks: true
+    // Ez a szimpla sortöréseket <br> taggé alakítja, nem pedig új bekezdéssé.
+    const converter = new showdown.Converter({ 
+        openLinksInNewWindow: true, 
+        noHeaderId: true, 
+        simpleLineBreaks: true 
+    });
+    resultDiv.innerHTML = converter.makeHtml(analysisText);
+} else {
+    // Fallback, ha a Showdown nem töltődne be
+    resultDiv.textContent = analysisText;
+}
 
     } catch (error) {
         console.error("Prompt Doktor error:", error);

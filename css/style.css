@@ -3207,4 +3207,11 @@ body.light-theme .spinner {
        akkor töröld ki a komment jelet a következő sor elől: */
     /* text-transform: uppercase; */
 }
+/* ===== PROMPT DOKTOR LISTA FORMÁZÁS JAVÍTÁSA ===== */
+#prompt-doctor-result ul li p {
+    margin-bottom: 0.5em; /* Kisebb térköz a bekezdések között a listán belül */
+}
 
+#prompt-doctor-result ul li p:last-child {
+    margin-bottom: 0; /* Az utolsó bekezdésnek egyáltalán nincs alsó térköze */
+}
