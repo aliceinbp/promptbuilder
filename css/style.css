@@ -3224,3 +3224,44 @@ body.light-theme .spinner {
     margin-right: 15px;
     transform: translateY(-2px);
 }
+/* "Hamarosan..." gomb stílus */
+a.cta-button-small:not([href]) {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+/* ===== TUDÁSTÁR PILLÉR NAVIGÁCIÓ ===== */
+.pillar-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.pillar-nav-btn {
+    background-color: transparent;
+    border: 2px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pillar-nav-btn:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.pillar-nav-btn i {
+    font-size: 0.9em;
+}

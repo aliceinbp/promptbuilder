@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initializeQuiz === 'function') initializeQuiz();
     if (typeof initializeChallengePage === 'function') initializeChallengePage();
     if (typeof initializeGlossaryExpert === 'function') initializeGlossaryExpert();
+    if (typeof initializePillarNav === 'function') initializePillarNav();
 
     // Pagefind kereső inicializálása
     if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {

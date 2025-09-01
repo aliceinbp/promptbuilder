@@ -437,6 +437,7 @@ const translations = {
         negativeCategoryDisturbing: "Zavaró Elemek",
         addSelectedBtn: "Kiválasztottak Hozzáadása",
         // Tudástár - Pillér Címek
+        comingSoonBtn: "Hamarosan...",
         handbookPillarImagesTitle: "AI Képalkotás Mesterkurzus",
         handbookPillarRpgTitle: "RPG & Világépítés Sarok",
         handbookPillarAiTitle: "AI Műhely: Általános Tudnivalók",
@@ -931,6 +932,7 @@ const translations = {
         handbookPillarImagesTitle: "AI Image Creation Masterclass",
         handbookPillarRpgTitle: "RPG & World-Building Corner",
         handbookPillarAiTitle: "AI Workshop: General Knowledge",
+        comingSoonBtn: "Coming soon...",
         // New Card Texts
         handbookCardQuizDesc: "Find the visual style that best suits you with this fun, 10-question quiz!",
         handbookCardRpgIntroTitle: "Introduction to Role-Playing Games",
