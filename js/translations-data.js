@@ -108,7 +108,15 @@ const translations = {
         { value: 'hungarian-style', label: 'Magyarosított' }
     ]
 },
-
+        featuredToolsTitle: "Kiemelt Eszközök",
+        toolCardGeneratorTitle: "Prompt Generátor",
+        toolCardGeneratorDesc: "Alkoss lenyűgöző képeket a részletes promptépítő segítségével.",
+        toolCardRpgTitle: "RPG Segédlet",
+        toolCardRpgDesc: "Generálj egyedi kalandokat, karaktereket és ötleteket a szerepjáték kampányaidhoz.",
+        toolCardDoctorTitle: "Prompt Doktor",
+        toolCardDoctorDesc: "Kérj AI-alapú javaslatokat a meglévő promptjaid tökéletesítésére.",
+        toolCardQuizTitle: "Stílus Kvíz",
+        toolCardQuizDesc: "Nem tudod, milyen stílust válassz? Töltsd ki a kvízt és találd meg a hangod!",
         handbookMoreTipsTitle: "További Tippek és Gyakori Kérdések",
         faqWhyEnglishTitle: "Miért fontos angolul írni a promptokat?",
         faqWhyEnglishText: "A legtöbb mesterséges intelligencia modellt angol nyelvű, hatalmas internetes adatbázisokon tanították. Emiatt az angol szavakat, kifejezéseket és kulturális utalásokat értik a legpontosabban. Bár sok AI megért más nyelveket is, a legjobb, legkiszámíthatóbb eredményeket szinte mindig angol promptokkal érheted el.",
@@ -928,6 +936,15 @@ const translations = {
             "Text & Signatures": ["text", "watermark", "signature", "ui", "logo"],
             "Disturbing Elements": ["out of frame", "cut off", "frame", "tiling", "ugly"]
         },
+        featuredToolsTitle: "Featured Tools",
+        toolCardGeneratorTitle: "Prompt Generator",
+        toolCardGeneratorDesc: "Create stunning images with the detailed prompt building tool.",
+        toolCardRpgTitle: "RPG Helper",
+        toolCardRpgDesc: "Generate unique adventures, characters, and ideas for your role-playing campaigns.",
+        toolCardDoctorTitle: "Prompt Doctor",
+        toolCardDoctorDesc: "Get AI-powered suggestions to perfect your existing prompts.",
+        toolCardQuizTitle: "Style Quiz",
+        toolCardQuizDesc: "Not sure which style to choose? Take the quiz and find your creative voice!",
         // Handbook - Pillar Titles
         handbookPillarImagesTitle: "AI Image Creation Masterclass",
         handbookPillarRpgTitle: "RPG & World-Building Corner",
