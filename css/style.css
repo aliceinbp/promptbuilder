@@ -3322,3 +3322,12 @@ a.cta-button-small:not([href]) {
     margin: 0;
     line-height: 1.6;
 }
+/* ===== CÍMKE SZÍN JAVÍTÁSA (VÉGLEGES) ===== */
+.prompt-input-tag,
+.prompt-tag {
+    color: var(--color-white-pure) !important;
+}
+/* Világos módban a gombok színe legyen sötét a jobb olvashatóságért */
+body.light-theme .button-group button {
+    color: var(--color-text-main);
+}
