@@ -11,3 +11,8 @@
     pretty_urls = false
   [build.processing.images]
     compress = true
+    # Netlify CMS biztonsági szabályainak kiegészítése
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Content-Security-Policy = "script-src 'self' 'unsafe-inline' https://gc.zgo.at https://cdn.js.cloudflare.com https://www.googletagmanager.com https://cusdis.com https://www.free-counters.org https://identity.netlify.com https://unpkg.com;"
