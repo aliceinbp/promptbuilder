@@ -540,7 +540,7 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
 
 .prompt-tag {
     background-color: var(--accent-color);
-    color: white;
+    color: var(--color-text-inverted);
     padding: 6px 12px;
     border-radius: 15px;
     font-size: 0.9em;
@@ -872,10 +872,10 @@ body.light-theme {
 
 /* Gradiens keret a fő konténerre világos módban */
 body.light-theme #main-container {
-  border: 5px solid transparent;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to bottom right, #8a2be2, #00c6ff); /* Neonlila -> Kék átmenet */
-}
+  border: 3px solid transparent;
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(var(--color-surface), var(--color-surface)), linear-gradient(135deg, var(--color-primary-light), var(--color-primary), var(--color-primary-accent));
+  }
 
 /* A belső elemek (szekciók, kártyák) hátterének beállítása */
 body.light-theme section,

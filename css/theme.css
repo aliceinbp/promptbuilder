@@ -32,6 +32,7 @@ body.light-theme {
     --color-primary-light: #a46de5;   /* A te eredeti, világosabb lilád a hover effektekhez */
     --color-primary-highlight: #8e44ad;
     --color-primary-accent: #e85acb;    /* A neonos magenta világos háttéren */
+    --color-shadow: rgba(100, 50, 150, 0.1);
     /* A szövegek nem feketék, hanem sötétlilák/szürkék a jobb olvashatóságért */
     --color-text-main: #34303E;
     --color-text-secondary: #5a5368;
