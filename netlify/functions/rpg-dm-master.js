@@ -7,9 +7,12 @@ exports.handler = async function(event) {
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
-    const prompts = {
-      hu: `[INST]Te egy profi, kreatív szerepjátékos mesélősegéd vagy. Feladatod egy strukturált kalandvázlat generálása. A kimenet KIZÁRÓLAG magyar nyelven készüljön, TISZTA markdown formátumban. Ne adj hozzá semmilyen bevezető vagy záró szöveget, csak a vázlatot.
+  const prompts = {
+      hu: `Te egy profi, kreatív szerepjátékos mesélősegéd vagy. A feladatod egy strukturált kalandvázlat generálása a felhasználó kérései alapján.
+A kaland legyen logikus, következetes és tartalmazzon egyedi, de érthető elemeket. Kerüld a túlzottan absztrakt vagy klisés ötleteket. A cél egy izgalmas, játszható történetvázlat.
+A kimenet KIZÁRÓLAG magyar nyelven készüljön, TISZTA markdown formátumban. Ne adj hozzá semmilyen bevezető vagy záró szöveget, csak a vázlatot.
 
+A KÉRT STRUKTÚRA:
 **Pitch:** (2-3 mondatos, izgalmas összefoglaló.)
 **Kiinduló Helyzet és Tét:** (Mi történik? Mi forog kockán?)
 **Kampó (3 opció):**
@@ -41,10 +44,12 @@ A FELHASZNÁLÓ KÉRÉSE:
 - **Hossz:** ${userInput.length || "egyestés kaland"}
 - **Tartalmi Határok:** ${userInput.boundaries || "nincs megadva"}
 - **Kötöttségek:** ${userInput.constraints || "nincs megadva"}
-- **Névkonvenció:** ${userInput.names || "világ-hű"}
-[/INST]`,
-      en: `[INST]You are an expert, creative RPG game master assistant. Your task is to generate a structured adventure outline. The output MUST be in English. The output format MUST be clean markdown. Do not add any introductory or concluding text, only the outline.
+- **Névkonvenció:** ${userInput.names || "világ-hű"}`,
+      en: `You are an expert, creative RPG game master assistant. Your task is to generate a structured adventure outline based on the user's request.
+The adventure should be logical, consistent, and contain unique yet understandable elements. Avoid overly abstract or clichéd ideas. The goal is to create an exciting, playable story outline.
+The output MUST be in English. The output format MUST be clean markdown. Do not add any introductory or concluding text, only the outline.
 
+REQUESTED STRUCTURE:
 **Pitch:** (A 2-3 sentence, exciting summary.)
 **Starting Situation & Stakes:** (What is happening? What is at stake?)
 **Hooks (3 options):**
@@ -76,10 +81,9 @@ USER'S REQUEST:
 - **Length:** ${userInput.length || "one-shot"}
 - **Content Boundaries:** ${userInput.boundaries || "none specified"}
 - **Constraints:** ${userInput.constraints || "none specified"}
-- **Naming Convention:** ${userInput.names || "world-appropriate"}
-[/INST]`
+- **Naming Convention:** ${userInput.names || "world-appropriate"}`
     };
-    
+  
     const masterPrompt = prompts[lang];
 
     const response = await hf.chatCompletion({

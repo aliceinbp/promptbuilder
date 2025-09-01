@@ -1,6 +1,5 @@
-// D:\promptbuilder\netlify\functions\rpg-dm-master.js (ÚJ, GEMINI VERZIÓ)
+// D:\promptbuilder\netlify\functions\rpg-dm-suggestions.js (JAVÍTOTT)
 
-// 1. A Hugging Face helyett a Google Gemini csomagját használjuk
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function(event) {
@@ -9,106 +8,41 @@ exports.handler = async function(event) {
   }
 
   try {
-    // 2. Inicializáljuk a Gemini klienst a Netlify-on beállított kulccsal
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
-    // 3. A promptokat átfogalmaztuk, hogy a Gemini jobban megértse a feladatot.
-    // A kért kimeneti formátum (a markdown struktúra) változatlan maradt.
+    // JAVÍTÁS: A prompt most 4 ötletet kér, és az elvárt JSON formátum is ezt tükrözi.
     const prompts = {
-      hu: `Te egy profi, kreatív szerepjátékos mesélősegéd vagy. A feladatod egy strukturált kalandvázlat generálása a felhasználó kérései alapján. A kimenet KIZÁRÓLAG magyar nyelven készüljön, TISZTA markdown formátumban. Ne adj hozzá semmilyen bevezető vagy záró szöveget, csak a vázlatot.
-
-A KÉRT STRUKTÚRA:
-**Pitch:** (2-3 mondatos, izgalmas összefoglaló.)
-**Kiinduló Helyzet és Tét:** (Mi történik? Mi forog kockán?)
-**Kampó (3 opció):**
-- *Harcosoknak:* (Akció-orientált bevezetés.)
-- *Nyomozóknak:* (Rejtély-központú bevezetés.)
-- *Társasági karaktereknek:* (Szociális interakcióra épülő bevezetés.)
-**A Fordulat:** (Egy meglepő felfedezés.)
-**Főbb Helyszínek (3):**
-1. **Helyszín neve:** (Leírás, interakciós lehetőség.)
-2. **Helyszín neve:** (Leírás)
-3. **Helyszín neve:** (Leírás)
-**Főbb NJK-k (3):**
-1. **Név:** (Célja, Módszere, Jellegzetes vonása/mondata.)
-2. **Név:** (Célja, Módszere, Jellegzetes vonása/mondata.)
-3. **Név:** (Célja, Módszere, Jellegzetes vonása/mondata.)
-**Lehetséges Jelenetek (5):**
-- (1. jelenet: Bevezetés)
-- (2. jelenet: Nyomozás/utazás)
-- (3. jelenet: Társasági találkozó)
-- (4. jelenet: Bonyodalom)
-- (5. jelenet: Csúcspont)
-**Jutalmak:** (Narratív és tárgyi jutalmak.)
-
-A FELHASZNÁLÓ KÉRÉSE:
-- **Játékrendszer/Világ:** ${userInput.world || "általános high fantasy"}
-- **Hangulat & Stílus:** ${userInput.mood || "hősies kaland"}
-- **Kulcsszavak:** ${userInput.keywords || "egy elveszett ereklye"}
-- **Játékosok:** ${userInput.party || "3-5 tapasztalt játékos"}
-- **Hossz:** ${userInput.length || "egyestés kaland"}
-- **Tartalmi Határok:** ${userInput.boundaries || "nincs megadva"}
-- **Kötöttségek:** ${userInput.constraints || "nincs megadva"}
-- **Névkonvenció:** ${userInput.names || "világ-hű"}`,
-      en: `You are an expert, creative RPG game master assistant. Your task is to generate a structured adventure outline based on the user's request. The output MUST be in English. The output format MUST be clean markdown. Do not add any introductory or concluding text, only the outline.
-
-REQUESTED STRUCTURE:
-**Pitch:** (A 2-3 sentence, exciting summary.)
-**Starting Situation & Stakes:** (What is happening? What is at stake?)
-**Hooks (3 options):**
-- *For Warriors/Action-seekers:* (A direct, action-oriented intro.)
-- *For Investigators/Intrigue-lovers:* (A mystery-focused intro.)
-- *For Social/Charismatic Characters:* (A social interaction-based intro.)
-**The Twist:** (A surprising revelation.)
-**Key Locations (3):**
-1. **Location Name:** (Atmospheric description, 1-2 interaction ideas.)
-2. **Location Name:** (Description)
-3. **Location Name:** (Description)
-**Key NPCs (3):**
-1. **Name:** (Goal, Method, Quirk/Quote.)
-2. **Name:** (Goal, Method, Quirk/Quote.)
-3. **Name:** (Goal, Method, Quirk/Quote.)
-**Potential Scenes (5):**
-- (Scene 1: The introduction)
-- (Scene 2: Investigation/travel)
-- (Scene 3: A social encounter)
-- (Scene 4: The complication)
-- (Scene 5: The climax)
-**Rewards:** (List both narrative and material rewards.)
-
-USER'S REQUEST:
-- **System/World:** ${userInput.world || "generic high fantasy"}
-- **Mood & Style:** ${userInput.mood || "heroic adventure"}
-- **Keywords:** ${userInput.keywords || "a missing artifact"}
-- **Party:** ${userInput.party || "3-5 experienced players"}
-- **Length:** ${userInput.length || "one-shot"}
-- **Content Boundaries:** ${userInput.boundaries || "none specified"}
-- **Constraints:** ${userInput.constraints || "none specified"}
-- **Naming Convention:** ${userInput.names || "world-appropriate"}`
+      hu: `Kérlek generálj 4 különböző, rövid, egyedi RPG kalandötletet (mindegyik 3-7 kulcsszóból álljon). A világ: ${userInput.world || 'fantasy'}. A hangulat: ${userInput.mood || 'kalandos'}. A válaszod CSAK egy JSON tömb legyen 4 stringgel, pl: ["ötlet1", "ötlet2", "ötlet3", "ötlet4"]. Semmi más szöveget ne írj.`,
+      en: `Generate 4 distinct, brief, unique RPG adventure hooks (each 3-7 keywords long). The world is: ${userInput.world || 'fantasy'}. The mood is: ${userInput.mood || 'adventurous'}. Your response MUST be ONLY a JSON array of 4 strings, like: ["hook1", "hook2", "hook3", "hook4"]. No other text.`
     };
     
     const masterPrompt = prompts[lang];
 
-    // 4. A kérést a Gemini modellnek küldjük
     const result = await model.generateContent(masterPrompt);
     const response = await result.response;
-    // 5. A választ a Gemini-specifikus formátumból nyerjük ki
-    const generatedText = response.text();
+    const rawResult = response.text();
+
+    // JAVÍTÁS: Biztonságos JSON kinyerése a válaszból, hogy elkerüljük a hibákat.
+    const jsonMatch = rawResult.match(/\[\s*".*?"\s*(,\s*".*?"\s*)*\]/s);
+    if (!jsonMatch) {
+      throw new Error("The AI did not return a valid JSON array.");
+    }
+    const jsonResult = JSON.parse(jsonMatch[0]);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ result: generatedText })
+      body: JSON.stringify({ suggestions: jsonResult })
     };
 
   } catch (error) {
-    console.error("DM Master (Gemini) hiba:", error);
+    console.error("DM Suggestion (Gemini) hiba:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Error during adventure generation.", details: error.message })
+      body: JSON.stringify({ error: "Hiba történt az ötletek generálása során.", details: error.message })
     };
   }
 };
