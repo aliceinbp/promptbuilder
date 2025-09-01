@@ -537,18 +537,22 @@ body.light-theme .history-item:hover { background-color: #dee2e6; }
     gap: 8px;
     align-content: flex-start;
 }
-
+/* ===== CÍMKÉK VÉGLEGES STÍLUSA (EGYSÉGESÍTETT) ===== */
+/* Ez a szabály biztosítja, hogy MINDEN prompt címke (a kategóriáknál és a végleges dobozban is)
+   mindig a megfelelő lila hátteret és fehér szöveget kapja, mindkét témában. */
+.prompt-input-tag,
 .prompt-tag {
-    background-color: var(--accent-color);
-    color: var(--color-text-inverted);
-    padding: 6px 12px;
+    background-color: var(--color-primary);
+    color: var(--color-white-pure) !important;
+    padding: 5px 10px;
     border-radius: 15px;
     font-size: 0.9em;
-    cursor: move;
-    transition: background-color 0.2s;
-    user-select: none; /* Ne jelölje ki a szöveget mozgatás közben */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+    user-select: none;
 }
-
 .prompt-tag:hover {
     background-color: var(--accent-color-hover);
 }
@@ -1096,19 +1100,6 @@ body.light-theme .choices__inner {
     flex-wrap: wrap;
     gap: 8px;
 }
-
-.prompt-input-tag {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverted);
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    animation: fadeIn 0.3s ease;
-}
-
 .delete-tag {
     background: none;
     border: none;
@@ -3321,13 +3312,4 @@ a.cta-button-small:not([href]) {
     color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.6;
-}
-/* ===== CÍMKE SZÍN JAVÍTÁSA (VÉGLEGES) ===== */
-.prompt-input-tag,
-.prompt-tag {
-    color: var(--color-white-pure) !important;
-}
-/* Világos módban a gombok színe legyen sötét a jobb olvashatóságért */
-body.light-theme .button-group button {
-    color: var(--color-text-main);
 }
