@@ -684,7 +684,6 @@ body.light-theme #close-quote-btn:hover {
     }
 }
 /* ===== KAPCSOLAT ŰRLAP VÉGLEGES STÍLUS ===== */
-
 /* Az űrlap doboza: sötét háttér, neonos lila keret és ragyogás */
 .contact-form {
     background: var(--section-bg-color); /* A weboldalad sötét háttérszíne */
@@ -1464,7 +1463,6 @@ body.light-theme .gradient-border-box {
     flex: 1 1 50%;
     min-width: 150px;
 }
-
 /* Cseréld le a következőre: */
 .input-group {
     display: flex;
@@ -3050,9 +3048,7 @@ body.light-theme .spinner {
     margin-top: 5px;
     margin-bottom: 0;
 }
-/* ======================================== */
 /* ===== RPG MINI-MODULOK STÍLUSA ===== */
-/* ======================================== */
 
 .rpg-mini-module {
     background-color: var(--color-surface);
@@ -3136,9 +3132,7 @@ body.light-theme .spinner {
     resize: vertical;
     min-height: 80px;
 }
-/* ======================================== */
 /* ===== A PROJEKT TÖRTÉNETE SZEKCIÓ ===== */
-/* ======================================== */
 #project-story-section {
     text-align: center;
     padding: 40px 0;
@@ -3191,10 +3185,7 @@ body.light-theme .spinner {
     color: var(--color-text-secondary);
     margin: 0;
 }
-/* ======================================== */
 /* ===== CÍMEK EGYSÉGESÍTÉSE (BETŰTÍPUS) ===== */
-/* ======================================== */
-
 /* Kicseréljük a Pacifico betűtípust Rajdhanira a legtöbb szekció-címnél */
 #saved-prompts-section h2,
 #links-section h2,
@@ -3208,8 +3199,28 @@ body.light-theme .spinner {
 .gallery-category-title {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
+    letter-spacing: 1px;  /* text-transform: uppercase; */
+}
+/* ===== TUDÁSTÁR PILLÉR STÍLUSOK ===== */
+.handbook-pillar {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 2px solid var(--color-border-accent);
+}
+
+.handbook-pillar-title {
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 2em;
     letter-spacing: 1px;
-    /* Opcionális: Ha szeretnéd, hogy mindenhol nagybetűs legyen, mint a logóban,
-       akkor töröld ki a komment jelet a következő sor elől: */
-    /* text-transform: uppercase; */
+    color: var(--color-text-main);
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.handbook-pillar-title i {
+    color: var(--color-primary);
+    margin-right: 15px;
+    transform: translateY(-2px);
 }
