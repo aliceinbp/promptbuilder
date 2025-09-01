@@ -1,4 +1,4 @@
-// D:\promptbuilder\netlify\functions\rpg-character-creator.js (ÚJ, GEMINI VERZIÓ)
+// D:\promptbuilder\netlify\functions\rpg-character-creator.js (Névgenerálás javítva)
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -14,9 +14,9 @@ exports.handler = async function(event) {
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
-    // JAVÍTÁS: Új, részletesebb prompt a Gemini számára, minőségi elvárásokkal.
+    // JAVÍTÁS: A Név generálására vonatkozó utasítás pontosítva lett.
     const prompts = {
-      hu: `Te egy profi, kreatív szerepjátékos karakteralkotó segéd vagy. Feladatod egy strukturált, mechanika-semleges karakterkoncepció generálása a felhasználó által megadott adatok alapján.
+      hu: `Te egy profi, kreatív szerepjátékos karakteralkotó segéd vagy. A feladatod egy strukturált, mechanika-semleges karakterkoncepció generálása a felhasználó által megadott adatok alapján.
 
 **KRITIKUS SZABÁLYOK:**
 1.  **Maradj a kontextusban:** A karakter illeszkedjen a megadott világba és stílusba. Legyen egyedi, de logikus és játszható. Kerüld az önellentmondásokat és a túlzottan absztrakt, megfoghatatlan elemeket.
@@ -26,7 +26,7 @@ exports.handler = async function(event) {
 
 **A KÉRT STRUKTÚRA:**
 ### Név és Koncepció
-**Név:** (A karakter neve a kért konvenció szerint.)
+**Név:** (Generálj egy teljesen egyedi nevet, ami hangzásában illik a karakter fajához/származásához, de nem létező szavakból áll. Kerüld a kliséket és az egyszerű szó-összetételeket, pl. ne legyen 'Árnyék-futó'.)
 **Koncepció:** (Egyetlen, ütős mondat, ami összefoglalja a karaktert.)
 ### Külső Leírás
 (2-3 mondatos leírás a megjelenésről, öltözetről, testbeszédről.)
@@ -66,7 +66,7 @@ exports.handler = async function(event) {
 
 **REQUESTED STRUCTURE:**
 ### Name & Concept
-**Name:** (The character's name according to the requested convention.)
+**Name:** (Generate a completely unique name that sonically fits the character's race/origin but is not made of existing words. Avoid clichés and simple compound words, e.g., no 'Shadow-runner'.)
 **Concept:** (A single, powerful sentence summarizing the character.)
 ### Appearance
 (A 2-3 sentence description of their appearance, attire, and body language.)

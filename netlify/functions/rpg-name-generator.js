@@ -1,43 +1,62 @@
-import { HfInference } from "@huggingface/inference";
+// D:\promptbuilder\netlify\functions\rpg-name-generator.js (ÚJ, GEMINI VERZIÓ)
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
   try {
-    const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
-    // EZ A VÉGLEGES, MÉG SZIGORÚBB PROMPT
-    const promptText = lang === 'hu'
-      ? `Viselkedj úgy, mint egy nyelvész és fantasy író. Generálj 10 darab, teljesen egyedi, fiktív nevet, amelyek illenek a következő leíráshoz: "${userInput.style || 'általános fantasy'}".
-      A nevek legyenek egybefüggő, kitalált szavak, vagy két részből álló nevek, ahol MINDKÉT RÉSZ FIKTÍV.
-      KRITIKUSAN FONTOS: NE alkoss neveket létező magyar szavak összetételéből (KERÜLENDŐ: 'Árnyék-Suttogó', 'Obszidián-Szív'). A cél az eredetiség, nem a leírás.
-      A következő nevek KIZÁRÓLAG STÍLUS PÉLDÁK: 'Lyra Valerion', 'Sorin Thale', 'Elaria Vessar'. NE HASZNÁLD VAGY MÁSOLD ezeket!
-      A válaszod CSAK egy JSON tömb legyen 10 stringgel, pl: ["Név1", "Név2", ...].`
-      : `Act as a linguist and fantasy author. Generate 10 completely unique, fictional proper names that fit the following description: "${userInput.style || 'general fantasy'}".
-      The names should be single, cohesive words, or two-part names where BOTH parts are fictional. They should sound like authentic names, not descriptive titles.
-      CRITICAL: DO NOT create names by combining common English words (AVOID: 'Shadow-Whisper', 'Crimson-Blade', 'Nightshade'). The goal is originality, not description.
-      The following names are STYLE EXAMPLES ONLY: 'Lyra Valerion', 'Sorin Thale', 'Elaria Vessar'. DO NOT USE OR COPY them!
-      Your response MUST be ONLY a JSON array of 10 strings, like: ["Name1", "Name2", ...].`;
-      
-    const masterPrompt = `[INST]${promptText}[/INST]`;
+    // JAVÍTÁS: Új, sokkal szigorúbb prompt a minőségi, egyedi nevek generálásához.
+    const prompts = {
+      hu: `Te egy kreatív nyelvész és fantasy-névgenerátor vagy. A feladatod 10 teljesen egyedi név létrehozása a felhasználó által megadott stílus alapján.
 
-    const response = await hf.chatCompletion({
-      model: 'mistralai/Mistral-7B-Instruct-v0.3',
-      messages: [{ role: "user", content: masterPrompt }],
-      parameters: { max_new_tokens: 200, temperature: 1.0, repetition_penalty: 1.2 }
-    });
+**KRITIKUS SZABÁLYOK A NÉVALKOTÁSHOZ:**
+1.  **Eredetiség:** A nevek legyenek teljesen kitaláltak. NE használj létező szavakat semmilyen nyelven.
+2.  **Hangzás:** A nevek hangulata és hangzása illeszkedjen a megadott stílushoz (pl. egy törp név legyen keményebb hangzású, egy tünde dallamosabb).
+3.  **Nincsenek összetételek:** Szigorúan TILOS létező szavakból összerakni a neveket (pl. KERÜLENDŐ: 'Árny-mágus', 'Vaskalapács').
+4.  **Kerüld a kliséket:** Ne használj közismert fantasy neveket (pl. 'Legolas', 'Aragorn').
+
+**FELHASZNÁLÓI KÉRÉS:**
+- Stílus: "${userInput.style || 'általános fantasy'}"
+
+**A VÁLASZ FORMÁTUMA:**
+A válaszod KIZÁRÓLAG egy JSON tömb legyen, ami 10 stringet tartalmaz. Semmi mást ne írj.`,
+      en: `You are a creative linguist and fantasy name generator. Your task is to create 10 completely unique names based on the user-provided style.
+
+**CRITICAL RULES FOR NAME CREATION:**
+1.  **Originality:** The names must be entirely fictional. DO NOT use existing words from any language.
+2.  **Phonetics:** The mood and sound of the names must fit the requested style (e.g., a dwarven name should sound harsher, an elven name more melodic).
+3.  **No Compounds:** It is strictly FORBIDDEN to combine existing words (e.g., AVOID: 'Shadow-mancer', 'Iron-hammer').
+4.  **Avoid Clichés:** Do not use well-known fantasy names (e.g., 'Legolas', 'Aragorn').
+
+**USER REQUEST:**
+- Style: "${userInput.style || 'general fantasy'}"
+
+**RESPONSE FORMAT:**
+Your response MUST BE a JSON array containing exactly 10 strings. Do not write anything else.`
+    };
+
+    const masterPrompt = prompts[lang];
+
+    const result = await model.generateContent(masterPrompt);
+    const response = await result.response;
+    const rawResult = response.text();
     
-    const rawResult = response.choices[0].message.content;
+    // Biztonságos JSON kinyerése a válaszból
     const jsonMatch = rawResult.match(/\[\s*".*?"\s*(,\s*".*?"\s*)*\]/s);
     if (!jsonMatch) {
-        throw new Error("Az AI nem adott vissza érvényes JSON formátumú választ.");
+      throw new Error("The AI did not return a valid JSON array.");
     }
     const jsonResult = JSON.parse(jsonMatch[0]);
 
     return { statusCode: 200, body: JSON.stringify({ names: jsonResult }) };
   } catch (error) {
-    console.error("Name Generator hiba:", error);
+    console.error("Name Generator (Gemini) hiba:", error);
     return { statusCode: 500, body: JSON.stringify({ error: "Hiba a nevek generálása során.", details: error.message }) };
   }
 };
