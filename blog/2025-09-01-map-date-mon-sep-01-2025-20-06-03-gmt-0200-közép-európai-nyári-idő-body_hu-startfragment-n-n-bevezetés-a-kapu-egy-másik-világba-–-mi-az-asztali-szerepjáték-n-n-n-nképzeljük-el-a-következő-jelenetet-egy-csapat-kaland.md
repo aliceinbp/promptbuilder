@@ -1,5 +1,5 @@
 ---
-title_hu: "# A képzelet játéka: Utazás az asztali szerepjátékok világában"
+title_hu: "A képzelet játéka: Utazás az asztali szerepjátékok világában"
 title_en: "The Game of Imagination: A Journey into the World of Tabletop
   Role-Playing Games"
 date: 2025-09-01T18:06:03.022Z
@@ -117,7 +117,7 @@ body_hu: >-
   Az asztali szerepjáték több mint egyszerű játék. Egy olyan hobbi, amely fejleszti a kreativitást, a problémamegoldó képességet és a kommunikációs készségeket. De ami a legfontosabb, mély és tartós emberi kapcsolatokat épít a közös történetmesélés élményén keresztül. A szabályok, a kockák és a könyvek mögött a varázslat lényege egyszerű: barátok gyűlnek össze, hogy együtt alkossanak egy történetet, amely csakis az övék. A lehetőségek végtelenek, a kalandok határtalanok. Ragadj hát kockát, hívd össze a barátaidat, és vágj bele – a te történeted már vár.
 
 
-  ![](/src/blog-images/rpg03 (2).jpg)
+  ![](/src/blog-images/rpg03.jpg)
 
 
   <!--StartFragment-->
@@ -254,7 +254,7 @@ body_en: >-
   A tabletop role-playing game is more than just a game. It is a hobby that develops creativity, problem-solving abilities, and communication skills. But most importantly, it builds deep and lasting human connections through the experience of shared storytelling. Behind the rules, the dice, and the books, the essence of the magic is simple: friends gather to create a story together that is uniquely theirs. The possibilities are endless, the adventures limitless. So grab some dice, gather your friends, and dive in—your story awaits.
 
 
-  ![](/src/blog-images/rpg03 (2).jpg)
+  ![](/src/blog-images/rpg02.jpg)
 
 
   <!--EndFragment-->
