@@ -1,37 +1,55 @@
-import { HfInference } from "@huggingface/inference";
+// D:\promptbuilder\netlify\functions\rpg-character-suggestions.js (ÚJ, GEMINI VERZIÓ)
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
   try {
-    const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
     const userInput = JSON.parse(event.body);
     const lang = userInput.lang || 'en';
 
-    // Egyértelműsített parancs az AI-nak mindkét nyelven
-    const promptText = lang === 'hu'
-      ? `Kérlek generálj 3 különböző, egy mondatos MAGYAR NYELVŰ szerepjáték karakter koncepciót. A világ: ${userInput.world || 'fantasy'}. A kaszt: ${userInput.class || 'kalandor'}. A válaszod CSAK egy JSON tömb legyen 3 stringgel, pl: ["koncepció1", "koncepció2", "koncepció3"]. Semmi más szöveget ne írj.`
-      : `Generate 3 distinct, one-sentence RPG character concepts in ENGLISH. The world is: ${userInput.world || 'fantasy'}. The class is: ${userInput.class || 'adventurer'}. Your response MUST be ONLY a JSON array of 3 strings, like: ["concept1", "concept2", "concept3"]. No other text.`;
+    const prompts = {
+      hu: `Te egy kreatív RPG ötletgenerátor vagy. A feladatod, hogy 4 KÜLÖNBÖZŐ, egy mondatos karakterkoncepciót adj.
+A felhasználó adta meg a következőket:
+- Világ: ${userInput.world || 'fantasy'}
+- Kaszt: ${userInput.class || 'kalandor'}
 
-    const masterPrompt = `[INST]${promptText}[/INST]`;
+A VÁLASZOD KIZÁRÓLAG egy JSON tömb legyen, ami 4 stringet tartalmaz. Minden string egy-egy különálló ötlet. NE fűzd össze az ötleteket!
 
-    const response = await hf.chatCompletion({
-      model: 'mistralai/Mistral-7B-Instruct-v0.3',
-      messages: [{ role: "user", content: masterPrompt }],
-      parameters: { max_new_tokens: 150, temperature: 0.95 }
-    });
+Példa a HELYES formátumra:
+["Egy veterán testőr, aki cserbenhagyta a herceget, akit védelmeznie kellett volna.", "Egy alkimista, aki véletlenül halhatatlanná tette a macskáját, és most a gyógymódot keresi.", "Egy kiugrott pap, aki egy tiltott isten suttogásait hallja a fejében.", "Egy nomád bárd, aki a törzsének elveszett történeteit gyűjti össze a világban."]
 
-    const rawResult = response.choices[0].message.content;
+Ne írj semmilyen más szöveget a JSON tömbön kívül.`,
+      en: `You are a creative RPG idea generator. Your task is to provide 4 SEPARATE, one-sentence character concepts.
+The user has provided:
+- World: ${userInput.world || 'fantasy'}
+- Class: ${userInput.class || 'adventurer'}
 
-    // Biztonságosabb JSON kinyerése a válaszból
-    const jsonMatch = rawResult.match(/\[\s*".*"\s*\]/s);
+Your response MUST BE a JSON array containing exactly 4 strings. Each string is one separate concept. DO NOT combine the concepts into a single string.
+
+Example of the CORRECT format:
+["A veteran bodyguard who failed the prince they were sworn to protect.", "An alchemist who accidentally made their cat immortal and is now seeking a cure.", "A disgraced priest who hears the whispers of a forbidden god.", "A nomadic bard piecing together their tribe's lost history from scattered lore."]
+
+Do not write any text outside of the JSON array.`
+    };
+
+    const masterPrompt = prompts[lang];
+
+    const result = await model.generateContent(masterPrompt);
+    const response = await result.response;
+    const rawResult = response.text();
+    
+    const jsonMatch = rawResult.match(/\[\s*".*?"\s*(,\s*".*?"\s*)*\]/s);
     if (!jsonMatch) {
-        throw new Error("Az AI nem adott vissza érvényes JSON formátumú választ.");
+      throw new Error("The AI did not return a valid JSON array.");
     }
     const jsonResult = JSON.parse(jsonMatch[0]);
 
     return { statusCode: 200, body: JSON.stringify({ suggestions: jsonResult }) };
   } catch (error) {
-    console.error("Character Suggestion hiba:", error);
+    console.error("Character Suggestion (Gemini) hiba:", error);
     return { statusCode: 500, body: JSON.stringify({ error: "Hiba a koncepciók generálása során.", details: error.message }) };
   }
 };
