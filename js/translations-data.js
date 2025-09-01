@@ -25,7 +25,12 @@ const translations = {
         techModalText: "A háttérben működő ‘motor’ immár a Google Gemini, egy fejlett AI modell, amely lehetővé teszi, hogy az ötleteid még pontosabban és kreatívabban keljenek életre. A célom kezdettől az volt, hogy egy bárki számára elérhető, könnyen használható eszközt hozzak létre, amely megszabadít a bonyolult technológia és a magas költségek terhétől. Nagy álmom, hogy a projekt folyamatosan fejlődjön, és a legkorszerűbb AI-megoldásokat biztosítsa neked a jövőben is.",
         futureModalTitle: "A Jövő: Közös Fejlődés",
         futureModalText: "A jövő? Alakítsuk együtt. A tartalombővítés, a tudásom átadása a cél, de ha szeretnél a részese lenni, csak küldd be az ötleteid, gondolataid és segítsünk együtt másoknak!",
-        
+        expertTitle: "AI Tudós",
+        expertDesc: "Nem találod, amit keresel? Kérdezd meg a Tudósunkat, és ő azonnal generál neked egy érthető magyarázatot!",
+        expertPlaceholder: "Írj be egy művészeti stílust vagy AI kifejezést...",
+        expertAskBtn: "Kérdés",
+        expertPlaceholderInitial: "A válasz itt fog megjelenni...",
+        expertErrorEmpty: "Kérlek, írj be egy kifejezést a kereséshez!",
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -485,7 +490,12 @@ const translations = {
         techModalText: "The engine running in the background is now Google Gemini, a cutting-edge AI model that brings your ideas to life with even greater precision and creativity. From the very beginning, my goal has been to create a tool that’s accessible and easy to use for everyone, freeing you from the burden of complex technology and high costs. My dream is for this project to keep evolving, always providing you with the most advanced AI solutions in the future.",
         futureModalTitle: "The Future: Growing Together",
         futureModalText: "The future? Let's shape it together. My goal is to expand the content and share my knowledge, but if you'd like to be a part of it, just send in your ideas and thoughts, and let's help others together!",
-        
+        expertTitle: "AI Scholar",
+        expertDesc: "Can't find what you're looking for? Ask our Scholar, and it will instantly generate an easy-to-understand explanation for you!",
+        expertPlaceholder: "Enter an art style or AI term...",
+        expertAskBtn: "Ask",
+        expertPlaceholderInitial: "The answer will appear here...",
+        expertErrorEmpty: "Please enter a term to search for!",
         // RPG Mini-Modules
         nameGenTitle: "Name Generator",
         nameGenDesc: "Describe a style, and the AI will create unique names for your world!",

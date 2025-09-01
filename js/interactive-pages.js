@@ -320,3 +320,55 @@ function initializeChallengePage() {
         challengeDisplay.classList.remove('hidden');
     });
 }
+// Az interactive-pages.js fájl végére illeszd be
+
+function initializeGlossaryExpert() {
+    const askBtn = document.getElementById('ask-expert-btn');
+    if (!askBtn) return; // Csak akkor fusson, ha a fogalomtár oldalon vagyunk
+
+    const input = document.getElementById('expert-term-input');
+    const outputDiv = document.getElementById('expert-output');
+
+    askBtn.addEventListener('click', async () => {
+        const userTerm = input.value.trim();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+        if (!userTerm) {
+            outputDiv.innerHTML = `<p style="color: #ff6b6b;" data-key="expertErrorEmpty"></p>`;
+            window.setLanguage(lang); // Frissíti a data-key-es szöveget
+            return;
+        }
+
+        outputDiv.innerHTML = `<div class="spinner" style="margin: 20px auto;"></div>`;
+        askBtn.disabled = true;
+
+        try {
+            const response = await fetch('/.netlify/functions/glossary-expert', {
+                method: 'POST',
+                body: JSON.stringify({ userTerm: userTerm, lang: lang })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.details || `Network error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            
+            if (typeof showdown !== 'undefined') {
+                const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
+                // A Kulcsszavak részt félkövérré tesszük a jobb kinézetért
+                const formattedHtml = converter.makeHtml(data.definition).replace('Kulcsszavak:', '<strong>Kulcsszavak:</strong>').replace('Keywords:', '<strong>Keywords:</strong>');
+                outputDiv.innerHTML = formattedHtml;
+            } else {
+                outputDiv.textContent = data.definition;
+            }
+
+        } catch (error) {
+            console.error("Glossary Expert hiba:", error);
+            outputDiv.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}<br><small>${error.message}</small></p>`;
+        } finally {
+            askBtn.disabled = false;
+        }
+    });
+}

@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initializeStyleFinder === 'function') initializeStyleFinder();
     if (typeof initializeQuiz === 'function') initializeQuiz();
     if (typeof initializeChallengePage === 'function') initializeChallengePage();
+    if (typeof initializeGlossaryExpert === 'function') initializeGlossaryExpert();
 
     // Pagefind kereső inicializálása
     if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
