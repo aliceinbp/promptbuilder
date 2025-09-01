@@ -22,24 +22,28 @@
 }
 
 body.light-theme {
-    /* --- VILÁGOS TÉMA (KÉK ÁRNYALATOKKAL) --- */
-    --color-bg: #f0f2f5;
-    --color-surface: #ffffff;
-    --color-surface-alt: #e9ecef;
-    --color-surface-darker: #dee2e6;
-    --color-primary: #007bff;
-    --color-primary-light: #4ea8ff;
-    --color-primary-highlight: #0056b3;
-    --color-primary-accent: #0056b3;
-    --color-text-main: #212529;
-    --color-text-secondary: #495057;
-    --color-text-subtle: #6c757d;
-    --color-border: #dee2e6;
-    --color-border-accent: #007bff;
-    --color-border-soft: rgba(0, 123, 255, 0.5);
-    --color-shadow: rgba(0, 123, 255, 0.2);
+    /* --- VILÁGOS TÉMA (ÚJ, LILA VERZIÓ) --- */
+    --color-bg: #f9f7fd; /* Egy nagyon halvány, majdnem fehér lila háttér */
+    --color-surface: #ffffff; /* A kártyák és a fő konténer háttere tiszta fehér marad */
+    --color-surface-alt: #f2eef7; /* A belső dobozok, pl. input mezők halványlila háttere */
+    --color-surface-darker: #e9e4f0;
+    /* A kék színeket lecseréljük a te lila árnyalataidra */
+    --color-primary: #8e44ad;         /* Egy erősebb, olvashatóbb lila */
+    --color-primary-light: #a46de5;   /* A te eredeti, világosabb lilád a hover effektekhez */
+    --color-primary-highlight: #8e44ad;
+    --color-primary-accent: #e85acb;    /* A neonos magenta világos háttéren */
+    /* A szövegek nem feketék, hanem sötétlilák/szürkék a jobb olvashatóságért */
+    --color-text-main: #34303E;
+    --color-text-secondary: #5a5368;
+    --color-text-subtle: #8d869b;
     --color-text-inverted: #ffffff;
-    --color-white-pure: #ffffff;
-    --cusdis-border-color: #007bff; /* Világos mód: Kék keret */
-    --cusdis-bg-color: #ffffff; /* Fehér, ahogy kérted */
+    /* Keretek és árnyékok */
+    --color-border: #dcd6e6;
+    --color-border-accent: #a46de5;
+    --color-border-soft: rgba(142, 68, 173, 0.4);
+    --color-shadow: rgba(142, 68, 173, 0.15);
+        --color-white-pure: #ffffff;
+    /* A Cusdis vendégkönyv keretének színe */
+    --cusdis-border-color: #a46de5; 
+    --cusdis-bg-color: #ffffff;
 }
