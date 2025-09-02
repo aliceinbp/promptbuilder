@@ -73,63 +73,66 @@
             </div>
         </header>
         <main data-pagefind-body>
-            <section id="challenge-intro" style="text-align: center;">
-                <h2><i class="fa-solid fa-dice-d20"></i> <span data-key="challengeTitle">Prompt Kihívás</span></h2>
-                <p class="artist-subtitle" data-key="challengeIntro">Készen állsz egy kreatív kalandra? Pörgess egy véletlenszerű promptot, és mutasd meg, mit tudsz!</p>
-            </section>
-            <section class="challenge-generator-box daily-feature-box">
-                <h3 data-key="challengeGenerateTitle">1. Pörgess egy Kihívást!</h3>
-                <p data-key="challengeGenerateDesc">Kattints a gombra, hogy a sors összeállítson neked egy egyedi prompt alapot 3 véletlenszerű elemből!</p>
-                <button id="generate-challenge-btn" class="cta-button"><i class="fa-solid fa-dice"></i> <span data-key="generateChallengeBtn">Kihívás Pörgetése</span></button>
-                <div id="challenge-display" class="hidden">
-                    <h4>A te kihívásod:</h4>
-                    <div id="challenge-elements">
-                        <span class="challenge-part" id="challenge-subject"></span>
-                        <span class="challenge-plus">+</span>
-                        <span class="challenge-part" id="challenge-style"></span>
-                        <span class="challenge-plus">+</span>
-                        <span class="challenge-part" id="challenge-mood"></span>
-                    </div>
-                    <p data-key="challengeUseIt" class="challenge-instruction">Most pedig irány a <a href="generator.html">Generátor</a>, és keltsd életre ezt a kombinációt!</p>
+
+    <div id="challenge-content">
+
+        <section id="challenge-intro" style="text-align: center;">
+            <h2><i class="fa-solid fa-dice-d20"></i> <span data-key="challengeTitle">Prompt Kihívás</span></h2>
+            <p class="artist-subtitle" data-key="challengeIntro">Készen állsz egy kreatív kalandra? Pörgess egy véletlenszerű promptot, és mutasd meg, mit tudsz!</p>
+        </section>
+        <section class="challenge-generator-box daily-feature-box">
+            <h3 data-key="challengeGenerateTitle">1. Pörgess egy Kihívást!</h3>
+            <p data-key="challengeGenerateDesc">Kattints a gombra, hogy a sors összeállítson neked egy egyedi prompt alapot 3 véletlenszerű elemből!</p>
+            <button id="generate-challenge-btn" class="cta-button"><i class="fa-solid fa-dice"></i> <span data-key="generateChallengeBtn">Kihívás Pörgetése</span></button>
+            <div id="challenge-display" class="hidden">
+                <h4>A te kihívásod:</h4>
+                <div id="challenge-elements">
+                    <span class="challenge-part" id="challenge-subject"></span>
+                    <span class="challenge-plus">+</span>
+                    <span class="challenge-part" id="challenge-style"></span>
+                    <span class="challenge-plus">+</span>
+                    <span class="challenge-part" id="challenge-mood"></span>
                 </div>
-            </section>
-            <section class="challenge-submit-box daily-feature-box">
-                <h3 data-key="challengeSubmitTitle">2. Küldd be az Alkotásod!</h3>
-                <p data-key="challengeSubmitDesc"></p>
-                <div class="submission-steps">
-                    <div class="step">
-                        <h4>1. Lépés: Kép feltöltése</h4>
-                        <p>Nincs hova feltöltened a képet? Használd az ImgBB-t! Kattints a gombra, töltsd fel az alkotásod, majd a 'BEÁGYAZÁSI KÓDOK'-nál válaszd a 'Közvetlen link'-et és másold ki.</p>
-                        <a href="https://imgbb.com/" target="_blank" class="cta-button-small imgbb-button">
-                            <i class="fa-solid fa-upload"></i> Kép feltöltése az ImgBB-re
-                        </a>
-                    </div>
-                    <div class="step">
-                        <h4>2. Lépés: Adatok beküldése</h4>
-                        <p>Ha megvan a kép linkje, add meg a neveddel együtt az alábbi űrlapon, hogy bekerülhess a Dicsőségfalra!</p>
-                        <form name="challenge-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-challenge.html" class="submission-form">
-                            <input type="hidden" name="form-name" value="challenge-submission" />
-                            <p class="hidden"><label>Ezt hagyd üresen: <input name="bot-field" /></label></p>
-                            <div class="form-group">
-                                <label for="name">Neved vagy Művészneved</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="imageUrl">Kép Direkt Linkje</label>
-                                <input type="url" id="imageUrl" name="imageUrl" required placeholder="https://i.ibb.co/...">
-                            </div>
-                            <button type="submit">Beküldés a Dicsőségfalra</button>
-                        </form>
-                    </div>
+                <p data-key="challengeUseIt" class="challenge-instruction">Most pedig irány a <a href="generator.html">Generátor</a>, és keltsd életre ezt a kombinációt!</p>
+            </div>
+        </section>
+        <section class="challenge-submit-box daily-feature-box">
+            <h3 data-key="challengeSubmitTitle">2. Küldd be az Alkotásod!</h3>
+            <p data-key="challengeSubmitDesc"></p>
+            <div class="submission-steps">
+                <div class="step">
+                    <h4>1. Lépés: Kép feltöltése</h4>
+                    <p>Nincs hova feltöltened a képet? Használd az ImgBB-t! Kattints a gombra, töltsd fel az alkotásod, majd a 'BEÁGYAZÁSI KÓDOK'-nál válaszd a 'Közvetlen link'-et és másold ki.</p>
+                    <a href="https://imgbb.com/" target="_blank" class="cta-button-small imgbb-button">
+                        <i class="fa-solid fa-upload"></i> Kép feltöltése az ImgBB-re
+                    </a>
                 </div>
-            </section>
-            <section id="submission-gallery" style="padding-top: 40px; border-top: 1px solid var(--color-border-accent);">
-                <h2 style="text-align: center;"><i class="fa-solid fa-trophy"></i> <span data-key="submissionGalleryTitle">Alkotók Dicsőségfala</span></h2>
-                <div id="submission-gallery-grid" class="gallery-grid" style="margin-top: 30px;">
-                    <p data-key="loadingSubmissions">Beküldött alkotások betöltése...</p>
+                <div class="step">
+                    <h4>2. Lépés: Adatok beküldése</h4>
+                    <p>Ha megvan a kép linkje, add meg a neveddel együtt az alábbi űrlapon, hogy bekerülhess a Dicsőségfalra!</p>
+                    <form name="challenge-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-challenge.html" class="submission-form">
+                        <input type="hidden" name="form-name" value="challenge-submission" />
+                        <p class="hidden"><label>Ezt hagyd üresen: <input name="bot-field" /></label></p>
+                        <div class="form-group">
+                            <label for="name">Neved vagy Művészneved</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageUrl">Kép Direkt Linkje</label>
+                            <input type="url" id="imageUrl" name="imageUrl" required placeholder="https://i.ibb.co/...">
+                        </div>
+                        <button type="submit">Beküldés a Dicsőségfalra</button>
+                    </form>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+        <section id="submission-gallery" style="padding-top: 40px; border-top: 1px solid var(--color-border-accent);">
+            <h2 style="text-align: center;"><i class="fa-solid fa-trophy"></i> <span data-key="submissionGalleryTitle">Alkotók Dicsőségfala</span></h2>
+            <div id="submission-gallery-grid" class="gallery-grid" style="margin-top: 30px;">
+                <p data-key="loadingSubmissions">Beküldött alkotások betöltése...</p>
+            </div>
+        </section>
+    </div> </main>
         <footer class="footer-main">
             <div class="footer-top">
                 <div class="footer-widget">

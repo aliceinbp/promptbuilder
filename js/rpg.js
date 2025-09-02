@@ -26,7 +26,12 @@ function initializeRpgHelper() {
     const twistOutput = document.getElementById('twist-output');
 
     // === Eseménykezelők ===
+    
     generateAdventureBtn.addEventListener('click', () => {
+        if (!canUseTool('aiHelper')) { 
+        showLimitModal();           
+        return;                     
+    }                               
         if (dmKeywordsInput.value.trim() === '') {
             generateSuggestions('/.netlify/functions/rpg-dm-suggestions', getDmMasterFormData(), dmSuggestionsOutput);
         } else {
@@ -35,6 +40,10 @@ function initializeRpgHelper() {
     });
 
     generateCharacterBtn.addEventListener('click', () => {
+        if (!canUseTool('aiHelper')) { 
+        showLimitModal();           
+        return;                     
+    }     
         if (ccKeywordsInput.value.trim() === '') {
             generateSuggestions('/.netlify/functions/rpg-character-suggestions', getCharacterCreatorFormData(), ccSuggestionsOutput);
         } else {

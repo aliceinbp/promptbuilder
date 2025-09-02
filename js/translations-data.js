@@ -11,7 +11,8 @@ const translations = {
         rpgInfoTooltip: "Tipp a jobb eredményekért!",
         rpgInfoModalTitle: "Tipp a Jobb Eredményekért",
         rpgInfoModalText: "A mesterséges intelligencia modellek jelenleg angol nyelven a legkreatívabbak. A legjobb, legötletesebb eredmények érdekében javasoljuk az oldal angol nyelvű változatának használatát a 'HUN | ENG' gombbal.",
-        // A Projekt Története Szekció
+        limitModalTitle: "Elérted a Napi Limitet",
+        limitModalText: "A vendégek számára a kreatív eszközök használata korlátozott. Regisztrálj egy ingyenes fiókot a korlátlan alkotáshoz és az exkluzív funkciók eléréséhez!",// A Projekt Története Szekció
         storyTitle: "A projekt története",
         storyCardPhilosophyTitle: "Történet",
         storyCardPhilosophyDesc: "Miért született meg a Script Acid?",
@@ -605,6 +606,8 @@ const translations = {
         loginBtn: "Login",
         signupBtn: "Sign Up",
         logoutBtn: "Logout",
+        limitModalTitle: "You've Reached the Daily Limit",
+        limitModalText: "The use of creative tools is limited for guests. Register for a free account for unlimited creation and to access exclusive features!",
         handbookMoreTipsTitle: "More Tips & Common Questions",
         faqWhyEnglishTitle: "Why is it important to write prompts in English?",
         faqWhyEnglishText: "Most artificial intelligence models were trained on vast, English-language datasets from the internet. Because of this, they understand English words, phrases, and cultural references most accurately. Although many AIs can understand other languages, you will almost always achieve the best, most predictable results with English prompts.",

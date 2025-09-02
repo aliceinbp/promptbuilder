@@ -515,9 +515,11 @@ function buildFinalPromptString() {
         }
     };
 
-    // ILLESZD BE EZT AZ ÚJ, TELJES RÉSZT A TÖRÖLT HELYÉRE:
-// ----------------------------------------------------
 btn.addEventListener('click', async () => {
+    if (!canUseTool('aiHelper')) {
+        showLimitModal();
+        return;
+    }
     const userPrompt = input.value.trim();
     if (!userPrompt) {
         const lang = localStorage.getItem('preferredLanguage') || 'en';

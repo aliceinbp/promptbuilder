@@ -340,6 +340,88 @@ function initializeAuth() {
 
   netlifyIdentity.on('login', user => {
     updateLoginState(user);
+// ===== NAPI LIMIT SZÁMLÁLÓ RENDSZER =====
+
+/**
+ * Ellenőrzi, hogy a felhasználó elérte-e a napi limitjét egy adott eszközre.
+ * @param {'generator' | 'aiHelper'} toolType Az eszköz típusa.
+ * @returns {boolean} Igaz, ha használhatja az eszközt, hamis, ha elérte a limitet.
+ */
+function canUseTool(toolType) {
+  const user = netlifyIdentity.currentUser();
+  // Ha a felhasználó be van jelentkezve, mindig használhatja.
+  if (user) {
+    return true;
+  }
+
+  const today = new Date().toISOString().split('T')[0]; // Mai dátum YYYY-MM-DD formátumban
+  let usage = JSON.parse(localStorage.getItem('dailyUsage')) || {};
+
+  // Ha új nap van, nullázzuk a számlálókat.
+  if (usage.date !== today) {
+    usage = { date: today, generatorCount: 0, aiHelperCount: 0 };
+  }
+
+  const limits = {
+    generator: 5,
+    aiHelper: 3
+  };
+
+  const currentCount = usage[`${toolType}Count`] || 0;
+
+  if (currentCount < limits[toolType]) {
+    // Még nem érte el a limitet.
+    usage[`${toolType}Count`]++;
+    localStorage.setItem('dailyUsage', JSON.stringify(usage));
+    return true;
+  } else {
+    // Elérte a limitet.
+    return false;
+  }
+}
+
+/**
+ * Megjeleníti a limit eléréséről szóló modális ablakot.
+ */
+function showLimitModal() {
+  const lang = localStorage.getItem('preferredLanguage') || 'en';
+  // Itt szükség lesz egy új modális ablakra.
+  // Ezt később hozzuk létre, de a logikája itt van:
+  
+  // Létrehozzuk a HTML-t, ha még nem létezik
+  if (!document.getElementById('limit-modal')) {
+      const modalHTML = `
+        <div id="limit-modal" class="modal hidden">
+            <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            <h2 data-key="limitModalTitle"></h2>
+            <p data-key="limitModalText"></p>
+            <div id="limit-modal-buttons" style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="limit-login-btn" class="cta-button" style="flex: 1;"></button>
+                <button id="limit-signup-btn" class="cta-button" style="flex: 1;"></button>
+            </div>
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+      // Eseménykezelők hozzáadása az új gombokhoz
+      document.getElementById('limit-login-btn').addEventListener('click', () => netlifyIdentity.open('login'));
+      document.getElementById('limit-signup-btn').addEventListener('click', () => netlifyIdentity.open('signup'));
+      document.getElementById('limit-modal').querySelector('.close-modal-btn').addEventListener('click', () => {
+          document.getElementById('modal-overlay').classList.add('hidden');
+          document.getElementById('limit-modal').classList.add('hidden');
+      });
+  }
+  
+  const modal = document.getElementById('limit-modal');
+  // Szövegek beállítása a fordításból
+  modal.querySelector('[data-key="limitModalTitle"]').textContent = translations[lang].limitModalTitle;
+  modal.querySelector('[data-key="limitModalText"]').textContent = translations[lang].limitModalText;
+  modal.querySelector('#limit-login-btn').textContent = translations[lang].loginBtn;
+  modal.querySelector('#limit-signup-btn').textContent = translations[lang].signupBtn;
+
+  // Modális ablak megjelenítése
+  document.getElementById('modal-overlay').classList.remove('hidden');
+  modal.classList.remove('hidden');
+}
     netlifyIdentity.close(); // Automatikusan bezárja az ablakot bejelentkezés után
   });
 
@@ -385,4 +467,47 @@ function updateLoginState(user) {
       <button id="signup-btn" class="utility-btn primary">${translations[lang].signupBtn || 'Sign Up'}</button>
     `;
   }
+  function updateLoginState(user) {
+  const container = document.getElementById('login-status-container');
+  if (!container) return;
+
+  const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+  if (user) {
+    // Bejelentkezett állapot
+    const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+    container.innerHTML = `
+      <div class="user-info">
+        <span>${userName}</span>
+        <button id="logout-btn" class="utility-btn">${translations[lang].logoutBtn || 'Logout'}</button>
+      </div>
+    `;
+  } else {
+    // Kijelentkezett állapot
+    container.innerHTML = `
+      <button id="login-btn" class="utility-btn">${translations[lang].loginBtn || 'Login'}</button>
+      <button id="signup-btn" class="utility-btn primary">${translations[lang].signupBtn || 'Sign Up'}</button>
+    `;
+  }
+  
+  // --- IDE ILLSZD BE AZ ÚJ KÓDOT ---
+  // Ez a rész kezeli a Recept gombok letiltását/engedélyezését
+  const saveRecipeBtn = document.getElementById('save-recipe-btn');
+  const loadRecipeBtn = document.getElementById('load-recipe-btn');
+
+  if (saveRecipeBtn && loadRecipeBtn) {
+    if (user) {
+      saveRecipeBtn.disabled = false;
+      loadRecipeBtn.disabled = false;
+      saveRecipeBtn.title = '';
+      loadRecipeBtn.title = '';
+    } else {
+      const tooltipText = translations[lang].recipeLoginTooltip || 'Login to use this feature';
+      saveRecipeBtn.disabled = true;
+      loadRecipeBtn.disabled = true;
+      saveRecipeBtn.title = tooltipText;
+      loadRecipeBtn.title = tooltipText;
+    }
+  }
+}
 }
