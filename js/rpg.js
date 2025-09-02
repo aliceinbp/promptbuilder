@@ -26,9 +26,9 @@ function initializeRpgHelper() {
     const twistOutput = document.getElementById('twist-output');
 
     // === Eseménykezelők ===
-    
-    generateAdventureBtn.addEventListener('click', () => {
-        if (!canUseTool('aiHelper')) { 
+   generateAdventureBtn.addEventListener('click', () => {
+    // JAVÍTÁS: 'aiHelper'-ről 'dmHelper'-re cserélve
+    if (!canUseTool('dmHelper')) { 
         showLimitModal();           
         return;                     
     }                               
@@ -40,7 +40,7 @@ function initializeRpgHelper() {
     });
 
     generateCharacterBtn.addEventListener('click', () => {
-        if (!canUseTool('aiHelper')) { 
+        if (!canUseTool('charCreator')) { 
         showLimitModal();           
         return;                     
     }     

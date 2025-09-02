@@ -401,34 +401,43 @@ function updateLoginState(user) {
     }
   }
 }
-
-
-// =======================================================
 // ===== NAPI LIMIT SZÁMLÁLÓ RENDSZER =====
-// =======================================================
-
 function canUseTool(toolType) {
   const user = netlifyIdentity.currentUser();
-  if (user) {
-    return true;
-  }
+  if (user) return true;
 
   const today = new Date().toISOString().split('T')[0];
   let usage = JSON.parse(localStorage.getItem('dailyUsage')) || {};
-
+  // Ha új nap van, minden számlálót nullázunk.
   if (usage.date !== today) {
-    usage = { date: today, generatorCount: 0, aiHelperCount: 0 };
+    usage = { 
+        date: today, 
+        generatorCount: 0, 
+        dmHelperCount: 0, 
+        charCreatorCount: 0,
+        promptDoctorCount: 0
+    };
   }
-
+  // Itt vannak az egyedi limitek minden eszközhöz.
   const limits = {
-    generator: 5,
-    aiHelper: 1
+    generator: 10,
+    dmHelper: 1,
+    charCreator: 1,
+    promptDoctor: 1
   };
 
-  const currentCount = usage[`${toolType}Count`] || 0;
+  const countKey = `${toolType}Count`;
+  const currentCount = usage[countKey] || 0;
+  const limit = limits[toolType];
 
-  if (currentCount < limits[toolType]) {
-    usage[`${toolType}Count`]++;
+  // Hibakezelés, ha ismeretlen eszközt kapnánk.
+  if (limit === undefined) {
+      console.error(`Ismeretlen eszköz a limithez: ${toolType}`);
+      return true; 
+  }
+
+  if (currentCount < limit) {
+    usage[countKey] = (usage[countKey] || 0) + 1;
     localStorage.setItem('dailyUsage', JSON.stringify(usage));
     return true;
   } else {

@@ -527,7 +527,7 @@ function buildFinalPromptString() {
     };
 
 btn.addEventListener('click', async () => {
-    if (!canUseTool('aiHelper')) {
+    if (!canUseTool('promptDoctor')) {
         showLimitModal();
         return;
     }
