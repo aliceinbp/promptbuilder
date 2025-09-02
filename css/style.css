@@ -3313,3 +3313,30 @@ a.cta-button-small:not([href]) {
     margin: 0;
     line-height: 1.6;
 }
+/* ======================================== */
+/* ===== BEJELENTKEZŐ GOMBOK STÍLUSA ===== */
+/* ======================================== */
+#login-status-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto; /* Jobbra tolja a gombokat a bal oldali ikonoktól */
+}
+.utility-btn.primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverted);
+}
+.utility-btn.primary:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+  color: var(--color-text-inverted);
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  font-size: 0.9em;
+}

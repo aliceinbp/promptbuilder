@@ -108,6 +108,9 @@ const translations = {
         { value: 'hungarian-style', label: 'Magyarosított' }
     ]
 },
+        loginBtn: "Bejelentkezés",
+        signupBtn: "Regisztráció",
+        logoutBtn: "Kijelentkezés",
         featuredToolsTitle: "Kiemelt Eszközök",
         toolCardGeneratorTitle: "Prompt Generátor",
         toolCardGeneratorDesc: "Alkoss lenyűgöző képeket a részletes promptépítő segítségével.",
@@ -599,7 +602,9 @@ const translations = {
         { value: 'hungarian-style', label: 'Hungarian-Style' }
     ]
 },
-
+        loginBtn: "Login",
+        signupBtn: "Sign Up",
+        logoutBtn: "Logout",
         handbookMoreTipsTitle: "More Tips & Common Questions",
         faqWhyEnglishTitle: "Why is it important to write prompts in English?",
         faqWhyEnglishText: "Most artificial intelligence models were trained on vast, English-language datasets from the internet. Because of this, they understand English words, phrases, and cultural references most accurately. Although many AIs can understand other languages, you will almost always achieve the best, most predictable results with English prompts.",

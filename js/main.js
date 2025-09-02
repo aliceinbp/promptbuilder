@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLanguageSwitcher();
     initializeModalSystem();
     initializeBackToTopButton();
+    initializeAuth();
     initializeStoryModals();
     initializeUsePromptButtons();
     initializeGalleryCopyButtons();
@@ -316,4 +317,72 @@ function initializeModalSystem() {
             mainInfoModal.classList.remove('hidden');
         });
     }
+}
+// =======================================================
+// ===== NETLIFY IDENTITY & AUTHENTIKÁCIÓS RENDSZER =====
+// =======================================================
+
+function initializeAuth() {
+  if (typeof netlifyIdentity === 'undefined') {
+    console.error('Netlify Identity widget not found. Make sure the script is included in your HTML.');
+    return;
+  }
+
+  const loginButtonContainer = document.createElement('div');
+  loginButtonContainer.id = 'login-status-container';
+  const headerTopRow = document.getElementById('header-top-row');
+
+  // A gombokat a bal oldali ikonok és a nyelvválasztó közé helyezzük
+  if (headerTopRow && headerTopRow.firstChild) {
+    headerTopRow.insertBefore(loginButtonContainer, headerTopRow.children[1]);
+    updateLoginState(netlifyIdentity.currentUser());
+  }
+
+  netlifyIdentity.on('login', user => {
+    updateLoginState(user);
+    netlifyIdentity.close(); // Automatikusan bezárja az ablakot bejelentkezés után
+  });
+
+  netlifyIdentity.on('logout', () => {
+    updateLoginState(null);
+  });
+
+  netlifyIdentity.on('error', err => console.error('Netlify Identity Error:', err));
+
+  // Eseménykezelő a dinamikusan létrehozott gombokhoz
+  document.addEventListener('click', function(e) {
+    if (e.target.id === 'login-btn') {
+      netlifyIdentity.open('login');
+    }
+    if (e.target.id === 'signup-btn') {
+      netlifyIdentity.open('signup');
+    }
+    if (e.target.id === 'logout-btn') {
+      netlifyIdentity.logout();
+    }
+  });
+}
+
+function updateLoginState(user) {
+  const container = document.getElementById('login-status-container');
+  if (!container) return;
+
+  const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+  if (user) {
+    // Bejelentkezett állapot
+    const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+    container.innerHTML = `
+      <div class="user-info">
+        <span>${userName}</span>
+        <button id="logout-btn" class="utility-btn">${translations[lang].logoutBtn || 'Logout'}</button>
+      </div>
+    `;
+  } else {
+    // Kijelentkezett állapot
+    container.innerHTML = `
+      <button id="login-btn" class="utility-btn">${translations[lang].loginBtn || 'Login'}</button>
+      <button id="signup-btn" class="utility-btn primary">${translations[lang].signupBtn || 'Sign Up'}</button>
+    `;
+  }
 }
