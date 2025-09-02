@@ -375,49 +375,60 @@ function buildFinalPromptString() {
 
     // === ESEMÉNYKEZELŐK ===
     function initializeEventListeners() {
-        if (translateButton) translateButton.addEventListener('click', handleTranslation);
+    if (translateButton) translateButton.addEventListener('click', handleTranslation);
 
-        document.querySelectorAll('.add-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const parentGroup = this.closest('.input-group');
-                const selectElement = parentGroup.querySelector('select');
-                const inputElement = parentGroup.querySelector('.new-prompt-input');
-                const categoryKey = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
-                const choiceInstance = choiceInstances[categoryKey];
-                let valueToAdd = inputElement.value.trim();
-                if (!valueToAdd && choiceInstance) valueToAdd = choiceInstance.getValue(true);
-                if (valueToAdd) {
-                    const outputCategoryKey = this.dataset.category === 'details' ? 'details' : this.dataset.category;
-                    const categoryContainer = tagContainers[outputCategoryKey];
-                    categoryContainer.appendChild(createTag(valueToAdd, false));
-                    finalPromptContainer.appendChild(createTag(valueToAdd, true));
-                    updateFinalPrompt();
-                    inputElement.value = '';
-                    if (choiceInstance) {
-                        choiceInstance.clearInput();
-                        choiceInstance.setChoiceByValue('');
-                    }
-                }
-            });
-        });
+    document.querySelectorAll('.add-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // ===============================================
+            // ===== EZ AZ ÚJ, BEILLESZTETT LIMIT-ELLENŐRZÉS =====
+            if (!canUseTool('generator')) {
+                showLimitModal();
+                return;
+            }
+            // ===============================================
 
-        document.querySelector('main').addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('delete-tag')) {
-                const tagToRemove = e.target.parentElement;
-                const textToRemove = tagToRemove.dataset.originalText;
-                tagToRemove.remove();
-                if (tagToRemove.classList.contains('prompt-tag')) {
-                     Object.values(tagContainers).forEach(container => {
-                        const tagInCategory = [...container.querySelectorAll('.prompt-input-tag')].find(t => t.dataset.originalText === textToRemove);
-                        if (tagInCategory) tagInCategory.remove();
-                    });
-                } else {
-                    const tagInFinal = [...finalPromptContainer.querySelectorAll('.prompt-tag')].find(t => t.dataset.originalText === textToRemove);
-                    if (tagInFinal) tagInFinal.remove();
-                }
+            const parentGroup = this.closest('.input-group');
+            const selectElement = parentGroup.querySelector('select');
+            const inputElement = parentGroup.querySelector('.new-prompt-input');
+            const categoryKey = selectElement.id.replace(/-select$/, '').replace(/-/g, '_');
+            const choiceInstance = choiceInstances[categoryKey];
+            let valueToAdd = inputElement.value.trim();
+
+            if (!valueToAdd && choiceInstance) valueToAdd = choiceInstance.getValue(true);
+
+            if (valueToAdd) {
+                const outputCategoryKey = this.dataset.category === 'details' ? 'details' : this.dataset.category;
+                const categoryContainer = tagContainers[outputCategoryKey];
+                categoryContainer.appendChild(createTag(valueToAdd, false));
+                finalPromptContainer.appendChild(createTag(valueToAdd, true));
                 updateFinalPrompt();
+                inputElement.value = '';
+                if (choiceInstance) {
+                    choiceInstance.clearInput();
+                    choiceInstance.setChoiceByValue('');
+                }
             }
         });
+    });
+
+    document.querySelector('main').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('delete-tag')) {
+            const tagToRemove = e.target.parentElement;
+            const textToRemove = tagToRemove.dataset.originalText;
+            tagToRemove.remove();
+
+            if (tagToRemove.classList.contains('prompt-tag')) {
+                Object.values(tagContainers).forEach(container => {
+                    const tagInCategory = [...container.querySelectorAll('.prompt-input-tag')].find(t => t.dataset.originalText === textToRemove);
+                    if (tagInCategory) tagInCategory.remove();
+                });
+            } else {
+                const tagInFinal = [...finalPromptContainer.querySelectorAll('.prompt-tag')].find(t => t.dataset.originalText === textToRemove);
+                if (tagInFinal) tagInFinal.remove();
+            }
+            updateFinalPrompt();
+        }
+    });
         
         if (copyButton) copyButton.addEventListener('click', () => {
             if (finalPromptHiddenTextarea.value) navigator.clipboard.writeText(finalPromptHiddenTextarea.value).then(() => {

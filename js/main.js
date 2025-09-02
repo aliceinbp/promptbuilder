@@ -422,7 +422,7 @@ function canUseTool(toolType) {
 
   const limits = {
     generator: 5,
-    aiHelper: 3
+    aiHelper: 1
   };
 
   const currentCount = usage[`${toolType}Count`] || 0;
