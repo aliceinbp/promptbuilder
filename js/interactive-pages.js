@@ -390,3 +390,14 @@ function initializePillarNav() {
         });
     });
 }
+// Globális függvény a harmonika magasságának frissítésére
+function updateAccordionHeight(contentElement) {
+    const accordionContent = contentElement.closest('.accordion-content');
+    if (accordionContent) {
+        const accordionItem = accordionContent.parentElement;
+        if (accordionItem && accordionItem.classList.contains('active')) {
+            // Újraszámoljuk és beállítjuk a magasságot
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+        }
+    }
+}

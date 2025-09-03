@@ -40,11 +40,13 @@ function initializeCommHelper() {
 
         if (!userText) {
             outputDiv.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].expertErrorEmpty || 'Please enter some text to rewrite!'}</p>`;
+            updateAccordionHeight(outputDiv);
             return;
         }
 
         // 2. Lépés: Felület előkészítése a generálásra
         outputDiv.innerHTML = `<div class="spinner" style="margin: 20px auto;"></div>`;
+        updateAccordionHeight(outputDiv); // Frissítünk a spinner méretére
         generateBtn.disabled = true;
 
         // 3. Lépés: Kérés küldése az AI-nak
@@ -64,7 +66,6 @@ function initializeCommHelper() {
             // 4. Lépés: Eredmény megjelenítése
             const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[lang].outputCopyBtn}</span></button></div>`;
             
-            // Az eredményt egy <p> tag-be tesszük a jobb formázásért
             outputDiv.innerHTML = toolbarHTML + `<p>${data.rewrittenText}</p>`;
 
         } catch (error) {
@@ -72,6 +73,20 @@ function initializeCommHelper() {
             outputDiv.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}<br><small>${error.message}</small></p>`;
         } finally {
             generateBtn.disabled = false;
+            // A tartalom beillesztése UTÁN újra frissítjük a magasságot
+            setTimeout(() => updateAccordionHeight(outputDiv), 50); 
         }
     });
+}
+
+// Globális függvény a harmonika magasságának frissítésére
+function updateAccordionHeight(contentElement) {
+    const accordionContent = contentElement.closest('.accordion-content');
+    if (accordionContent) {
+        const accordionItem = accordionContent.parentElement;
+        if (accordionItem && accordionItem.classList.contains('active')) {
+            // Újraszámoljuk és beállítjuk a magasságot
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+        }
+    }
 }
