@@ -415,21 +415,21 @@ function canUseTool(toolType) {
         generatorCount: 0, 
         dmHelperCount: 0, 
         charCreatorCount: 0,
-        promptDoctorCount: 0
+        promptDoctorCount: 0,
+        commHelperCount: 0 
     };
-  }
+}
   // Itt vannak az egyedi limitek minden eszközhöz.
   const limits = {
     generator: 10,
     dmHelper: 1,
     charCreator: 1,
-    promptDoctor: 1
-  };
-
+    promptDoctor: 1,
+    commHelper: 1 
+};
   const countKey = `${toolType}Count`;
   const currentCount = usage[countKey] || 0;
   const limit = limits[toolType];
-
   // Hibakezelés, ha ismeretlen eszközt kapnánk.
   if (limit === undefined) {
       console.error(`Ismeretlen eszköz a limithez: ${toolType}`);
