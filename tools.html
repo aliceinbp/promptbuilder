@@ -80,87 +80,63 @@
 
             <div id="helper-tools-container" class="allow-multiple">
                 
-    <div class="accordion-item" style="margin-bottom: 25px;">
-        <button class="accordion-header">
-            <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-comments"></i> <span data-key="commHelperTitle">Communication Helper</span>
-            </h3>
-        </button>
-        <div class="accordion-content">
-            <div id="comm-helper-tool" class="rpg-form">
-                <p class="module-description" data-key="commHelperDesc">Írd be a szöveged, válassz egy stílust, és az AI segít átfogalmazni!</p>
-                
-                <div class="rpg-form-group">
-                    <textarea id="comm-helper-input" rows="5" data-key-placeholder="commHelperInputPlaceholder"></textarea>
-                </div>
+                <div class="accordion-item" style="margin-bottom: 25px;">
+                    <button class="accordion-header">
+                        <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-comments"></i> <span data-key="commHelperTitle">Communication Helper</span>
+                        </h3>
+                    </button>
+                    <div class="accordion-content">
+                        <div id="comm-helper-tool" class="rpg-form">
+                            <p class="module-description" data-key="commHelperDesc">Írd be a szöveged, válassz egy stílust, és az AI segít átfogalmazni!</p>
+                            
+                            <div class="rpg-form-group">
+                                <textarea id="comm-helper-input" rows="5" data-key-placeholder="commHelperInputPlaceholder"></textarea>
+                            </div>
 
-                <div class="rpg-form-group">
-                    <label data-key="commHelperToneLabel">Válassz hangnemet:</label>
-                    <div class="tone-btn-group">
-                        <button class="tone-btn active" data-tone="formal" data-key="commHelperToneFormal">Formális</button>
-                        <button class="tone-btn" data-tone="friendly" data-key="commHelperToneFriendly">Barátságos</button>
-                        <button class="tone-btn" data-tone="confident" data-key="commHelperToneConfident">Magabiztos</button>
-                        <button class="tone-btn" data-tone="concise" data-key="commHelperToneConcise">Tömör</button>
+                            <div class="rpg-form-group">
+                                <label data-key="commHelperToneLabel">Válassz hangnemet:</label>
+                                <div class="tone-btn-group">
+                                    <button class="tone-btn active" data-tone="formal" data-key="commHelperToneFormal">Formális</button>
+                                    <button class="tone-btn" data-tone="friendly" data-key="commHelperToneFriendly">Barátságos</button>
+                                    <button class="tone-btn" data-tone="confident" data-key="commHelperToneConfident">Magabiztos</button>
+                                    <button class="tone-btn" data-tone="concise" data-key="commHelperToneConcise">Tömör</button>
+                                </div>
+                            </div>
+
+                            <button id="generate-rewrite-btn" class="cta-button">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="commHelperRewriteBtn">Átírás</span>
+                            </button>
+
+                            <div id="comm-helper-output" class="mini-module-output" style="margin-top: 20px;">
+                                </div>
+                        </div>
                     </div>
                 </div>
 
-                <button id="generate-rewrite-btn" class="cta-button">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="commHelperRewriteBtn">Átírás</span>
-                </button>
-
-                <div id="comm-helper-output" class="mini-module-output" style="margin-top: 20px;">
+                <div class="accordion-item" style="margin-bottom: 25px;">
+                    <button class="accordion-header">
+                        <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-gift"></i> <span data-key="giftIdeaTitle">Gift Ideas</span>
+                        </h3>
+                    </button>
+                    <div class="accordion-content">
+                        <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
                     </div>
+                </div>
+
+                <div class="accordion-item" style="margin-bottom: 25px;">
+                    <button class="accordion-header">
+                        <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-lightbulb"></i> <span data-key="metaphorMasterTitle">Metaphor Master</span>
+                        </h3>
+                    </button>
+                    <div class="accordion-content">
+                        <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
-
-    <div class="accordion-item" style="margin-bottom: 25px;">
-        <button class="accordion-header">
-            <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-gift"></i> <span data-key="giftIdeaTitle">Gift Ideas</span>
-            </h3>
-        </button>
-        <div class="accordion-content">
-            <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-        </div>
-    </div>
-
-    <div class="accordion-item" style="margin-bottom: 25px;">
-        <button class="accordion-header">
-            <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-lightbulb"></i> <span data-key="metaphorMasterTitle">Metaphor Master</span>
-            </h3>
-        </button>
-        <div class="accordion-content">
-            <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-        </div>
-    </div>
-
-</div>
-
-    <div class="accordion-item" style="margin-bottom: 25px;">
-        <button class="accordion-header">
-            <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-gift"></i> <span data-key="giftIdeaTitle">Gift Ideas</span>
-            </h3>
-        </button>
-        <div class="accordion-content">
-            <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-        </div>
-    </div>
-
-    <div class="accordion-item" style="margin-bottom: 25px;">
-        <button class="accordion-header">
-            <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-lightbulb"></i> <span data-key="metaphorMasterTitle">Metaphor Master</span>
-            </h3>
-        </button>
-        <div class="accordion-content">
-            <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-        </div>
-    </div>
-
-</div>
         </main>
         <footer class="footer-main">
             <div class="footer-top">
