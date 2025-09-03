@@ -3370,3 +3370,8 @@ a.cta-button-small:not([href]) {
     color: var(--color-text-inverted);
     box-shadow: 0 0 10px var(--color-shadow);
 }
+/* Kommunikációs segédlet válasz dobozának egyedi stílusa */
+#comm-helper-output {
+    min-height: auto; 
+    padding: 20px;    
+}
