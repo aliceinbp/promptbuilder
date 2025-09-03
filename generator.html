@@ -177,7 +177,7 @@
                 <div class="input-group">
                     <select id="mainSubject-select"></select>
                     <input type="text" id="mainSubject-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="mainSubject">Hozzáad</button>
+                    <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                 </div>
                 <div id="mainSubject-container" class="tag-container"></div>
             </div>
@@ -188,7 +188,7 @@
                     <div class="input-group">
                         <select id="detail-physical-select"></select>
                         <input type="text" id="detail-physical-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
+                        <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                     </div>
                 </div>
                 <div class="prompt-section detail-subsection">
@@ -196,7 +196,7 @@
                     <div class="input-group">
                         <select id="detail-environment-select"></select>
                         <input type="text" id="detail-environment-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
+                        <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                     </div>
                 </div>
                 <div class="prompt-section detail-subsection">
@@ -204,7 +204,7 @@
                     <div class="input-group">
                         <select id="detail-mood-select"></select>
                         <input type="text" id="detail-mood-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                        <button class="add-button" data-category="details">Hozzáad</button>
+                        <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                     </div>
                 </div>
                 <div id="details-container" class="tag-container"></div>
@@ -220,7 +220,7 @@
                 <div class="input-group">
                     <select id="style-select"></select>
                     <input type="text" id="style-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="style">Hozzáad</button>
+                    <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                 </div>
                 <div id="style-container" class="tag-container"></div>
             </div>
@@ -229,7 +229,7 @@
                 <div class="input-group">
                     <select id="extra-select"></select>
                     <input type="text" id="extra-input" data-key-placeholder="yourIdeaPlaceholder" class="new-prompt-input">
-                    <button class="add-button" data-category="extra">Hozzáad</button>
+                    <button class="add-button" data-category="mainSubject" data-key="addButton">Hozzáad</button>
                 </div>
                 <div id="extra-container" class="tag-container"></div>
             </div>
@@ -316,12 +316,12 @@
                     </form>
                 </div>
                 <div class="footer-widget">
-                    <h4>Támogasd a Projektet!</h4>
-                    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
-                        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
-                        Támogass egy kávéval
-                    </a>
-                </div>
+    <h4 data-key="supportProject">Támogasd a Projektet!</h4>
+    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
+        <span data-key="kofiButtonText">Támogass egy kávéval</span>
+    </a>
+</div>
             </div>
             <div class="footer-middle">
                 <div class="footer-links">

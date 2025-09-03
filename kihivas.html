@@ -114,14 +114,14 @@
                         <input type="hidden" name="form-name" value="challenge-submission" />
                         <p class="hidden"><label>Ezt hagyd üresen: <input name="bot-field" /></label></p>
                         <div class="form-group">
-                            <label for="name">Neved vagy Művészneved</label>
+                            <label for="name" data-key="challengeFormName">Neved vagy Művészneved</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="imageUrl">Kép Direkt Linkje</label>
+                            <label for="imageUrl" data-key="challengeFormUrl">Kép Direkt Linkje</label>
                             <input type="url" id="imageUrl" name="imageUrl" required placeholder="https://i.ibb.co/...">
                         </div>
-                        <button type="submit">Beküldés a Dicsőségfalra</button>
+                        <button type="submit" data-key="challengeFormSubmit">Beküldés a Dicsőségfalra</button>
                     </form>
                 </div>
             </div>
@@ -146,12 +146,12 @@
                     </form>
                 </div>
                 <div class="footer-widget">
-                    <h4>Támogasd a Projektet!</h4>
-                    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
-                        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
-                        Támogass egy kávéval
-                    </a>
-                </div>
+    <h4 data-key="supportProject">Támogasd a Projektet!</h4>
+    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
+        <span data-key="kofiButtonText">Támogass egy kávéval</span>
+    </a>
+</div>
             </div>
             <div class="footer-middle">
                 <div class="footer-links">
