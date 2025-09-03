@@ -100,31 +100,31 @@
             <h3 data-key="challengeSubmitTitle">2. Küldd be az Alkotásod!</h3>
             <p data-key="challengeSubmitDesc"></p>
             <div class="submission-steps">
-                <div class="step">
-                    <h4>1. Lépés: Kép feltöltése</h4>
-                    <p>Nincs hova feltöltened a képet? Használd az ImgBB-t! Kattints a gombra, töltsd fel az alkotásod, majd a 'BEÁGYAZÁSI KÓDOK'-nál válaszd a 'Közvetlen link'-et és másold ki.</p>
-                    <a href="https://imgbb.com/" target="_blank" class="cta-button-small imgbb-button">
-                        <i class="fa-solid fa-upload"></i> Kép feltöltése az ImgBB-re
-                    </a>
-                </div>
-                <div class="step">
-                    <h4>2. Lépés: Adatok beküldése</h4>
-                    <p>Ha megvan a kép linkje, add meg a neveddel együtt az alábbi űrlapon, hogy bekerülhess a Dicsőségfalra!</p>
-                    <form name="challenge-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-challenge.html" class="submission-form">
-                        <input type="hidden" name="form-name" value="challenge-submission" />
-                        <p class="hidden"><label>Ezt hagyd üresen: <input name="bot-field" /></label></p>
-                        <div class="form-group">
-                            <label for="name" data-key="challengeFormName">Neved vagy Művészneved</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="imageUrl" data-key="challengeFormUrl">Kép Direkt Linkje</label>
-                            <input type="url" id="imageUrl" name="imageUrl" required placeholder="https://i.ibb.co/...">
-                        </div>
-                        <button type="submit" data-key="challengeFormSubmit">Beküldés a Dicsőségfalra</button>
-                    </form>
-                </div>
+    <div class="step">
+        <h4 data-key="challengeStep1Title">1. Lépés: Kép feltöltése</h4>
+        <p data-key="challengeStep1Desc">Nincs hova feltöltened a képet? Használd az ImgBB-t! Kattints a gombra, töltsd fel az alkotásod, majd a 'BEÁGYAZÁSI KÓDOK'-nál válaszd a 'Közvetlen link'-et és másold ki.</p>
+        <a href="https://imgbb.com/" target="_blank" class="cta-button-small imgbb-button">
+            <i class="fa-solid fa-upload"></i> <span data-key="challengeStep1Button">Kép feltöltése az ImgBB-re</span>
+        </a>
+    </div>
+    <div class="step">
+        <h4 data-key="challengeStep2Title">2. Lépés: Adatok beküldése</h4>
+        <p data-key="challengeStep2Desc">Ha megvan a kép linkje, add meg a neveddel együtt az alábbi űrlapon, hogy bekerülhess a Dicsőségfalra!</p>
+        <form name="challenge-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you-challenge.html" class="submission-form">
+            <input type="hidden" name="form-name" value="challenge-submission" />
+            <p class="hidden"><label>Ezt hagyd üresen: <input name="bot-field" /></label></p>
+            <div class="form-group">
+                <label for="name" data-key="challengeFormName">Neved vagy Művészneved</label>
+                <input type="text" id="name" name="name" required>
             </div>
+            <div class="form-group">
+                <label for="imageUrl" data-key="challengeFormUrl">Kép Direkt Linkje</label>
+                <input type="url" id="imageUrl" name="imageUrl" required placeholder="https://i.ibb.co/...">
+            </div>
+            <button type="submit" data-key="challengeFormSubmit">Beküldés a Dicsőségfalra</button>
+        </form>
+    </div>
+</div>
         </section>
         <section id="submission-gallery" style="padding-top: 40px; border-top: 1px solid var(--color-border-accent);">
             <h2 style="text-align: center;"><i class="fa-solid fa-trophy"></i> <span data-key="submissionGalleryTitle">Alkotók Dicsőségfala</span></h2>
