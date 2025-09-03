@@ -3340,3 +3340,33 @@ a.cta-button-small:not([href]) {
   color: var(--color-text-secondary);
   font-size: 0.9em;
 }
+/* ===== KOMMUNIKÁCIÓS SEGÉDLET STÍLUS ===== */
+.tone-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tone-btn {
+    flex-grow: 1;
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.tone-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.tone-btn.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary-light);
+    color: var(--color-text-inverted);
+    box-shadow: 0 0 10px var(--color-shadow);
+}
