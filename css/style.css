@@ -3375,3 +3375,24 @@ a.cta-button-small:not([href]) {
     min-height: auto; 
     padding: 20px;    
 }
+/* ===== RPG FILOZÓFIA DOBOZ STÍLUS ===== */
+.rpg-philosophy-box {
+    max-width: 700px;
+    margin: 20px auto 30px auto;
+    padding: 15px 20px;
+    background-color: var(--color-surface-alt);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 8px 8px 0;
+}
+
+.rpg-philosophy-box p {
+    margin: 0;
+    font-size: 0.95em;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+.rpg-philosophy-box strong {
+    color: var(--color-primary-light);
+    font-weight: bold;
+}

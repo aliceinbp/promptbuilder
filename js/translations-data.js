@@ -125,6 +125,8 @@ const translations = {
         outputGenerating: "Generálás folyamatban, kérlek várj...",
         outputError: "Hiba történt a generálás során. Próbáld újra, vagy egyszerűsíts a kérésen.",
         // RPG Űrlap Placeholderek
+        rpgPhilosophyTitle: "Egy fontos útravaló:",
+        rpgPhilosophyText: "Ez az eszköz egy remek alapot adhat, de a te csodálatos fantáziádat semmi nem helyettesíti. Úgy állj hozzá, hogy ez csak segítség, egy sorvezető, nem pedig egy teljes, kész kaland. Használd ihletforrásnak, majd tedd hozzá a saját, egyedi ötleteidet!",
         dmSystemPlaceholder: "pl. M.A.G.U.S., D&D 5e, Urban Fantasy...",
         dmMoodPlaceholder: "pl. komor, heroikus, politikai intrika...",
         dmPartyPlaceholder: "pl. 4 fő, tapasztalt",
@@ -670,6 +672,8 @@ const translations = {
         downloadProGuide: "Guide for Pro AIs",
         generateAdventureBtn: "Generate Adventure",
         generateCharacterBtn: "Generate Character",
+        rpgPhilosophyTitle: "An Important Note:",
+        rpgPhilosophyText: "This tool can provide a great foundation, but nothing can replace your own wonderful imagination. Approach it as a helper, a guide—not a complete, ready-made adventure. Use it for inspiration, then add your own unique ideas!",
         // Form Labels
         formSystemLabel: "Game System / World",
         formMoodLabel: "Mood & Style",
