@@ -1,3 +1,5 @@
+// D:\promptbuilder\netlify\functions\map-creator.js (JAVÍTOTT NYELVI KEZELÉSSEL)
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function(event) {
@@ -15,23 +17,26 @@ exports.handler = async function(event) {
             throw new Error("A 'keywords' mező hiányzik.");
         }
 
-        // Ez a mesterprompt, ami a két feladatot adja az AI-nak.
+        // JAVÍTOTT MESTERPROMPT: Külön utasítás a fordításra
         const masterPrompt = `
 You are an expert fantasy cartographer and world-building assistant for tabletop RPGs. Your task is to generate two distinct pieces of content based on the user's keywords: a detailed, NightCafe-compatible prompt for generating a map, and a list of key locations for that map.
 
 **CRITICAL RULES:**
 1.  **Response Format:** Your entire output MUST be a single, valid JSON object. Do not include any text, explanations, or markdown backticks before or after the JSON object.
-2.  **Language:** All generated content (both the prompt and the locations) must be in the language specified by the user ('hu' for Hungarian, 'en' for English).
+2.  **Language:** The **Key Locations** must be in the language specified by the user ('hu' for Hungarian, 'en' for English). The **Image Prompt** must ALWAYS be in English.
 
-**Task 1: Generate the Image Prompt**
+**INTERNAL STEP (VERY IMPORTANT):**
+If the user's Response Language is 'hu', you MUST first mentally translate the user's Hungarian keywords into natural, evocative English keywords. Use this English translation to build the 100% English image prompt.
+
+**Task 1: Generate the Image Prompt (ALWAYS IN ENGLISH)**
 Create a detailed, NightCafe-compatible prompt. Follow this structure precisely:
-- **Main subject:** "top-down fantasy map of [user's keywords]"
-- **Secondary subject:** Add 2-3 descriptive elements fitting the keywords (e.g., "winding rivers, ancient ruins, dense forests").
+- **Main subject:** "top-down fantasy map of [the English version of user's keywords]"
+- **Secondary subject:** Add 2-3 descriptive English elements fitting the keywords (e.g., "winding rivers, ancient ruins, dense forests").
 - **Artist names / style prompts:** Use stylistic keywords like "in the style of a Tolkien-esque map, vintage cartography, simple line art, hand-drawn".
 - **Photography / artistic prompts:** Add technical keywords like "highly detailed, intricate, epic scale, masterpiece".
 - **Colors:** Specify "black and white" or "sepia tones" to ensure a map-like quality.
 
-**Task 2: Generate Key Locations**
+**Task 2: Generate Key Locations (in the user's specified language)**
 Create a list of 3-5 key locations that would logically appear on a map based on the user's keywords. For each location, provide a one-sentence evocative description.
 
 **USER'S REQUEST:**
@@ -40,12 +45,12 @@ Create a list of 3-5 key locations that would logically appear on a map based on
 
 **FINAL JSON OUTPUT STRUCTURE EXAMPLE:**
 {
-  "prompt": "top-down fantasy map of an abandoned dwarf mine near a volcano, overflowing lava rivers, crumbling stone bridges, in the style of a Tolkien-esque map, vintage cartography, simple line art, hand-drawn, highly detailed, intricate, epic scale, masterpiece, sepia tones",
+  "prompt": "top-down fantasy map of an abandoned treasure map of a swampy region, winding marshy rivers, ancient ruins, dangerous marshlands, in the style of a Tolkien-esque map, vintage cartography, simple line art, hand-drawn, highly detailed, intricate, epic scale, masterpiece, sepia tones",
   "locations": [
-    "**The Molten Heart:** A vast cavern where the main forge was once powered by the volcano's heat.",
-    "**Whispering Tunnels:** A maze of secondary shafts known for strange echoes and unsettling drafts.",
-    "**King's Overlook:** A collapsed balcony that once offered a view of the entire mining operation.",
-    "**The Obsidian Gate:** The main, heavily fortified entrance to the mine, now shattered and blocked."
+    "**The Sunken Crypt:** An ancient tomb half-swallowed by the marsh, rumored to hold the treasure.",
+    "**Whisperwood:** A section of dead trees where strange voices are heard on the wind.",
+    "**The Serpent's Path:** A treacherous, winding waterway that is the only safe passage through the bog.",
+    "**Old Man Willow's Rest:** A massive, ancient willow tree that serves as a landmark and a place of strange power."
   ]
 }
 `;
@@ -54,7 +59,6 @@ Create a list of 3-5 key locations that would logically appear on a map based on
         const response = await result.response;
         let textResult = response.text();
         
-        // Biztonsági ellenőrzés és tisztítás, hogy biztosan JSON legyen
         const jsonMatch = textResult.match(/\{[\s\S]*\}/);
         if (!jsonMatch) {
             throw new Error("AI did not return a valid JSON object.");
@@ -63,7 +67,7 @@ Create a list of 3-5 key locations that would logically appear on a map based on
 
         return {
             statusCode: 200,
-            body: JSON.stringify(parsedResult) // Közvetlenül a parse-olt objektumot küldjük vissza
+            body: JSON.stringify(parsedResult)
         };
 
     } catch (error) {
