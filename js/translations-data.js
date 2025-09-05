@@ -32,6 +32,72 @@ const translations = {
         expertAskBtn: "Kérdés",
         expertPlaceholderInitial: "A válasz itt fog megjelenni...",
         expertErrorEmpty: "Kérlek, írj be egy kifejezést a kereséshez!",
+        // ===== ESZKÖZÖK OLDAL (TOOLS.HTML) =====
+        pageTitleTools: "Eszközök - Script Acid",
+        toolsTitle: "Hétköznapi Eszközök",
+        toolsSubtitle: "AI-alapú segédletek a mindennapi kreativitáshoz és kommunikációhoz.",
+        // Kommunikációs segédlet
+        commHelperTitle: "Kommunikációs segédlet",
+        commHelperDesc: "Írd be a szöveged, válassz egy stílust, és az AI segít átfogalmazni!",
+        commHelperInputPlaceholder: "Írd ide az átfogalmazandó szöveget...",
+        commHelperToneLabel: "Válassz hangnemet:",
+        commHelperToneFormal: "Formális",
+        commHelperToneFriendly: "Barátságos",
+        commHelperToneConfident: "Magabiztos",
+        commHelperToneConcise: "Tömör",
+        commHelperRewriteBtn: "Átírás",
+        // Ajándékötlet Generátor
+        giftIdeaTitle: "Ajándékötlet Generátor",
+        giftHelperDesc: "Töltsd ki az űrlapot, és az AI segít megtalálni a tökéletes ajándékot!",
+        giftRecipientLabel: "Kinek?",
+        giftOccasionLabel: "Milyen alkalomra?",
+        giftAgeLabel: "Korosztály",
+        giftPriceLabel: "Árkategória",
+        giftInterestsLabel: "Érdeklődési körök (kulcsszavak)",
+        giftInterestsPlaceholder: "pl. túrázás, sci-fi könyvek, macskák, főzés...",
+        giftStyleLabel: "Ajándék stílusa",
+        giftStylePractical: "Praktikus",
+        giftStyleSentimental: "Személyes",
+        giftStyleFunny: "Vicces",
+        giftStyleExperience: "Élmény",
+        giftStyleLuxury: "Luxus",
+        giftGenerateBtn: "Ötletek Generálása",
+        giftInterestsWarning: "Kérlek, írd le az ajándékozott érdeklődési körét!",
+        // Metafora Mester
+        metaphorMasterTitle: "Metafora Mester",
+        // Legördülő menük opciói
+        giftSelectOptions: {
+            recipients: [
+                { value: 'partner', label: 'Partner (férj, feleség, barát/nő)' },
+                { value: 'parent', label: 'Szülő (anya, apa)' },
+                { value: 'sibling', label: 'Testvér' },
+                { value: 'friend', label: 'Barát / Barátnő' },
+                { value: 'colleague', label: 'Kolléga / Munkatárs' },
+                { value: 'child', label: 'Gyerek' },
+                { value: 'other', label: 'Egyéb' }
+            ],
+            occasions: [
+                { value: 'birthday', label: 'Születésnap' },
+                { value: 'christmas', label: 'Karácsony' },
+                { value: 'anniversary', label: 'Évforduló' },
+                { value: 'name day', label: 'Névnap' },
+                { value: 'housewarming', label: 'Házavató' },
+                { value: 'just because', label: 'Csak úgy' }
+            ],
+            ageGroups: [
+                { value: 'child (0-12)', label: 'Gyerek (0-12)' },
+                { value: 'teenager (13-19)', label: 'Tinédzser (13-19)' },
+                { value: 'young adult (20-30)', label: 'Fiatal felnőtt (20-30)' },
+                { value: 'adult (31-50)', label: 'Felnőtt (31-50)' },
+                { value: 'senior (51+)', label: 'Idősebb (51+)' }
+            ],
+            priceRanges: [
+                { value: 'symbolic (up to ~€15)', label: 'Jelképes (kb. 5.000 Ft-ig)' },
+                { value: 'mid-range (~€15-€40)', label: 'Közepes (kb. 5.000 - 15.000 Ft)' },
+                { value: 'higher-end (~€40-€80)', label: 'Magasabb (kb. 15.000 - 30.000 Ft)' },
+                { value: 'exclusive (over €80)', label: 'Exkluzív (30.000 Ft felett)' }
+            ]
+        },
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -563,6 +629,72 @@ const translations = {
         twistGenDesc: "Stuck in the story? Describe the current situation, and the AI will provide a few ideas to continue!",
         twistGenPlaceholder: "Describe the current situation, e.g., The heroes have cornered the thieves' guild leader, who claims he's being blackmailed...",
         generateTwistBtn: "Get a Twist!",
+        // ===== TOOLS PAGE (TOOLS.HTML) =====
+        pageTitleTools: "Tools - Script Acid",
+        toolsTitle: "Everyday Tools",
+        toolsSubtitle: "AI-powered helpers for everyday creativity and communication.",
+        // Communication Helper
+        commHelperTitle: "Communication Helper",
+        commHelperDesc: "Enter your text, choose a style, and the AI will help you rephrase it!",
+        commHelperInputPlaceholder: "Write the text to be rephrased here...",
+        commHelperToneLabel: "Choose a tone:",
+        commHelperToneFormal: "Formal",
+        commHelperToneFriendly: "Friendly",
+        commHelperToneConfident: "Confident",
+        commHelperToneConcise: "Concise",
+        commHelperRewriteBtn: "Rewrite",
+        // Gift Idea Generator
+        giftIdeaTitle: "Gift Idea Generator",
+        giftHelperDesc: "Fill out the form, and the AI will help you find the perfect gift!",
+        giftRecipientLabel: "Who is it for?",
+        giftOccasionLabel: "What's the occasion?",
+        giftAgeLabel: "Age Group",
+        giftPriceLabel: "Price Range",
+        giftInterestsLabel: "Interests (keywords)",
+        giftInterestsPlaceholder: "e.g., hiking, sci-fi books, cats, cooking...",
+        giftStyleLabel: "Gift Style",
+        giftStylePractical: "Practical",
+        giftStyleSentimental: "Sentimental",
+        giftStyleFunny: "Funny",
+        giftStyleExperience: "Experience",
+        giftStyleLuxury: "Luxury",
+        giftGenerateBtn: "Generate Ideas",
+        giftInterestsWarning: "Please describe the person's interests!",
+        // Metaphor Master
+        metaphorMasterTitle: "Metaphor Master",
+        // Dropdown options
+        giftSelectOptions: {
+            recipients: [
+                { value: 'partner', label: 'Partner (husband, wife, bf/gf)' },
+                { value: 'parent', label: 'Parent (mom, dad)' },
+                { value: 'sibling', label: 'Sibling' },
+                { value: 'friend', label: 'Friend' },
+                { value: 'colleague', label: 'Colleague / Coworker' },
+                { value: 'child', label: 'Child' },
+                { value: 'other', label: 'Other' }
+            ],
+            occasions: [
+                { value: 'birthday', label: 'Birthday' },
+                { value: 'christmas', label: 'Christmas' },
+                { value: 'anniversary', label: 'Anniversary' },
+                { value: 'name day', label: 'Name Day' },
+                { value: 'housewarming', label: 'Housewarming' },
+                { value: 'just because', label: 'Just Because' }
+            ],
+            ageGroups: [
+                { value: 'child (0-12)', label: 'Child (0-12)' },
+                { value: 'teenager (13-19)', label: 'Teenager (13-19)' },
+                { value: 'young adult (20-30)', label: 'Young Adult (20-30)' },
+                { value: 'adult (31-50)', label: 'Adult (31-50)' },
+                { value: 'senior (51+)', label: 'Senior (51+)' }
+            ],
+            priceRanges: [
+                { value: 'symbolic (up to ~$15)', label: 'Symbolic (up to ~$15)' },
+                { value: 'mid-range (~$15-$40)', label: 'Mid-range (~$15-$40)' },
+                { value: 'higher-end (~$40-$80)', label: 'Higher-end (~$40-$80)' },
+                { value: 'exclusive (over $80)', label: 'Exclusive (over $80)' }
+            ]
+        },
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",

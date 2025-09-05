@@ -115,15 +115,62 @@
                 </div>
 
                 <div class="accordion-item" style="margin-bottom: 25px;">
-                    <button class="accordion-header">
-                        <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-gift"></i> <span data-key="giftIdeaTitle">Gift Ideas</span>
-                        </h3>
-                    </button>
-                    <div class="accordion-content">
-                        <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-                    </div>
-                </div>
+                            <button class="accordion-header">
+                                <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-gift"></i> <span data-key="giftIdeaTitle">Ajándékötlet Generátor</span>
+                                </h3>
+                            </button>
+                            <div class="accordion-content">
+                                <div id="gift-helper-tool" class="rpg-form">
+                                    <p class="module-description" data-key="giftHelperDesc">Töltsd ki az űrlapot, és az AI segít megtalálni a tökéletes ajándékot!</p>
+                                    
+                                    <div class="rpg-form-grid">
+                                        <div class="rpg-form-group">
+                                            <label for="gift-recipient" data-key="giftRecipientLabel">Kinek?</label>
+                                            <select id="gift-recipient"></select>
+                                        </div>
+                                        <div class="rpg-form-group">
+                                            <label for="gift-occasion" data-key="giftOccasionLabel">Milyen alkalomra?</label>
+                                            <select id="gift-occasion"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="rpg-form-grid">
+                                        <div class="rpg-form-group">
+                                            <label for="gift-age" data-key="giftAgeLabel">Korosztály</label>
+                                            <select id="gift-age"></select>
+                                        </div>
+                                        <div class="rpg-form-group">
+                                            <label for="gift-price" data-key="giftPriceLabel">Árkategória</label>
+                                            <select id="gift-price"></select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="rpg-form-group">
+                                        <label for="gift-interests" data-key="giftInterestsLabel">Érdeklődési körök (kulcsszavak)</label>
+                                        <input type="text" id="gift-interests" data-key-placeholder="giftInterestsPlaceholder">
+                                    </div>
+
+                                    <div class="rpg-form-group">
+                                        <label data-key="giftStyleLabel">Ajándék stílusa</label>
+                                        <div class="tone-btn-group" id="gift-style-buttons">
+                                            <button class="tone-btn active" data-style="practical" data-key="giftStylePractical"></button>
+                                            <button class="tone-btn" data-style="sentimental" data-key="giftStyleSentimental"></button>
+                                            <button class="tone-btn" data-style="funny" data-key="giftStyleFunny"></button>
+                                            <button class="tone-btn" data-style="experience" data-key="giftStyleExperience"></button>
+                                            <button class="tone-btn" data-style="luxury" data-key="giftStyleLuxury"></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <button id="generate-gift-btn" class="cta-button">
+                                        <i class="fa-solid fa-lightbulb"></i> <span data-key="giftGenerateBtn">Ötletek Generálása</span>
+                                    </button>
+
+                                    <div id="gift-helper-output" class="mini-module-output" style="margin-top: 20px;">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
 
                 <div class="accordion-item" style="margin-bottom: 25px;">
                     <button class="accordion-header">

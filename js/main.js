@@ -410,23 +410,25 @@ function canUseTool(toolType) {
   let usage = JSON.parse(localStorage.getItem('dailyUsage')) || {};
   // Ha új nap van, minden számlálót nullázunk.
   if (usage.date !== today) {
-    usage = { 
-        date: today, 
-        generatorCount: 0, 
-        dmHelperCount: 0, 
-        charCreatorCount: 0,
-        promptDoctorCount: 0,
-        commHelperCount: 0 
-    };
+        usage = { 
+            date: today, 
+            generatorCount: 0, 
+            dmHelperCount: 0, 
+            charCreatorCount: 0,
+            promptDoctorCount: 0,
+            commHelperCount: 0,
+            giftHelperCount: 0 
+        };
 }
   // Itt vannak az egyedi limitek minden eszközhöz.
   const limits = {
-    generator: 10,
-    dmHelper: 1,
-    charCreator: 1,
-    promptDoctor: 1,
-    commHelper: 1 
-};
+        generator: 10,
+        dmHelper: 1,
+        charCreator: 1,
+        promptDoctor: 1,
+        commHelper: 1,
+        giftHelper: 5 // <--- 2. ADD HOZZÁ EZT A SORT (itt 5-re állítottam a napi limitet)
+    };
   const countKey = `${toolType}Count`;
   const currentCount = usage[countKey] || 0;
   const limit = limits[toolType];
