@@ -1,4 +1,4 @@
-// D:\promptbuilder\netlify\functions\comm-helper.js (FINOMHANGOLT PROMPTTAL)
+// D:\promptbuilder\netlify\functions\comm-helper.js (HIBÁTLAN, VÉGLEGES VERZIÓ)
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function(event) {
@@ -16,7 +16,6 @@ exports.handler = async function(event) {
       throw new Error("A szöveg vagy a hangnem hiányzik a kérésből.");
     }
     
-    // ÚJ: Részletesebb, kontextus-érzékenyebb mesterprompt
     const languageInstruction = lang === 'hu' ? 'A válasz KIZÁRÓLAG magyar nyelven készüljön.' : 'The response MUST be in English.';
     
     const toneMap = {
@@ -56,9 +55,10 @@ exports.handler = async function(event) {
       "${userText}"
 
       **A KÉRT ÚJ HANGNEM:**
-      ${selectedTone}
+      ${tone} 
     `;
-
+    // JAVÍTVA: Itt a 'tone' változót használjuk, nem a 'selectedTone'-t
+    
     const result = await model.generateContent(masterPrompt);
     const response = await result.response;
     const rewrittenText = response.text();
