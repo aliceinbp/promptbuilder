@@ -3396,3 +3396,63 @@ a.cta-button-small:not([href]) {
     color: var(--color-primary-light);
     font-weight: bold;
 }
+/* ===== TÉRKÉP ALKOTÓ ASSZISZTENS STÍLUS ===== */
+#map-creator-output {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.map-output-section h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--color-primary-light);
+    font-size: 1.1em;
+}
+
+.map-output-section .form-hint {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* A NightCafe link kiemelése */
+.map-output-section .form-hint a {
+    color: var(--color-primary-accent);
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--color-primary-accent);
+}
+.map-output-section .form-hint a:hover {
+    color: var(--color-primary-light);
+    border-bottom-style: solid;
+}
+
+#map-prompt-output,
+#map-locations-output {
+    min-height: auto;
+    white-space: normal; /* Engedélyezzük a sortörést */
+}
+
+#map-locations-output ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#map-locations-output li {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+#map-locations-output li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#map-locations-output strong {
+    color: var(--color-primary-light);
+    display: block;
+    margin-bottom: 5px;
+}

@@ -46,12 +46,47 @@
         <main data-pagefind-body>
     <section id="rpg-helper-intro" style="text-align: center;">
     <h2><i class="fa-solid fa-dungeon"></i> <span data-key="rpgHelperTitle">RPG Segédlet</span></h2>
-    <h2><i class="fa-solid fa-dungeon"></i> <span data-key="rpgHelperTitle">RPG Segédlet</span></h2>
-
-<div class="rpg-philosophy-box">
+    <div class="rpg-philosophy-box">
     <p><strong data-key="rpgPhilosophyTitle">Egy fontos útravaló:</strong> <span data-key="rpgPhilosophyText">Ez az eszköz egy remek alapot adhat, de a te csodálatos fantáziádat semmi nem helyettesíti. Úgy állj hozzá, hogy ez csak segítség, egy sorvezető, nem pedig egy teljes, kész kaland. Használd ihletforrásnak, majd tedd hozzá a saját, egyedi ötleteidet!</span></p>
 </div>
+</div>
 
+<div class="accordion-item" style="margin-bottom: 25px;">
+    <button class="accordion-header">
+        <h2 style="margin: 0; font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-map-location-dot"></i> <span data-key="mapCreatorTitle">Térkép Alkotó Asszisztens</span>
+        </h2>
+    </button>
+    <div class="accordion-content">
+        <div id="map-creator-tool" class="rpg-form">
+            <p class="module-description" data-key="mapCreatorDesc">Írj be néhány kulcsszót a térképedhez, és az AI generál egy profi promptot a képalkotáshoz, valamint leírásokat a legfontosabb helyszínekhez!</p>
+            
+            <div class="rpg-form-group">
+                <label for="map-keywords" data-key="mapKeywordsLabel">Térkép leírása (kulcsszavak)</label>
+                <input type="text" id="map-keywords" data-key-placeholder="mapKeywordsPlaceholder">
+            </div>
+            
+            <button id="generate-map-btn" class="cta-button">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="mapGenerateBtn">Asszisztens Indítása</span>
+            </button>
+
+            <div id="map-creator-output" class="hidden" style="margin-top: 25px;">
+                <div class="map-output-section">
+                    <h4 data-key="mapOutputPromptTitle">1. Prompt a Képalkotóhoz</h4>
+                    <p class="form-hint" data-key="mapOutputPromptDesc">Másold be ezt a promptot a kedvenc képalkotódba! A legjobb eredményhez a <a href="https://creator.nightcafe.studio/?ru=Aliceinbp" target="_blank">NightCafe Studio</a>-t ajánljuk.</p>
+                    <div id="map-prompt-output" class="mini-module-output"></div>
+                </div>
+
+                <div class="map-output-section">
+                    <h4 data-key="mapOutputLocationsTitle">2. Kulcsfontosságú Helyszínek</h4>
+                    <div id="map-locations-output" class="mini-module-output"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="accordion-item" style="margin-bottom: 25px;">
+    
 <div style="display: inline-flex; align-items: center; gap: 10px;">
     <div style="display: inline-flex; align-items: center; gap: 10px;">
         <p class="artist-subtitle" data-key="rpgHelperSubtitle" style="margin-bottom: 40px; margin-top: 0;">AI-alapú inspiráció mesélőknek és játékosoknak.</p>
