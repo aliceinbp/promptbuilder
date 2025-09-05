@@ -41,7 +41,7 @@ document.addEventListener('htmlLoaded', function() {
     if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         new PagefindUI({
-            element: "#search-widget",
+            element: "#search-container",
             showSubResults: true,
             translations: {
                 placeholder: translations[lang].searchPlaceholder,
