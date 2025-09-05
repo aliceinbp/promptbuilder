@@ -1,16 +1,82 @@
-// ===== RPG Segédlet - Vezérlő Szkript (rpg.js) =====
+// js/rpg.js
 
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('rpg-helper-intro')) {
         initializeRpgHelper();
+        initializeMapCreator(); // ÚJ: Meghívjuk a Térkép Alkotó logikáját
     }
     initializeRpgInfoModal();
 });
+// ===== ÚJ RÉSZ: TÉRKÉP ALKOTÓ ASSZISZTENS =====
+function initializeMapCreator() {
+    const toolContainer = document.getElementById('map-creator-tool');
+    if (!toolContainer) return;
 
+    const keywordsInput = toolContainer.querySelector('#map-keywords');
+    const generateBtn = toolContainer.querySelector('#generate-map-btn');
+    const outputContainer = toolContainer.querySelector('#map-creator-output');
+    const promptOutputDiv = toolContainer.querySelector('#map-prompt-output');
+    const locationsOutputDiv = toolContainer.querySelector('#map-locations-output');
+
+    generateBtn.addEventListener('click', async () => {
+        if (!canUseTool('mapCreator')) {
+            showLimitModal();
+            return;
+        }
+
+        const keywords = keywordsInput.value.trim();
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+
+        if (!keywords) {
+            alert(translations[lang].mapKeywordsWarning || "Please provide some keywords for your map!");
+            return;
+        }
+
+        outputContainer.classList.remove('hidden');
+        const spinnerHTML = `<div class="spinner" style="margin: 20px auto;"></div>`;
+        promptOutputDiv.innerHTML = spinnerHTML;
+        locationsOutputDiv.innerHTML = spinnerHTML;
+        updateAccordionHeight(outputContainer);
+        generateBtn.disabled = true;
+
+        try {
+            const response = await fetch('/.netlify/functions/map-creator', {
+                method: 'POST',
+                body: JSON.stringify({ keywords: keywords, lang: lang })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Network error');
+            }
+
+            // Prompt kimenet feltöltése
+            const promptToolbar = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[lang].outputCopyBtn}</span></button></div>`;
+            promptOutputDiv.innerHTML = promptToolbar + `<p>${data.prompt}</p>`;
+
+            // Helyszínek kimenet feltöltése
+            const locationsHTML = data.locations.map(loc => `<li>${loc}</li>`).join('');
+            locationsOutputDiv.innerHTML = `<ul>${locationsHTML}</ul>`;
+
+        } catch (error) {
+            console.error("Map Creator hiba:", error);
+            const errorMessage = error.message.includes("overloaded") 
+                ? translations[lang].outputErrorOverloaded 
+                : translations[lang].outputError;
+            
+            promptOutputDiv.innerHTML = `<p style="color: #ff6b6b;">${errorMessage}</p>`;
+            locationsOutputDiv.innerHTML = '';
+        } finally {
+            generateBtn.disabled = false;
+            setTimeout(() => updateAccordionHeight(outputContainer), 100);
+        }
+    });
+}
+// ===== MEGLÉVŐ RPG KÓD (VÁLTOZATLAN) =====
 function initializeRpgHelper() {
-    // === Elemek ===
-
     const generateAdventureBtn = document.getElementById('generate-adventure-btn');
+    // ... (A fájl többi része változatlan)
     const generateCharacterBtn = document.getElementById('generate-character-btn');
     const adventureOutput = document.getElementById('adventure-output');
     const characterOutput = document.getElementById('character-output');
@@ -25,13 +91,11 @@ function initializeRpgHelper() {
     const twistContextInput = document.getElementById('twist-gen-context');
     const twistOutput = document.getElementById('twist-output');
 
-    // === Eseménykezelők ===
-   generateAdventureBtn.addEventListener('click', () => {
-    // JAVÍTÁS: 'aiHelper'-ről 'dmHelper'-re cserélve
-    if (!canUseTool('dmHelper')) { 
-        showLimitModal();           
-        return;                     
-    }                               
+    generateAdventureBtn.addEventListener('click', () => {
+        if (!canUseTool('dmHelper')) {
+            showLimitModal();
+            return;
+        }
         if (dmKeywordsInput.value.trim() === '') {
             generateSuggestions('/.netlify/functions/rpg-dm-suggestions', getDmMasterFormData(), dmSuggestionsOutput);
         } else {
@@ -40,10 +104,10 @@ function initializeRpgHelper() {
     });
 
     generateCharacterBtn.addEventListener('click', () => {
-        if (!canUseTool('charCreator')) { 
-        showLimitModal();           
-        return;                     
-    }     
+        if (!canUseTool('charCreator')) {
+            showLimitModal();
+            return;
+        }
         if (ccKeywordsInput.value.trim() === '') {
             generateSuggestions('/.netlify/functions/rpg-character-suggestions', getCharacterCreatorFormData(), ccSuggestionsOutput);
         } else {
@@ -72,10 +136,9 @@ function initializeRpgHelper() {
     });
 
     generateTwistBtn.addEventListener('click', () => {
-    const context = twistContextInput.value.trim();
-    // Mostantól a fő generateContent függvényt használjuk, ami minden hibakezelést tud
-    generateContent('/.netlify/functions/rpg-twist-generator', { context: context }, twistOutput);
-});
+        const context = twistContextInput.value.trim();
+        generateContent('/.netlify/functions/rpg-twist-generator', { context: context }, twistOutput);
+    });
     
     document.querySelectorAll('.slider-group input[type="range"]').forEach(slider => {
         const valueSpan = slider.nextElementSibling;
@@ -86,10 +149,7 @@ function initializeRpgHelper() {
     populateSelectOptions(localStorage.getItem('preferredLanguage') || 'en');
 }
 
-// === Dinamikus gombok eseménykezelői (a teljes dokumentumot figyelik) ===
-
 document.addEventListener('click', function(e) {
-    // Ötlet-gombok kezelése
     if (e.target.classList.contains('suggestion-btn')) {
         const parentId = e.target.parentElement.id;
         const dmKeywordsInput = document.getElementById('dm-keywords');
@@ -98,15 +158,14 @@ document.addEventListener('click', function(e) {
         if (parentId === 'dm-suggestions-output') {
             dmKeywordsInput.value = e.target.textContent;
             document.getElementById('dm-suggestions-output').innerHTML = '';
-            document.getElementById('generate-adventure-btn').click(); // Automatikus generálás
+            document.getElementById('generate-adventure-btn').click();
         } else if (parentId === 'cc-suggestions-output') {
             ccKeywordsInput.value = e.target.textContent;
             document.getElementById('cc-suggestions-output').innerHTML = '';
-            document.getElementById('generate-character-btn').click(); // Automatikus generálás
+            document.getElementById('generate-character-btn').click();
         }
     }
 
-    // Másolás gombok kezelése
     if (e.target.closest('.copy-output-btn')) {
         const button = e.target.closest('.copy-output-btn');
         const outputContainer = button.closest('.mini-module-output, #adventure-output, #character-output');
@@ -123,18 +182,6 @@ document.addEventListener('click', function(e) {
         }
     }
 });
-
-// === Segédfüggvények ===
-
-function getDmMasterFormData() { /* ... kód változatlan ... */ }
-function getCharacterCreatorFormData() { /* ... kód változatlan ... */ }
-async function generateSuggestions(endpoint, formData, suggestionsOutputElement) { /* ... kód változatlan ... */ }
-async function generateContent(endpoint, formData, outputElement) { /* ... kód változatlan ... */ }
-function updateAccordionHeight(contentElement) { /* ... kód változatlan ... */ }
-function populateSelectOptions(lang) { /* ... kód változatlan ... */ }
-function updateDownloadLink(lang) { /* ... kód változatlan ... */ }
-
-// IDE BEMÁSOLJUK A VÁLTOZATLAN FÜGGVÉNYEKET A BIZTONSÁG KEDVÉÉRT
 
 function getDmMasterFormData() {
     const focusCombat = document.getElementById('dm-focus-combat').value;
@@ -213,14 +260,13 @@ async function generateContent(endpoint, formData, outputElement) {
             throw new Error(errorData.details || `Network error: ${response.statusText}`);
         }
         const data = await response.json();
-        const resultKey = Object.keys(data)[0]; // twists, names, result, etc.
+        const resultKey = Object.keys(data)[0];
         const resultValue = data[resultKey];
-
         const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[lang].outputCopyBtn}</span></button></div>`;
         
-        if (Array.isArray(resultValue)) { // Név- és fordulatgenerátor
-             outputElement.innerHTML = `<ul>${resultValue.map(item => `<li>${item}</li>`).join('')}</ul>`;
-        } else { // Kaland és karakter
+        if (Array.isArray(resultValue)) {
+            outputElement.innerHTML = `<ul>${resultValue.map(item => `<li>${item}</li>`).join('')}</ul>`;
+        } else {
             if (typeof showdown !== 'undefined') {
                 const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true, simpleLineBreaks: true });
                 outputElement.innerHTML = toolbarHTML + converter.makeHtml(resultValue);
@@ -277,6 +323,7 @@ function updateDownloadLink(lang) {
         link.href = (lang === 'hu') ? '/guides/prompting-for-pros-hu.pdf' : '/guides/prompting-for-pros-en.pdf';
     }
 }
+
 function initializeRpgInfoModal() {
     const icon = document.getElementById('rpg-info-icon');
     const modal = document.getElementById('rpg-info-modal');
@@ -284,23 +331,20 @@ function initializeRpgInfoModal() {
 
     if (!icon || !modal || !overlay) return;
 
-    // === EZ AZ ÚJ, BIZTOSÍTÓ KÓD ===
-    // Ez a rész garantálja, hogy a felirat beállítódjon, amint az RPG oldal elindul.
     const lang = localStorage.getItem('preferredLanguage') || 'en';
     const tooltipKey = icon.dataset.keyTitle;
     if (typeof translations !== 'undefined' && translations[lang] && translations[lang][tooltipKey]) {
         icon.setAttribute('title', translations[lang][tooltipKey]);
     }
-    // === EDDIG TART AZ ÚJ RÉSZ ===
 
     function openModal() {
-        // A szövegek frissítése a jelenlegi nyelv alapján
         const titleElem = modal.querySelector('[data-key="rpgInfoModalTitle"]');
         const textElem = modal.querySelector('[data-key="rpgInfoModalText"]');
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
 
-        if (translations[lang]) {
-            titleElem.textContent = translations[lang].rpgInfoModalTitle;
-            textElem.textContent = translations[lang].rpgInfoModalText;
+        if (translations[currentLang]) {
+            titleElem.textContent = translations[currentLang].rpgInfoModalTitle;
+            textElem.textContent = translations[currentLang].rpgInfoModalText;
         }
 
         overlay.classList.remove('hidden');

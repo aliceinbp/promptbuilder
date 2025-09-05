@@ -99,6 +99,16 @@ const translations = {
         downloadProGuide: "Útmutató Profi AI-okhoz",
         generateAdventureBtn: "Kaland Generálása",
         generateCharacterBtn: "Karakter Generálása",
+        // Térkép Alkotó Asszisztens
+        mapCreatorTitle: "Térkép Alkotó Asszisztens",
+        mapCreatorDesc: "Írj be néhány kulcsszót a térképedhez, és az AI generál egy profi promptot a képalkotáshoz, valamint leírásokat a legfontosabb helyszínekhez!",
+        mapKeywordsLabel: "Térkép leírása (kulcsszavak)",
+        mapKeywordsPlaceholder: "pl. elhagyatott törp bánya egy vulkán mellett...",
+        mapGenerateBtn: "Asszisztens Indítása",
+        mapKeywordsWarning: "Kérlek, adj meg néhány kulcsszót a térképhez!",
+        mapOutputPromptTitle: "1. Prompt a Képalkotóhoz",
+        mapOutputPromptDesc: "Másold be ezt a promptot a kedvenc képalkotódba! A legjobb eredményhez a NightCafe Studio-t ajánljuk.",
+        mapOutputLocationsTitle: "2. Kulcsfontosságú Helyszínek a Térképen",
         // Űrlap címkék
         formSystemLabel: "Játékrendszer / Világ",
         formMoodLabel: "Hangulat & Stílus",
@@ -674,6 +684,16 @@ const translations = {
         generateCharacterBtn: "Generate Character",
         rpgPhilosophyTitle: "An Important Note:",
         rpgPhilosophyText: "This tool can provide a great foundation, but nothing can replace your own wonderful imagination. Approach it as a helper, a guide—not a complete, ready-made adventure. Use it for inspiration, then add your own unique ideas!",
+        // Map Creator Assistant
+        mapCreatorTitle: "Map Creator Assistant",
+        mapCreatorDesc: "Enter a few keywords for your map, and the AI will generate a professional prompt for image creation, along with descriptions for key locations!",
+        mapKeywordsLabel: "Map description (keywords)",
+        mapKeywordsPlaceholder: "e.g., abandoned dwarf mine near a volcano...",
+        mapGenerateBtn: "Start Assistant",
+        mapKeywordsWarning: "Please provide some keywords for your map!",
+        mapOutputPromptTitle: "1. Prompt for the Image Generator",
+        mapOutputPromptDesc: "Copy and paste this prompt into your favorite image generator! For the best results, we recommend NightCafe Studio.",
+        mapOutputLocationsTitle: "2. Key Locations on the Map",
         // Form Labels
         formSystemLabel: "Game System / World",
         formMoodLabel: "Mood & Style",

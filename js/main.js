@@ -418,7 +418,8 @@ function canUseTool(toolType) {
             promptDoctorCount: 0,
             commHelperCount: 0,
             giftHelperCount: 0,
-            metaphorMasterCount: 0 
+            metaphorMasterCount: 0,
+            mapCreatorCount: 0 
         };
 }
   // Itt vannak az egyedi limitek minden eszközhöz.
@@ -429,7 +430,8 @@ function canUseTool(toolType) {
         promptDoctor: 1,
         commHelper: 1,
         giftHelper: 5,
-        metaphorMaster: 5
+        metaphorMaster: 5,
+        mapCreator: 3
     };
   const countKey = `${toolType}Count`;
   const currentCount = usage[countKey] || 0;
