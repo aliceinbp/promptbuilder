@@ -20,57 +20,14 @@
 </head>
 <body>
     <div id="main-container">
-        <header>
-            <div id="logo-container" style="margin-top: 30px;">
-                <img src="src/myLogo.jpg" alt="My Logo" id="logo">
-            </div>
-            <h1>[ <span data-key="siteTitle">Script Acid</span> ]</h1>
-        </header>
-
+        <div id="header-placeholder"></div>
         <main style="text-align: center; padding: 40px 0;">
             <h2 data-key="thankYouContactTitle" style="font-family: 'Pacifico', cursive; color: var(--color-primary-light); font-size: 2em;">Köszönöm az üzeneted!</h2>
             <p data-key="thankYouContactText">Hamarosan felveszem veled a kapcsolatot.</p>
             <a href="index.html" class="cta-button" style="margin-top: 20px;" data-key="thankYouContactBtn">Vissza a Főoldalra</a>
         </main>
 
-        <footer class="footer-main">
-    <div class="footer-top">
-        <div class="footer-widget">
-            <h4 data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</h4>
-            <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
-                <input type="hidden" name="form-name" value="newsletter" />
-                <div class="newsletter-input-group">
-                    <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
-                    <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </form>
-        </div>
-        <div class="footer-widget">
-    <h4 data-key="supportProject">Támogasd a Projektet!</h4>
-    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
-        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
-        <span data-key="kofiButtonText">Támogass egy kávéval</span>
-    </a>
-</div>
-    </div>
-
-    <div class="footer-middle">
-        <div class="footer-links">
-            <a href="contact.html" data-key="navContact">Kapcsolat</a>
-            <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's Creations</a>
-        </div>
-        <div class="footer-socials">
-            <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <div id="visitor-counter">
-    <div class="goatcounter-display">Pageviews: <span data-goatcounter-display="hits">...</span></div>
-</div>
-        <p class="copyright-text">&copy; 2025 Script Acid by aliceinbp. Minden jog fenntartva.</p>
-    </div>
-</footer>
+       <div id="footer-placeholder"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
@@ -84,5 +41,7 @@
     <script src="js/interactive-pages.js"></script>
     
     <script src="js/main.js"></script>
+    <script src="js/html-loader.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 // ===== Script Acid - Fő Szkript (Javított, Teljes Verzió) =====
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('htmlLoaded', function() {
     // --- INICIALIZÁLÁS ---
     const initialTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(initialTheme);

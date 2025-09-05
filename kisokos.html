@@ -43,39 +43,7 @@
 </head>
 <body>
     <div id="main-container">
-        <header>
-    <div id="header-top-row">
-        <div class="header-icons-left">
-            <button id="info-button" title="Névjegy / Segítség"><i class="fa-solid fa-circle-question"></i></button>
-            <button id="theme-toggle" title="Téma váltása"><i class="fa-solid fa-sun"></i></button>
-        </div>
-        <div id="lang-switcher">
-            <a href="#" id="lang-hu">HUN</a> | <a href="#" id="lang-en" class="active">ENG</a>
-        </div>
-    </div>
-    <div id="logo-container">
-        <img src="src/myLogo.jpg" alt="My Logo" id="logo">
-    </div>
-    <h1>[ <span data-key="siteTitle">Script Acid</span> ]</h1>
-    <p data-key="siteSubtitle">AI Képalkotó Segédlet</p>
-<p class="signature">by aliceinbp</p>
-    <div id="header-nav-container">
-        <nav id="main-nav">
-    <a href="index.html"><i class="fa-solid fa-house-chimney"></i> <span data-key="navHome">Főoldal</span></a>
-    <a href="generator.html"><i class="fa-solid fa-flask-vial"></i> <span data-key="navGenerator">Prompt Lab</span></a>
-    <a href="tools.html"><i class="fa-solid fa-toolbox"></i> <span data-key="navTools">Eszközök</span></a>
-    <a href="rpg.html"><i class="fa-solid fa-dungeon"></i> <span data-key="navRpgHelper">RPG Segédlet</span></a>
-    <a href="kihivas.html"><i class="fa-solid fa-dice-d20"></i> <span data-key="navChallenge">Kihívás</span></a>
-    <a href="kisokos.html"><i class="fa-solid fa-book-open"></i> <span data-key="navHandbook">Tudástár</span></a>
-    <a href="gallery.html"><i class="fa-solid fa-images"></i> <span data-key="navGallery">Galéria</span></a>
-    <a href="blog.html"><i class="fa-solid fa-feather-pointed"></i> <span data-key="navBlog">Blog</span></a>
-</nav>
-    </div>
-    <div id="search-container">
-        <div id="search"></div>
-    </div>
-</header>
-
+        <div id="header-placeholder"></div>
        <main data-pagefind-body>
     <section id="handbook-intro" style="text-align: center;">
         <h2><i class="fa-solid fa-book-open"></i> <span data-key="handbookTitle">Tudástár</span></h2>
@@ -187,44 +155,7 @@
         </div>
     </section>
 </main>
-        <footer class="footer-main">
-    <div class="footer-top">
-        <div class="footer-widget">
-            <h4 data-key="newsletterLabel">Iratkozz fel a Hírlevélre!</h4>
-            <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
-                <input type="hidden" name="form-name" value="newsletter" />
-                <div class="newsletter-input-group">
-                    <input type="email" id="newsletter-email" name="email" data-key-placeholder="newsletterPlaceholder" required>
-                    <button type="submit" data-key-title="newsletterButtonTooltip"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </form>
-        </div>
-        <div class="footer-widget">
-    <h4 data-key="supportProject">Támogasd a Projektet!</h4>
-    <a class="kofi-button" href="https://ko-fi.com/aliceinbp" target="_blank">
-        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Buy Me a Coffee at ko-fi.com" class="kofi-img">
-        <span data-key="kofiButtonText">Támogass egy kávéval</span>
-    </a>
-</div>
-    </div>
-
-    <div class="footer-middle">
-        <div class="footer-links">
-            <a href="contact.html" data-key="navContact">Kapcsolat</a>
-            <a href="https://creator.nightcafe.studio/u/Aliceinbp?ru=Aliceinbp" target="_blank">Alicebp's Creations</a>
-        </div>
-        <div class="footer-socials">
-            <a href="https://www.instagram.com/aliceinbp_promptbuilder/" target="_blank" title="Instagram profilom"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <div id="visitor-counter">
-    <div class="goatcounter-display">Pageviews: <span data-goatcounter-display="hits">...</span></div>
-</div>
-        <p class="copyright-text">&copy; 2025 Script Acid by aliceinbp. Minden jog fenntartva.</p>
-    </div>
-</footer>
+        <div id="footer-placeholder"></div>
     </div>
     
     <div id="modal-overlay" class="hidden"></div>
@@ -251,5 +182,7 @@
         async src="//gc.zgo.at/count.js"></script>
 
     <a href="#" id="back-to-top" class="hidden" data-key-title="backToTopTooltip"><i class="fa-solid fa-arrow-up"></i></a>
+    <script src="js/html-loader.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
