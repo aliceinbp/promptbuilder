@@ -174,7 +174,7 @@ window.setLanguage = function(lang) {
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.dataset.key;
         if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
-            elem.textContent = translations[lang][key];
+            elem.innerHTML = translations[lang][key];
         }
     });
 
