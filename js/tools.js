@@ -190,24 +190,30 @@ function initializeMetaphorMaster() {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json(); // Itt most már mindig lesz érvényes JSON
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.details || 'Network error');
+                // Ha a szerver hibát küld (pl. 503), az error mező alapján dobunk hibát
+                throw new Error(data.error || 'Network error');
             }
 
-            const data = await response.json();
             const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[formData.lang].outputCopyBtn}</span></button></div>`;
 
             if (typeof showdown !== 'undefined') {
                 const converter = new showdown.Converter({ openLinksInNewWindow: true, noHeaderId: true });
                 outputDiv.innerHTML = toolbarHTML + converter.makeHtml(data.result);
             } else {
-                outputDiv.innerHTML = toolbarHTML + `<pre>${data.result}</pre>`; // Fallback, ha a Showdown nem érhető el
+                outputDiv.innerHTML = toolbarHTML + `<pre>${data.result}</pre>`;
             }
 
         } catch (error) {
             console.error("Metaphor Master hiba:", error);
-            outputDiv.innerHTML = `<p style="color: #ff6b6b;">${translations[formData.lang].outputError}<br><small>${error.message}</small></p>`;
+            // JAVÍTÁS: A hibaüzenetet most már a szerverről kapjuk
+            const errorMessage = error.message.includes("túlterhelt") || error.message.includes("overloaded")
+                ? translations[formData.lang].outputErrorOverloaded 
+                : translations[formData.lang].outputError;
+            
+            outputDiv.innerHTML = `<p style="color: #ff6b6b;">${errorMessage}</p>`;
         } finally {
             generateBtn.disabled = false;
             setTimeout(() => updateAccordionHeight(outputDiv), 50);

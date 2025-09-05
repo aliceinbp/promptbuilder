@@ -1,4 +1,4 @@
-// D:\promptbuilder\netlify\functions\metaphor-master.js
+// D:\promptbuilder\netlify\functions\metaphor-master.js (VÉGLEGESEN JAVÍTOTT NYELVI KEZELÉSSEL)
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -14,7 +14,30 @@ exports.handler = async function(event) {
         const userInput = JSON.parse(event.body);
         const lang = userInput.lang || 'en';
 
-        // Ez a mesterprompt, amit az 1. lépésben terveztünk.
+        // ÚJ: Előre definiáljuk a címsorokat mindkét nyelven
+        const headers = {
+            hu: {
+                metaphors: "Metaforák és Hasonlatok",
+                personifications: "Megszemélyesítések",
+                sensory: "Érzékszervi Asszociációk",
+                sight: "Látvány",
+                sound: "Hang",
+                smell: "Szag/Íz",
+                touch: "Érintés"
+            },
+            en: {
+                metaphors: "Metaphors & Similes",
+                personifications: "Personifications",
+                sensory: "Sensory Associations",
+                sight: "Sight",
+                sound: "Sound",
+                smell: "Smell/Taste",
+                touch: "Touch"
+            }
+        };
+        const currentHeaders = headers[lang]; // Kiválasztjuk a helyes nyelvű objektumot
+
+        // A mesterprompt most már dinamikusan kapja meg a helyes nyelvű címsorokat
         const masterPrompt = `
 You are a seasoned, award-winning author and creative writing professor. Your task is to act as a brainstorming partner for another writer. You will generate a list of creative, original, and subtle figurative language concepts based on their input.
 
@@ -28,22 +51,20 @@ DO NOT generate long, flowery, poetic sentences. Your output should consist of s
 1.  Analyze the user's provided concept and tone.
 2.  Generate 3-4 metaphors/similes.
 3.  Generate 2-3 personifications.
-4.  Generate 1-2 sensory associations for each sense (Sight, Sound, Smell/Taste, Touch).
+4.  Generate 1-2 sensory associations for each sense.
 5.  Your response MUST BE ONLY in the specified markdown format below, with no introductory or concluding text.
 
 **MARKDOWN FORMAT:**
-### Metaphors & Similes
+### ${currentHeaders.metaphors}
 - [Idea 1]
 - [Idea 2]
-- [Idea 3]
-### Personifications
+### ${currentHeaders.personifications}
 - [Idea 1]
-- [Idea 2]
-### Sensory Associations
-- **Sight:** [Visual idea]
-- **Sound:** [Auditory idea]
-- **Smell/Taste:** [Olfactory/Gustatory idea]
-- **Touch:** [Tactile idea]
+### ${currentHeaders.sensory}
+- **${currentHeaders.sight}:** [Visual idea]
+- **${currentHeaders.sound}:** [Auditory idea]
+- **${currentHeaders.smell}:** [Olfactory/Gustatory idea]
+- **${currentHeaders.touch}:** [Tactile idea]
 
 **USER'S REQUEST:**
 - Concept: "${userInput.concept}"
@@ -62,6 +83,14 @@ DO NOT generate long, flowery, poetic sentences. Your output should consist of s
 
     } catch (error) {
         console.error("Metaphor Master (Gemini) hiba:", error);
+
+        if (error.message.includes('503') || error.message.toLowerCase().includes('overloaded')) {
+            return {
+                statusCode: 503,
+                body: JSON.stringify({ error: "Az AI modell jelenleg túlterhelt.", details: "Service Unavailable" })
+            };
+        }
+
         return {
             statusCode: 500,
             body: JSON.stringify({ error: "Hiba történt az ötletelés során.", details: error.message })

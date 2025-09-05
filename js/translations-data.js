@@ -113,6 +113,8 @@ const translations = {
             { value: 'mysterious/ethereal', label: 'Rejtélyes / Éteri' },
             { value: 'cynical/humorous', label: 'Cinikus / Humoros' }
         ],
+        outputError: "Hiba történt a generálás során. Próbáld újra, vagy egyszerűsíts a kérésen.",
+        outputErrorOverloaded: "Az AI modell jelenleg túlterhelt, kérlek próbáld újra egy kicsit később. Ez egy átmeneti hiba, ami nem a te hibád!", // <--- ÚJ SOR
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -725,6 +727,8 @@ const translations = {
             { value: 'mysterious/ethereal', label: 'Mysterious / Ethereal' },
             { value: 'cynical/humorous', label: 'Cynical / Humorous' }
         ],
+        outputError: "An error occurred during generation. Please try again or simplify your request.",
+        outputErrorOverloaded: "The AI model is currently overloaded, please try again in a moment. This is a temporary issue and not your fault!", // <--- ÚJ SOR
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",
