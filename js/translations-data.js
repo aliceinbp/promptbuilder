@@ -98,6 +98,21 @@ const translations = {
                 { value: 'exclusive (over €80)', label: 'Exkluzív (30.000 Ft felett)' }
             ]
         },
+        // Metafora Mester
+        metaphorMasterTitle: "Metafora Mester",
+        metaphorHelperDesc: "Add meg a fogalmat, amire írói eszközt keresel, és az AI segít eredeti ötletekkel.",
+        metaphorConceptLabel: "Fogalom (amit le szeretnél írni)",
+        metaphorConceptPlaceholder: "pl. a magány, a bosszú, egy rohanó város...",
+        metaphorToneLabel: "Hangulat",
+        metaphorGenerateBtn: "Ötletelés",
+        metaphorConceptWarning: "Kérlek, adj meg egy fogalmat az ötleteléshez!",
+        metaphorSelectOptions: [
+            { value: 'joyful/optimistic', label: 'Örömteli / Optimista' },
+            { value: 'sad/melancholic', label: 'Szomorú / Melankolikus' },
+            { value: 'dark/menacing', label: 'Sötét / Fenyegető' },
+            { value: 'mysterious/ethereal', label: 'Rejtélyes / Éteri' },
+            { value: 'cynical/humorous', label: 'Cinikus / Humoros' }
+        ],
         // RPG Mini-Modulok
         nameGenTitle: "Névgenerátor",
         nameGenDesc: "Adj meg egy stílust, és az AI egyedi neveket alkot a világhoz!",
@@ -695,6 +710,21 @@ const translations = {
                 { value: 'exclusive (over $80)', label: 'Exclusive (over $80)' }
             ]
         },
+        // Metaphor Master
+        metaphorMasterTitle: "Metaphor Master",
+        metaphorHelperDesc: "Provide a concept you need a literary device for, and the AI will help with original ideas.",
+        metaphorConceptLabel: "Concept (what you want to describe)",
+        metaphorConceptPlaceholder: "e.g., loneliness, revenge, a bustling city...",
+        metaphorToneLabel: "Tone / Mood",
+        metaphorGenerateBtn: "Brainstorm",
+        metaphorConceptWarning: "Please enter a concept to brainstorm!",
+        metaphorSelectOptions: [
+            { value: 'joyful/optimistic', label: 'Joyful / Optimistic' },
+            { value: 'sad/melancholic', label: 'Sad / Melancholic' },
+            { value: 'dark/menacing', label: 'Dark / Menacing' },
+            { value: 'mysterious/ethereal', label: 'Mysterious / Ethereal' },
+            { value: 'cynical/humorous', label: 'Cynical / Humorous' }
+        ],
         // ===== RPG HELPER =====
         navRpgHelper: "RPG Helper",
         rpgHelperTitle: "RPG Helper",

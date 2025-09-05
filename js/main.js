@@ -417,7 +417,8 @@ function canUseTool(toolType) {
             charCreatorCount: 0,
             promptDoctorCount: 0,
             commHelperCount: 0,
-            giftHelperCount: 0 
+            giftHelperCount: 0,
+            metaphorMasterCount: 0 
         };
 }
   // Itt vannak az egyedi limitek minden eszközhöz.
@@ -427,7 +428,8 @@ function canUseTool(toolType) {
         charCreator: 1,
         promptDoctor: 1,
         commHelper: 1,
-        giftHelper: 5 // <--- 2. ADD HOZZÁ EZT A SORT (itt 5-re állítottam a napi limitet)
+        giftHelper: 5,
+        metaphorMaster: 5
     };
   const countKey = `${toolType}Count`;
   const currentCount = usage[countKey] || 0;

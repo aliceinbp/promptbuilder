@@ -173,15 +173,34 @@
                         </div>
 
                 <div class="accordion-item" style="margin-bottom: 25px;">
-                    <button class="accordion-header">
-                        <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
-                            <i class="fa-solid fa-lightbulb"></i> <span data-key="metaphorMasterTitle">Metaphor Master</span>
-                        </h3>
-                    </button>
-                    <div class="accordion-content">
-                        <p style="padding: 20px;" data-key="comingSoonBtn">Coming soon...</p>
-                    </div>
-                </div>
+                            <button class="accordion-header">
+                                <h3 style="margin: 0; font-size: 1.5em; display: inline-flex; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-lightbulb"></i> <span data-key="metaphorMasterTitle">Metafora Mester</span>
+                                </h3>
+                            </button>
+                            <div class="accordion-content">
+                                <div id="metaphor-helper-tool" class="rpg-form">
+                                    <p class="module-description" data-key="metaphorHelperDesc">Add meg a fogalmat, amire írói eszközt keresel, és az AI segít eredeti ötletekkel.</p>
+                                    
+                                    <div class="rpg-form-group">
+                                        <label for="metaphor-concept" data-key="metaphorConceptLabel">Fogalom</label>
+                                        <input type="text" id="metaphor-concept" data-key-placeholder="metaphorConceptPlaceholder">
+                                    </div>
+
+                                    <div class="rpg-form-group">
+                                        <label for="metaphor-tone" data-key="metaphorToneLabel">Hangulat</label>
+                                        <select id="metaphor-tone"></select>
+                                    </div>
+                                    
+                                    <button id="generate-metaphor-btn" class="cta-button">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="metaphorGenerateBtn">Ötletelés</span>
+                                    </button>
+
+                                    <div id="metaphor-helper-output" class="mini-module-output" style="margin-top: 20px;">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
 
             </div>
         </main>
