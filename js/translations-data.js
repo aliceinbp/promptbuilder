@@ -33,12 +33,12 @@ const translations = {
         expertPlaceholderInitial: "A válasz itt fog megjelenni...",
         expertErrorEmpty: "Kérlek, írj be egy kifejezést a kereséshez!",
         // ===== ESZKÖZÖK OLDAL (TOOLS.HTML) =====
-        pageTitleTools: "Eszközök - Script Acid",
-        toolsTitle: "Hétköznapi Eszközök",
-        toolsSubtitle: "AI-alapú segédletek a mindennapi kreativitáshoz és kommunikációhoz.",
+        pageTitleTools: "AI Kreatív Eszközök: Szövegátíró, Ajándék- és Metafora Generátor - Script Acid",
+        toolsTitle: "AI Kreatív Eszközök",
+        toolsSubtitle: "Engedd szabadjára a kreativitásod a Script Acid ingyenes, mesterséges intelligencia alapú segédleteivel! Legyen szó hivatalos levél megírásáról, a tökéletes ajándék megtalálásáról vagy az írói blokk leküzdéséről, ezek az eszközök segítenek ihletet meríteni és gyorsabban alkotni.",
         // Kommunikációs segédlet
-        commHelperTitle: "Kommunikációs segédlet",
-        commHelperDesc: "Írd be a szöveged, válassz egy stílust, és az AI segít átfogalmazni!",
+        commHelperTitle: "Kommunikációs Segédlet: Szövegátíró",
+        commHelperDesc: "Elakadtál egy e-mail megfogalmazásával? Tedd a szövegedet professzionálisabbá, barátságosabbá vagy épp magabiztosabbá egyetlen kattintással! Az AI segít finomítani az üzeneted, hogy mindig a megfelelő hangnemet találd el.",
         commHelperInputPlaceholder: "Írd ide az átfogalmazandó szöveget...",
         commHelperToneLabel: "Válassz hangnemet:",
         commHelperToneFormal: "Formális",
@@ -48,7 +48,7 @@ const translations = {
         commHelperRewriteBtn: "Átírás",
         // Ajándékötlet Generátor
         giftIdeaTitle: "Ajándékötlet Generátor",
-        giftHelperDesc: "Töltsd ki az űrlapot, és az AI segít megtalálni a tökéletes ajándékot!",
+        giftHelperDesc: "Soha többé tanácstalanság! Add meg, kinek, milyen alkalomra és milyen stílusban keresel ajándékot, és az AI személyre szabott, kreatív ötletekkel segít, hogy garantáltan örömet okozz.",
         giftRecipientLabel: "Kinek?",
         giftOccasionLabel: "Milyen alkalomra?",
         giftAgeLabel: "Korosztály",
@@ -64,55 +64,21 @@ const translations = {
         giftGenerateBtn: "Ötletek Generálása",
         giftInterestsWarning: "Kérlek, írd le az ajándékozott érdeklődési körét!",
         // Metafora Mester
-        metaphorMasterTitle: "Metafora Mester",
-        // Legördülő menük opciói
-        giftSelectOptions: {
-            recipients: [
-                { value: 'partner', label: 'Partner (férj, feleség, barát/nő)' },
-                { value: 'parent', label: 'Szülő (anya, apa)' },
-                { value: 'sibling', label: 'Testvér' },
-                { value: 'friend', label: 'Barát / Barátnő' },
-                { value: 'colleague', label: 'Kolléga / Munkatárs' },
-                { value: 'child', label: 'Gyerek' },
-                { value: 'other', label: 'Egyéb' }
-            ],
-            occasions: [
-                { value: 'birthday', label: 'Születésnap' },
-                { value: 'christmas', label: 'Karácsony' },
-                { value: 'anniversary', label: 'Évforduló' },
-                { value: 'name day', label: 'Névnap' },
-                { value: 'housewarming', label: 'Házavató' },
-                { value: 'just because', label: 'Csak úgy' }
-            ],
-            ageGroups: [
-                { value: 'child (0-12)', label: 'Gyerek (0-12)' },
-                { value: 'teenager (13-19)', label: 'Tinédzser (13-19)' },
-                { value: 'young adult (20-30)', label: 'Fiatal felnőtt (20-30)' },
-                { value: 'adult (31-50)', label: 'Felnőtt (31-50)' },
-                { value: 'senior (51+)', label: 'Idősebb (51+)' }
-            ],
-            priceRanges: [
-                { value: 'symbolic (up to ~€15)', label: 'Jelképes (kb. 5.000 Ft-ig)' },
-                { value: 'mid-range (~€15-€40)', label: 'Közepes (kb. 5.000 - 15.000 Ft)' },
-                { value: 'higher-end (~€40-€80)', label: 'Magasabb (kb. 15.000 - 30.000 Ft)' },
-                { value: 'exclusive (over €80)', label: 'Exkluzív (30.000 Ft felett)' }
-            ]
-        },
-        // Metafora Mester
-        metaphorMasterTitle: "Metafora Mester",
-        metaphorHelperDesc: "Add meg a fogalmat, amire írói eszközt keresel, és az AI segít eredeti ötletekkel.",
+        metaphorMasterTitle: "Metafora Mester (Íróknak)",
+        metaphorHelperDesc: "Küzdesz az írói blokkal? Adj meg egy fogalmat és egy hangulatot, és az AI eredeti metaforákat, megszemélyesítéseket és érzékszervi leírásokat generál, hogy életre keltsd a szövegeidet.",
         metaphorConceptLabel: "Fogalom (amit le szeretnél írni)",
         metaphorConceptPlaceholder: "pl. a magány, a bosszú, egy rohanó város...",
         metaphorToneLabel: "Hangulat",
         metaphorGenerateBtn: "Ötletelés",
         metaphorConceptWarning: "Kérlek, adj meg egy fogalmat az ötleteléshez!",
-        metaphorSelectOptions: [
-            { value: 'joyful/optimistic', label: 'Örömteli / Optimista' },
-            { value: 'sad/melancholic', label: 'Szomorú / Melankolikus' },
-            { value: 'dark/menacing', label: 'Sötét / Fenyegető' },
-            { value: 'mysterious/ethereal', label: 'Rejtélyes / Éteri' },
-            { value: 'cynical/humorous', label: 'Cinikus / Humoros' }
-        ],
+        // Legördülő menük opciói
+        giftSelectOptions: {
+            recipients: [ { value: 'partner', label: 'Partner (férj, feleség, barát/nő)' }, { value: 'parent', label: 'Szülő (anya, apa)' }, { value: 'sibling', label: 'Testvér' }, { value: 'friend', label: 'Barát / Barátnő' }, { value: 'colleague', label: 'Kolléga / Munkatárs' }, { value: 'child', label: 'Gyerek' }, { value: 'other', label: 'Egyéb' } ],
+            occasions: [ { value: 'birthday', label: 'Születésnap' }, { value: 'christmas', label: 'Karácsony' }, { value: 'anniversary', label: 'Évforduló' }, { value: 'name day', label: 'Névnap' }, { value: 'housewarming', label: 'Házavató' }, { value: 'just because', label: 'Csak úgy' } ],
+            ageGroups: [ { value: 'child (0-12)', label: 'Gyerek (0-12)' }, { value: 'teenager (13-19)', label: 'Tinédzser (13-19)' }, { value: 'young adult (20-30)', label: 'Fiatal felnőtt (20-30)' }, { value: 'adult (31-50)', label: 'Felnőtt (31-50)' }, { value: 'senior (51+)', label: 'Idősebb (51+)' } ],
+            priceRanges: [ { value: 'symbolic (up to ~€15)', label: 'Jelképes (kb. 5.000 Ft-ig)' }, { value: 'mid-range (~€15-€40)', label: 'Közepes (kb. 5.000 - 15.000 Ft)' }, { value: 'higher-end (~€40-€80)', label: 'Magasabb (kb. 15.000 - 30.000 Ft)' }, { value: 'exclusive (over €80)', label: 'Exkluzív (30.000 Ft felett)' } ]
+        },
+        metaphorSelectOptions: [ { value: 'joyful/optimistic', label: 'Örömteli / Optimista' }, { value: 'sad/melancholic', label: 'Szomorú / Melankolikus' }, { value: 'dark/menacing', label: 'Sötét / Fenyegető' }, { value: 'mysterious/ethereal', label: 'Rejtélyes / Éteri' }, { value: 'cynical/humorous', label: 'Cinikus / Humoros' } ],
         outputError: "Hiba történt a generálás során. Próbáld újra, vagy egyszerűsíts a kérésen.",
         outputErrorOverloaded: "Az AI modell jelenleg túlterhelt, kérlek próbáld újra egy kicsit később. Ez egy átmeneti hiba, ami nem a te hibád!", // <--- ÚJ SOR
         // RPG Mini-Modulok
@@ -647,12 +613,12 @@ const translations = {
         twistGenPlaceholder: "Describe the current situation, e.g., The heroes have cornered the thieves' guild leader, who claims he's being blackmailed...",
         generateTwistBtn: "Get a Twist!",
         // ===== TOOLS PAGE (TOOLS.HTML) =====
-        pageTitleTools: "Tools - Script Acid",
-        toolsTitle: "Everyday Tools",
-        toolsSubtitle: "AI-powered helpers for everyday creativity and communication.",
+        pageTitleTools: "AI Creative Tools: Text Rewriter, Gift & Metaphor Generator - Script Acid",
+        toolsTitle: "AI Creative Tools",
+        toolsSubtitle: "Unleash your creativity with Script Acid's free, AI-powered helpers! Whether it's writing a professional letter, finding the perfect gift, or overcoming writer's block, these tools help you find inspiration and create faster.",
         // Communication Helper
-        commHelperTitle: "Communication Helper",
-        commHelperDesc: "Enter your text, choose a style, and the AI will help you rephrase it!",
+        commHelperTitle: "Communication Helper: Text Rewriter",
+        commHelperDesc: "Stuck writing an email? Make your text more professional, friendly, or confident with a single click! The AI helps you refine your message to always strike the right tone.",
         commHelperInputPlaceholder: "Write the text to be rephrased here...",
         commHelperToneLabel: "Choose a tone:",
         commHelperToneFormal: "Formal",
@@ -662,7 +628,7 @@ const translations = {
         commHelperRewriteBtn: "Rewrite",
         // Gift Idea Generator
         giftIdeaTitle: "Gift Idea Generator",
-        giftHelperDesc: "Fill out the form, and the AI will help you find the perfect gift!",
+        giftHelperDesc: "Never be stumped for a gift again! Specify who it's for, the occasion, and the style, and our AI will help with personalized, creative ideas that are guaranteed to bring joy.",
         giftRecipientLabel: "Who is it for?",
         giftOccasionLabel: "What's the occasion?",
         giftAgeLabel: "Age Group",
@@ -678,55 +644,21 @@ const translations = {
         giftGenerateBtn: "Generate Ideas",
         giftInterestsWarning: "Please describe the person's interests!",
         // Metaphor Master
-        metaphorMasterTitle: "Metaphor Master",
-        // Dropdown options
-        giftSelectOptions: {
-            recipients: [
-                { value: 'partner', label: 'Partner (husband, wife, bf/gf)' },
-                { value: 'parent', label: 'Parent (mom, dad)' },
-                { value: 'sibling', label: 'Sibling' },
-                { value: 'friend', label: 'Friend' },
-                { value: 'colleague', label: 'Colleague / Coworker' },
-                { value: 'child', label: 'Child' },
-                { value: 'other', label: 'Other' }
-            ],
-            occasions: [
-                { value: 'birthday', label: 'Birthday' },
-                { value: 'christmas', label: 'Christmas' },
-                { value: 'anniversary', label: 'Anniversary' },
-                { value: 'name day', label: 'Name Day' },
-                { value: 'housewarming', label: 'Housewarming' },
-                { value: 'just because', label: 'Just Because' }
-            ],
-            ageGroups: [
-                { value: 'child (0-12)', label: 'Child (0-12)' },
-                { value: 'teenager (13-19)', label: 'Teenager (13-19)' },
-                { value: 'young adult (20-30)', label: 'Young Adult (20-30)' },
-                { value: 'adult (31-50)', label: 'Adult (31-50)' },
-                { value: 'senior (51+)', label: 'Senior (51+)' }
-            ],
-            priceRanges: [
-                { value: 'symbolic (up to ~$15)', label: 'Symbolic (up to ~$15)' },
-                { value: 'mid-range (~$15-$40)', label: 'Mid-range (~$15-$40)' },
-                { value: 'higher-end (~$40-$80)', label: 'Higher-end (~$40-$80)' },
-                { value: 'exclusive (over $80)', label: 'Exclusive (over $80)' }
-            ]
-        },
-        // Metaphor Master
-        metaphorMasterTitle: "Metaphor Master",
-        metaphorHelperDesc: "Provide a concept you need a literary device for, and the AI will help with original ideas.",
+        metaphorMasterTitle: "Metaphor Master (for Writers)",
+        metaphorHelperDesc: "Struggling with writer's block? Provide a concept and a mood, and the AI will generate original metaphors, personifications, and sensory details to bring your texts to life.",
         metaphorConceptLabel: "Concept (what you want to describe)",
         metaphorConceptPlaceholder: "e.g., loneliness, revenge, a bustling city...",
         metaphorToneLabel: "Tone / Mood",
         metaphorGenerateBtn: "Brainstorm",
         metaphorConceptWarning: "Please enter a concept to brainstorm!",
-        metaphorSelectOptions: [
-            { value: 'joyful/optimistic', label: 'Joyful / Optimistic' },
-            { value: 'sad/melancholic', label: 'Sad / Melancholic' },
-            { value: 'dark/menacing', label: 'Dark / Menacing' },
-            { value: 'mysterious/ethereal', label: 'Mysterious / Ethereal' },
-            { value: 'cynical/humorous', label: 'Cynical / Humorous' }
-        ],
+        // Dropdown options
+        giftSelectOptions: {
+            recipients: [ { value: 'partner', label: 'Partner (husband, wife, bf/gf)' }, { value: 'parent', label: 'Parent (mom, dad)' }, { value: 'sibling', label: 'Sibling' }, { value: 'friend', label: 'Friend' }, { value: 'colleague', label: 'Colleague / Coworker' }, { value: 'child', label: 'Child' }, { value: 'other', label: 'Other' } ],
+            occasions: [ { value: 'birthday', label: 'Birthday' }, { value: 'christmas', label: 'Christmas' }, { value: 'anniversary', label: 'Anniversary' }, { value: 'name day', label: 'Name Day' }, { value: 'housewarming', label: 'Housewarming' }, { value: 'just because', label: 'Just Because' } ],
+            ageGroups: [ { value: 'child (0-12)', label: 'Child (0-12)' }, { value: 'teenager (13-19)', label: 'Teenager (13-19)' }, { value: 'young adult (20-30)', label: 'Young Adult (20-30)' }, { value: 'adult (31-50)', label: 'Adult (31-50)' }, { value: 'senior (51+)', label: 'Senior (51+)' } ],
+            priceRanges: [ { value: 'symbolic (up to ~$15)', label: 'Symbolic (up to ~$15)' }, { value: 'mid-range (~$15-$40)', label: 'Mid-range (~$15-$40)' }, { value: 'higher-end (~$40-$80)', label: 'Higher-end (~$40-$80)' }, { value: 'exclusive (over $80)', label: 'Exclusive (over $80)' } ]
+        },
+        metaphorSelectOptions: [ { value: 'joyful/optimistic', label: 'Joyful / Optimistic' }, { value: 'sad/melancholic', label: 'Sad / Melancholic' }, { value: 'dark/menacing', label: 'Dark / Menacing' }, { value: 'mysterious/ethereal', label: 'Mysterious / Ethereal' }, { value: 'cynical/humorous', label: 'Cynical / Humorous' } ],
         outputError: "An error occurred during generation. Please try again or simplify your request.",
         outputErrorOverloaded: "The AI model is currently overloaded, please try again in a moment. This is a temporary issue and not your fault!", // <--- ÚJ SOR
         // ===== RPG HELPER =====
