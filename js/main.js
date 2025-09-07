@@ -38,7 +38,7 @@ document.addEventListener('htmlLoaded', function() {
     if (typeof initializePillarNav === 'function') initializePillarNav();
 
     // Pagefind kereső inicializálása
-    if (typeof PagefindUI !== 'undefined' && document.getElementById('search')) {
+    if (typeof PagefindUI !== 'undefined' && document.getElementById('search-container')) {
         const lang = localStorage.getItem('preferredLanguage') || 'en';
         new PagefindUI({
             element: "#search-container",
