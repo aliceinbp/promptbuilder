@@ -106,8 +106,9 @@ const translations = {
         mapKeywordsPlaceholder: "pl. elhagyatott törp bánya egy vulkán mellett...",
         mapGenerateBtn: "Asszisztens Indítása",
         mapKeywordsWarning: "Kérlek, adj meg néhány kulcsszót a térképhez!",
+        mapCreatorHint_part1: "Az elkészült promptot másold be a kedvenc képalkotódba! A legjobb eredményhez a ",
+        mapCreatorHint_part2: "-t ajánljuk.",
         mapOutputPromptTitle: "1. Prompt a Képalkotóhoz",
-        mapCreatorHint: "Az elkészült promptot másold be a kedvenc képalkotódba! A legjobb eredményhez a NightCafe Studio-t ajánljuk.",
         mapOutputLocationsTitle: "2. Kulcsfontosságú Helyszínek a Térképen",
         // Űrlap címkék
         formSystemLabel: "Játékrendszer / Világ",
@@ -692,7 +693,8 @@ const translations = {
         mapGenerateBtn: "Start Assistant",
         mapKeywordsWarning: "Please provide some keywords for your map!",
         mapOutputPromptTitle: "1. Prompt for the Image Generator",
-        mapCreatorHint: "Copy the finished prompt into your favorite image generator! For the best results, we recommend NightCafe Studio.",
+        mapCreatorHint_part1: "Copy the finished prompt into your favorite image generator! For the best results, we recommend ",
+        mapCreatorHint_part2: ".",
         mapOutputLocationsTitle: "2. Key Locations on the Map",
         // Form Labels
         formSystemLabel: "Game System / World",
