@@ -354,6 +354,7 @@ function initializeRpgInfoModal() {
 
     icon.addEventListener('click', openModal);
 }
+
 function initializeRpgPortraitAssistant() {
     const toolContainer = document.getElementById('portrait-assistant-tool');
     if (!toolContainer) return;
