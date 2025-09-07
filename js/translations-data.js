@@ -107,7 +107,7 @@ const translations = {
         mapGenerateBtn: "Asszisztens Indítása",
         mapKeywordsWarning: "Kérlek, adj meg néhány kulcsszót a térképhez!",
         mapOutputPromptTitle: "1. Prompt a Képalkotóhoz",
-        mapOutputPromptDesc: "Másold be ezt a promptot a kedvenc képalkotódba! A legjobb eredményhez a NightCafe Studio-t ajánljuk.",
+        mapCreatorHint: "Az elkészült promptot másold be a kedvenc képalkotódba! A legjobb eredményhez a NightCafe Studio-t ajánljuk.",
         mapOutputLocationsTitle: "2. Kulcsfontosságú Helyszínek a Térképen",
         // Űrlap címkék
         formSystemLabel: "Játékrendszer / Világ",
@@ -692,7 +692,7 @@ const translations = {
         mapGenerateBtn: "Start Assistant",
         mapKeywordsWarning: "Please provide some keywords for your map!",
         mapOutputPromptTitle: "1. Prompt for the Image Generator",
-        mapOutputPromptDesc: "Copy and paste this prompt into your favorite image generator! For the best results, we recommend NightCafe Studio.",
+        mapCreatorHint: "Copy the finished prompt into your favorite image generator! For the best results, we recommend NightCafe Studio.",
         mapOutputLocationsTitle: "2. Key Locations on the Map",
         // Form Labels
         formSystemLabel: "Game System / World",
