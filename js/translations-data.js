@@ -90,6 +90,9 @@ const translations = {
         twistGenDesc: "Elakadtál a mesében? Írd le a jelenlegi helyzetet, és az AI ad pár ötletet a folytatáshoz!",
         twistGenPlaceholder: "Írd le a jelenlegi helyzetet, pl: A hősök sarokba szorították a tolvajcéh vezetőjét, aki azt állítja, zsarolják...",
         generateTwistBtn: "Fordulatot Kérek!",
+        challengeMonthTitle: "A Hónap Témája",
+        blogLinkText: "Tippek és inspiráció a témához a blogon!",
+        blogLinkComingSoon: "Hamarosan: Blogbejegyzés a témában!",
         // ===== RPG SEGÉDLET =====
         navRpgHelper: "RPG Segédlet",
         rpgHelperTitle: "RPG Segédlet",
@@ -652,6 +655,9 @@ const translations = {
         expertAskBtn: "Ask",
         expertPlaceholderInitial: "The answer will appear here...",
         expertErrorEmpty: "Please enter a term to search for!",
+        challengeMonthTitle: "Theme of the Month",
+        blogLinkText: "Tips and inspiration for the theme on the blog!",
+        blogLinkComingSoon: "Coming Soon: Blog post on the theme!",
         // RPG Mini-Modules
         nameGenTitle: "Name Generator",
         nameGenDesc: "Describe a style, and the AI will create unique names for your world!",

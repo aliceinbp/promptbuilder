@@ -1,0 +1,98 @@
+[
+    {
+        "id": "january",
+        "name_hu": "Kozmikus Utazás",
+        "name_en": "Cosmic Voyage",
+        "desc_hu": "Tervezz űrhajókat, fedezz fel idegen világokat, vagy ábrázolj lélegzetelállító csillagködöket és galaxisokat.",
+        "desc_en": "Design spaceships, discover alien worlds, or depict breathtaking nebulas and galaxies.",
+        "blogLink": ""
+    },
+    {
+        "id": "february",
+        "name_hu": "Elfeledett Birodalmak",
+        "name_en": "Forgotten Realms",
+        "desc_hu": "Kelts életre ősi romokat, dzsungel mélyén rejtőző templomokat és letűnt civilizációk titkait.",
+        "desc_en": "Bring ancient ruins, temples hidden deep in the jungle, and the secrets of lost civilizations to life.",
+        "blogLink": ""
+    },
+    {
+        "id": "march",
+        "name_hu": "Cyberpunk Lázadás",
+        "name_en": "Cyberpunk Rebellion",
+        "desc_hu": "Merülj el a neonfényes, esős metropoliszok disztópikus világában. Alkosd meg a jövő lázadóit, kiborgjait és hackereit.",
+        "desc_en": "Dive into the dystopian world of neon-lit, rainy metropolises. Create the rebels, cyborgs, and hackers of the future.",
+        "blogLink": ""
+    },
+    {
+        "id": "april",
+        "name_hu": "Tavaszi Ébredés",
+        "name_en": "Spring Awakening",
+        "desc_hu": "Ragadd meg a természet újjászületését. Fess virágzó tájakat, erdei szellemeket és a tavasz varázslatos lényeit.",
+        "desc_en": "Capture the rebirth of nature. Paint blooming landscapes, forest spirits, and the magical creatures of spring.",
+        "blogLink": ""
+    },
+    {
+        "id": "may",
+        "name_hu": "Steampunk Forradalom",
+        "name_en": "Steampunk Revolution",
+        "desc_hu": "Indítsd be a gőzgépeket! Alkoss lenyűgöző mechanikus szerkezeteket, léghajókat és viktoriánus korabeli feltalálókat.",
+        "desc_en": "Start the steam engines! Create amazing mechanical contraptions, airships, and Victorian-era inventors.",
+        "blogLink": ""
+    },
+    {
+        "id": "june",
+        "name_hu": "Vízalatti Világok",
+        "name_en": "Underwater Worlds",
+        "desc_hu": "Fedezd fel a mélység titkait. Alkoss elsüllyedt városokat, biolumineszcens lényeket és a tengerek rejtélyes civilizációit.",
+        "desc_en": "Discover the secrets of the deep. Create sunken cities, bioluminescent creatures, and the mysterious civilizations of the seas.",
+        "blogLink": ""
+    },
+    {
+        "id": "july",
+        "name_hu": "Mítoszok és Legendák",
+        "name_en": "Myths & Legends",
+        "desc_hu": "Idézd meg a régmúlt isteneit, hőseit és szörnyeit. Alkoss újra egy ismert legendát vagy teremts egy teljesen újat!",
+        "desc_en": "Summon the gods, heroes, and monsters of ancient times. Recreate a well-known legend or invent a completely new one!",
+        "blogLink": ""
+    },
+    {
+        "id": "august",
+        "name_hu": "Sivatagi Kalandok",
+        "name_en": "Desert Adventures",
+        "desc_hu": "A forró homokdűnéktől az elrejtett oázisokig. Ábrázolj nomád törzseket, elveszett kincseket és a sivatag misztikus lényeit.",
+        "desc_en": "From the hot sand dunes to hidden oases. Depict nomadic tribes, lost treasures, and the mystical creatures of the desert.",
+        "blogLink": ""
+    },
+    {
+        "id": "september",
+        "name_hu": "Varázslók Iskolája",
+        "name_en": "School of Wizardry",
+        "desc_hu": "Lépj be a mágia világába! Tervezz varázslatos tantermeket, bűbájos lényeket vagy egy ifjú varázslótanonc portréját.",
+        "desc_en": "Enter the world of magic! Design enchanting classrooms, magical creatures, or the portrait of a young wizard apprentice.",
+        "blogLink": ""
+    },
+    {
+        "id": "october",
+        "name_hu": "Gótikus Horror",
+        "name_en": "Gothic Horror",
+        "desc_hu": "Öleld át a sötétséget! Alkosd meg a kísértetjárta kastélyok, ősi vámpírok és a borzongató romantika világát.",
+        "desc_en": "Embrace the darkness! Create the world of haunted castles, ancient vampires, and chilling romance.",
+        "blogLink": ""
+    },
+    {
+        "id": "november",
+        "name_hu": "Őszi Erdő Szellemei",
+        "name_en": "Spirits of the Autumn Forest",
+        "desc_hu": "Az avar és a köd birodalma. Keltsd életre az erdő ősi szellemeit, állat-totemeit és a melankolikus, őszi táj szépségét.",
+        "desc_en": "The realm of fallen leaves and fog. Bring to life the ancient spirits of the forest, animal totems, and the beauty of the melancholic autumn landscape.",
+        "blogLink": ""
+    },
+    {
+        "id": "december",
+        "name_hu": "Téli Meseország",
+        "name_en": "Winter Wonderland",
+        "desc_hu": "A hó és a jég varázsa. Fess hófödte tájakat, jégpalotákat, és az ünnepi időszak mitikus lényeit.",
+        "desc_en": "The magic of snow and ice. Paint snow-covered landscapes, ice palaces, and the mythical creatures of the festive season.",
+        "blogLink": ""
+    }
+]
