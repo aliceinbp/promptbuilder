@@ -3,7 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('rpg-helper-intro')) {
         initializeRpgHelper();
-        initializeMapCreator(); // ÚJ: Meghívjuk a Térkép Alkotó logikáját
+        initializeMapCreator();
+        initializeRpgPortraitAssistant();
     }
     initializeRpgInfoModal();
 });
@@ -352,4 +353,89 @@ function initializeRpgInfoModal() {
     }
 
     icon.addEventListener('click', openModal);
+}
+function initializeRpgPortraitAssistant() {
+    const toolContainer = document.getElementById('portrait-assistant-tool');
+    if (!toolContainer) return;
+
+    // Form elemek összegyűjtése
+    const raceSelect = toolContainer.querySelector('#pa-race');
+    const classSelect = toolContainer.querySelector('#pa-class');
+    const genderSelect = toolContainer.querySelector('#pa-gender');
+    const customKeywordsInput = toolContainer.querySelector('#pa-custom-keywords');
+    const generateBtn = toolContainer.querySelector('#generate-portrait-btn');
+    const outputDiv = toolContainer.querySelector('#portrait-output');
+
+    // Legördülő menük feltöltése a fordítási adatokból
+    function populatePortraitSelects(lang) {
+        const optionsData = translations[lang].rpgPortraitOptions;
+        if (!optionsData) return;
+
+        const populate = (selectElement, options) => {
+            selectElement.innerHTML = '';
+            options.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.value;
+                option.textContent = opt.label;
+                selectElement.appendChild(option);
+            });
+        };
+
+        populate(raceSelect, optionsData.races);
+        populate(classSelect, optionsData.classes);
+        populate(genderSelect, optionsData.genders);
+    }
+
+    // Gomb eseménykezelője
+    generateBtn.addEventListener('click', async () => {
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        outputDiv.classList.remove('hidden');
+        outputDiv.innerHTML = `<div class="spinner" style="margin: 20px auto;"></div>`;
+        updateAccordionHeight(outputDiv);
+        generateBtn.disabled = true;
+
+        try {
+            // 1. Adatok begyűjtése
+            const raceValue = raceSelect.value;
+            const classValue = classSelect.value;
+            const genderValue = genderSelect.value;
+            const customKeywords = customKeywordsInput.value.trim();
+            let translatedKeywords = '';
+
+            // 2. Fordítás (ha szükséges)
+            if (customKeywords) {
+                const response = await fetch('/.netlify/functions/translate', {
+                    method: 'POST',
+                    body: JSON.stringify({ text: customKeywords, target_lang: 'EN-US' })
+                });
+                if (!response.ok) throw new Error('Translation failed');
+                const data = await response.json();
+                translatedKeywords = data.translatedText;
+            }
+
+            // 3. Prompt összeállítása a NightCafe struktúra szerint
+            const mainSubject = `A portrait of a ${genderValue} ${raceValue} ${classValue}`;
+            const secondarySubject = translatedKeywords ? `, ${translatedKeywords}` : '';
+            const style = `epic fantasy character concept art, by Greg Rutkowski and Artgerm`;
+            const extras = `highly detailed, cinematic lighting, 8k resolution, intricate details`;
+            
+            const finalPrompt = `${mainSubject}${secondarySubject}, ${style}, ${extras}.`;
+
+            // 4. Eredmény megjelenítése
+            const toolbarHTML = `<div class="output-toolbar"><button class="cta-button-small copy-output-btn"><i class="fa-solid fa-copy"></i> <span>${translations[lang].outputCopyBtn}</span></button></div>`;
+            const promptHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${finalPrompt}</pre>`;
+            outputDiv.innerHTML = toolbarHTML + promptHTML;
+
+        } catch (error) {
+            console.error("Portrait Assistant Error:", error);
+            outputDiv.innerHTML = `<p style="color: #ff6b6b;">${translations[lang].outputError}</p>`;
+        } finally {
+            generateBtn.disabled = false;
+            setTimeout(() => updateAccordionHeight(outputDiv), 50);
+        }
+    });
+
+    // Kezdeti feltöltés és nyelvváltozás figyelése
+    populatePortraitSelects(localStorage.getItem('preferredLanguage') || 'en');
+    document.body.addEventListener('languageChanged', (e) => populatePortraitSelects(e.detail.lang));
 }

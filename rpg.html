@@ -205,6 +205,49 @@
             <div id="character-output"></div>
         </div>
     </div>
+
+    <div class="accordion-item" style="margin-bottom: 25px;">
+    <button class="accordion-header">
+        <h2 style="margin: 0; font-size: 1.8em; display: inline-flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-user-pen"></i> <span data-key="portraitAssistantTitle">RPG Karakter Portré Asszisztens</span>
+        </h2>
+    </button>
+    <div class="accordion-content">
+        <div id="portrait-assistant-tool" class="rpg-form">
+            <p class="module-description" data-key="portraitAssistantDesc"></p>
+            
+            <div class="rpg-form-grid">
+                <div class="rpg-form-group">
+                    <label for="pa-race" data-key="portraitRaceLabel"></label>
+                    <select id="pa-race"></select>
+                </div>
+                <div class="rpg-form-group">
+                    <label for="pa-class" data-key="portraitClassLabel"></label>
+                    <select id="pa-class"></select>
+                </div>
+            </div>
+
+            <div class="rpg-form-group">
+                <label for="pa-gender" data-key="portraitGenderLabel"></label>
+                <select id="pa-gender"></select>
+            </div>
+
+            <div class="rpg-form-group">
+                <label for="pa-custom-keywords" data-key="portraitKeywordsLabel"></label>
+                <input type="text" id="pa-custom-keywords" data-key-placeholder="portraitKeywordsPlaceholder">
+                <p class="form-hint" data-key="portraitKeywordsHint"></p>
+            </div>
+
+            <button id="generate-portrait-btn" class="cta-button">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-key="portraitGenerateBtn"></span>
+            </button>
+
+            <div id="portrait-output" class="hidden" style="margin-top: 25px;">
+                </div>
+        </div>
+    </div>
+</div>
+
     <section id="rpg-mini-modules" style="margin-top: 40px;">
 
     <div class="rpg-mini-module">

@@ -110,6 +110,42 @@ const translations = {
         mapCreatorHint_part2: "-t ajánljuk.",
         mapOutputPromptTitle: "1. Prompt a Képalkotóhoz",
         mapOutputLocationsTitle: "2. Kulcsfontosságú Helyszínek a Térképen",
+        portraitAssistantTitle: "RPG Karakter Portré Asszisztens",
+portraitAssistantDesc: "Generálj egy részletes, NightCafe-kompatibilis promptot a karaktered vizuális megjelenítéséhez!",
+portraitRaceLabel: "Faj",
+portraitClassLabel: "Kaszt / Hivatás",
+portraitGenderLabel: "Nem",
+portraitKeywordsLabel: "További kulcsszavak (opcionális)",
+portraitKeywordsPlaceholder: "pl. sebhelyes arc, acél páncél, ravasz mosoly...",
+portraitKeywordsHint: "Ezt a mezőt az AI automatikusan lefordítja angolra.",
+portraitGenerateBtn: "Portré Prompt Generálása",
+rpgPortraitOptions: {
+    races: [
+        { label: "Ember", value: "human" },
+        { label: "Tünde", value: "elf" },
+        { label: "Féltünde", value: "half-elf" },
+        { label: "Törp", value: "dwarf" },
+        { label: "Félszerzet", value: "halfling" },
+        { label: "Ork / Félork", value: "orc / half-orc" },
+        { label: "Sárkányszülött", value: "dragonborn" },
+        { label: "Tiefling", value: "tiefling" }
+    ],
+    classes: [
+        { label: "Harcos", value: "warrior" },
+        { label: "Varázsló", value: "wizard" },
+        { label: "Tolvaj / Zsivány", value: "rogue" },
+        { label: "Pap / Klérus", value: "cleric" },
+        { label: "Íjász / Vadász", value: "ranger" },
+        { label: "Bárd", value: "bard" },
+        { label: "Druida", value: "druid" },
+        { label: "Paladin", value: "paladin" }
+    ],
+    genders: [
+        { label: "Férfi", value: "male" },
+        { label: "Nő", value: "female" },
+        { label: "Nem-bináris / Androgün", value: "non-binary / androgynous" }
+    ]
+},
         // Űrlap címkék
         formSystemLabel: "Játékrendszer / Világ",
         formMoodLabel: "Hangulat & Stílus",
@@ -664,6 +700,42 @@ const translations = {
         metaphorToneLabel: "Tone / Mood",
         metaphorGenerateBtn: "Brainstorm",
         metaphorConceptWarning: "Please enter a concept to brainstorm!",
+        portraitAssistantTitle: "RPG Character Portrait Assistant",
+portraitAssistantDesc: "Generate a detailed, NightCafe-compatible prompt for your character's visual representation!",
+portraitRaceLabel: "Race",
+portraitClassLabel: "Class / Profession",
+portraitGenderLabel: "Gender",
+portraitKeywordsLabel: "Additional Keywords (optional)",
+portraitKeywordsPlaceholder: "e.g., scarred face, steel armor, cunning smile...",
+portraitKeywordsHint: "This field will be automatically translated to English by the AI.",
+portraitGenerateBtn: "Generate Portrait Prompt",
+rpgPortraitOptions: {
+    races: [
+        { label: "Human", value: "human" },
+        { label: "Elf", value: "elf" },
+        { label: "Half-Elf", value: "half-elf" },
+        { label: "Dwarf", value: "dwarf" },
+        { label: "Halfling", value: "halfling" },
+        { label: "Orc / Half-Orc", value: "orc / half-orc" },
+        { label: "Dragonborn", value: "dragonborn" },
+        { label: "Tiefling", value: "tiefling" }
+    ],
+    classes: [
+        { label: "Warrior", value: "warrior" },
+        { label: "Wizard", value: "wizard" },
+        { label: "Rogue", value: "rogue" },
+        { label: "Cleric", value: "cleric" },
+        { label: "Ranger", value: "ranger" },
+        { label: "Bard", value: "bard" },
+        { label: "Druid", value: "druid" },
+        { label: "Paladin", value: "paladin" }
+    ],
+    genders: [
+        { label: "Male", value: "male" },
+        { label: "Female", value: "female" },
+        { label: "Non-Binary / Androgynous", value: "non-binary / androgynous" }
+    ]
+},
         // Dropdown options
         giftSelectOptions: {
             recipients: [ { value: 'partner', label: 'Partner (husband, wife, bf/gf)' }, { value: 'parent', label: 'Parent (mom, dad)' }, { value: 'sibling', label: 'Sibling' }, { value: 'friend', label: 'Friend' }, { value: 'colleague', label: 'Colleague / Coworker' }, { value: 'child', label: 'Child' }, { value: 'other', label: 'Other' } ],
