@@ -335,50 +335,100 @@ async function loadBlogPosts() {
 }
 
 async function loadSinglePost() {
-    const container = document.getElementById('post-content-container');
-    if (!container || !markdownConverter) return;
+    const container = document.getElementById('post-content-container');
+    if (!container || !markdownConverter) return;
 
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
-    if (!slug) {
-        container.innerHTML = 'Hiba: Nincs megadva bejegyzés azonosító.';
-        return;
-    }
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    if (!slug) {
+        container.innerHTML = 'Hiba: Nincs megadva bejegyzés azonosító.';
+        return;
+    }
 
-    const POST_URL = `https://raw.githubusercontent.com/aliceinbp/promptbuilder/main/blog/${slug}.md`;
-    try {
-        const response = await fetch(POST_URL);
-        if (!response.ok) throw new Error('A bejegyzés nem található.');
-        const markdown = await response.text();
-        const { frontmatter, content } = parseFrontmatter(markdown);
-        
-        const lang = localStorage.getItem('preferredLanguage') || 'en';
-        const title = (lang === 'hu' ? frontmatter.title_hu : frontmatter.title_en) || frontmatter.title_en;
-        const bodyMarkdown = (lang === 'hu' ? frontmatter.body_hu : frontmatter.body_en) || content;
-        const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
-        const postDate = new Date(frontmatter.date).toLocaleDateString(lang === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const POST_URL = `https://raw.githubusercontent.com/aliceinbp/promptbuilder/main/blog/${slug}.md`;
+    try {
+        const response = await fetch(POST_URL);
+        if (!response.ok) throw new Error('A bejegyzés nem található.');
+        const markdown = await response.text();
+        const { frontmatter, content } = parseFrontmatter(markdown);
+        
+        const lang = localStorage.getItem('preferredLanguage') || 'en';
+        const title = (lang === 'hu' ? frontmatter.title_hu : frontmatter.title_en) || frontmatter.title_en;
+        const bodyMarkdown = (lang === 'hu' ? frontmatter.body_hu : frontmatter.body_en) || content;
+        const bodyHtml = markdownConverter.makeHtml(bodyMarkdown);
+        const postDate = new Date(frontmatter.date).toLocaleDateString(lang === 'hu' ? 'hu-HU' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-        document.title = `${title} - Alkimista Műhely Blog`;
-        
-        const likeBtnHtml = `<div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;"><span class="likebtn-wrapper" data-identifier="${slug}" data-lazy_load="true" data-rich_snippet="true"></span></div>`;
-        container.innerHTML = `
-            <div class="post-header">
-                <h1>${title}</h1>
-                <p class="post-meta"><span data-key="postedOn"></span> ${postDate}</p>
-            </div>
-            <img src="${frontmatter.image}" alt="${title}" class="post-featured-image">
-            <div class="post-body">${bodyHtml}</div>
-            ${likeBtnHtml}`;
-        
-        if (window.setLanguage) window.setLanguage(lang);
+        // ===== SEO ÉS META TAG FRISSÍTÉS - ÚJ BLOKK KEZDETE =====
+        const plainTextBody = content.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+        const description = plainTextBody.substring(0, 155) + '...';
+        const imageUrl = `https://aliceinbp.com${frontmatter.image}`;
+        const postUrl = `https://aliceinbp.com/post.html?slug=${slug}`;
 
-        if (window.likebtn_queue) {
-            window.likebtn_queue.push({ init: true });
-        }
-    } catch (error) {
-        console.error('Hiba a bejegyzés betöltésekor:', error);
-        container.innerHTML = '<p>A bejegyzés nem tölthető be.</p>';
-    }
+        document.getElementById('page-title').textContent = `${title} - Script Acid Blog`;
+        document.getElementById('meta-description').setAttribute('content', description);
+        
+        document.getElementById('og-title').setAttribute('content', title);
+        document.getElementById('og-description').setAttribute('content', description);
+        document.getElementById('og-url').setAttribute('content', postUrl);
+        document.getElementById('og-image').setAttribute('content', imageUrl);
+
+        document.getElementById('twitter-title').setAttribute('content', title);
+        document.getElementById('twitter-description').setAttribute('content', description);
+        document.getElementById('twitter-image').setAttribute('content', imageUrl);
+     // ===== SCHEMA.ORG STRUKTURÁLT ADATOK - ÚJ BLOKK KEZDETE =====
+            const oldSchema = document.getElementById('blog-post-schema');
+        if (oldSchema) {
+            oldSchema.remove();
+        }
+
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": title,
+            "name": title,
+            "description": description,
+            "image": imageUrl,
+            "datePublished": new Date(frontmatter.date).toISOString(),
+            "author": {
+                "@type": "Person",
+                "name": "aliceinbp"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Script Acid by aliceinbp",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://aliceinbp.com/src/myLogo.jpg"
+                }
+            }
+        };
+
+        const schemaScript = document.createElement('script');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.id = 'blog-post-schema'; // ID-t adunk neki a könnyebb eltávolításhoz
+        schemaScript.text = JSON.stringify(schema);
+        document.head.appendChild(schemaScript);
+        // ===== SCHEMA.ORG STRUKTURÁLT ADATOK - ÚJ BLOKK VÉGE =====
+        
+        const likeBtnHtml = `<div class="like-button-container" style="margin-top: 40px; border-top: 1px solid var(--color-border); padding-top: 20px;"><span class="likebtn-wrapper" data-identifier="${slug}" data-lazy_load="true" data-rich_snippet="true"></span></div>`;
+        container.innerHTML = `
+            <div class="post-header">
+                <h1>${title}</h1>
+                <p class="post-meta"><span data-key="postedOn"></span> ${postDate}</p>
+            </div>
+            <img src="${frontmatter.image}" alt="${title}" class="post-featured-image">
+            <div class="post-body">${bodyHtml}</div>
+            ${likeBtnHtml}`;
+        
+        if (window.setLanguage) window.setLanguage(lang);
+
+        if (window.likebtn_queue) {
+            window.likebtn_queue.push({ init: true });
+        }
+    } catch (error) {
+        console.error('Hiba a bejegyzés betöltésekor:', error);
+        container.innerHTML = '<p>A bejegyzés nem tölthető be.</p>';
+    }
 }
 
 function displayDailyQuote() {
