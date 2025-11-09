@@ -10,7 +10,7 @@ exports.handler = async function(event) {
   try {
     // 1. Inicializáljuk a Google AI klienst a Netlify-on beállított kulccsal
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const { userPrompt } = JSON.parse(event.body);
 
